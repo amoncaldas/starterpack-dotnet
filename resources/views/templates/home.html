@@ -1,0 +1,13 @@
+<content-body>
+  <div class="row">
+    <div class="col-sm-12">
+      <box title="Página Inicial">
+        <h3>Seja bem Vindo {{currentUser.name}}</h3>
+        <p>Utilize o menu para navegação {{currentUser.name}}</p>
+        <a ng-click="home.getUsers(true)">teste rapido</a>
+        <a ng-click="home.getUsers(false)">teste lento</a>
+
+      </box>
+    </div>
+  </div>
+</content-body>
