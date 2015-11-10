@@ -5,6 +5,7 @@
 - php versão 5.6 ou superior [tutorial para instalar](http://tecadmin.net/install-php5-on-ubuntu/)
 - composer [tutorial para instalar](https://getcomposer.org/doc/00-intro.md#globally)
 - editor descente [atom.io](https://atom.io/)
+- postgres
 
 ## Para desenvolvimento
 
@@ -18,6 +19,9 @@
 - chmod **777** -R storage
 - chmod **777** -R bootstrap/cache
 - cp .env.example .env
+
+> configure o .env com os dados da conexão do postgres
+
 - composer install
 - php artisan key:generate
 - php artisan db:seed
