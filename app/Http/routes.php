@@ -4,12 +4,19 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::group(['prefix' => 'api'], function()
-{
-    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
+Route::group(['prefix' => 'v1'], function () {
     Route::post('authenticate', 'AuthenticateController@authenticate');
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
-    Route::get('authenticate/teste', 'AuthenticateController@teste');
+
+    Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function () {
+        Route::put('profile', 'UsersController@updateProfile');
+    });
+
+    //admin area
+    Route::group(['middleware' => ['jwt.auth', 'jwt.refresh', 'acl.role:admin']], function () {
+        Route::resource('users', 'UsersController', ['only' => ['index', 'store', 'update', 'show']]);
+        Route::resource('roles', 'RolesController', ['only' => ['index', 'store', 'update']]);
+    });
 });
 
 Route::get(
@@ -17,7 +24,7 @@ Route::get(
     function($templatePath = null) {
       return File::get(join('/', array_filter([Config::get('view.paths')[0], 'templates', $templatePath])));
     }
-)->where('templatePath', '(.*)');;
+)->where('templatePath', '(.*)');
 
 // Using different syntax for Blade to avoid conflicts with AngularJS.
 // You are well-advised to go without any Blade at all.

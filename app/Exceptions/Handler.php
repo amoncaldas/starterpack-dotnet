@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -46,10 +47,14 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if ($e instanceof ModelNotFoundException) {
-            $e = new NotFoundHttpException($e->getMessage(), $e);
+            return response()->json(['error' =>'model_not_found'], 404);
         }
 
         if ($e instanceof TokenExpiredException) {
+            return response()->json(['error' =>'token_expired'], $e->getStatusCode());
+        }
+
+        if ($e instanceof UnauthorizedHttpException) {
             return response()->json(['error' =>'token_expired'], $e->getStatusCode());
         }
 

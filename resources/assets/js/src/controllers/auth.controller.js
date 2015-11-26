@@ -6,9 +6,9 @@
     .module('app')
     .controller('AuthController', AuthController);
 
-  AuthController.$inject = ['$state', '$http', '$rootScope', 'Auth', '$auth', 'GlobalService'];
+  AuthController.$inject = ['$state', 'Auth', 'Global', 'Toast'];
 
-  function AuthController($state, $http, $rootScope, Auth, $auth, GlobalService) {
+  function AuthController($state, Auth, Global, Toast) {
     var vm = this;
 
     vm.login = login;
@@ -26,9 +26,9 @@
       };
 
       Auth.login(credentials).then(function(data) {
-        $state.go(GlobalService.homeState);
+        $state.go(Global.homeState);
       }, function(error) {
-        toastr.error(error.data.error);
+        Toast.error(error.data.error);
       });
     }
   }

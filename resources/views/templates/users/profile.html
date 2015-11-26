@@ -1,0 +1,40 @@
+<content-body>
+    <div class="row">
+        <div class="col-sm-12">
+            <box title="Profile">
+                <form class="form-horizontal">
+                    <div class="form-group required">
+                        <label for="name" class="col-sm-2 control-label">Nome</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="name" class="form-control" placeholder="Nome" ng-model="profileCtrl.user.name">
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        <label for="email" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-3">
+                            <input type="email" id="email" class="form-control" placeholder="Email" ng-model="profileCtrl.user.email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label">Senha</label>
+                        <div class="col-sm-3">
+                            <input type="password" id="password" class="form-control" ng-model="profileCtrl.user.password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmation" class="col-sm-2 control-label">Confirmação da Senha</label>
+                        <div class="col-sm-3">
+                            <input type="password" id="password_confirmation" class="form-control" ng-model="profileCtrl.user.password_confirmation">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button class="btn btn-primary" ng-click="profileCtrl.update()">Atualizar</button>
+                        </div>
+                    </div>
+
+                </form>
+            </box>
+        </div>
+    </div>
+</content-body>

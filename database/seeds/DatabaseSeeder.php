@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use App\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,19 +19,28 @@ class DatabaseSeeder extends Seeder
         // $this->call(UserTableSeeder::class);
 
         DB::table('users')->delete();
+        DB::table('roles')->delete();
+        DB::table('role_user')->delete();
 
         $users = array(
                 ['name' => 'Prode BASE', 'email' => 'admin-base@prodeb.com', 'password' => Hash::make('Prodeb01')],
-                ['name' => 'Chris Sevilleja', 'email' => 'chris@scotch.io', 'password' => Hash::make('secret')],
-                ['name' => 'Holly Lloyd', 'email' => 'holly@scotch.io', 'password' => Hash::make('secret')],
-                ['name' => 'Adnan Kukic', 'email' => 'adnan@scotch.io', 'password' => Hash::make('secret')],
+                ['name' => 'Usuário 1', 'email' => 'usuario1-base@prodeb.com', 'password' => Hash::make('secret')],
+                ['name' => 'Usuário 2', 'email' => 'usuario1-base@prodeb.com', 'password' => Hash::make('secret')],
+                ['name' => 'Usuário 3', 'email' => 'usuario1-base@prodeb.com', 'password' => Hash::make('secret')],
         );
 
         // Loop through each user above and create the record for them in the database
         foreach ($users as $user)
         {
             User::create($user);
-        }        
+        }
+
+        $role = new Role;
+        $role->title = 'Admin';
+        $role->slug = 'admin';
+        $role->save();
+
+        User::where('email', 'admin-base@prodeb.com')->first()->roles()->attach($role->id);
 
         Model::reguard();
     }

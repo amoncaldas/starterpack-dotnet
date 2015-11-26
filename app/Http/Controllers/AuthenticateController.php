@@ -23,25 +23,6 @@ class AuthenticateController extends Controller
       $this->middleware('jwt.refresh', ['except' => ['authenticate']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-      $users = User::all();
-
-      return $users;
-    }
-
-    public function teste()
-    {
-        sleep(2);
-        $users = User::all();
-        return $users;
-    }
-
     public function authenticate(Request $request)
     {
       $credentials = $request->only('email', 'password');
@@ -66,6 +47,7 @@ class AuthenticateController extends Controller
             return response()->json(['user_not_found'], 404);
         }
 
+        $user->roles = array_pluck($user->roles()->get()->toArray(), 'slug');
 
         // the token is valid and we have found the user via the sub claim
         return response()->json(compact('user'));

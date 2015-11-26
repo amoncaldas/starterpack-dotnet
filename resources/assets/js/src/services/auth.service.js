@@ -5,28 +5,54 @@
     .module('app')
     .factory('Auth', Auth);
 
-  Auth.$inject = ['$http', '$auth', '$q', '$rootScope'];
+  Auth.$inject = ['$http', '$auth', '$q', '$rootScope', 'Global', 'lodash'];
 
-  function Auth($http, $auth, $q, $rootScope) {
-    return {
+  function Auth($http, $auth, $q, $rootScope, Global, _) {
+    var auth = {
       login: login,
-      logout: logout
+      logout: logout,
+      updateCurrentUser: updateCurrentUser,
+      authenticated: authenticated,
+      is: is,
+      isAdmin: isAdmin,
+      currentUser: null
     };
+
+    function is(profile) {
+      return (auth.currentUser && _.includes(auth.currentUser.roles, profile) );
+    }
+
+    function isAdmin() {
+      return auth.is('admin');
+    }
+
+    function authenticated() {
+      return (auth.currentUser);
+    }
+
+    function updateCurrentUser(user) {
+      if(user !== null) {
+        if(angular.isUndefined(user.roles)) { user.roles = []; }
+
+        var jsonUser = JSON.stringify(user);
+
+        localStorage.setItem('user', jsonUser);
+        auth.currentUser = user;
+      } else {
+        localStorage.removeItem('user');
+        auth.currentUser = null;
+      }
+    }
 
     function login(credentials) {
       var deferred = $q.defer();
 
       $auth.login(credentials)
         .then(function(data) {
-          return $http.get('api/authenticate/user');
+          return $http.get(Global.apiVersion + '/authenticate/user');
         })
         .then(function(response) {
-          var user = JSON.stringify(response.data.user);
-
-          localStorage.setItem('user', user);
-
-          $rootScope.authenticated = true;
-          $rootScope.currentUser = response.data.user;
+          auth.updateCurrentUser(response.data.user);
 
           deferred.resolve();
         }, function(error) {
@@ -40,16 +66,15 @@
       var deferred = $q.defer();
 
       $auth.logout().then(function() {
-        localStorage.removeItem('user');
-
-        $rootScope.authenticated = false;
-        $rootScope.currentUser = null;
+        auth.updateCurrentUser(null);
 
         deferred.resolve();
       });
 
       return deferred.promise;
     }
+
+    return auth;
   }
 
 }());

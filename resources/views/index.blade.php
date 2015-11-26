@@ -25,6 +25,7 @@
 
   <body class="hold-transition skin-blue layout-top-nav" ng-app="app" ng-controller="GlobalController as globalCtrl">
     <div class="wrapper">
+      <spinner></spinner>
       <ng-include src="'templates/menu.html'"></ng-include>
 
       <div class="content-wrapper" ui-view></div>
@@ -34,6 +35,12 @@
     <!-- ./wrapper -->
 
     <script src="<% elixir('js/all.js') %>"></script>
+
+    @if ( Config::get('app.debug') )
+      <script type="text/javascript">
+        document.write('<script src="//localhost:35729/livereload.js?snipver=1" type="text/javascript"><\/script>')
+      </script>
+    @endif
 
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
        Both of these plugins are recommended to enhance the

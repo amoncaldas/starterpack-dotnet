@@ -5,23 +5,31 @@
     .module('app')
     .config(routes);
 
-  routes.$inject = ['$stateProvider', '$urlRouterProvider', 'GlobalServiceProvider'];
+  routes.$inject = ['$stateProvider', '$urlRouterProvider', 'Global'];
 
-  function routes($stateProvider, $urlRouterProvider, GlobalServiceProvider) {
-    // Redirect to the auth state if any other states
-    // are requested other than users
-    $urlRouterProvider.otherwise(GlobalServiceProvider.$get().loginState);
-
+  function routes($stateProvider, $urlRouterProvider, Global) {
     $stateProvider
-      .state(GlobalServiceProvider.$get().loginState, {
+      .state(Global.homeState, {
+        url: '/',
+        templateUrl: 'templates/home.html',
+        controller: 'HomeController as home'
+      })
+      .state(Global.loginState, {
         url: '/login',
         templateUrl: 'templates/auth/loginForm.html',
         controller: 'AuthController as auth'
       })
-      .state(GlobalServiceProvider.$get().homeState, {
-        url: '/home',
-        templateUrl: 'templates/home.html',
-        controller: 'HomeController as home'
+      .state('usuarios', {
+        url: '/usuarios',
+        templateUrl: 'templates/users/index.html',
+        controller: 'UsersController as usersCtrl'
+      })
+      .state('profile', {
+        url: '/profile',
+        templateUrl: 'templates/users/profile.html',
+        controller: 'ProfileController as profileCtrl'
       });
+
+    $urlRouterProvider.otherwise(Global.loginState);
   }
 }());

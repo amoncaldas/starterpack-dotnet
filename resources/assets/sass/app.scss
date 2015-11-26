@@ -1,9 +1,14 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+body {
+  background-color: #ecf0f5;
+}
+
 #toast-container > div {
   opacity: 1;
 }
 
-body {
-  background-color: #ecf0f5;
+.form-group.required .control-label:after {
+  content:" *";
+  color:red;
 }

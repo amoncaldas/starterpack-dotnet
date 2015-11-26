@@ -6,9 +6,9 @@
     .module('app')
     .controller('GlobalController', GlobalController);
 
-  GlobalController.$inject = ['$state', '$http', '$rootScope', 'Auth', '$auth', 'GlobalService'];
+  GlobalController.$inject = ['$state', '$http', 'Auth', 'Global'];
 
-  function GlobalController($state, $http, $rootScope, Auth, $auth, GlobalService) {
+  function GlobalController($state, $http, Auth, Global) {
     var vm = this;
 
     vm.logout = logout;
@@ -19,7 +19,7 @@
 
     function logout() {
       Auth.logout().then(function() {
-        $state.go(GlobalService.loginState);
+        $state.go(Global.loginState);
       });
     }
   }

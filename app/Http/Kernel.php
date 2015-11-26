@@ -30,6 +30,8 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
-        'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class
+        'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
+        'acl.role' => \App\Http\Middleware\HasRole::class,
+        'acl.permission' => \App\Http\Middleware\HasPermission::class,
     ];
 }
