@@ -29,7 +29,6 @@
         //iterate over a object keys. Laravel send the errors in a object like:
         //{"name": ["o campo nome é obrigatório"], "password":["A confirmação de senha não confere.","senha deve ter no mínimo 6 caracteres."]}
         _.forIn(errors, function(keyErrors, key) {
-
           //itera sobre os erros de um atributo
           keyErrors.forEach(function(error) {
             errorStr += error + "<br/>";

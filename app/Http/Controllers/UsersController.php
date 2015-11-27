@@ -120,6 +120,8 @@ class UsersController extends Controller
         $user->save();
         $user->roles()->sync(Input::only('roles')["roles"]);
 
+        $user->roles = array_pluck($user->roles()->get()->toArray(), 'slug');
+
         return $user;
     }
 }

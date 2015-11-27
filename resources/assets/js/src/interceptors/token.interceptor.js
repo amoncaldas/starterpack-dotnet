@@ -29,29 +29,33 @@
           }
           return response;
         },
-        responseError: function (rejection) {
+        responseError: function (response) {
           // Instead of checking for a status code of 400 which might be used
           // for other reasons in Laravel, we check for the specific rejection
           // reasons to tell us if we need to redirect to the login state
           var rejectionReasons = ['token_not_provided', 'token_expired', 'token_absent', 'token_invalid'];
 
           angular.forEach(rejectionReasons, function (value, key) {
-            if (rejection.data && rejection.data.error === value) {
+            if (response.data && response.data.error === value) {
               $injector.get('Auth').logout().then(function () {
-                $injector.get('Toast').info("Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente");
-                $injector.get('$state').go(Global.loginState);
+                $injector.get('Toast').warning("Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente");
+
+                var $state = $injector.get('$state');
+
+                //in case multiple ajax request fail at same time because token problems, only the first will redirect
+                if(!$state.is('Global.loginState')) { $state.go(Global.loginState); }
               });
             }
           });
 
           //many servers errors (business) are intercept here but generated a new refresh token and need update current token
-          var token = rejection.headers('Authorization');
+          var token = response.headers('Authorization');
 
           if ('undefined' !== typeof token && null !== token) {
             $injector.get('$auth').setToken(token.split(' ')[1]);
           }
 
-          return $q.reject(rejection);
+          return $q.reject(response);
         }
       };
     }
@@ -102,12 +106,12 @@
         // If the user is logged in and we hit the auth route we don't need
         // to stay there and can send the user to the main state
         if(toState.name === Global.loginState) {
-          $state.go(Global.homeState, {}, {notify:false});
+          $state.go(Global.homeState);
           event.preventDefault();
         }
       } else {
         if(toState.name !== Global.loginState) {
-          $state.go(Global.loginState, {}, {notify:false});
+          $state.go(Global.loginState);
           event.preventDefault();
         }
       }

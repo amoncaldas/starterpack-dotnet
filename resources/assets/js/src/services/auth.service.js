@@ -19,7 +19,7 @@
     };
 
     function is(profile) {
-      return (auth.currentUser && _.includes(auth.currentUser.roles, profile) );
+      return (angular.isObject(auth.currentUser) && _.includes(auth.currentUser.roles, profile) );
     }
 
     function isAdmin() {

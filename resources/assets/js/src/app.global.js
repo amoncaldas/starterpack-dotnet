@@ -6,6 +6,7 @@
     .constant('Global', {
       homeState: 'home',
       loginState: 'login',
+      notAuthorizedState: 'not-authorized',
       apiVersion: 'v1'
     });
 }());

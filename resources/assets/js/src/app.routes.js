@@ -22,12 +22,17 @@
       .state('usuarios', {
         url: '/usuarios',
         templateUrl: 'templates/users/index.html',
-        controller: 'UsersController as usersCtrl'
+        controller: 'UsersController as usersCtrl',
+        data: { needAdmin: true }
       })
       .state('profile', {
         url: '/profile',
         templateUrl: 'templates/users/profile.html',
         controller: 'ProfileController as profileCtrl'
+      })
+      .state('not-authorized', {
+        url: '/acesso-negado',
+        templateUrl: 'templates/404.html'
       });
 
     $urlRouterProvider.otherwise(Global.loginState);
