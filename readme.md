@@ -1,12 +1,12 @@
-#Sobre
+# Sobre
 
 - Este projeto tem como objetivo servir de base para futuros projetos da Prodeb.
-- O mesmo utiliza Laravel 5.1 com Angular 1.4.
+- O mesmo utiliza Laravel 5.1 com Angular 1.5.
 - O sistema utiliza JWT (http://jwt.io) para autenticação através da lib (https://github.com/tymondesigns/jwt-auth)
 - O sistema não faz uso de sessão para identificação do usuário, toda a informação é através do token enviado/recebido
 - Todas as funcionalidades retornam json contendo as informações da requisitadas.
 
-#Pré requisitos
+# Pré requisitos
 
 - linux (preferência ubuntu)
 - node versão 4 ou superior [tutorial para instalar](https://nodejs.org/en/download/package-manager/)
