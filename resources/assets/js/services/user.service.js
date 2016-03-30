@@ -8,7 +8,7 @@
   UserService.$inject = ['$resource', '$q', '$http', 'Global'];
 
   function UserService($resource, $q, $http, Global) {
-    var service = $resource(Global.apiVersion + '/users/:id', null,
+    var service = $resource(Global.apiVersion + '/users/:id', {id: '@id'},
     {
         'update': { method:'PUT' }
     });
