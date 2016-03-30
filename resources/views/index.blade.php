@@ -9,7 +9,7 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <link rel="stylesheet" href="<% elixir('css/all.css') %>">
+    <link rel="stylesheet" href="build/css/all.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
@@ -34,18 +34,9 @@
     </div>
     <!-- ./wrapper -->
 
-    <script src="<% elixir('js/all.js') %>"></script>
-
-    @if ( Config::get('app.debug') )
-      <script type="text/javascript">
-        document.write('<script src="//localhost:35729/livereload.js?snipver=1" type="text/javascript"><\/script>')
-      </script>
-    @endif
-
-    <!-- Optionally, you can add Slimscroll and FastClick plugins.
-       Both of these plugins are recommended to enhance the
-       user experience. Slimscroll is required when using the
-       fixed layout. -->
+    <script src="build/js/vendors.js"></script>
+    <script src="build/js/angular-with-plugins.js"></script>
+    <script src="build/js/application.js"></script>
   </body>
 
 </html>

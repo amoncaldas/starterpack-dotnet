@@ -12,6 +12,7 @@
       login: login,
       logout: logout,
       updateCurrentUser: updateCurrentUser,
+      retrieveUserFromLocalStorage: retrieveUserFromLocalStorage,
       authenticated: authenticated,
       is: is,
       isAdmin: isAdmin,
@@ -30,8 +31,15 @@
       return (auth.currentUser);
     }
 
+    function retrieveUserFromLocalStorage(user) {
+      var user = localStorage.getItem('user');
+      if(user) {
+        auth.currentUser = JSON.parse(user);
+      }
+    }
+
     function updateCurrentUser(user) {
-      if(user !== null) {
+      if(user) {
         if(angular.isUndefined(user.roles)) { user.roles = []; }
 
         var jsonUser = JSON.stringify(user);

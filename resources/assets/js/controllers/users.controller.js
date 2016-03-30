@@ -21,15 +21,15 @@
     function activate() {
       vm.user = {};
 
-      vm.roles = RoleService.getList().then(function (roles) {
-        vm.roles = roles.plain();
+      vm.roles = RoleService.query().$promise.then(function (response) {
+        vm.roles = response;
       });
       vm.search();
     }
 
     function search() {
-      UserService.getList().then(function (users) {
-        vm.users = users;
+      UserService.query().$promise.then(function (response) {
+        vm.users = response;
       }, function (error) {
         Toast.error("Não foi possível realizar a busca de usuários");
       });
@@ -59,9 +59,9 @@
 
       vm.user.roles = _.pluck(_.filter(angular.copy(vm.roles), { 'selected': true }),'id');
 
-      promisse = (vm.user.id) ?  vm.user.put() : UserService.post(vm.user);
+      promisse = (vm.user.id) ?  UserService.update(vm.user).$promise : UserService.save(vm.user).$promise;
 
-      promisse.then(function (user) {
+      promise.then(function (user) {
         vm.user = user;
 
         if(vm.user.id === Auth.currentUser.id) { Auth.updateCurrentUser(user.plain()); }

@@ -5,12 +5,11 @@
     .module('app')
     .config(config);
 
-  config.$inject = ['$authProvider', 'Global', 'RestangularProvider'];
+  config.$inject = ['$authProvider', 'Global'];
 
-  function config($authProvider, Global, RestangularProvider) {
+  function config($authProvider, Global) {
     // Satellizer configuration that specifies which API
     // route the JWT should be retrieved from
-    RestangularProvider.setBaseUrl(Global.apiVersion);
     $authProvider.loginUrl = Global.apiVersion + '/authenticate';
 
   }

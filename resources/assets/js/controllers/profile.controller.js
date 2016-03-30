@@ -20,8 +20,8 @@
     }
 
     function update() {
-      UserService.updateProfile(vm.user).then(function (user) {
-        Auth.updateCurrentUser(user);
+      UserService.updateProfile(vm.user).then(function (response) {
+        Auth.updateCurrentUser(response.data);
       }, function (error) {
         Toast.errorValidation(error.data, "Não foi possível atualizar seu profile");
       });

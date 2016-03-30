@@ -31,6 +31,11 @@
           $injector.get('Spinner').hide();
 
           return response;
+        },
+        responseError: function (rejection) {
+          $injector.get('Spinner').hide();
+
+          return $q.reject(rejection);
         }
       };
     }

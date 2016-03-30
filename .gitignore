@@ -4,6 +4,7 @@ vendor/
 
 ### Resources ###
 node_modules
+bower_components
 /public/css
 /public/js
 /public/build

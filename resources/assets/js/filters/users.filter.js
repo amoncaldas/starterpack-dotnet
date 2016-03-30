@@ -10,7 +10,7 @@
 
   function rolesStr(_) {
     return function(roles) {
-      return _.pluck(roles, 'slug').join(", ");
+      return _.map(roles, 'slug').join(", ");
     };
   }
 

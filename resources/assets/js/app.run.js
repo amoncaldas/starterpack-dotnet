@@ -13,5 +13,7 @@
     $rootScope.$stateParams = $stateParams;
     $rootScope.auth = Auth;
 
+    Auth.retrieveUserFromLocalStorage();
+
   }
 }());

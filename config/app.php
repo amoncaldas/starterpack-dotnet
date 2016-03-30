@@ -148,8 +148,7 @@ return [
         /*
          * External
          */
-        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class
     ],
 
     /*
@@ -204,8 +203,7 @@ return [
          */
 
         'JWTAuth'       => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory'    => Tymon\JWTAuth\Facades\JWTFactory::class,
-        'Debugbar'      => Barryvdh\Debugbar\Facade::class
+        'JWTFactory'    => Tymon\JWTAuth\Facades\JWTFactory::class
     ],
 
 ];

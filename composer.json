@@ -12,7 +12,6 @@
     "laravel/framework": "5.1.*",
     "illuminate/html": "5.*",
     "tymon/jwt-auth": "dev-develop",
-    "barryvdh/laravel-debugbar": "^2.0",
     "barryvdh/laravel-ide-helper": "v2.1.0"
   },
   "require-dev": {

@@ -28,7 +28,8 @@
       Auth.login(credentials).then(function(data) {
         $state.go(Global.homeState);
       }, function(error) {
-        Toast.error(error.data.error);
+        var message = (error.data.error === 'invalid_credentials') ? "Credenciais inválidas" : "Não foi possível realizar o login";
+        Toast.error(message);
       });
     }
   }
