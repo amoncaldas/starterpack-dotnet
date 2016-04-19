@@ -19,7 +19,7 @@
     activate();
 
     function activate() {
-      vm.user = {};
+      vm.user = new UserService();
 
       vm.roles = RoleService.query().$promise.then(function (response) {
         vm.roles = response;
@@ -36,7 +36,7 @@
     }
 
     function cleanForm() {
-      vm.user = {};
+      vm.user = new UserService();
 
       vm.roles.forEach(function(role) {
         role.selected = false;
@@ -45,7 +45,7 @@
 
     function edit(user) {
       vm.cleanForm();
-      vm.user = user;
+      vm.user = angular.copy(user);
 
       vm.roles.forEach(function(role) {
         vm.user.roles.forEach(function(roleUser) {
@@ -55,11 +55,11 @@
     }
 
     function save() {
-      var promisse;
+      var promise;
 
-      vm.user.roles = _.pluck(_.filter(angular.copy(vm.roles), { 'selected': true }),'id');
+      vm.user.roles = _.map(_.filter(angular.copy(vm.roles), { 'selected': true }),'id');
 
-      promisse = (vm.user.id) ?  UserService.update(vm.user).$promise : UserService.save(vm.user).$promise;
+      promise = (vm.user.id) ? vm.user.$update() : vm.user.$save();
 
       promise.then(function (user) {
         vm.user = user;

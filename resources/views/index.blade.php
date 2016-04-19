@@ -28,7 +28,7 @@
       <spinner></spinner>
       <ng-include src="'templates/menu.html'"></ng-include>
 
-      <div class="content-wrapper" ui-view></div>
+      <div id="main-content" class="content-wrapper" ui-view></div>
 
       <ng-include src="'templates/footer.html'"></ng-include>
     </div>
