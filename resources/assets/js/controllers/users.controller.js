@@ -14,6 +14,7 @@
     vm.search = search;
     vm.edit = edit;
     vm.save = save;
+    vm.delete = del;
     vm.cleanForm = cleanForm;
 
     activate();
@@ -70,6 +71,18 @@
         vm.search();
       }, function (error) {
         Toast.errorValidation(error.data, "Não foi possível salvar o usuário");
+      });
+    }
+
+    function del(user) {
+      var promise;
+      promise = (user.id) ? user.$remove() : Toast.error("Nenhum usuário selecionado para deletar");
+      promise.then(function () {
+        if(user.id === Auth.currentUser.id) { Auth.updateCurrentUser(user.plain()); }
+        vm.search();
+        Toast.info("Usuário removido");
+      }, function (error) {
+        Toast.errorValidation(error.data, "Não foi possível remover o usuário");
       });
     }
   }

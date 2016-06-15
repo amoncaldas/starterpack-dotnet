@@ -29,7 +29,7 @@
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               <button class="btn btn-primary" ng-click="usersCtrl.save()">Salvar</button>
-              <button class="btn btn-default" ng-click="usersCtrl.cleanForm()">Novo</button>
+              <button class="btn btn-default" ng-click="usersCtrl.cleanForm()">Limpar</button>
             </div>
           </div>
         </form>
@@ -52,7 +52,7 @@
               <td>
                 <div class="btn-group">
                   <button type="button" class="btn btn-xs btn-primary" ng-click="usersCtrl.edit(user)">Editar</button>
-                  <button type="button" class="btn btn-xs btn-danger">Excluir</button>
+                  <button type="button" class="btn btn-xs btn-danger" ng-click="usersCtrl.delete(user)">Excluir</button>
                 </div>
               </td>
             </tr>

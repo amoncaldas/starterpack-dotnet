@@ -14,7 +14,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     //admin area
     Route::group(['middleware' => ['jwt.auth', 'jwt.refresh', 'acl.role:admin']], function () {
-        Route::resource('users', 'UsersController', ['only' => ['index', 'store', 'update', 'show']]);
+        Route::resource('users', 'UsersController', ['only' => ['index', 'store', 'update', 'show', 'destroy']]);
         Route::resource('roles', 'RolesController', ['only' => ['index', 'store', 'update']]);
     });
 });

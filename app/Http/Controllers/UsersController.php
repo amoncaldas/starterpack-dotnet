@@ -55,6 +55,8 @@ class UsersController extends Controller
 
         try {
             $user->save();
+            $user->roles()->sync(Input::only('roles')["roles"]);
+            $user->roles = array_pluck($user->roles()->get()->toArray(), 'slug');
         } catch (Exception $e) {
             return Response::json(['error' => 'User already exists.'], HttpResponse::HTTP_CONFLICT);
         }
@@ -123,5 +125,8 @@ class UsersController extends Controller
         $user->roles = array_pluck($user->roles()->get()->toArray(), 'slug');
 
         return $user;
+    }
+    public function destroy($id){
+      $user = User::destroy($id);
     }
 }
