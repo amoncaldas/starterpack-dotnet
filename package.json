@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "starter pack php",
+  "name": "base-php-laravel-angular",
   "description": "StarterPack em PHP usando Laravel com Angular",
   "version": "1.0.0",
   "scripts": {

@@ -1,5 +1,5 @@
 {
-  "name": "Base",
+  "name": "base-php-laravel-angular",
   "main": "",
   "license": "MIT",
   "moduleType": [],
@@ -21,6 +21,7 @@
     "bootstrap-sass": "^3.3.6",
     "ng-dialog": "^0.6.2",
     "satellizer": "^0.14.1",
-    "angular-animate": "^1.5.7"
+    "angular-animate": "^1.5.7",
+    "ng-prodeb": "git@git.prodeb.ba.gov.br:ngprodeb.git"
   }
 }

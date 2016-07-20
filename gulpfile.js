@@ -36,7 +36,7 @@ paths.angularScripts = [
   paths.bower + '/angular-ui-router/release/angular-ui-router.min.js',
   paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.min.js',
   paths.bower + '/angular-toastr/dist/angular-toastr.tpls.js',
-  paths.bower + '/ngProdeb/dist/ngProdeb.min.js',
+  paths.bower + '/ng-prodeb/dist/ng-prodeb.min.js'
 ];
 paths.vendorsScripts = [
   paths.bower + '/jquery/dist/jquery.min.js',
