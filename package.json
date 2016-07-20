@@ -1,5 +1,8 @@
 {
   "private": true,
+  "name": "starter pack php",
+  "description": "StarterPack em PHP usando Laravel com Angular",
+  "version": "1.0.0",
   "scripts": {
     "postinstall": "bower install",
     "server": "php artisan serve --port=5000",

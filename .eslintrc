@@ -33,6 +33,7 @@
     }],
 
     //stylistic issues
+    "max-statements-per-line": 1,
     "brace-style": [2, "1tbs", { "allowSingleLine": true }],
     "comma-dangle": [2, "never"],
     "array-bracket-spacing": [2, "never"],

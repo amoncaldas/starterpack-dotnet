@@ -5,8 +5,7 @@
     .module('app')
     .config(config);
 
-  config.$inject = ['$authProvider', 'Global'];
-
+  /** @ngInject */
   function config($authProvider, Global) {
     // Satellizer configuration that specifies which API
     // route the JWT should be retrieved from

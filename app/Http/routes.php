@@ -7,7 +7,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'v1'], function () {
     Route::post('authenticate', 'AuthenticateController@authenticate');
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
-    
+
 
     Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function () {
         Route::group([], function () {

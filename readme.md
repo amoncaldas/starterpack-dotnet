@@ -41,7 +41,7 @@
 
 - gulp
   - parametros opcionais 
-    - --sync (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
+    - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
 
 > Em outra aba do terminal.
 
@@ -50,11 +50,11 @@
 > Abra o navegador
 
 - acesse htt://localhost:5000
-- logue com os dados email: admin-base@prodeb.com pass: Prodeb01
+- logue com os dados email: **admin-base@prodeb.com** pass: **Prodeb01**
 
 > Outros comandos
 
 - gulp check (verifica a formatação do código javascript) 
   - parametros opcionais 
-    - --fix (para corrigir os erros 'auto corrigidos')
+    - **--fix** (para corrigir os erros 'auto corrigidos')
 - npm run package (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)

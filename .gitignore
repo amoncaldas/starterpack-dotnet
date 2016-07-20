@@ -1,3 +1,5 @@
+.sonar/
+
 ### Composer ###
 composer.phar
 vendor/

@@ -1,8 +1,8 @@
-'use strict';
+/*eslint strict: 0, */
+/*global require*/
 
 var gulp = require('gulp');
 var concat = require('gulp-concat');
-var babel = require("gulp-babel");
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
@@ -16,7 +16,6 @@ var inject = require('gulp-inject');
 var series = require('stream-series');
 var lazypipe = require('lazypipe');
 var browserSync = require('browser-sync');
-var eslint = require('gulp-eslint');
 var shell = require('gulp-shell')
 var argv = require('yargs').argv;
 
@@ -57,20 +56,16 @@ paths.styles = [
   paths.bower + '/ng-dialog/css/ngDialog-theme-default.min.css'
 ];
 
-var names = {
-  vendors: 'vendors'
-}
-
 var minifierJSChannel = lazypipe()
   .pipe(uglify)
   .pipe(rename, {
-    suffix: ".min"
+    suffix: 'min'
   });
 
 var minifierCSSChannel = lazypipe()
   .pipe(cleanCSS)
   .pipe(rename, {
-    suffix: ".min"
+    suffix: 'min'
   });
 
 function scriptsVendors() {
@@ -121,17 +116,15 @@ function styles() {
     .pipe(gulp.dest(paths.destination));
 };
 
-function isFixed(file) {
-  // Has ESLint fixed the file contents?
-  return file.eslint != null && file.eslint.fixed;
-}
-
 gulp.task('scriptsVendors', scriptsVendors);
 gulp.task('scriptsAngular', scriptsAngular);
 gulp.task('scriptsApplication', scriptsApplication);
 gulp.task('styles', styles);
 
-
+/**
+ * Task to sync the browser with changes in the
+ * source code.
+ */
 gulp.task('browser-sync', function() {
   if (argv.sync && !argv.production) {
     browserSync({
@@ -149,6 +142,9 @@ gulp.task('watch', function() {
   }
 });
 
+/**
+ * Build js files and inject into index.html
+ */
 gulp.task('build', function() {
   var cssStream = styles();
   var vendorStream = scriptsVendors();
@@ -168,6 +164,10 @@ gulp.task('build', function() {
     .pipe(gulp.dest(paths.client));
 });
 
+/**
+ * Check all .js files using eslint
+ * --fix can be passed to fix possible problems
+ */
 gulp.task('check', shell.task([
   'eslint ' + paths.app + '/**/*.js' + ((argv.fix) ? ' --fix' : '')
 ], {
