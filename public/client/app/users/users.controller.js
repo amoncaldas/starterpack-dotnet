@@ -50,7 +50,9 @@
 
       vm.roles.forEach(function(role) {
         vm.user.roles.forEach(function(roleUser) {
-          if (role.id === roleUser.id) { role.selected = true; }
+          if (role.id === roleUser.id) {
+            role.selected = true;
+          }
         });
       });
     }
@@ -64,7 +66,9 @@
       promise.then(function (user) {
         vm.user = user;
 
-        if (vm.user.id === Auth.currentUser.id) { Auth.updateCurrentUser(user.plain()); }
+        if (vm.user.id === Auth.currentUser.id) {
+          Auth.updateCurrentUser(user.plain());
+        }
 
         vm.cleanForm();
         vm.search();
@@ -78,7 +82,9 @@
 
       promise = (user.id) ? user.$remove() : PrToast.error('Nenhum usuário selecionado para deletar');
       promise.then(function () {
-        if (user.id === Auth.currentUser.id) { Auth.updateCurrentUser(user.plain()); }
+        if (user.id === Auth.currentUser.id) {
+          Auth.updateCurrentUser(user.plain());
+        }
         vm.search();
         PrToast.info('Usuário removido');
       }, function (error) {

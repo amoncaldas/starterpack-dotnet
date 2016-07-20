@@ -21,8 +21,3 @@ Route::group(['prefix' => 'v1'], function () {
         });
     });
 });
-
-// Using different syntax for Blade to avoid conflicts with AngularJS.
-// You are well-advised to go without any Blade at all.
-Blade::setContentTags('<%', '%>'); // For variables and all things Blade.
-Blade::setEscapedContentTags('<%%', '%%>'); // For escaped data.

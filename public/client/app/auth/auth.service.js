@@ -31,7 +31,7 @@
       return (auth.currentUser);
     }
 
-    function retrieveUserFromLocalStorage(user) {
+    function retrieveUserFromLocalStorage() {
       var user = localStorage.getItem('user');
 
       if (user) {
@@ -41,7 +41,9 @@
 
     function updateCurrentUser(user) {
       if (user) {
-        if (angular.isUndefined(user.roles)) { user.roles = []; }
+        if (angular.isUndefined(user.roles)) {
+          user.roles = [];
+        }
 
         var jsonUser = angular.toJson(user);
 
