@@ -126,7 +126,9 @@ class UsersController extends Controller
 
         return $user;
     }
-    public function destroy($id){
+
+    public function destroy($id)
+    {
       $user = User::destroy($id);
     }
 }

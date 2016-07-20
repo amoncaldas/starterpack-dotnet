@@ -1,0 +1,30 @@
+(function() {
+
+  'use strict';
+
+  angular
+    .module('app')
+    .controller('ProfileController', ProfileController);
+
+  /** @ngInject */
+  function ProfileController(UserService, Auth, PrToast) {
+    var vm = this;
+
+    vm.update = update;
+
+    activate();
+
+    function activate() {
+      vm.user = angular.copy(Auth.currentUser);
+    }
+
+    function update() {
+      UserService.updateProfile(vm.user).then(function (response) {
+        Auth.updateCurrentUser(response.data);
+      }, function (error) {
+        PrToast.errorValidation(error.data, 'Não foi possível atualizar seu profile');
+      });
+    }
+  }
+
+})();
