@@ -9,6 +9,12 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+    <!--
+       Todos os inject são inseridos automaticamente através da tarefa do gulp.
+       Quando executado a tarefa do gulp pra produção a tarefa substituirá
+       as referências para os arquivos minificados.
+     -->
+
     <!-- inject:css -->
     <link rel="stylesheet" href="client/build/application.css">
     <!-- endinject -->
@@ -31,20 +37,16 @@
     <div class="wrapper">
       <pr-spinner></pr-spinner>
       <ng-include src="'client/app/layout/menu.html'"></ng-include>
-
+      <!-- É nesta div que o ui-router adiciona o conteudo das páginas através da diretiva ui-view -->
       <div id="main-content" class="content-wrapper" ui-view></div>
 
       <ng-include src="'client/app/layout/footer.html'"></ng-include>
     </div>
-    <!-- ./wrapper -->
 
     <!-- inject:js -->
     <script src="client/build/vendors.js"></script>
     <script src="client/build/angular-with-plugins.js"></script>
     <script src="client/build/application.js"></script>
-    <!-- endinject -->
-
-    <!-- inject:browsersync:html -->
     <!-- endinject -->
   </body>
 

@@ -14,7 +14,7 @@
     vm.search = search;
     vm.edit = edit;
     vm.save = save;
-    vm.delete = del;
+    vm.remove = remove;
     vm.cleanForm = cleanForm;
 
     activate();
@@ -77,7 +77,7 @@
       });
     }
 
-    function del(user) {
+    function remove(user) {
       var promise;
 
       promise = (user.id) ? user.$remove() : PrToast.error('Nenhum usuário selecionado para deletar');

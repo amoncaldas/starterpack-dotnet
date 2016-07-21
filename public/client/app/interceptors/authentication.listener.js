@@ -3,12 +3,13 @@
 
   angular
     .module('app')
-    .run(stateChangeListener);
+    .run(authenticationListener);
 
   /**
    * Listen all state (page) changes. Every time a state change need to verify the user is authenticated or not to
    * redirect to correct page. When a user close the browser without logout, when him reopen the browser this event
    * reauthenticate the user with the persistent token of the local storage.
+   *
    * We don't check if the token is expired or not in the page change, because is generate an unecessary overhead.
    * If the token is expired when the user try to call the first api to get data, him will be logoff and redirect
    * to login page.
@@ -19,7 +20,7 @@
    * @param Auth
    */
   /** @ngInject */
-  function stateChangeListener($rootScope, $state, Global, Auth) {
+  function authenticationListener($rootScope, $state, Global, Auth) {
 
     // $stateChangeStart is fired whenever the state changes. We can use some parameters
     // such as toState to hook into details about the state as it is changing

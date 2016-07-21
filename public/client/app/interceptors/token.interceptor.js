@@ -5,7 +5,6 @@
     .module('app')
     .config(tokenInterceptor);
 
-
   /**
    * Intercept all response (success or error) to verify the returned token
    *
@@ -37,14 +36,14 @@
           angular.forEach(rejectionReasons, function(value) {
             if (response.data && response.data.error === value) {
               $injector.get('Auth').logout().then(function() {
-                $injector.get('PrToast')
-                  .warning('Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente');
-
                 var $state = $injector.get('$state');
 
                 // in case multiple ajax request fail at same time because token problems,
-                // only the first will redirect
-                if (!$state.is('Global.loginState')) {
+                // only the first will redirect and notified
+                if (!$state.is(Global.loginState)) {
+                  $injector.get('PrToast')
+                    .warning('Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente');
+
                   $state.go(Global.loginState);
                 }
               });

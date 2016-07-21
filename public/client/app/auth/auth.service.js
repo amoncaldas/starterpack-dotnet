@@ -7,43 +7,49 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function Auth($http, $auth, $q, Global, lodash) {
+  function Auth($http, $auth, $q, Global, UserModel) {
     var auth = {
       login: login,
       logout: logout,
       updateCurrentUser: updateCurrentUser,
       retrieveUserFromLocalStorage: retrieveUserFromLocalStorage,
       authenticated: authenticated,
-      is: is,
-      isAdmin: isAdmin,
       currentUser: null
     };
 
-    function is(profile) {
-      return (angular.isObject(auth.currentUser) && lodash.includes(auth.currentUser.roles, profile));
-    }
-
-    function isAdmin() {
-      return auth.is('admin');
-    }
-
+    /**
+     * Verifica se o usuário está autenticado
+     *
+     * @returns {boolean}
+     */
     function authenticated() {
       return (auth.currentUser);
     }
 
+    /**
+     * Recupera o usuário do localStorage
+     */
     function retrieveUserFromLocalStorage() {
       var user = localStorage.getItem('user');
 
       if (user) {
-        auth.currentUser = angular.fromJson(user);
+        auth.currentUser = UserModel.getInstanceWithAttributes(angular.fromJson(user));
       }
     }
 
+    /**
+     * Guarda o usuário no localStorage para caso o usuário feche e abra o navegador
+     * dentro do tempo de sessão seja possível recuperar o token autenticado.
+     *
+     * Mantém a variável auth.currentUser para facilitar o acesso ao usuário logado em toda a aplicação
+     *
+     *
+     * @param {any} user Usuáario a ser atualizado. Caso seja passado null limpa
+     * todas as informações do usuário corrente.
+     */
     function updateCurrentUser(user) {
       if (user) {
-        if (angular.isUndefined(user.roles)) {
-          user.roles = [];
-        }
+        user = UserModel.getInstanceWithAttributes(user);
 
         var jsonUser = angular.toJson(user);
 
@@ -55,6 +61,12 @@
       }
     }
 
+    /**
+     * Realiza o login do usuário
+     *
+     * @param {any} credentials
+     * @returns Uma promise com o resultado do chamada no backend
+     */
     function login(credentials) {
       var deferred = $q.defer();
 
@@ -73,6 +85,13 @@
       return deferred.promise;
     }
 
+    /**
+     * Desloga os usuários. Como não ten nenhuma informação na sessão do servidor
+     * e um token uma vez gerado não pode, por padrão, ser invalidado antes do seu tempo de expiração,
+     * somente apagamos os dados do usuário e o token do navegador para efetivar o logout.
+     *
+     * @returns Uma promise com o resultado da operação
+     */
     function logout() {
       var deferred = $q.defer();
 

@@ -5,9 +5,17 @@
     .module('app')
     .config(spinnerInterceptor);
 
-  /** @ngInject */
   function spinnerInterceptor($httpProvider, $provide) {
 
+    /**
+     * Este interceptor é responsável por mostrar e esconder o
+     * componente PrSpinner sempre que uma requisição ajax
+     * iniciar e finalizar.
+     *
+     * @param {any} $q
+     * @param {any} $injector
+     * @returns
+     */
     function showHideSpinner($q, $injector) {
 
       return {
@@ -19,11 +27,13 @@
           }
           return config;
         },
+
         response: function (response) {
           $injector.get('PrSpinner').hide();
 
           return response;
         },
+
         responseError: function (rejection) {
           $injector.get('PrSpinner').hide();
 
@@ -32,10 +42,10 @@
       };
     }
 
-    // Setup for the $httpInterceptor
+    // Define uma factory para o $httpInterceptor
     $provide.factory('showHideSpinner', showHideSpinner);
 
-    // Push the new factory onto the $http interceptor array
+    // Adiciona a factory no array de interceptors do $http
     $httpProvider.interceptors.push('showHideSpinner');
   }
 }());
