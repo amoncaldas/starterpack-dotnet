@@ -5,6 +5,12 @@
     .module('app')
     .config(routes);
 
+  /**
+   * Arquivo de configuração com as rotas específicas do recurso user
+   *
+   * @param {any} $stateProvider
+   * @param {any} Global
+   */
   /** @ngInject */
   function routes($stateProvider, Global) {
     $stateProvider
