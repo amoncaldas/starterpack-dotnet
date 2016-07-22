@@ -10,7 +10,8 @@
     //Cria um serviço para o recurso Usuário.
     //Através desse serviço é feita a comunicação com o backend.
     var service = $resource(Global.apiVersion + '/users/:id', { id: '@id' }, {
-      update: { method: 'PUT' }
+      update: { method: 'PUT' },
+      paginate: { method: 'GET', isArray: false }
     });
 
     //Declaração de métodos adicionais

@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function UsersController(lodash, PrToast, UserService, RoleService, Auth) {
+  function UsersController(lodash, PrToast, PrPagination, UserService, RoleService, Auth) {
     var vm = this;
 
     vm.search = search;
@@ -25,12 +25,17 @@
       vm.roles = RoleService.query().$promise.then(function (response) {
         vm.roles = response;
       });
-      vm.search();
+
+      vm.paginator = PrPagination.getInstance(search, 10);
+      vm.search(1);
     }
 
-    function search() {
-      UserService.query().$promise.then(function (response) {
-        vm.users = response;
+    function search(page) {
+      vm.paginator.currentPage = page;
+
+      UserService.paginate({ page: page, perPage: vm.paginator.perPage }).$promise.then(function (response) {
+        vm.paginator.calcNumberOfPages(response.total);
+        vm.users = response.items;
       }, function () {
         PrToast.error('Não foi possível realizar a busca de usuários');
       });
