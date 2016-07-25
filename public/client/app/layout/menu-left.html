@@ -1,0 +1,43 @@
+<md-sidenav
+  class="site-sidenav md-sidenav-left full-height"
+  md-component-id="left"
+  md-is-locked-open="$mdMedia('gt-sm')"
+  hide-print
+  md-whiteframe="4">
+  <header class="nav-header">
+    <a class="logo" href="/">
+      <img  src="client/images/logo-governo.png"  alt="logo"/>
+    </a>
+  </header>
+  <md-content layout-padding flex style="text-transform:uppercase;">
+    <ul class="menu-sidenav" ng-if="auth.authenticated()">
+      <li ng-repeat="item in menuCtrl.itensMenu">
+        <md-menu md-offset="0 -5">
+          <md-button
+            class="md-button md-block"
+            ui-sref="{{item.url}}"
+            ng-click="menuCtrl.openMenu($mdOpenMenu, $event, item.subItens.length)"
+            style="margin-bottom: 0px !important;color:#fff;">
+            <md-icon md-font-set="material-icons"
+              class="pull-left menu-icon" style="color:#fff;">
+              {{item.icon}}
+            </md-icon>
+            {{item.titulo}}
+          </md-button>
+          <md-menu-content width="4">
+            <md-menu-item ng-repeat="subItem in item.subItens">
+              <md-button ui-sref="{{subItem.url}}">
+                <span md-menu-align-target>
+                  <md-icon md-font-set="material-icons" class="pull-left menu-icon">
+                    {{subItem.icon}}
+                  </md-icon>
+                  {{subItem.titulo}}
+                </span>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </li>
+    </ul>
+  </md-content>
+</md-sidenav>

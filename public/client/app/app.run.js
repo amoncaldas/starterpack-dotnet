@@ -5,13 +5,15 @@
     .module('app')
     .run(run);
 
-  run.$inject = ['$rootScope', '$state', '$stateParams', 'Auth'];
+  run.$inject = ['$rootScope', '$state', '$stateParams', 'Auth', 'Global'];
 
-  function run($rootScope, $state, $stateParams, Auth) {
+  // eslint-disable-next-line max-params
+  function run($rootScope, $state, $stateParams, Auth, Global) {
 
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     $rootScope.auth = Auth;
+    $rootScope.global = Global;
 
     Auth.retrieveUserFromLocalStorage();
 

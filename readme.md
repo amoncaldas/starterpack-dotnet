@@ -58,3 +58,8 @@
   - parametros opcionais 
     - **--fix** (para corrigir os erros 'auto corrigidos')
 - npm run package (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
+
+
+### Erro no watch no linux
+
+- echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p

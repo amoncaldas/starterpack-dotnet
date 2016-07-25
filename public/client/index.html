@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sistema</title>
+    <title>Sistema Base Laravel</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -20,10 +20,10 @@
     <!-- endinject -->
 
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!--
+      Material Icons (Referência: https://design.google.com/icons/ )
+    -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,14 +33,53 @@
       <![endif]-->
   </head>
 
-  <body class="hold-transition skin-blue layout-top-nav" ng-app="app" ng-controller="AppController as appCtrl">
-    <div class="wrapper">
-      <pr-spinner></pr-spinner>
-      <ng-include src="'client/app/layout/menu.html'"></ng-include>
-      <!-- É nesta div que o ui-router adiciona o conteudo das páginas através da diretiva ui-view -->
-      <div id="main-content" class="content-wrapper" ui-view></div>
+  <body ng-app="app" ng-controller="AppController as appCtrl" ng-cloak>
+    <!--div layout="row" class="alturaCemPorCento" style="background-color: #DDD">
+      TESTE
+    </div-->
+    <pr-spinner></pr-spinner>
+    <div layout="row" class="full-height" ng-controller="MenuController as menuCtrl">
 
-      <ng-include src="'client/app/layout/footer.html'"></ng-include>
+      <ng-include src="'client/app/layout/menu-left.html'" ng-if="global.layout.menuTop"></ng-include>
+
+      <div layout="column" flex class="full-height">
+
+        <!-- titulo do projeto -->
+        <md-toolbar class="md-whiteframe-glowz1 site-content-toolbar" aria-hidden="false">
+          <div class="md-toolbar-tools">
+            <md-button
+              ng-click="appCtrl.openNavBar()"
+              class="md-icon-button md-primary"
+              hide-gt-sm aria-label="Menu">
+              <md-icon md-font-set="material-icons">menu</md-icon>
+            </md-button>
+            <div layout="column" flex="90"><strong>SISTEMA BASE LARAVEL</strong></div>
+            <div layout="column" flex="10">
+              <md-button
+                ng-if="auth.authenticated()"
+                class="md-raised md-primary"
+                style="min-width: 40px !important;"
+                ng-click="appCtrl.logout()">
+                <md-icon md-font-set="material-icons" class="pull-left menu-icon">
+                  power_settings_new
+                </md-icon>
+                <span hide-xs>SAIR</span>
+              </md-button>
+            </div>
+          </div>
+          <ng-include src="'client/app/layout/menu-top.html'" ng-if="!global.layout.menuTop"></ng-include>
+        </md-toolbar>
+
+        <md-content layout="column" flex md-scroll-y>
+          <!-- É nesta div que o ui-router adiciona o conteudo das páginas através da diretiva ui-view -->
+          <div layout-padding flex="noshrink" ui-view></div>
+        </md-content>
+
+        <!-- Rodapé -->
+        <ng-include src="'client/app/layout/footer.html'"></ng-include>
+
+      </div>
+
     </div>
 
     <!-- inject:js -->
@@ -48,6 +87,10 @@
     <script src="client/build/angular-with-plugins.js"></script>
     <script src="client/build/application.js"></script>
     <!-- endinject -->
+
+<script id="__bs_script__">//<![CDATA[
+    document.write("<script async src='http://HOST:5005/browser-sync/browser-sync-client.2.13.0.js'><\/script>".replace("HOST", location.hostname));
+//]]></script>
   </body>
 
 </html>

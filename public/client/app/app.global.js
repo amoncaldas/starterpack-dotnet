@@ -8,6 +8,9 @@
       homeState: 'dashboard',
       loginState: 'login',
       notAuthorizedState: 'not-authorized',
-      apiVersion: 'v1'
+      apiVersion: 'v1',
+      layout: {
+        menuTop: true
+      }
     });
 }());

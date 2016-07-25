@@ -6,8 +6,7 @@
     'ngResource',
     'ui.router',
     'ngProdeb',
-    'ui.bootstrap',
     'ui.utils.masks',
-    'ngDialog',
+    'ngMaterial',
     'satellizer']);
 })();

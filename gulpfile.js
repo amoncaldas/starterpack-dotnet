@@ -28,18 +28,18 @@ paths.app = paths.client + '/app';
 paths.destination = paths.client + '/build';
 paths.angularScripts = [
   paths.bower + '/angular/angular.min.js',
+  paths.bower + '/angular-aria/angular-aria.js',
+  paths.bower + '/angular-animate/angular-animate.js',
   paths.bower + '/angular-resource/angular-resource.min.js',
   paths.bower + '/satellizer/satellizer.min.js',
-  paths.bower + '/ng-dialog/js/ngDialog.min.js',
   paths.bower + '/angular-i18n/angular-locale_pt-br.js',
   paths.bower + '/angular-input-masks/angular-input-masks-standalone.min.js',
   paths.bower + '/angular-ui-router/release/angular-ui-router.min.js',
-  paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.min.js',
+  paths.bower + '/angular-material/angular-material.js',
   paths.bower + '/angular-toastr/dist/angular-toastr.tpls.js',
   paths.bower + '/ng-prodeb/dist/ng-prodeb.min.js'
 ];
 paths.vendorsScripts = [
-  paths.bower + '/jquery/dist/jquery.min.js',
   paths.bower + '/lodash/dist/lodash.min.js'
 ];
 paths.scripts = [
@@ -48,12 +48,8 @@ paths.scripts = [
   paths.app + '/**/*.js'
 ];
 paths.styles = [
-  paths.client + '/styles/admin-skin-blue.scss',
-  paths.client + '/styles/admin.scss',
-  paths.client + '/styles/app.scss',
   paths.bower + '/angular-toastr/dist/angular-toastr.css',
-  paths.bower + '/ng-dialog/css/ngDialog.min.css',
-  paths.bower + '/ng-dialog/css/ngDialog-theme-default.min.css'
+  paths.client + '/styles/app.scss'
 ];
 
 var minifierJSChannel = lazypipe()
@@ -138,7 +134,7 @@ gulp.task('watch', function() {
   if (!argv.production) {
     gulp.watch(paths.scripts, ['scriptsApplication']).on('change', browserSync.reload);
     gulp.watch(paths.app + '/**/*.html').on('change', browserSync.reload);
-    gulp.watch(paths.styles, ['styles']);
+    gulp.watch(paths.styles, ['styles']).on('change', browserSync.reload);
   }
 });
 
@@ -169,7 +165,7 @@ gulp.task('build', function() {
  * --fix can be passed to fix possible problems
  */
 gulp.task('check', shell.task([
-  'eslint ' + paths.app + '/**/*.js' + ((argv.fix) ? ' --fix' : '')
+  'eslint ' +  paths.app + '/*.js ' + paths.app + '/**/*.js' + ((argv.fix) ? ' --fix' : '')
 ], {
   ignoreErrors: true
 }));
