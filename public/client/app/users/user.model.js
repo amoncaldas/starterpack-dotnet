@@ -24,13 +24,19 @@
     }
 
     /**
-     * Verifica se o usuário tem o perfil informado.
+     * Verifica se o usuário tem os perfis informados.
      *
      * @param {any} profile
      * @returns {boolean}
      */
-    User.prototype.hasProfile = function(profile) {
-      return lodash.includes(this.roles, profile);
+    User.prototype.hasProfile = function(roles, all) {
+      roles = angular.isArray(roles) ? roles : [roles];
+
+      if (all) {
+        return lodash.intersection(this.roles, roles).length === roles.length;
+      } else { //return the length because 0 is false in js
+        return lodash.intersection(this.roles, roles).length;
+      }
     }
 
     /**

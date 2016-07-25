@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -8,11 +8,12 @@
   /** @ngInject */
   function authorizationListener($rootScope, $state, Global, Auth) {
     /**
-     * A cada mudança de estado ("página") verifica se o destino só pode ser acesso por um administrador
-     * caso necessite, verifica se o usuário é administrador permitindo assim a mudança de página
+     * A cada mudança de estado ("página") verifica se o usuário tem o perfil necessário para o acesso a mesma
      */
     $rootScope.$on('$stateChangeStart', function(event, toState) {
-      if (toState.data && toState.data.needAdmin && Auth.currentUser && !Auth.currentUser.isAdmin()) {
+      if (toState.data && toState.data.needProfile && Auth.currentUser &&
+        !Auth.currentUser.hasProfile(toState.data.needProfile, toState.data.allProfiles)) {
+
         $state.go(Global.notAuthorizedState);
         event.preventDefault();
       }

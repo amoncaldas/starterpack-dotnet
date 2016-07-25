@@ -86,9 +86,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $roles = is_array($roles) ? $roles : [$roles];
 
         if($all)
-            return count(array_intersect($userRoles, $roles));
-        else
             return count(array_intersect($userRoles, $roles)) == count($roles);
+        else
+            return count(array_intersect($userRoles, $roles));
     }
 
     /**
