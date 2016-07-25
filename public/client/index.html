@@ -40,7 +40,7 @@
     <pr-spinner></pr-spinner>
     <div layout="row" class="full-height" ng-controller="MenuController as menuCtrl">
 
-      <ng-include src="'client/app/layout/menu-left.html'" ng-if="global.layout.menuTop"></ng-include>
+      <ng-include src="'client/app/layout/menu-left.html'"></ng-include>
 
       <div layout="column" flex class="full-height">
 
@@ -53,21 +53,22 @@
               hide-gt-sm aria-label="Menu">
               <md-icon md-font-set="material-icons">menu</md-icon>
             </md-button>
-            <div layout="column" flex="90"><strong>SISTEMA BASE LARAVEL</strong></div>
-            <div layout="column" flex="10">
-              <md-button
-                ng-if="auth.authenticated()"
-                class="md-raised md-primary"
-                style="min-width: 40px !important;"
-                ng-click="appCtrl.logout()">
-                <md-icon md-font-set="material-icons" class="pull-left menu-icon">
-                  power_settings_new
-                </md-icon>
-                <span hide-xs>SAIR</span>
-              </md-button>
+            <div layout="column" flex="94"><strong>SISTEMA BASE LARAVEL</strong></div>
+            <div layout="column" flex="5">
+              <md-icon
+                ng-click="appCtrl.logout()"
+                md-font-set="material-icons"
+                style="cursor: pointer; color: #165A9E;"
+                class="pull-left" ng-if="auth.authenticated()">
+                power_settings_new
+                <md-tooltip md-direction="left">
+                  SAIR
+                </md-tooltip>
+              </md-icon>
+
             </div>
           </div>
-          <ng-include src="'client/app/layout/menu-top.html'" ng-if="!global.layout.menuTop"></ng-include>
+          <ng-include src="'client/app/layout/menu-top.html'" ng-if="!global.layout.menuTop && !appCtrl.isMobile"></ng-include>
         </md-toolbar>
 
         <md-content layout="column" flex md-scroll-y>

@@ -1,68 +1,29 @@
-<div layout="row" layout-padding class="bg-dark-blue nav-dark" layout-align="space-between center">
-<div>
-    <md-button>Home</md-button>
-    <md-button>Item 1</md-button>
-    <md-button>Item 2</md-button>
-    <md-menu>
-        <md-button md-menu-origin ng-click="$mdOpenMenu()">Help</md-button>
-        <md-menu-content width="2">
-            <md-menu-item>
-                <md-button>Help</md-button>
-            </md-menu-item>
-            <md-menu-item>
-                <md-button>About</md-button>
+<div class="nav-header" style="color: #fff; padding: 0px !important; max-height: 65px;"
+  layout="row" layout-padding
+  layout-align="space-between center">
+  <div>
+    <md-menu ng-repeat="item in menuCtrl.itensMenu" ng-if="auth.authenticated()">
+        <md-button
+          md-menu-origin
+          ui-sref="{{item.url}}"
+          ng-click="menuCtrl.openMenu($mdOpenMenu, $event, item.subItens.length)"
+          style="font-weight: bold; font-size: 12px;">
+          <md-icon md-font-set="material-icons"
+            class="pull-left menu-icon" style="color:#fff; margin-right: 10px;">
+            {{item.icon}}
+          </md-icon>
+          {{item.titulo}}
+        </md-button>
+        <md-menu-content width="5">
+            <md-menu-item ng-repeat="subItem in item.subItens">
+                <md-button ui-sref="{{subItem.url}}">
+                  <md-icon md-font-set="material-icons" class="pull-left">
+                    {{subItem.icon}}
+                  </md-icon>
+                  {{subItem.titulo}}
+                </md-button>
             </md-menu-item>
         </md-menu-content>
     </md-menu>
+  </div>
 </div>
-<div class="nav-buttons">
-    <md-button class="md-raised md-accent">My profile</md-button>
-    <md-button class="md-raised md-warn">Log Out</md-button>
-</div>
-<!--md-menu-bar>
-  <md-menu>
-    <button ng-click="$mdOpenMenu()">
-      Format
-    </button>
-    <md-menu-content>
-      <md-menu-item>
-        <md-button ng-click="ctrl.sampleAction('bold', $event)">
-          Bold
-          <span class="md-alt-text"> {{ 'M-B' | keyboardShortcut }}</span>
-        </md-button>
-      </md-menu-item>
-      <md-menu-item>
-        <md-button ng-click="ctrl.sampleAction('italic', $event)">
-          Italic
-          <span class="md-alt-text">{{ 'M-I' | keyboardShortcut }}</span>
-        </md-button>
-      </md-menu-item>
-      <md-menu-item>
-        <md-button ng-click="ctrl.sampleAction('underline', $event)">
-          Underline
-          <span class="md-alt-text">{{ 'M-U' | keyboardShortcut }}</span>
-        </md-button>
-      </md-menu-item>
-      <md-menu-item>
-        <md-button ng-click="ctrl.sampleAction('strikethrough', $event)">
-          Strikethrough
-          <span class="md-alt-text">{{ 'A-S-5' | keyboardShortcut }}</span>
-        </md-button>
-      </md-menu-item>
-      <md-menu-item>
-        <md-button ng-click="ctrl.sampleAction('superscript', $event)">
-          Superscript
-          <span class="md-alt-text">{{ 'M-.' | keyboardShortcut }}</span>
-        </md-button>
-      </md-menu-item>
-      <md-menu-item>
-        <md-button ng-click="ctrl.sampleAction('subscript', $event)">
-          Subscript
-          <span class="md-alt-text">{{ 'M-,' | keyboardShortcut }}</span>
-        </md-button>
-      </md-menu-item>
-      <md-menu-divider></md-menu-divider>
-      <md-menu-item><md-button ng-click="ctrl.toggleSetting('clearFormatting')">Clear Formatting</md-button></md-menu-item>
-    </md-menu-content>
-  </md-menu>
-</md-menu-bar-->

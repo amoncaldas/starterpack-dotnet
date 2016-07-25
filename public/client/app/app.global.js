@@ -10,7 +10,7 @@
       notAuthorizedState: 'not-authorized',
       apiVersion: 'v1',
       layout: {
-        menuTop: true
+        menuTop: false
       }
     });
 }());

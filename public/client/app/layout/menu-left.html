@@ -10,7 +10,7 @@
     </a>
   </header>
   <md-content layout-padding flex style="text-transform:uppercase;">
-    <ul class="menu-sidenav" ng-if="auth.authenticated()">
+    <ul class="menu-sidenav" ng-if="auth.authenticated() && global.layout.menuTop || appCtrl.isMobile">
       <li ng-repeat="item in menuCtrl.itensMenu">
         <md-menu md-offset="0 -5">
           <md-button
