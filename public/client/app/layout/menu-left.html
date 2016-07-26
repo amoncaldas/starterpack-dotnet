@@ -7,12 +7,13 @@
   <header class="nav-header">
     <a class="logo" href="/">
       <img  src="client/images/logo-governo.png"  alt="logo"/>
+      <h4 class="md-title">Sistema Base Laravel</h4>
     </a>
   </header>
   <md-content layout-padding flex style="text-transform:uppercase;">
     <ul class="menu-sidenav" ng-if="auth.authenticated() && global.layout.menuTop || appCtrl.isMobile">
       <li ng-repeat="item in menuCtrl.itensMenu">
-        <md-menu md-offset="0 -5">
+        <md-menu md-offset="0 55">
           <md-button
             class="md-button md-block"
             ui-sref="{{item.url}}"
