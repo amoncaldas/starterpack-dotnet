@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 
 use Hash;
+use Log;
 
 use Illuminate\Http\Request;
 
@@ -17,23 +18,36 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        // Apply the jwt.auth middleware to all methods in this controller
-        // except for the authenticate method. We don't want to prevent
-        // the user from retrieving their token if they don't already have it
     }
-
 
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        Log::debug('Carregando os usuários da página: '.$request->page);
 
-        $users = User::with('roles')->get();
+        $baseQuery = User::with('roles');
 
-        return $users;
+        if(isset($request->name))
+            $baseQuery = $baseQuery->where('name', 'like', '%'.$request->name.'%');
+
+        $dataQuery = clone $baseQuery;
+        $countQuery = clone $baseQuery;
+
+        $data['items'] = $dataQuery
+            ->orderBy('name', 'asc')
+            ->skip(($request->page - 1) * $request->perPage)
+            ->take($request->perPage)
+            ->get();
+
+        $data['total'] = $countQuery
+            ->count();
+
+        return $data;
     }
 
     /**
@@ -77,7 +91,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Atualiza os dados do usuário logado
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -85,7 +99,6 @@ class UsersController extends Controller
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
-
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email,'.$user->id,
@@ -93,7 +106,9 @@ class UsersController extends Controller
         ]);
 
         $user->fill(Input::only('name', 'email'));
-        if($request->has('password')) $user->password = Hash::make($request->password);
+        if($request->has('password'))
+            $user->password = Hash::make($request->password);
+
         $user->save();
 
         //get the roles to return do view

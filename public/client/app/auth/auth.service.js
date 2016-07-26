@@ -64,8 +64,8 @@
     /**
      * Realiza o login do usuário
      *
-     * @param {any} credentials
-     * @returns Uma promise com o resultado do chamada no backend
+     * @param {any} credentials Email e Senha do usuário
+     * @returns {promise} Uma promise com o resultado do chamada no backend
      */
     function login(credentials) {
       var deferred = $q.defer();
@@ -90,7 +90,7 @@
      * e um token uma vez gerado não pode, por padrão, ser invalidado antes do seu tempo de expiração,
      * somente apagamos os dados do usuário e o token do navegador para efetivar o logout.
      *
-     * @returns Uma promise com o resultado da operação
+     * @returns {promise} Uma promise com o resultado da operação
      */
     function logout() {
       var deferred = $q.defer();

@@ -10,16 +10,18 @@
     //Cria um serviço para o recurso Usuário.
     //Através desse serviço é feita a comunicação com o backend.
     var service = $resource(Global.apiVersion + '/users/:id', { id: '@id' }, {
-      update: { method: 'PUT' }
+      update: { method: 'PUT' },
+      paginate: { method: 'GET', isArray: false }
     });
 
+    //Declaração de métodos adicionais
     service.updateProfile = updateProfile;
 
     /**
      * Atualiza o perfil do usuário logado
      *
      * @param {any} attributes Dados do usuário para atualizar
-     * @returns Uma promise com o retorno do serviço
+     * @returns {promise} Uma promise com o retorno do serviço
      */
     function updateProfile(attributes) {
       var deferred = $q.defer();

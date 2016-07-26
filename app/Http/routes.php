@@ -6,18 +6,19 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'v1'], function () {
     Route::post('authenticate', 'AuthenticateController@authenticate');
-    Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
 
-
+    //authenticated area
     Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function () {
+        Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
+
         Route::group([], function () {
             Route::put('profile', 'UsersController@updateProfile');
         });
 
         //admin area
         Route::group(['middleware' => ['acl.role:admin']], function () {
-            Route::resource('users', 'UsersController', ['only' => ['index', 'store', 'update', 'show', 'destroy']]);
-            Route::resource('roles', 'RolesController', ['only' => ['index', 'store', 'update']]);
+            Route::resource('users', 'UsersController', ['except' => ['updateProfile']]);
+            Route::resource('roles', 'RolesController');
         });
     });
 });
