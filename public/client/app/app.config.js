@@ -10,6 +10,10 @@
     // Satellizer configuration that specifies which API
     // route the JWT should be retrieved from
     $authProvider.loginUrl = Global.apiVersion + '/authenticate';
+    /*$injector('$mdThemingProvider').theme('default')
+      .primary('blue')
+      .accentPalette('orange');*/
+
 
   }
 }());
