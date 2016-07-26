@@ -1,11 +1,7 @@
 <section class="content-header">
-  <h1>
+  <md-subheader class="md-primary md-no-sticky">
     {{title}}
+    <md-divider ng-if="!$last"></md-divider>
     <small>{{description}}</small>
-  </h1>
-  <ol class="breadcrumb">
-    <li><a href="#" ui-sref="home" title="Home"><i class="fa fa-home"></i></a></li>
-    <li ng-if="module"><a href="#" ui-sref="{{module}}">{{module}}</a></li>
-    <li class="active">{{title}}</li>
-  </ol>
+  </md-subheader>
 </section>

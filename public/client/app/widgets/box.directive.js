@@ -13,7 +13,8 @@
       replace: true,
       transclude: true,
       scope: {
-        title: '@title'
+        title: '@title',
+        width: '@width'
       }
     };
 

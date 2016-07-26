@@ -14,8 +14,7 @@
       { url: 'dashboard', titulo: 'Home', icon: 'home', subItens: [] },
       { url: '#', titulo: 'Administração', icon: 'settings_applications',
         subItens: [
-          { url: 'user', titulo: 'Usuário', icon: 'people' },
-          { url: 'auditoria', titulo: 'Auditoria', icon: 'font_download' }
+          { url: 'user', titulo: 'Usuários', icon: 'people' }
         ]
       }
     ];
