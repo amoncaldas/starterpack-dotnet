@@ -23,7 +23,8 @@
     "bootstrap-sass": "^3.3.6",
     "ng-dialog": "^0.6.2",
     "satellizer": "^0.14.1",
-    "ng-prodeb": "git@git.prodeb.ba.gov.br:ngprodeb.git"
+    "ng-prodeb": "git@git.prodeb.ba.gov.br:ngprodeb.git",
+    "angular-material-data-table": "^0.10.9"
   },
   "resolutions": {
     "angular": "1.5.8"

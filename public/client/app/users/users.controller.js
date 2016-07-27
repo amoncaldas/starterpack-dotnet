@@ -26,7 +26,7 @@
         vm.roles = response;
       });
 
-      vm.paginator = PrPagination.getInstance(search, 10);
+      vm.paginator = PrPagination.getInstance(search, 2);
       vm.search(1);
     }
 

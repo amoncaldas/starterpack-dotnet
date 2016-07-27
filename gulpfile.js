@@ -36,6 +36,7 @@ paths.angularScripts = [
   paths.bower + '/angular-input-masks/angular-input-masks-standalone.min.js',
   paths.bower + '/angular-ui-router/release/angular-ui-router.min.js',
   paths.bower + '/angular-material/angular-material.js',
+  paths.bower + '/angular-material-data-table/dist/md-data-table.min.js',
   paths.bower + '/angular-toastr/dist/angular-toastr.tpls.js',
   paths.bower + '/ng-prodeb/dist/ng-prodeb.min.js'
 ];
@@ -49,6 +50,7 @@ paths.scripts = [
 ];
 paths.styles = [
   paths.bower + '/angular-toastr/dist/angular-toastr.css',
+  paths.bower + '/angular-material-data-table/dist/md-data-table.min.css',
   paths.client + '/styles/app.scss'
 ];
 

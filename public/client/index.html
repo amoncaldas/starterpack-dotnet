@@ -40,31 +40,31 @@
     <pr-spinner></pr-spinner>
     <div layout="row" class="full-height" ng-controller="MenuController as menuCtrl">
 
-      <ng-include src="'client/app/layout/menu-left.html'"></ng-include>
+      <ng-include src="'client/app/layout/menu-left.html'" ng-if="auth.authenticated()"></ng-include>
 
       <div layout="column" flex class="full-height">
 
         <!-- titulo do projeto -->
-        <md-toolbar class="md-whiteframe-glowz1 site-content-toolbar" aria-hidden="false">
+        <md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar" aria-hidden="false"
+          ng-if="auth.authenticated()">
           <div class="md-toolbar-tools" layout-wrap>
             <md-button
               ng-click="appCtrl.openNavBar()"
               class="md-icon-button md-primary"
-              hide-gt-sm aria-label="Menu">
+              hide-gt-sm
+              aria-label="Menu">
               <md-icon md-font-set="material-icons">menu</md-icon>
             </md-button>
-            <div layout="column" flex="94"><strong>SISTEMA BASE LARAVEL</strong></div>
-            <div layout="column" flex="5">
-              <md-icon
-                ng-click="appCtrl.logout()"
-                md-font-set="material-icons"
-                style="cursor: pointer; color: #165A9E;"
-                class="pull-left" ng-if="auth.authenticated()">
-                power_settings_new
-                <md-tooltip md-direction="left">
-                  SAIR
-                </md-tooltip>
-              </md-icon>
+            <div layout="row" flex>
+              <h2 class="md-toolbar-item md-breadcrumb md-headline">{{$state.current.data.breadcrumbs}}</h2>
+              <span flex></span>
+              <div layout="row" class="md-toolbar-item" ng-if="auth.authenticated()">
+                <md-button class="md-icon-button" aria-label="Sair" ng-click="appCtrl.logout()">
+                  <md-icon md-font-set="material-icons"
+                    class="md-dark">power_settings_new</md-icon>
+                  <md-tooltip md-direction="left">Sair</md-tooltip>
+                </md-button>
+              </div>
 
             </div>
           </div>
@@ -88,10 +88,6 @@
     <script src="client/build/angular-with-plugins.js"></script>
     <script src="client/build/application.js"></script>
     <!-- endinject -->
-
-<script id="__bs_script__">//<![CDATA[
-    document.write("<script async src='http://HOST:5005/browser-sync/browser-sync-client.2.13.0.js'><\/script>".replace("HOST", location.hostname));
-//]]></script>
   </body>
 
 </html>

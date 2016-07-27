@@ -4,9 +4,12 @@
 
   angular.module('app', [
     'ngResource',
+    'ngAnimate',
+    'ngAria',
     'ui.router',
     'ngProdeb',
     'ui.utils.masks',
     'ngMaterial',
+    'md.data.table',
     'satellizer']);
 })();
