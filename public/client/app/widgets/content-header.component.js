@@ -1,17 +1,18 @@
 (function() {
   'use strict';
 
-   /** @ngInject */
+  /** @ngInject */
   angular
     .module('app')
-    .component('box', {
+    .component('contentHeader', {
       templateUrl: function(Global) {
-        return Global.clientPath + '/widgets/box.html'
+        return Global.clientPath + '/widgets/content-header.html'
       },
       replace: true,
-      transclude: true,
       bindings: {
-        title: '@'
+        title: '@',
+        description: '@'
       }
     });
+
 }());
