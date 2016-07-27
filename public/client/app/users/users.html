@@ -1,80 +1,66 @@
-<md-content>
-<content-header title="Usuários"></content-header>
 <content-body>
-  <div layout="row">
-    <div flex="45">
-      <box title="Formulário de Cadastro">
-        <form>
-          <md-input-container class="md-block" flex>
-            <input type="text" placeholder="Nome" ng-model="usersCtrl.user.name">
-          </md-input-container>
-          <md-input-container class="md-block" flex>
-            <input type="email" placeholder="Email" ng-model="usersCtrl.user.email">
-          </md-input-container>
-          <md-input-container class="md-block" flex>
-            <label>Perfis</label>
-            <md-select ng-model="selectedVegetables"
-                      md-on-close="clearSearchTerm()"
-                      data-md-container-class="selectdemoSelectHeader"
-                      multiple>
-              <md-select-header class="demo-select-header">
-                <input ng-model="searchTerm"
-                      type="search"
-                      placeholder="Search for a vegetable..">
-              </md-select-header>
-              <md-optgroup label="vegetables">
-                <md-option ng-value="vegetable" ng-repeat="vegetable in vegetables |
-                  filter:searchTerm">{{vegetable}}</md-option>
-              </md-optgroup>
-            </md-select>
-          </md-input-container>
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Perfis</label>
-            <div class="col-sm-10">
-              <div class="checkbox">
-                <label ng-repeat="role in usersCtrl.roles">
-                  <input type="checkbox" name="selectedRoles[]" ng-model="role.selected">{{role.title}}&nbsp;
-                </label>
-              </div>
-            </div>
+  <div flex="50">
+    <box title="Formulário de Cadastro">
+      <form>
+        <md-input-container class="md-block" flex>
+          <input type="text" placeholder="Nome" ng-model="usersCtrl.user.name">
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <input type="email" placeholder="Email" ng-model="usersCtrl.user.email">
+        </md-input-container>
+        <div md-input-container class="md-block" >
+          <div ng-repeat="role in usersCtrl.roles">
+            <md-checkbox ng-model="role.selected">{{role.title}}</md-checkbox>
           </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <button class="btn btn-primary" ng-click="usersCtrl.save()">Salvar</button>
-              <button class="btn btn-default" ng-click="usersCtrl.cleanForm()">Limpar</button>
-            </div>
-          </div>
-        </form>
-      </box>
-    </div>
-    <div flex="9"></div>
-    <div flex="45">
-      <box title="Lista">
-        <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <th>Nome</th>
-              <th>Email</th>
-              <th>Perfis</th>
-              <th style="width: 120px">Ações</th>
+        </div>
+        <box-button-bar>
+          <md-button class="md-primary md-raised" ng-click="usersCtrl.save()">Salvar</md-button>
+          <md-button class="md-raised" ng-click="usersCtrl.cleanForm()">Limpar</md-button>
+        </box-button-bar>
+      </form>
+    </box>
+  </div>
+  <div flex="50">
+    <box title="Lista">
+      <md-table-container>
+        <table md-table>
+          <thead md-head>
+            <tr md-row>
+              <th md-column>Nome</th>
+              <th md-column>Email</th>
+              <th md-column>Perfis</th>
+              <th md-column>Ações</th>
             </tr>
-            <tr ng-repeat="user in usersCtrl.users">
-              <td>{{user.name}}</td>
-              <td>{{user.email}}</td>
-              <td>{{user.roles | rolesStr}}</td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-xs btn-primary" ng-click="usersCtrl.edit(user)">Editar</button>
-                  <button type="button" class="btn btn-xs btn-danger" ng-click="usersCtrl.remove(user)">Excluir</button>
-                </div>
+          </thead>
+          <tbody md-body>
+            <tr md-row ng-repeat="user in usersCtrl.users">
+              <td md-cell>{{user.name}}</td>
+              <td md-cell>{{user.email}}</td>
+              <td md-cell>{{user.roles | rolesStr}}</td>
+              <td md-cell>
+                <md-button class="md-icon-button" ng-click="usersCtrl.edit(user)">
+                  <md-icon md-font-set="material-icons"
+                    class="md-dark">create</md-icon>
+                  <md-tooltip md-direction="bottom">Editar</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="usersCtrl.remove(user)">
+                  <md-icon md-font-set="material-icons"
+                    class="md-warn">delete</md-icon>
+                  <md-tooltip md-direction="bottom">Apagar</md-tooltip>
+                </md-button>
               </td>
             </tr>
           </tbody>
         </table>
+      </md-table-container>
 
-        <pr-pagination paginator="usersCtrl.paginator"></pr-pagination>
-      </box>
-    </div>
+      <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Por página:', of: 'de'}"
+        md-limit="usersCtrl.paginator.perPage"
+        md-total="{{usersCtrl.paginator.total}}"
+        md-page="usersCtrl.paginator.currentPage"
+        md-on-paginate="usersCtrl.search"
+        md-page-select>
+      </md-table-pagination>
+    </box>
   </div>
 </content-body>
-</md-content>
