@@ -12,7 +12,7 @@
     $authProvider.loginUrl = Global.apiVersion + '/authenticate';
     $mdThemingProvider.theme('default')
       .primaryPalette('blue')
-      .accentPalette('orange');
+      .accentPalette('amber');
 
   }
 }());

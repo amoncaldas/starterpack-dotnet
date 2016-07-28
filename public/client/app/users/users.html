@@ -54,13 +54,9 @@
         </table>
       </md-table-container>
 
-      <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Por página:', of: 'de'}"
-        md-limit="usersCtrl.paginator.perPage"
-        md-total="{{usersCtrl.paginator.total}}"
-        md-page="usersCtrl.paginator.currentPage"
-        md-on-paginate="usersCtrl.search"
-        md-page-select>
-      </md-table-pagination>
+      <md-card-actions layout="row" layout-align="end center">
+        <pr-pagination paginator="usersCtrl.paginator"></pr-pagination>
+      </md-card-actions>
     </box>
   </div>
 </content-body>
