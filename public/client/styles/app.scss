@@ -18,6 +18,14 @@ body {
   opacity: 1;
 }
 
+md-toolbar, section {
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 2px rgba(255, 255, 255, 0.1);
+}
+
+section {
+  border-radius: 4px;
+}
 md-toolbar.md-toolbar-h30 {
   min-height: 30px;
   height: 30px;
