@@ -37,7 +37,6 @@ paths.angularScripts = [
   paths.bower + '/angular-ui-router/release/angular-ui-router.min.js',
   paths.bower + '/angular-material/angular-material.js',
   paths.bower + '/angular-material-data-table/dist/md-data-table.min.js',
-  paths.bower + '/angular-toastr/dist/angular-toastr.tpls.js',
   paths.bower + '/ng-prodeb/dist/ng-prodeb.min.js'
 ];
 paths.vendorsScripts = [
@@ -49,7 +48,7 @@ paths.scripts = [
   paths.app + '/**/*.js'
 ];
 paths.styles = [
-  paths.bower + '/angular-toastr/dist/angular-toastr.css',
+  paths.bower + '/ng-prodeb/dist/ng-prodeb.css',
   paths.bower + '/angular-material-data-table/dist/md-data-table.min.css',
   paths.client + '/styles/app.scss'
 ];
