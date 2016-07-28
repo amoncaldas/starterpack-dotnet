@@ -1,17 +1,20 @@
 <content-body layout-align="center center">
-  <div flex=50>
-    <box title="{{global.appName}}">
-      <form>
-        <md-input-container class="md-block" flex>
-          <md-icon md-font-set="material-icons" class="md-primary">email</md-icon>
-          <input type="email" placeholder="Email" ng-model="loginCtrl.credentials.email">
-        </md-input-container>
-        <md-input-container class="md-block" flex>
-          <md-icon md-font-set="material-icons" class="md-primary">lock</md-icon>
-          <input type="password" placeholder="Senha" ng-model="loginCtrl.credentials.password">
-        </md-input-container>
-        <md-button class="md-raised md-primary md-block" ng-click="loginCtrl.login()">Entrar</md-button>
-      </form>
-    </box>
-  </div>
+    <div flex=50>
+      <div layout="row" layout-align="center center">
+        <img  src="client/images/logo-governo.png"  alt="logo"/>
+      </div>
+      <box title="{{global.appName}}">
+        <form>
+          <md-input-container class="md-block" flex>
+            <md-icon md-font-set="material-icons" class="md-primary">email</md-icon>
+            <input type="email" placeholder="Email" ng-model="loginCtrl.credentials.email">
+          </md-input-container>
+          <md-input-container class="md-block" flex>
+            <md-icon md-font-set="material-icons" class="md-primary">lock</md-icon>
+            <input type="password" placeholder="Senha" ng-model="loginCtrl.credentials.password">
+          </md-input-container>
+          <md-button class="md-raised md-primary md-block" ng-click="loginCtrl.login()">Entrar</md-button>
+        </form>
+      </box>
+    </div>
 </content-body>

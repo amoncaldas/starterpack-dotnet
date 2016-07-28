@@ -11,8 +11,8 @@
     // route the JWT should be retrieved from
     $authProvider.loginUrl = Global.apiVersion + '/authenticate';
     $mdThemingProvider.theme('default')
-      .primaryPalette('indigo')
-      .accentPalette('teal')
+      .primaryPalette('blue')
+      .accentPalette('red')
       .warnPalette('deep-orange');
 
   }
