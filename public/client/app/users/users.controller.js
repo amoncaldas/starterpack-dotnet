@@ -15,11 +15,13 @@
     vm.edit = edit;
     vm.save = save;
     vm.remove = remove;
+    vm.goTo = goTo;
     vm.cleanForm = cleanForm;
 
     activate();
 
     function activate() {
+      vm.viewForm = false;
       vm.user = new UserService();
 
       vm.roles = RoleService.query().$promise.then(function (response) {
@@ -28,10 +30,6 @@
 
       vm.paginator = PrPagination.getInstance(search, 2);
       vm.search(1);
-    }
-
-    vm.teste = function() {
-      console.log('Teste');
     }
 
     function search(page) {
@@ -55,6 +53,8 @@
 
     function edit(user) {
       vm.cleanForm();
+      vm.goTo('form');
+
       vm.user = angular.copy(user);
 
       vm.roles.forEach(function(role) {
@@ -99,6 +99,10 @@
       }, function (error) {
         PrToast.errorValidation(error.data, 'Não foi possível remover o usuário');
       });
+    }
+
+    function goTo(viewName) {
+      vm.viewForm = (viewName === 'form');
     }
   }
 

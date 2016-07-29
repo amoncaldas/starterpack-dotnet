@@ -12,9 +12,7 @@
       bindings: {
         theme: '@',
         icon: '@',
-        title: '@',
-        uiSref: '@',
-        onClick: '&'
+        title: '@'
       },
       controller: function() {
         var ctrl = this;

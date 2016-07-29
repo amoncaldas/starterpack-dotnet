@@ -1,6 +1,8 @@
 <content-body>
-  <div flex>
-    <md-button-floating theme="md-accent" icon="add" title="Adicionar"  on-click="{{usersCtrl.teste()}}">
+  <div flex ng-include src="'client/app/users/_form.html'" ng-show="usersCtrl.viewForm"></div>
+
+  <div flex ng-hide="usersCtrl.viewForm">
+    <md-button-floating theme="md-accent" icon="add" title="Adicionar" ng-click="usersCtrl.goTo('form')">
     </md-button-floating>
     <box title="Lista">
       <md-table-container>

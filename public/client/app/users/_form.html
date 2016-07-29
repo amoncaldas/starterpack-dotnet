@@ -1,0 +1,23 @@
+<md-button-floating theme="md-accent" icon="add" title="Lista" ng-click="usersCtrl.goTo('list')">
+</md-button-floating>
+
+<box title="Formulário de Cadastro">
+  <form>
+    <md-input-container class="md-block" flex>
+      <input type="text" placeholder="Nome" ng-model="usersCtrl.user.name">
+    </md-input-container>
+    <md-input-container class="md-block" flex>
+      <input type="email" placeholder="Email" ng-model="usersCtrl.user.email">
+    </md-input-container>
+    <div md-input-container class="md-block" >
+      <div ng-repeat="role in usersCtrl.roles">
+        <md-checkbox ng-model="role.selected">{{role.title}}</md-checkbox>
+      </div>
+    </div>
+    <box-button-bar>
+      <md-button class="md-primary md-raised" ng-click="usersCtrl.save()">Salvar</md-button>
+      <md-button class="md-raised" ng-click="usersCtrl.cleanForm()">Limpar</md-button>
+    </box-button-bar>
+  </form>
+</box>
+
