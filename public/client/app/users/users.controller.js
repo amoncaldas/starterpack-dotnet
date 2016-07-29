@@ -30,6 +30,10 @@
       vm.search(1);
     }
 
+    vm.teste = function() {
+      console.log('Teste');
+    }
+
     function search(page) {
       vm.paginator.currentPage = page;
 
