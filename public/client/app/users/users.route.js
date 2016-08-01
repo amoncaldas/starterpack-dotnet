@@ -20,12 +20,6 @@
         controller: 'UsersController as usersCtrl',
         data: { breadcrumbs: 'Administração > Usuário', needProfile: ['admin'] }
       })
-      .state('user-form', {
-        url: '/usuario/formulario',
-        templateUrl: Global.clientPath + '/users/formulario.html',
-        controller: 'UsersController as usersCtrl',
-        data: { breadcrumbs: 'Administração > Usuário > Formulário', needProfile: ['admin'] }
-      })
       .state('user-profile', {
         url: '/usuario/perfil',
         templateUrl: Global.clientPath + '/users/profile.html',

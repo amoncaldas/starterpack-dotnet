@@ -11,7 +11,7 @@
     var vm = this;
 
     vm.itensMenu = [
-      { url: 'dashboard', titulo: 'Home', icon: 'home', subItens: [] },
+      { url: 'dashboard', titulo: 'Dashboard', icon: 'dashboard', subItens: [] },
       { url: '#', titulo: 'Administração', icon: 'settings_applications',
         subItens: [
           { url: 'user', titulo: 'Usuários', icon: 'people' }

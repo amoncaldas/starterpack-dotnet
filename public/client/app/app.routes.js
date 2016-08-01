@@ -12,7 +12,8 @@
       .state(Global.homeState, {
         url: '/',
         templateUrl: Global.clientPath + '/dashboard/dashboard.html',
-        controller: 'DashboardController as dashboardCtrl'
+        controller: 'DashboardController as dashboardCtrl',
+        data: { breadcrumbs: 'Dashboard' }
       })
       .state(Global.loginState, {
         url: '/login',
@@ -21,7 +22,8 @@
       })
       .state('not-authorized', {
         url: '/acesso-negado',
-        templateUrl: Global.clientPath + '/layout/404.html'
+        templateUrl: Global.clientPath + '/layout/404.html',
+        data: { breadcrumbs: 'Acesso Negado' }
       });
 
     $urlRouterProvider.otherwise(Global.loginState);
