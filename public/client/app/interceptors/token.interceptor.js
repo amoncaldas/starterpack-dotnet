@@ -42,7 +42,7 @@
                 // only the first will redirect and notified
                 if (!$state.is(Global.loginState)) {
                   $injector.get('PrToast')
-                    .warning('Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente');
+                    .warn('Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente');
 
                   $state.go(Global.loginState);
                 }

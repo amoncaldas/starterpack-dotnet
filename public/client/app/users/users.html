@@ -2,9 +2,13 @@
   <div flex ng-include src="'client/app/users/_form.html'" ng-show="usersCtrl.viewForm"></div>
 
   <div flex ng-hide="usersCtrl.viewForm">
-    <md-button-floating theme="md-accent" icon="add" title="Adicionar" ng-click="usersCtrl.goTo('form')">
-    </md-button-floating>
     <box title="Lista">
+      <box-toolbar-buttons>
+        <md-button class="md-icon-button" ng-click="usersCtrl.goTo('form')">
+          <md-icon md-font-set="material-icons" class="md-warn">add</md-icon>
+          <md-tooltip md-direction="bottom">Apagar</md-tooltip>
+        </md-button>
+      </box-toolbar-buttons>
       <md-table-container>
         <table md-table>
           <thead md-head>

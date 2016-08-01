@@ -9,9 +9,17 @@
         return Global.clientPath + '/widgets/box.html'
       },
       replace: true,
-      transclude: true,
+      transclude: {
+        toolbarButtons: '?boxToolbarButtons',
+        footerButtons: '?boxFooterButtons'
+      },
       bindings: {
         title: '@'
+      },
+      controller: function($transclude) {
+        var ctrl = this;
+
+        ctrl.transclude = $transclude;
       }
     });
 }());
