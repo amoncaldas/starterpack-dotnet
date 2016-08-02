@@ -1,0 +1,30 @@
+<!-- titulo do projeto -->
+<md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar" aria-hidden="false">
+  <div class="md-toolbar-tools" layout-wrap>
+    <md-button
+      ng-click="appCtrl.openNavBar()"
+      class="md-icon-button md-primary"
+      hide-gt-sm
+      aria-label="Menu">
+      <md-icon md-font-set="material-icons">menu</md-icon>
+    </md-button>
+    <div layout="row" flex>
+      <h2 class="md-toolbar-item md-breadcrumb md-headline">{{$state.current.data.breadcrumbs}}</h2>
+      <span flex></span>
+      <div layout="row" class="md-toolbar-item" ng-if="auth.authenticated()">
+        <md-button class="md-icon-button" aria-label="Perfil" ui-sref="user-profile">
+          <md-icon md-font-set="material-icons"
+            class="md-dark">perm_identity</md-icon>
+          <md-tooltip md-direction="left">Perfil</md-tooltip>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Sair" ng-click="appCtrl.logout()">
+          <md-icon md-font-set="material-icons"
+            class="md-dark">power_settings_new</md-icon>
+          <md-tooltip md-direction="bottom">Sair</md-tooltip>
+        </md-button>
+      </div>
+
+    </div>
+  </div>
+  <ng-include src="'client/app/layout/menu-top.html'" ng-if="!global.layout.menuTop && !appCtrl.isMobile"></ng-include>
+</md-toolbar>
