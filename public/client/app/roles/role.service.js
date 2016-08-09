@@ -6,14 +6,10 @@
     .factory('RoleService', RoleService);
 
   /** @ngInject */
-  function RoleService(Global, $resource) {
-    var service = $resource(Global.apiVersion + '/roles/:id', null, {
-      update: {
-        method: 'PUT'
-      }
-    });
+  function RoleService(serviceFactory) {
+    var model = serviceFactory('roles');
 
-    return service;
+    return model;
   }
 
 }());

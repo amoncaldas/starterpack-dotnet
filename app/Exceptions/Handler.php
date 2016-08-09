@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Log;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -70,6 +71,16 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'token_not_provided'], $e->getStatusCode());
         }
 
-        return parent::render($request, $e);
+        if (config('app.debug')) {
+            return response()
+                ->json(
+                    ['error' => $e->getMessage()],
+                    method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500);
+        } else {
+            return response()
+                ->json(
+                    ['error' => 'Aconteceu um erro inesperado, tente novamente dentro de alguns minutos.'],
+                    method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500);
+        }
     }
 }

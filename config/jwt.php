@@ -173,7 +173,7 @@ return [
     |
     */
 
-    'blacklist_grace_period' => env('JWT_BLACKLIST_GRACE_PERIOD', 60),
+    'blacklist_grace_period' => env('JWT_BLACKLIST_GRACE_PERIOD', 120),
 
     /*
     |--------------------------------------------------------------------------

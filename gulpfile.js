@@ -27,6 +27,8 @@ var paths = {
 paths.app = paths.client + '/app';
 paths.destination = paths.client + '/build';
 paths.angularScripts = [
+  paths.bower + '/deep-diff/index.js',
+  paths.bower + '/uri-templates/uri-templates.js',
   paths.bower + '/angular/angular.min.js',
   paths.bower + '/angular-aria/angular-aria.js',
   paths.bower + '/angular-animate/angular-animate.js',
@@ -37,6 +39,7 @@ paths.angularScripts = [
   paths.bower + '/angular-ui-router/release/angular-ui-router.min.js',
   paths.bower + '/angular-material/angular-material.js',
   paths.bower + '/angular-material-data-table/dist/md-data-table.min.js',
+  paths.bower + '/angular-model-factory/dist/angular-model-factory.js',
   paths.bower + '/ng-prodeb/dist/ng-prodeb.min.js'
 ];
 paths.vendorsScripts = [

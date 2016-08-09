@@ -6,7 +6,10 @@
     .config(config);
 
   /** @ngInject */
-  function config($authProvider, Global, $mdThemingProvider) {
+  function config($authProvider, Global, $mdThemingProvider, $modelFactoryProvider) {
+
+    $modelFactoryProvider.defaultOptions.prefix = Global.apiVersion;
+
     // Satellizer configuration that specifies which API
     // route the JWT should be retrieved from
     $authProvider.loginUrl = Global.apiVersion + '/authenticate';

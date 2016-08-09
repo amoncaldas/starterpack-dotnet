@@ -1,0 +1,38 @@
+<content-body>
+  <div flex="100">
+    <box box-title="Lista">
+      <md-table-container>
+        <table md-table>
+          <thead md-head>
+            <tr md-row>
+              <th md-column>Usuário</th>
+              <th md-column>Recurso</th>
+              <th md-column>Ação</th>
+              <th md-column>Data</th>
+              <th md-column>Ações</th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row ng-repeat="log in auditCtrl.logs">
+              <td md-cell>{{log.user.name}}</td>
+              <td md-cell>{{log.owner_type}}</td>
+              <td md-cell>{{log.type}}</td>
+              <td md-cell>{{log.updated_at | date}}</td>
+              <td md-cell>
+                <md-button class="md-icon-button" ng-click="auditCtrl.edit(log)">
+                  <md-icon md-font-set="material-icons"
+                    class="md-dark">create</md-icon>
+                  <md-tooltip md-direction="bottom">Editar</md-tooltip>
+                </md-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+
+      <md-card-actions layout="row" layout-align="end center">
+        <pr-pagination paginator="auditCtrl.paginator"></pr-pagination>
+      </md-card-actions>
+    </box>
+  </div>
+</content-body>
