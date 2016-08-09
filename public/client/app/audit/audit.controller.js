@@ -29,7 +29,7 @@
       AuditService.paginate({ page: page, perPage: vm.paginator.perPage }).then(function (response) {
         vm.paginator.calcNumberOfPages(response.total);
         vm.logs = response.items;
-        console.log(vm.logs)
+
       }, function () {
         PrToast.error('Não foi possível realizar a busca de usuários');
       });
