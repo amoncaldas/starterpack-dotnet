@@ -1,7 +1,35 @@
 <content-body>
   <div flex="100">
-    <box box-title="Lista">
-      <md-table-container>
+    <box box-title="Pesquisa">
+      <md-content layout-padding md-whiteframe="1" class="bottom-4">
+        <form class="condensed">
+          <div layout="row">
+            <md-input-container flex>
+              <input type="date" placeholder="Data Inicial" ng-model="auditCtrl.queryFilters.dateStart">
+            </md-input-container>
+            <md-input-container flex>
+              <input type="date" placeholder="Data Final" ng-model="auditCtrl.queryFilters.dateEnd">
+            </md-input-container>
+            <md-input-container flex>
+              <md-select placeholder="Recurso" ng-model="auditCtrl.queryFilters.resource">
+                <md-option ng-repeat="resource in auditCtrl.resources" value="{{resource.id}}">
+                  {{resource.label}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div layout="row">
+            <md-input-container flex>
+              <md-radio-group ng-model="auditCtrl.queryFilters.type" layout="row">
+                <md-radio-button value="{{type.id}}" ng-repeat="type in auditCtrl.types">{{type.label}}</md-radio-button>
+              </md-radio-group>
+            </md-input-container>
+            <md-button class="md-raised md-primary md-mini" ng-click="auditCtrl.search(vm.paginator.currentPage)">Filtar</md-button>
+          </div>
+        </form>
+      </md-content>
+
+      <md-table-container md-whiteframe="1">
         <table md-table>
           <thead md-head>
             <tr md-row>
@@ -30,9 +58,9 @@
         </table>
       </md-table-container>
 
-      <md-card-actions layout="row" layout-align="end center">
+      <box-footer-buttons>
         <pr-pagination paginator="auditCtrl.paginator"></pr-pagination>
-      </md-card-actions>
+      </box-footer-buttons>
     </box>
   </div>
 </content-body>

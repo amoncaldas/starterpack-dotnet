@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Carbon\Carbon;
 
 class AuditController extends Controller
 {
@@ -29,11 +30,14 @@ class AuditController extends Controller
         if($request->has('type'))
             $baseQuery = $baseQuery->where('type', $request->type);
 
+        if($request->has('resource'))
+            $baseQuery = $baseQuery->where('owner_type', 'App\\' . $request->resource);
+
         if($request->has('dateStart'))
             $baseQuery = $baseQuery->where('created_at', '>=', $request->dateStart);
 
         if($request->has('dateEnd'))
-            $baseQuery = $baseQuery->where('created_at', '>=', $request->dateEnd);
+            $baseQuery = $baseQuery->where('created_at', '<=', Carbon::parse($request->dateEnd)->endOfDay());
 
         $dataQuery = clone $baseQuery;
         $countQuery = clone $baseQuery;

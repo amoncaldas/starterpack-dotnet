@@ -18,6 +18,7 @@ body {
   opacity: 1;
 }
 
+
 md-toolbar, section {
   border-radius: 4px 4px 0 0;
   box-shadow: 0 2px rgba(255, 255, 255, 0.1);
@@ -27,44 +28,49 @@ section {
   border-radius: 4px;
 }
 
-md-toolbar.md-toolbar-h30 {
-  min-height: 30px;
-  height: 30px;
-}
-md-toolbar.md-toolbar-h40 {
-  min-height: 40px;
-  height: 40px;
-}
-md-toolbar.md-toolbar-h50 {
-  min-height: 50px;
-  height: 50px;
+@for $i from 1 through 5 {
+  md-toolbar.md-toolbar-h#{$i * 10} {
+    min-height: 10px * $i;
+    height: 10px * $i;
+  }
 }
 
-.top5 {
-  margin-top: 5px;
+@for $i from 1 through 20 {
+  .top-#{$i} { margin-top: 1px * $i; }
 }
 
-.top7 {
-  margin-top: 7px;
+@for $i from 1 through 20 {
+  .bottom-#{$i} { margin-bottom: 1px * $i; }
 }
 
-.top10 {
-  margin-top: 10px;
+
+form.condensed {
+  margin: 2px 0;
 }
 
-.top15 {
-  margin-top: 15px;
+form.condensed md-input-container {
+  margin: 0px;
 }
 
-.top17 {
-  margin-top: 17px;
+.md-button.md-mini {
+  line-height: 20px;
+  min-width: 30px;
+  min-height: 24px;
+  font-size: 12px;
 }
 
-.top30 {
-  margin-top: 30px;
+.md-button.md-micro {
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  min-height: 20px;
+  vertical-align: top;
+  font-size: 10px;
+  padding: 0 0;
+  margin: 0;
 }
 
-.md-button-floating{
+.md-button-floating {
   position: absolute;
   right: 35px;
   top: 47px;
@@ -113,10 +119,9 @@ ul.menu-sidenav li {
 .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
-.material-icons.md-18 { font-size: 18px; }
-.material-icons.md-24 { font-size: 24px; }
-.material-icons.md-36 { font-size: 36px; }
-.material-icons.md-48 { font-size: 48px; }
+@for $i from 1 through 4 {
+  .material-icons.md-#{$i * 12} { font-size: 12px * $i; }
+}
 
 .nav-header {
   background-color: #106CC8;
