@@ -72,15 +72,18 @@ class Handler extends ExceptionHandler
         }
 
         if (config('app.debug')) {
-            return response()
-                ->json(
-                    ['error' => $e->getMessage()],
-                    method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500);
+            $content = ['error' => $e->getMessage()];
         } else {
+            $content = ['error' => 'Aconteceu um erro inesperado, tente novamente dentro de alguns minutos.'];
+        }
+
+        try {
             return response()
-                ->json(
-                    ['error' => 'Aconteceu um erro inesperado, tente novamente dentro de alguns minutos.'],
-                    method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500);
+                ->json($content,  method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500)
+                ->header('Authorization', 'Bearer '. \JWTAuth::parseToken()->refresh());
+        } catch (Exception $e) {
+            return response()
+                ->json($content,  method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500);
         }
     }
 }
