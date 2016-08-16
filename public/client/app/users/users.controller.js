@@ -59,8 +59,6 @@
         PrToast.error('Você não pode remover seu próprio usuário');
         return false;
       };
-
-      return true;
     }
 
   }
