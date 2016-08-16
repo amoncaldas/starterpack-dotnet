@@ -8,8 +8,6 @@ Route::group(['prefix' => 'v1'], function () {
     //public area
     Route::post('authenticate', 'AuthenticateController@authenticate');
 
-    Route::get('audit', 'AuditController@index');
-
     //authenticated area
     Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function () {
         Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
@@ -22,6 +20,7 @@ Route::group(['prefix' => 'v1'], function () {
 
         //admin area
         Route::group(['middleware' => ['acl.role:admin']], function () {
+            Route::get('audit', 'AuditController@index');
             Route::resource('users', 'UsersController', ['except' => ['updateProfile']]);
             Route::resource('roles', 'RolesController');
         });
