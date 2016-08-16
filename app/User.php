@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\BaseModel;
+
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -11,7 +13,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Tymon\JWTAuth\Contracts\JWTSubject as JWTSubject;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract, JWTSubject
+class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract, JWTSubject
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
@@ -35,6 +37,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+    protected $dontKeepLogOf = ['password', 'remember_token'];
 
     public function getJWTIdentifier()
     {
