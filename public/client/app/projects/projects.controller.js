@@ -37,7 +37,7 @@
         vm.paginator.calcNumberOfPages(response.total);
         vm.projects = response.items;
       }, function () {
-        PrToast.error('Não foi possível realizar a busca de usuários');
+        PrToast.error('Não foi possível realizar a busca de projetos');
       });
     }
 
