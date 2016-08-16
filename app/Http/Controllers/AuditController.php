@@ -30,8 +30,8 @@ class AuditController extends Controller
         if($request->has('type'))
             $baseQuery = $baseQuery->where('type', $request->type);
 
-        if($request->has('resource'))
-            $baseQuery = $baseQuery->where('owner_type', 'App\\' . $request->resource);
+        if($request->has('model'))
+            $baseQuery = $baseQuery->where('owner_type', 'App\\' . $request->model);
 
         if($request->has('dateStart'))
             $baseQuery = $baseQuery->where('created_at', '>=', $request->dateStart);
