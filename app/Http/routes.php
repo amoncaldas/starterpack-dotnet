@@ -5,11 +5,16 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'v1'], function () {
+    //public area
     Route::post('authenticate', 'AuthenticateController@authenticate');
+
+    Route::get('audit', 'AuditController@index');
 
     //authenticated area
     Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function () {
         Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
+
+        Route::resource('projects', 'ProjectsController');
 
         Route::group([], function () {
             Route::put('profile', 'UsersController@updateProfile');

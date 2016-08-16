@@ -1,40 +1,28 @@
-<content-body>
-    <div class="row">
-        <div class="col-sm-12">
-            <box title="Profile">
-                <form class="form-horizontal">
-                    <div class="form-group required">
-                        <label for="name" class="col-sm-2 control-label">Nome</label>
-                        <div class="col-sm-3">
-                            <input type="text" id="name" class="form-control" placeholder="Nome" ng-model="profileCtrl.user.name">
-                        </div>
-                    </div>
-                    <div class="form-group required">
-                        <label for="email" class="col-sm-2 control-label">Email</label>
-                        <div class="col-sm-3">
-                            <input type="email" id="email" class="form-control" placeholder="Email" ng-model="profileCtrl.user.email">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="col-sm-2 control-label">Senha</label>
-                        <div class="col-sm-3">
-                            <input type="password" id="password" class="form-control" ng-model="profileCtrl.user.password">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password_confirmation" class="col-sm-2 control-label">Confirmação da Senha</label>
-                        <div class="col-sm-3">
-                            <input type="password" id="password_confirmation" class="form-control" ng-model="profileCtrl.user.password_confirmation">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button class="btn btn-primary" ng-click="profileCtrl.update()">Atualizar</button>
-                        </div>
-                    </div>
-
-                </form>
-            </box>
+<content-body layout-align="center center">
+  <div flex=100 flex-sm=80 flex-gt-sm=60>
+    <box box-title="Formulário de Atualização">
+      <form>
+        <md-input-container class="md-block" flex>
+          <input type="text" placeholder="Nome" ng-model="profileCtrl.user.name">
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <input type="email" placeholder="Email" ng-model="profileCtrl.user.email">
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <input type="password" placeholder="Senha" ng-model="profileCtrl.user.password">
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <input type="password_confirmation" placeholder="Confirmação da Senha" ng-model="profileCtrl.user.password_confirmation">
+        </md-input-container>
+        <div md-input-container class="md-block" >
+          <div ng-repeat="role in profileCtrl.roles">
+            <md-checkbox ng-model="role.selected">{{role.title}}</md-checkbox>
+          </div>
         </div>
-    </div>
+      </form>
+      <box-footer-buttons>
+        <md-button class="md-primary md-raised" ng-click="profileCtrl.update()">Atualizar</md-button>
+      </box-footer-buttons>
+    </box>
+  </div>
 </content-body>

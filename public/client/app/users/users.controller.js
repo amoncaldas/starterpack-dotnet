@@ -24,18 +24,18 @@
       vm.viewForm = false;
       vm.user = new UserService();
 
-      vm.roles = RoleService.query().$promise.then(function (response) {
+      vm.roles = RoleService.query().then(function (response) {
         vm.roles = response;
       });
 
-      vm.paginator = PrPagination.getInstance(search, 2);
-      vm.search(1);
+      vm.paginator = PrPagination.getInstance(search, 10);
+      vm.search();
     }
 
     function search(page) {
-      vm.paginator.currentPage = page;
+      vm.paginator.currentPage = (angular.isDefined(page)) ? page : 1;
 
-      UserService.paginate({ page: page, perPage: vm.paginator.perPage }).$promise.then(function (response) {
+      UserService.paginate({ page: vm.paginator.currentPage, perPage: vm.paginator.perPage }).then(function (response) {
         vm.paginator.calcNumberOfPages(response.total);
         vm.users = response.items;
       }, function () {
@@ -67,12 +67,10 @@
     }
 
     function save() {
-      var promise;
-
+      //filtra o array de roles para extrair somente os ids
       vm.user.roles = lodash.map(lodash.filter(angular.copy(vm.roles), { selected: true }), 'id');
-      promise = (vm.user.id) ? vm.user.$update() : vm.user.$save();
 
-      promise.then(function (user) {
+      vm.user.$save().then(function (user) {
         vm.user = user;
 
         if (vm.user.id === Auth.currentUser.id) {
@@ -80,25 +78,24 @@
         }
 
         vm.cleanForm();
-        vm.search();
+        vm.search(vm.paginator.currentPage);
+        vm.goTo('list');
       }, function (error) {
         PrToast.errorValidation(error.data, 'Não foi possível salvar o usuário');
       });
     }
 
     function remove(user) {
-      var promise;
-
-      promise = (user.id) ? user.$remove() : PrToast.error('Nenhum usuário selecionado para deletar');
-      promise.then(function () {
-        if (user.id === Auth.currentUser.id) {
-          Auth.updateCurrentUser(user.plain());
-        }
-        vm.search();
-        PrToast.info('Usuário removido');
-      }, function (error) {
-        PrToast.errorValidation(error.data, 'Não foi possível remover o usuário');
-      });
+      if (user.id === Auth.currentUser.id) {
+        PrToast.error('Você não pode remover seu usuário');
+      } else {
+        user.$remove().then(function () {
+          vm.search();
+          PrToast.info('Usuário removido');
+        }, function (error) {
+          PrToast.errorValidation(error.data, 'Não foi possível remover o usuário');
+        });
+      }
     }
 
     function goTo(viewName) {

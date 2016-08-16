@@ -22,30 +22,35 @@ class UsersController extends Controller
 
     /**
      * Display a listing of the resource.
+     * If page info is passed get a paginated list instead
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        Log::debug('Carregando os usuários da página: '.$request->page);
-
         $baseQuery = User::with('roles');
 
-        if(isset($request->name))
+        if($request->has('name'))
             $baseQuery = $baseQuery->where('name', 'like', '%'.$request->name.'%');
 
         $dataQuery = clone $baseQuery;
-        $countQuery = clone $baseQuery;
+        $dataQuery = $dataQuery->orderBy('name', 'asc');
 
-        $data['items'] = $dataQuery
-            ->orderBy('name', 'asc')
-            ->skip(($request->page - 1) * $request->perPage)
-            ->take($request->perPage)
-            ->get();
+        if( $request->has('perPage', 'page') ) {
+            $countQuery = clone $baseQuery;
+            $perPage = $request->input('perPage', $this->perPage);
 
-        $data['total'] = $countQuery
-            ->count();
+            $data['items'] = $dataQuery
+                ->skip(($request->page - 1) * $perPage)
+                ->take($perPage)
+                ->get();
+
+            $data['total'] = $countQuery
+                ->count();
+        } else {
+            $data = $dataQuery->get();
+        }
 
         return $data;
     }

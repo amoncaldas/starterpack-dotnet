@@ -6,36 +6,58 @@
     .factory('UserService', UserService);
 
   /** @ngInject */
-  function UserService($resource, $q, $http, Global) {
-    //Cria um serviço para o recurso Usuário.
-    //Através desse serviço é feita a comunicação com o backend.
-    var service = $resource(Global.apiVersion + '/users/:id', { id: '@id' }, {
-      update: { method: 'PUT' },
-      paginate: { method: 'GET', isArray: false }
+  // eslint-disable-next-line max-params
+  function UserService(lodash, Global, serviceFactory) {
+    var model = serviceFactory('users', {
+      // only called on empty inits
+      defaults: {
+        roles: []
+      },
+
+      actions: {
+        /**
+         * Atualiza os dados do perfil do usuário logado
+         *
+         * @param {object} attributes
+         * @returns {promise} Uma promise com o resultado do chamada no backend
+         */
+        updateProfile: {
+          method: 'PUT',
+          url: Global.apiVersion + '/profile',
+          override: true,
+          wrap: false
+        }
+      },
+
+      instance: {
+        /**
+         * Verifica se o usuário tem os perfis informados.
+         *
+         * @param {any} profile
+         * @returns {boolean}
+         */
+        hasProfile: function(roles, all) {
+          roles = angular.isArray(roles) ? roles : [roles];
+
+          if (all) {
+            return lodash.intersection(this.roles, roles).length === roles.length;
+          } else { //return the length because 0 is false in js
+            return lodash.intersection(this.roles, roles).length;
+          }
+        },
+
+        /**
+         * Verifica se o usuário é admin.
+         *
+         * @returns {boolean}
+         */
+        isAdmin: function() {
+          return this.hasProfile('admin');
+        }
+      }
     });
 
-    //Declaração de métodos adicionais
-    service.updateProfile = updateProfile;
-
-    /**
-     * Atualiza o perfil do usuário logado
-     *
-     * @param {any} attributes Dados do usuário para atualizar
-     * @returns {promise} Uma promise com o retorno do serviço
-     */
-    function updateProfile(attributes) {
-      var deferred = $q.defer();
-
-      $http.put(Global.apiVersion + '/profile', attributes).then(function(response) {
-        deferred.resolve(response);
-      }, function(error) {
-        deferred.reject(error);
-      });
-
-      return deferred.promise;
-    }
-
-    return service;
+    return model;
   }
 
 }());

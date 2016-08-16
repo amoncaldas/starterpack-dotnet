@@ -9,6 +9,8 @@ node_modules/
 bower_components/
 public/client/build/
 
+npm-debug.log
+
 ### Laravel ###
 .env
 Homestead.yaml

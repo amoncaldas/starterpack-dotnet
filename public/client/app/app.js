@@ -3,13 +3,13 @@
   'use strict';
 
   angular.module('app', [
-    'ngResource',
     'ngAnimate',
     'ngAria',
     'ui.router',
     'ngProdeb',
     'ui.utils.masks',
     'ngMaterial',
+    'modelFactory',
     'md.data.table',
     'satellizer']);
 })();

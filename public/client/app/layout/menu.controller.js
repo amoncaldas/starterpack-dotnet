@@ -12,9 +12,10 @@
 
     vm.itensMenu = [
       { url: 'dashboard', titulo: 'Dashboard', icon: 'dashboard', subItens: [] },
-      { url: '#', titulo: 'Administração', icon: 'settings_applications',
+      { url: '#', titulo: 'Administração', icon: 'settings_applications', profiles: ['admin'],
         subItens: [
-          { url: 'user', titulo: 'Usuários', icon: 'people' }
+          { url: 'user', titulo: 'Usuários', icon: 'people' },
+          { url: 'audit', titulo: 'Auditoria', icon: 'people' }
         ]
       }
     ];

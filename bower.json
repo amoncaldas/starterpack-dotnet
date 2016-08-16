@@ -21,7 +21,8 @@
     "angular-input-masks": "^2.4.0",
     "satellizer": "^0.14.1",
     "angular-material-data-table": "^0.10.9",
-    "ng-prodeb": "git@git.prodeb.ba.gov.br:ngprodeb.git#0.1.1"
+    "ng-prodeb": "git@git.prodeb.ba.gov.br:ngprodeb.git#0.1.1",
+    "angular-model-factory": "^1.0.3"
   },
   "resolutions": {
     "angular": "1.5.8"

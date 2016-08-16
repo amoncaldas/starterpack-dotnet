@@ -23,7 +23,8 @@
       .state('user-profile', {
         url: '/usuario/perfil',
         templateUrl: Global.clientPath + '/users/profile.html',
-        controller: 'ProfileController as profileCtrl'
+        controller: 'ProfileController as profileCtrl',
+        data: { breadcrumbs: 'Perfil' }
       });
 
   }
