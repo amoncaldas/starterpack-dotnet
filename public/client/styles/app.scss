@@ -70,9 +70,19 @@ md-toolbar.md-toolbar-h50 {
   top: 47px;
 }
 
-.md-breadcrumb {
-  font-size: 24px !important;
-  font-weight: 400 !important;
+@media only screen and (min-width: 240px) {
+  .md-breadcrumb {
+    font-size: 53% !important;
+    font-weight: 400 !important;
+    line-height: 140% !important;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .md-breadcrumb {
+    font-size: 100% !important;
+    font-weight: 400 !important;
+  }
 }
 
 ul.menu-sidenav {
@@ -106,7 +116,6 @@ ul.menu-sidenav li {
 /* https://google.github.io/material-design-icons/#using-the-icons-in-html */
 
 .material-icons.md-dark {
-  background-color: #FAFAFA !important;
   color: #000000 !important;
 }
 

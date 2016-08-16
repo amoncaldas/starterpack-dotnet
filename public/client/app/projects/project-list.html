@@ -1,0 +1,43 @@
+<box box-title="Lista">
+  <box-toolbar-buttons>
+    <md-button class="md-icon-button" ng-click="projectsCtrl.goTo('form')">
+      <md-icon md-font-set="material-icons" class="md-warn">add</md-icon>
+      <md-tooltip md-direction="bottom">Adicionar</md-tooltip>
+    </md-button>
+  </box-toolbar-buttons>
+  <md-table-container>
+    <table md-table>
+      <thead md-head>
+        <tr md-row>
+          <th md-column>Nome</th>
+          <th md-column>Email</th>
+          <th md-column>Perfis</th>
+          <th md-column>Ações</th>
+        </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row ng-repeat="project in projectsCtrl.projects">
+          <td md-cell></td>
+          <td md-cell></td>
+          <td md-cell></td>
+          <td md-cell>
+            <md-button class="md-icon-button" ng-click="projectsCtrl.edit(project)">
+              <md-icon md-font-set="material-icons"
+                class="md-dark">create</md-icon>
+              <md-tooltip md-direction="bottom">Editar</md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button" ng-click="projectsCtrl.remove(project)">
+              <md-icon md-font-set="material-icons"
+                class="md-warn">delete</md-icon>
+              <md-tooltip md-direction="bottom">Apagar</md-tooltip>
+            </md-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+
+  <md-card-actions layout="row" layout-align="end center">
+    <pr-pagination paginator="usersCtrl.paginator"></pr-pagination>
+  </md-card-actions>
+</box>

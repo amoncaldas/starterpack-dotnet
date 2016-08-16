@@ -1,0 +1,21 @@
+<box box-title="Formulário de Cadastro">
+  <box-toolbar-buttons>
+    <md-button class="md-fab md-mini" ng-click="projectsCtrl.goTo('list')">
+      <md-icon md-font-set="material-icons">list</md-icon>
+      <md-tooltip md-direction="bottom">Lista</md-tooltip>
+    </md-button>
+  </box-toolbar-buttons>
+  <form>
+    <md-input-container class="md-block" flex>
+      <input type="text" placeholder="Nome">
+    </md-input-container>
+    <md-input-container class="md-block" flex>
+      <input type="email" placeholder="Email">
+    </md-input-container>
+  </form>
+  <box-footer-buttons>
+    <md-button class="md-primary md-raised" ng-click="projectsCtrl.save()">Salvar</md-button>
+    <md-button class="md-raised" ng-click="projectsCtrl.cleanForm()">Limpar</md-button>
+  </box-footer-buttons>
+</box>
+

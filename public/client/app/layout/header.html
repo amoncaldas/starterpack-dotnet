@@ -9,7 +9,9 @@
       <md-icon md-font-set="material-icons">menu</md-icon>
     </md-button>
     <div layout="row" flex>
-      <h2 class="md-toolbar-item md-breadcrumb md-headline">{{$state.current.data.breadcrumbs}}</h2>
+      <div layout="row" layout-align="start center">
+        <div class="md-breadcrumb">{{$state.current.data.breadcrumbs}}</div>
+      </div>
       <span flex></span>
       <div layout="row" class="md-toolbar-item" ng-if="auth.authenticated()">
         <md-button class="md-icon-button" aria-label="Perfil" ui-sref="user-profile">

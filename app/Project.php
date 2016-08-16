@@ -15,4 +15,14 @@ class Project extends Model
     protected $auditEnabled  = true;
     protected $historyLimit = 100;
     protected $auditableTypes = ['created', 'saved', 'deleted'];
+
+    /**
+    * Retorna os tasks de um determinado projeto.
+    */
+    public function tasks()
+    {
+
+        return $this->hasMany('App\Task');
+
+    }
 }
