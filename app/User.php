@@ -49,11 +49,6 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         return [];
     }
 
-    /*
-|--------------------------------------------------------------------------
-| ACL Methods
-|--------------------------------------------------------------------------
-*/
     /**
      * Checks a Permission
      *
