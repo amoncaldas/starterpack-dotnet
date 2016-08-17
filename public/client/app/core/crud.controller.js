@@ -51,7 +51,6 @@
     }
 
     function edit(resource) {
-      vm.cleanForm();
       vm.goTo('form');
 
       vm.resource = angular.copy(resource);
@@ -87,7 +86,12 @@
     }
 
     function goTo(viewName) {
-      vm.viewForm = (viewName === 'form');
+      vm.viewForm = false;
+
+      if (viewName === 'form') {
+        vm.cleanForm();
+        vm.viewForm = true;
+      }
     }
   }
 

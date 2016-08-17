@@ -5,16 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\AuditingTrait;
 
-class Project extends Model
+class Project extends BaseModel
 {
     protected $table = 'projects';
-    protected $fillable = ['name', 'cost'];
+    protected $fillable = ['name', 'cost', 'tasks'];
 
-    use AuditingTrait;
-
-    protected $auditEnabled  = true;
-    protected $historyLimit = 100;
-    protected $auditableTypes = ['created', 'saved', 'deleted'];
+    public function __construct()
+    {
+        $this->castAttributes(['cost' => 'real']);
+    }
 
     /**
     * Retorna os tasks de um determinado projeto.
@@ -22,7 +21,7 @@ class Project extends Model
     public function tasks()
     {
 
-        return $this->hasMany('App\Task');
+        return $this->hasMany(Task::class);
 
     }
 }
