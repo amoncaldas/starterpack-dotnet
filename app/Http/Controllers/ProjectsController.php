@@ -27,7 +27,7 @@ class ProjectsController extends Controller
      */
     public function index(Request $request)
     {
-        $baseQuery = Project::query();
+        $baseQuery = Project::with('tasks');
 
         if($request->has('name'))
             $baseQuery = $baseQuery->where('name', 'like', '%'.$request->name.'%');
@@ -65,6 +65,7 @@ class ProjectsController extends Controller
 
         try {
             $project->save();
+            $project->tasks()->sync(Input::only('tasks')["tasks"]);
         } catch (Exception $e) {
             return Response::json(['error' => 'Project already exists.'], HttpResponse::HTTP_CONFLICT);
         }

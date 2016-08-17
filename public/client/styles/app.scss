@@ -1,4 +1,7 @@
 @import "bower_components/angular-material/angular-material.scss";
+
+$alignList: left, right, center, bottom, top, middle;
+
 html,
 body {
   background-color: #FAFAFA;
@@ -76,9 +79,19 @@ form.condensed md-input-container {
   top: 47px;
 }
 
-.md-breadcrumb {
-  font-size: 24px !important;
-  font-weight: 400 !important;
+@media only screen and (min-width: 240px) {
+  .md-breadcrumb {
+    font-size: 53% !important;
+    font-weight: 400 !important;
+    line-height: 140% !important;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .md-breadcrumb {
+    font-size: 100% !important;
+    font-weight: 400 !important;
+  }
 }
 
 ul.menu-sidenav {
@@ -112,7 +125,6 @@ ul.menu-sidenav li {
 /* https://google.github.io/material-design-icons/#using-the-icons-in-html */
 
 .material-icons.md-dark {
-  background-color: #FAFAFA !important;
   color: #000000 !important;
 }
 
@@ -201,4 +213,10 @@ a.logo {
 
 .menu-icon {
   margin-top: 7px !important;
+}
+
+@each $align in $alignList {
+  .md-text-#{$align} {
+    text-align: #{$align} !important;
+  }
 }
