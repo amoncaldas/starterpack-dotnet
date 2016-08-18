@@ -75,12 +75,31 @@ class UsersController extends Controller
         try {
             $user->save();
             $user->roles()->sync(Input::only('roles')["roles"]);
-            $user->roles = array_pluck($user->roles()->get()->toArray(), 'slug');
+
+            $newRoles = array_pluck($user->roles()->get()->toArray(), 'slug');
+            $this->auditRoles($user, [], $newRoles);
+
+            $user->roles = $newRoles;
         } catch (Exception $e) {
             return Response::json(['error' => 'User already exists.'], HttpResponse::HTTP_CONFLICT);
         }
 
         return $user;
+    }
+
+    protected function auditRoles($user, $oldRoles, $newRoles) {
+        sort($newRoles);
+        sort($oldRoles);
+
+        if( $oldRoles !== $newRoles )
+        {
+            $log = [
+                'new_value' => $newRoles,
+                'old_value' => $oldRoles
+            ];
+
+            $user->audit($log, 'updated');
+        }
     }
 
     /**
@@ -138,11 +157,17 @@ class UsersController extends Controller
             'email' => 'required|email|max:255|unique:users,email,'.$user->id,
         ]);
 
+        $oldRoles = array_pluck($user->roles()->get()->toArray(), 'slug');
+
         $user->fill(Input::only('name', 'email'));
         $user->save();
         $user->roles()->sync(Input::only('roles')["roles"]);
 
-        $user->roles = array_pluck($user->roles()->get()->toArray(), 'slug');
+        $newRoles = array_pluck($user->roles()->get()->toArray(), 'slug');
+
+        $this->auditRoles($user, $oldRoles, $newRoles);
+
+        $user->roles = $newRoles;
 
         return $user;
     }
