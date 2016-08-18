@@ -21,9 +21,9 @@ class BaseModel extends Model
         'deleted_at' => 'datetime'
     ];
 
-    protected $dates = [];
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
-    protected function castAttributes($moreAttributes = [])
+    protected function addCast($moreAttributes = [])
     {
         $this->casts = array_merge($this->casts, $moreAttributes);
     }
