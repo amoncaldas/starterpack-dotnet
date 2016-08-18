@@ -15,10 +15,11 @@ class BaseModel extends Model
     protected $historyLimit = 50;
     protected $auditableTypes = ['created', 'saved', 'deleted'];
 
-    protected $casts = [];
-    protected $dates = [];
 
-    protected function castAttributes($moreAttributes = [])
+    protected $casts = [];
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    protected function addCast($moreAttributes = [])
     {
         $this->casts = array_merge($this->casts, $moreAttributes);
     }

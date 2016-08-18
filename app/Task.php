@@ -19,13 +19,6 @@ class Task extends BaseModel
 
     protected $dates = ['scheduled_to'];
 
-    public function __construct($attributes = array())
-    {
-        parent::__construct($attributes);
-
-        // $this->castAttributes(['scheduled_to' => 'datetime']);
-    }
-
     /**
     * Retorna o projeto de um projeto
     */

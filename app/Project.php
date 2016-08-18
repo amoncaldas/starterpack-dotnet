@@ -10,13 +10,13 @@ use OwenIt\Auditing\AuditingTrait;
 class Project extends BaseModel
 {
     protected $table = 'projects';
-    protected $fillable = ['id', 'name', 'cost'];
+    protected $fillable = ['name', 'cost'];
 
     public function __construct($attributes = array())
     {
         parent::__construct($attributes);
 
-        $this->castAttributes(['cost' => 'real']);
+        $this->addCast(['cost' => 'real']);
     }
 
     /**
