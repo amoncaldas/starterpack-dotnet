@@ -15,7 +15,7 @@
     vm.beforeSearch = beforeSearch;
     vm.afterSearch = afterSearch;
 
-    $controller('CRUDController', { vm: vm, modelService: AuditService });
+    $controller('CRUDController', { vm: vm, modelService: AuditService, options: {} });
 
     function onActivate() {
       vm.models = [

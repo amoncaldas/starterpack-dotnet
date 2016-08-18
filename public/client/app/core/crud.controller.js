@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function CRUDController(vm, modelService, PrToast, PrPagination) {
+  function CRUDController(vm, modelService, options, PrToast, PrPagination) {
     vm.search = search;
     vm.edit = edit;
     vm.save = save;
@@ -19,6 +19,12 @@
     activate();
 
     function activate() {
+      vm.defaultOptions = {
+        redirectAfterSave: true
+      }
+
+      angular.merge(vm.defaultOptions, options);
+
       vm.viewForm = false;
       vm.resource = new modelService();
 
@@ -66,9 +72,14 @@
 
         if (angular.isFunction(vm.afterSave)) vm.afterSave.call(resource);
 
-        vm.cleanForm();
-        vm.search(vm.paginator.currentPage);
-        vm.goTo('list');
+        if (vm.defaultOptions.redirectAfterSave) {
+          vm.cleanForm();
+          vm.search(vm.paginator.currentPage);
+          vm.goTo('list');
+        }
+
+        PrToast.success('Operação realizada com sucesso');
+
       }, function (error) {
         PrToast.errorValidation(error.data, 'Não foi possível salvar.');
       });

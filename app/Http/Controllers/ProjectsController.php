@@ -64,8 +64,9 @@ class ProjectsController extends Controller
         $project->fill(Input::only('name', 'cost'));
 
         try {
+
             $project->save();
-            $project->tasks()->sync(Input::only('tasks')["tasks"]);
+
         } catch (Exception $e) {
             return Response::json(['error' => 'Project already exists.'], HttpResponse::HTTP_CONFLICT);
         }

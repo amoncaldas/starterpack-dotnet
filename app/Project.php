@@ -8,7 +8,7 @@ use OwenIt\Auditing\AuditingTrait;
 class Project extends BaseModel
 {
     protected $table = 'projects';
-    protected $fillable = ['name', 'cost', 'tasks'];
+    protected $fillable = ['name', 'cost'];
 
     public function __construct()
     {

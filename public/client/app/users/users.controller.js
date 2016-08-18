@@ -19,7 +19,7 @@
     vm.beforeRemove = beforeRemove;
 
     // instantiate base controller
-    $controller('CRUDController', { vm: vm, modelService: UserService });
+    $controller('CRUDController', { vm: vm, modelService: UserService, options: {} });
 
     function onActivate() {
       vm.roles = RoleService.query().then(function (response) {

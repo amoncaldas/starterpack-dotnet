@@ -26,6 +26,16 @@
                 class="md-dark">create</md-icon>
               <md-tooltip md-direction="bottom">Editar</md-tooltip>
             </md-button>
+            <md-button class="md-icon-button" ng-click="projectsCtrl.viewTasks(project)">
+              <md-icon md-font-set="material-icons"
+                class="md-dark">search</md-icon>
+              <md-tooltip md-direction="bottom">Lista de Tarefas</md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button" ng-click="projectsCtrl.addTasks($event, project.id)">
+              <md-icon md-font-set="material-icons"
+                class="md-dark">assignment</md-icon>
+              <md-tooltip md-direction="bottom">Adicionar Tarefa</md-tooltip>
+            </md-button>
             <md-button class="md-icon-button" ng-click="projectsCtrl.remove(project)">
               <md-icon md-font-set="material-icons"
                 class="md-warn">delete</md-icon>
