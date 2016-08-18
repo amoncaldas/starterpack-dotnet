@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function ProjectsController(Global, $controller, ProjectService, $mdDialog, $mdMedia, TaskService, PrToast) {
+  function ProjectsController(Global, $controller, ProjectService, $mdDialog, $mdMedia, TaskService) {
     var vm = this;
 
     //Attributes Block
@@ -16,10 +16,7 @@
 
     //Functions Block
     vm.onActivate       = onActivate;
-    vm.closeModalTask   = closeModalTask;
     vm.addTasks         = addTasks;
-    vm.cleanFormTask    = cleanFormTask;
-    vm.saveTask         = saveTask;
     vm.afterSave        = afterSave;
 
     // instantiate base controller
@@ -29,50 +26,45 @@
       vm.task = new TaskService();
     }
 
-    function addTasks(ev, idProject) {
-      var idProject = idProject;
+    function addTasks(event, projectId) {
+      vm.currentProjectId = projectId;
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
       $mdDialog.show({
-        locals: vm,
-        controller: angular.noop,
-        controllerAs: 'projectsCtrl',
+        locals: { projectCtrl: vm },
+        controller: function(projectCtrl) {
+          var vm = this;
+
+          vm.closeModal = closeModal;
+          vm.beforeSave = beforeSave;
+
+          $controller('CRUDController', { vm: vm, modelService: TaskService, options: {
+            redirectAfterSave: false,
+            searchOnInit: false
+          } });
+
+          function beforeSave() {
+            vm.resource.project = { id: projectCtrl.currentProjectId };
+          }
+
+          function closeModal() {
+            vm.task = new TaskService();
+            $mdDialog.cancel();
+          }
+        },
+        controllerAs: 'tasksCtrl',
         bindToController: true,
         templateUrl: Global.clientPath + '/tasks/task-form.html',
-        targetEvent: ev,
+        targetEvent: event,
         clickOutsideToClose: true,
         fullscreen: useFullScreen
       });
 
     }
 
+
     function afterSave() {
       vm.search(vm.paginator.currentPage);
-    }
-
-    function closeModalTask() {
-      vm.task = new TaskService();
-      $mdDialog.cancel();
-    }
-
-    function cleanFormTask(task) {
-      console.log(vm.task);
-      vm.task = new TaskService();
-      console.log(task);
-    }
-
-    function saveTask() {
-      vm.task.$save().then(function (resource) {
-        vm.task = resource;
-
-        vm.cleanFormTask();
-        vm.search(vm.paginator.currentPage);
-
-        PrToast.success('Operação realizada com sucesso');
-
-      }, function (error) {
-        PrToast.errorValidation(error.data, 'Não foi possível salvar.');
-      });
     }
 
   }

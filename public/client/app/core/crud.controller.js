@@ -20,7 +20,8 @@
 
     function activate() {
       vm.defaultOptions = {
-        redirectAfterSave: true
+        redirectAfterSave: true,
+        searchOnInit: true
       }
 
       angular.merge(vm.defaultOptions, options);
@@ -31,7 +32,8 @@
       if (angular.isFunction(vm.onActivate)) vm.onActivate.call();
 
       vm.paginator = PrPagination.getInstance(search, 10);
-      vm.search();
+
+      if (vm.defaultOptions.searchOnInit) vm.search();
     }
 
     function search(page) {

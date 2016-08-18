@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Task;
+use App\Project;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
-class TaskController extends Controller
+class TasksController extends Controller
 {
 
     public function __construct()
@@ -48,13 +52,12 @@ class TaskController extends Controller
             'scheduled_to' => 'required'
         ]);
 
-        $task = new Task;
-        $task->fill(Input::all());
+        $task = new Task($request->all());
+        $task->done = false;
+        $task->project()->associate(new Project($request->project));
 
         try {
-
             $task->save();
-
         } catch (Exception $e) {
             return Response::json(['error' => 'Task already exists.'], HttpResponse::HTTP_CONFLICT);
         }

@@ -2,16 +2,20 @@
 
 namespace App;
 
+use App\Task;
+
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\AuditingTrait;
 
 class Project extends BaseModel
 {
     protected $table = 'projects';
-    protected $fillable = ['name', 'cost'];
+    protected $fillable = ['id', 'name', 'cost'];
 
-    public function __construct()
+    public function __construct($attributes = array())
     {
+        parent::__construct($attributes);
+
         $this->castAttributes(['cost' => 'real']);
     }
 
@@ -20,8 +24,6 @@ class Project extends BaseModel
     */
     public function tasks()
     {
-
         return $this->hasMany(Task::class);
-
     }
 }
