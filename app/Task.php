@@ -23,7 +23,7 @@ class Task extends BaseModel
     {
         parent::__construct($attributes);
 
-        $this->castAttributes(['scheduled_to' => 'datetime']);
+        // $this->castAttributes(['scheduled_to' => 'datetime']);
     }
 
     /**

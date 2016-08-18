@@ -26,10 +26,10 @@
                 class="md-dark">create</md-icon>
               <md-tooltip md-direction="bottom">Editar</md-tooltip>
             </md-button>
-            <md-button class="md-icon-button" ng-click="projectsCtrl.viewTasks(project)">
+            <md-button class="md-icon-button" ng-click="projectsCtrl.viewTasks($event, project.id)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">search</md-icon>
-              <md-tooltip md-direction="bottom">Lista de Tarefas</md-tooltip>
+              <md-tooltip md-direction="bottom">Listar Tarefas</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="projectsCtrl.addTasks($event, project.id)">
               <md-icon md-font-set="material-icons"

@@ -23,9 +23,29 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $baseQuery = new Task;
+
+        if($request->has('projectId'))
+           $baseQuery = $baseQuery->where('project_id', '=', $request->projectId);
+
+        if($request->has('description'))
+            $baseQuery = $baseQuery->where('description', 'like', '%'.$request->description.'%');
+
+        $dataQuery = clone $baseQuery;
+        $countQuery = clone $baseQuery;
+
+        $data['items'] = $dataQuery
+            ->orderBy('description', 'asc')
+            ->skip(($request->page - 1) * $request->perPage)
+            ->take($request->perPage)
+            ->get();
+
+        $data['total'] = $countQuery
+            ->count();
+
+        return $data;
     }
 
     /**
@@ -96,16 +116,17 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $task = Task::find($id);
 
         $this->validate($request, [
             'description' => 'required|max:256',
             'priority' => 'required|min:1',
-            'scheduled_to' => 'required'
+            'scheduled_to' => 'required',
+            'done' => 'required'
         ]);
 
-        $task->fill(Input::all());
+        $task->fill($request->all());
+        $task->project()->associate(new Project($request->project));
         $task->save();
 
         return $task;

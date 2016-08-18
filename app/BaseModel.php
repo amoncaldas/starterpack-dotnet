@@ -15,12 +15,7 @@ class BaseModel extends Model
     protected $historyLimit = 50;
     protected $auditableTypes = ['created', 'saved', 'deleted'];
 
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-        'deleted_at' => 'datetime'
-    ];
-
+    protected $casts = [];
     protected $dates = [];
 
     protected function castAttributes($moreAttributes = [])
@@ -30,7 +25,7 @@ class BaseModel extends Model
 
     public function setAttribute($key, $value)
     {
-        if (in_array($key, $this->dates)) {
+        if (in_array($key, $this->dates) && is_string($value)) {
             $this->attributes[$key] = new Carbon($value);
         } else {
             parent::setAttribute($key, $value);
