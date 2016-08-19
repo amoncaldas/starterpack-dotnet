@@ -8,14 +8,11 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function TasksDialogController($mdDialog, $controller, TaskDialogService, projectCtrl, PrToast) {
+  function TasksDialogController($mdDialog, $controller, TaskDialogService, projectId, PrToast) {
     var vm = this;
 
-    //Attributes Block
-    vm.now  = new Date();
-    vm.queryFilters = { projectId: projectCtrl.currentProjectId };
-
     //Functions Block
+    vm.onActivate   = onActivate;
     vm.closeModal   = closeModal;
     vm.beforeSearch = beforeSearch;
     vm.beforeSave   = beforeSave;
@@ -27,6 +24,11 @@
       redirectAfterSave: false,
       perPage: 5
     } });
+
+    function onActivate() {
+      vm.now  = new Date();
+      vm.queryFilters = { projectId: projectId };
+    }
 
     function beforeSearch() {
       angular.extend(vm.defaultQueryFilters, vm.queryFilters);

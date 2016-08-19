@@ -10,9 +10,6 @@
   // eslint-disable-next-line max-params
   function CRUDController(vm, modelService, options, PrToast, PrPagination) {
 
-    //Atrributes Block
-    vm.perPage = options.perPage;
-
     //Functions Block
     vm.search = search;
     vm.edit = edit;
@@ -36,7 +33,7 @@
 
       if (angular.isFunction(vm.onActivate)) vm.onActivate.call();
 
-      vm.paginator = PrPagination.getInstance(search, vm.perPage);
+      vm.paginator = PrPagination.getInstance(search, vm.defaultOptions.perPage);
 
       if (vm.defaultOptions.searchOnInit) vm.search();
     }

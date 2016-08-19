@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function ProjectsController(Global, $controller, ProjectService, $mdDialog, $mdMedia) {
+  function ProjectsController(Global, $controller, ProjectService, $mdDialog, $mdMedia, PrDialog) {
     var vm = this;
 
     //Attributes Block
@@ -20,18 +20,18 @@
     // instantiate base controller
     $controller('CRUDController', { vm: vm, modelService: ProjectService, options: { redirectAfterSave: false } });
 
-    function viewTasks(event, projectId) {
-      vm.currentProjectId = projectId;
+    function viewTasks(projectId) {
+
+      PrDialog.show('alert');
 
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
       $mdDialog.show({
-        locals: { projectCtrl: vm },
+        locals: { projectId: projectId },
         controller: 'TasksDialogController',
         controllerAs: 'tasksCtrl',
         bindToController: true,
         templateUrl: Global.clientPath + '/tasks/task-dialog.html',
-        targetEvent: event,
         clickOutsideToClose: true,
         fullscreen: useFullScreen
       });

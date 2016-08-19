@@ -14,8 +14,8 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::resource('projects', 'ProjectsController');
 
-        Route::resource('tasks', 'TasksController');
         Route::put('/tasks/toggleDone', 'TasksController@toggleDone');
+        Route::resource('tasks', 'TasksController');
 
         Route::group([], function () {
             Route::put('profile', 'UsersController@updateProfile');

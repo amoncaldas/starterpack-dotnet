@@ -7,6 +7,10 @@
     .factory('serviceFactory', serviceFactory);
 
   /** @ngInject */
+  /**
+   * Mais informações:
+   * https://github.com/swimlane/angular-model-factory/wiki/API
+   */
   function serviceFactory($modelFactory) {
     var service = function(url, options) {
       var model;
