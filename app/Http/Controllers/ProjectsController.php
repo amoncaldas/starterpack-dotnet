@@ -30,8 +30,10 @@ class ProjectsController extends CrudController
 
         if($request->has('name'))
             $query = $query->where('name', 'like', '%'.$request->name.'%');
+    }
 
-        return $query;
+    protected function beforeSearch(Request $request, $dataQuery, $countQuery) {
+        $dataQuery->orderBy('name', 'asc');
     }
 
     protected function getValidationRules(Request $request, Model $obj)
@@ -41,7 +43,7 @@ class ProjectsController extends CrudController
             'cost' => 'required|min:1'
         ];
 
-        if ( $request->route()->getName() === 'projects.update' ) {
+        if ( strpos($request->route()->getName(), 'projects.update') !== false ) {
             $rules['name'] = 'required|max:255|unique:projects,name,'.$obj->id;
         }
 

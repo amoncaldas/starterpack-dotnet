@@ -27,10 +27,12 @@ trait Actions
 
         $baseQuery = $klass::query();
 
-        $baseQuery = $this->callback('applyFilters', $request, $baseQuery);
+        $this->callback('applyFilters', $request, $baseQuery);
 
         $dataQuery = clone $baseQuery;
         $countQuery = clone $baseQuery;
+
+        $this->callback('beforeSearch', $request, $dataQuery, $countQuery);
 
         $data['items'] = $dataQuery
             ->skip(($request->page - 1) * $request->perPage)

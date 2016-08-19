@@ -7,139 +7,70 @@ use Illuminate\Http\Request;
 use App\Task;
 use App\Project;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\CrudController;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
-class TasksController extends Controller
+class TasksController extends CrudController
 {
 
     public function __construct()
     {
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    protected function getModel()
     {
-        $baseQuery = new Task;
+        return Task::class;
+    }
 
+    protected function applyFilters(Request $request, $query) {
         if($request->has('projectId'))
-           $baseQuery = $baseQuery->where('project_id', '=', $request->projectId);
+           $query = $query->where('project_id', '=', $request->projectId);
 
         if($request->has('description'))
-            $baseQuery = $baseQuery->where('description', 'like', '%'.$request->description.'%');
-
-        $dataQuery = clone $baseQuery;
-        $countQuery = clone $baseQuery;
-
-        $data['items'] = $dataQuery
-            ->orderBy('description', 'asc')
-            ->skip(($request->page - 1) * $request->perPage)
-            ->take($request->perPage)
-            ->get();
-
-        $data['total'] = $countQuery
-            ->count();
-
-        return $data;
+            $query = $query->where('description', 'like', '%'.$request->description.'%');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    protected function beforeSearch(Request $request, $dataQuery, $countQuery) {
+        $dataQuery->orderBy('description', 'asc');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    protected function getValidationRules(Request $request, Model $obj)
     {
-        $this->validate($request, [
+        $rules = [
             'description' => 'required|max:256',
             'priority' => 'required|min:1',
             'scheduled_to' => 'required'
-        ]);
+        ];
 
-        $task = new Task($request->all());
-        $task->done = false;
-        $task->project()->associate(new Project($request->project));
-
-        try {
-            $task->save();
-        } catch (Exception $e) {
-            return Response::json(['error' => 'Task already exists.'], HttpResponse::HTTP_CONFLICT);
+        if ( strpos($request->route()->getName(), 'tasks.update') !== false ) {
+            $rules['done'] = 'required';
         }
 
-        return $task;
+        return $rules;
+    }
+
+    public function beforeStore(Request $request, Model $obj)
+    {
+        $obj->done = false;
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Atualiza o status da tarefa
      */
-    public function show($id)
+    public function toggleDone(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $task = Task::find($id);
+        $task = Task::find($request->id);
 
         $this->validate($request, [
-            'description' => 'required|max:256',
-            'priority' => 'required|min:1',
-            'scheduled_to' => 'required',
             'done' => 'required'
         ]);
 
-        $task->fill($request->all());
-        $task->project()->associate(new Project($request->project));
+        $task->done = $request->done;
+
         $task->save();
 
         return $task;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $task = Task::destroy($id);
     }
 }

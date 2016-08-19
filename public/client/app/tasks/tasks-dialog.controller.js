@@ -8,38 +8,32 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function TasksDialogController($mdDialog, $controller, TaskService, projectCtrl) {
+  function TasksDialogController($mdDialog, $controller, TaskDialogService, projectCtrl, PrToast) {
     var vm = this;
 
     //Attributes Block
-    vm.task = {};
+    vm.projectId = projectCtrl.currentProjectId;
     vm.now  = new Date();
 
     //Functions Block
-    vm.onActivate   = onActivate;
     vm.closeModal   = closeModal;
     vm.beforeSearch = beforeSearch;
     vm.beforeSave   = beforeSave;
     vm.afterSave    = afterSave;
-    vm.cleanForm    = cleanForm;
-    vm.setDone      = setDone;
+    vm.toggleDone   = toggleDone;
 
     // instantiate base controller
-    $controller('CRUDController', { vm: vm, modelService: TaskService, options: {
+    $controller('CRUDController', { vm: vm, modelService: TaskDialogService, options: {
       redirectAfterSave: false,
       searchOnInit: projectCtrl.searchOnInit
     } });
 
-    function onActivate() {
-      vm.cleanForm();
-    }
-
     function beforeSearch() {
-      angular.extend(vm.defaultQueryFilters, { projectId: projectCtrl.currentProjectId });
+      angular.extend(vm.defaultQueryFilters, { projectId: vm.projectId });
     }
 
     function beforeSave() {
-      vm.resource.project = { id: projectCtrl.currentProjectId };
+      vm.resource.project_id = vm.projectId;
     }
 
     function afterSave() {
@@ -51,14 +45,17 @@
       $mdDialog.cancel();
     }
 
-    function cleanForm() {
-      vm.task = new TaskService();
-    }
+    function toggleDone(resource) {
+      var task = {
+        id: resource.id,
+        done: resource.done
+      };
 
-    function setDone(task) {
-      vm.resource = task;
-      vm.save();
-      //console.log(vm);
+      TaskDialogService.toggleDone(task).then(function() {
+        vm.search(vm.paginator.currentPage);
+      }, function(error) {
+        PrToast.errorValidation(error.data, 'Não foi possível atualizar sua tarefa.');
+      });
     }
 
   }

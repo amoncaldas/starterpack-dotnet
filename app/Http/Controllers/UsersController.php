@@ -32,8 +32,10 @@ class UsersController extends CrudController
 
         if($request->has('name'))
             $query = $query->where('name', 'like', '%'.$request->name.'%');
+    }
 
-        return $query;
+    protected function beforeSearch(Request $request, $dataQuery, $countQuery) {
+        $dataQuery->orderBy('name', 'asc');
     }
 
     protected function getValidationRules(Request $request, Model $obj)

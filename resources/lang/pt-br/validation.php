@@ -106,6 +106,9 @@ return [
         'password' => 'senha',
         'name' => 'nome',
         'title' => 'título',
+        'description' => 'descrição',
+        'priority' => 'prioridade',
+        'scheduled_to' => 'agendar para'
     ],
 
 ];

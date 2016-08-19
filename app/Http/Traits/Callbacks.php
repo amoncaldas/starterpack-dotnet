@@ -28,6 +28,7 @@ trait Callbacks
     protected $registeredCallbacks = [
         'beforeAll' => [ 'beforeAll' ],
         'beforeStore' => [ 'beforeStore' ],
+        'beforeSearch' => [ 'beforeSearch' ],
         'beforeUpdate' => [ 'beforeUpdate' ],
         'beforeSave' => [ 'beforeSave' ],
         'beforeDestroy' => [ 'beforeDestroy' ],
@@ -47,6 +48,7 @@ trait Callbacks
      */
 
     protected function beforeAll(Request $request) { }
+    protected function beforeSearch(Request $request, $dataQuery, $countQuery) { }
     protected function beforeStore(Request $request, Model $model) { }
     protected function beforeUpdate(Request $request, Model $model) { }
     protected function beforeSave(Request $request, Model $model) { }

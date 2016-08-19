@@ -33,7 +33,7 @@
         controller: 'TasksDialogController',
         controllerAs: 'tasksCtrl',
         bindToController: true,
-        templateUrl: Global.clientPath + '/tasks/task-form.html',
+        templateUrl: Global.clientPath + '/tasks/task-dialog-form.html',
         targetEvent: event,
         clickOutsideToClose: true,
         fullscreen: useFullScreen
@@ -52,7 +52,7 @@
         controller: 'TasksDialogController',
         controllerAs: 'tasksCtrl',
         bindToController: true,
-        templateUrl: Global.clientPath + '/tasks/task-list.html',
+        templateUrl: Global.clientPath + '/tasks/task-dialog-list.html',
         targetEvent: event,
         clickOutsideToClose: true,
         fullscreen: useFullScreen

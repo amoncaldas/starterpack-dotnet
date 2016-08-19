@@ -13,7 +13,11 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
 
         Route::resource('projects', 'ProjectsController');
-        Route::resource('tasks', 'TasksController');
+
+        Route::group(['prefix' => 'tasks'], function () {
+            Route::resource('/', 'TasksController');
+            Route::put('/toggleDone', 'TasksController@toggleDone');
+        });
 
         Route::group([], function () {
             Route::put('profile', 'UsersController@updateProfile');

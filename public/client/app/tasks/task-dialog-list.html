@@ -17,10 +17,10 @@
             ng-repeat="task in tasksCtrl.resources"
             ng-if="tasksCtrl.resources.length > 0">
             <td md-cell>{{task.description}}</td>
-            <td md-cell>{{task.scheduled_to | date : "shortDate"}}</td>
+            <td md-cell>{{task.scheduled_to | date : 'dd-MM-yyyy'}}</td>
             <td md-cell>{{task.priority | number: 1}}</td>
             <td md-cell>
-              <md-switch aria-label="Não Feito/Feito" ng-model="task.done" ng-change="tasksCtrl.setDone(task)">
+              <md-switch aria-label="Não Feito/Feito" ng-model="task.done" ng-change="tasksCtrl.toggleDone(task)">
               </md-switch>
             </td>
           </tr>
