@@ -18,28 +18,23 @@
       <tbody md-body>
         <tr md-row ng-repeat="project in projectsCtrl.resources" ng-if="projectsCtrl.resources.length > 0">
           <td md-cell>{{project.name}}</td>
-          <td md-cell>{{project.cost | currency}}</td>
+          <td md-cell >R$ {{project.cost | number: 2}}</td>
           <td md-cell>{{project.tasks.length}}</td>
           <td md-cell class="md-text-center">
             <md-button class="md-icon-button" ng-click="projectsCtrl.edit(project)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">create</md-icon>
-              <md-tooltip md-direction="bottom">Editar</md-tooltip>
+              <md-tooltip md-direction="top">Editar</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="projectsCtrl.viewTasks($event, project.id)">
               <md-icon md-font-set="material-icons"
-                class="md-dark">search</md-icon>
-              <md-tooltip md-direction="bottom">Listar Tarefas</md-tooltip>
-            </md-button>
-            <md-button class="md-icon-button" ng-click="projectsCtrl.addTasks($event, project.id)">
-              <md-icon md-font-set="material-icons"
                 class="md-dark">assignment</md-icon>
-              <md-tooltip md-direction="bottom">Adicionar Tarefa</md-tooltip>
+              <md-tooltip md-direction="top">Listar Tarefas</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="projectsCtrl.remove(project)">
               <md-icon md-font-set="material-icons"
                 class="md-warn">delete</md-icon>
-              <md-tooltip md-direction="bottom">Apagar</md-tooltip>
+              <md-tooltip md-direction="top">Apagar</md-tooltip>
             </md-button>
           </td>
         </tr>

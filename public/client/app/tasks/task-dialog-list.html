@@ -1,42 +1,73 @@
-<md-dialog aria-label="Tarefas" flex="50">
-  <box box-title="Lista de Tarefas">
-    <md-table-container>
-      <table md-table>
-        <thead md-head>
-          <tr md-row>
-            <th md-column md-order-by="nameToLower"><span>Descrição</span></th>
-            <th md-column>Agendado para</th>
-            <th md-column md-numeric><span>Prioridade</span></th>
-            <th md-column>Status</th>
-          </tr>
-        </thead>
-        <tbody md-body>
-          <tr md-row md-select="task"
-            md-select-id="id"
-            md-auto-select
-            ng-repeat="task in tasksCtrl.resources"
-            ng-if="tasksCtrl.resources.length > 0">
-            <td md-cell>{{task.description}}</td>
-            <td md-cell>{{task.scheduled_to | date : 'dd-MM-yyyy'}}</td>
-            <td md-cell>{{task.priority | number: 1}}</td>
-            <td md-cell>
-              <md-switch aria-label="Não Feito/Feito" ng-model="task.done" ng-change="tasksCtrl.toggleDone(task)">
-              </md-switch>
-            </td>
-          </tr>
-          <tr md-row ng-if="tasksCtrl.resources.length == 0">
-            <td md-cell colspan="4">
-              <div layout="row" layout-align="center center">Nenhuma tarefa agendada para este projeto.</div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </md-table-container>
+<box box-title="Lista de Tarefas">
+  <box-toolbar-buttons>
+    <md-button class="md-icon-button" ng-click="tasksCtrl.goTo('form')">
+      <md-icon md-font-set="material-icons" class="md-warn">add</md-icon>
+      <md-tooltip md-direction="bottom">Adicionar</md-tooltip>
+    </md-button>
+  </box-toolbar-buttons>
+  <md-content layout-padding md-whiteframe="1" class="bottom-4">
+    <form class="condensed">
+      <div layout="row">
+        <md-datepicker flex ng-model="tasksCtrl.queryFilters.dateStart" md-placeholder="Data Inicial">
+        </md-datepicker>
+        <md-datepicker flex ng-model="tasksCtrl.queryFilters.dateEnd" md-placeholder="Data Final">
+        </md-datepicker>
+        <md-switch flex aria-label="Não Feito/Feito" ng-model="tasksCtrl.queryFilters.done">
+          Não Feito/Feito
+        </md-switch>
+        <md-button class="md-raised md-primary md-mini" ng-click="tasksCtrl.search(vm.paginator.currentPage)">Filtar</md-button>
+      </div>
+    </form>
+  </md-content>
+  <md-table-container>
+    <table md-table>
+      <thead md-head>
+        <tr md-row>
+          <th md-column><span>Descrição</span></th>
+          <th md-column>Agendado para</th>
+          <th md-column md-numeric><span>Prioridade</span></th>
+          <th md-column class="md-text-center">Não Feito / Feito</th>
+          <th md-column class="md-text-center">Ações</th>
+        </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row ng-repeat="task in tasksCtrl.resources" ng-if="tasksCtrl.resources.length > 0">
+          <td md-cell>{{task.description}}</td>
+          <td md-cell>{{task.scheduled_to | date : 'dd-MM-yyyy'}}</td>
+          <td md-cell>{{task.priority}}</td>
+          <td md-cell class="md-text-center">
+            <md-switch aria-label="Não Feito/Feito" ng-model="task.done" ng-change="tasksCtrl.toggleDone(task)">
+            </md-switch>
+          </td>
+          <td md-cell>
+            <md-button class="md-icon-button" ng-click="tasksCtrl.edit(task)">
+              <md-icon md-font-set="material-icons" class="md-dark">create</md-icon>
+              <md-tooltip md-direction="top">Editar</md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button" ng-click="tasksCtrl.remove(task)">
+              <md-icon md-font-set="material-icons" class="md-warn">delete</md-icon>
+              <md-tooltip md-direction="top">Apagar</md-tooltip>
+            </md-button>
+          </td>
+        </tr>
+        <tr md-row ng-if="tasksCtrl.resources.length == 0">
+          <td md-cell colspan="5">
+            <div layout="row" layout-align="center center">Nenhuma tarefa agendada para este projeto.</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
 
-    <box-footer-buttons>
-      <md-button class="md-warn" ng-click="tasksCtrl.closeModal()">Sair</md-button>
-    </box-footer-buttons>
+  <box-footer-buttons>
+    <div layout="row">
+      <div flex layout="row" layout-align="center center">
+        <pr-pagination paginator="tasksCtrl.paginator"></pr-pagination>
+      </div>
+      <div>
+        <md-button class="md-warn" ng-click="tasksCtrl.closeModal()">Sair</md-button>
+      </div>
+    </div>
+  </box-footer-buttons>
 
-  </box>
-
-</md-dialog>
+</box>

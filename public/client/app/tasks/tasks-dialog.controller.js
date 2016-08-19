@@ -12,8 +12,8 @@
     var vm = this;
 
     //Attributes Block
-    vm.projectId = projectCtrl.currentProjectId;
     vm.now  = new Date();
+    vm.queryFilters = { projectId: projectCtrl.currentProjectId };
 
     //Functions Block
     vm.closeModal   = closeModal;
@@ -25,19 +25,20 @@
     // instantiate base controller
     $controller('CRUDController', { vm: vm, modelService: TaskDialogService, options: {
       redirectAfterSave: false,
-      searchOnInit: projectCtrl.searchOnInit
+      perPage: 5
     } });
 
     function beforeSearch() {
-      angular.extend(vm.defaultQueryFilters, { projectId: vm.projectId });
+      angular.extend(vm.defaultQueryFilters, vm.queryFilters);
     }
 
     function beforeSave() {
-      vm.resource.project_id = vm.projectId;
+      vm.resource.project_id = vm.queryFilters.projectId;
     }
 
     function afterSave() {
       vm.cleanForm();
+      vm.search(vm.paginator.currentPage);
     }
 
     function closeModal() {
@@ -46,12 +47,8 @@
     }
 
     function toggleDone(resource) {
-      var task = {
-        id: resource.id,
-        done: resource.done
-      };
-
-      TaskDialogService.toggleDone(task).then(function() {
+      TaskDialogService.toggleDone({ id: resource.id, done: resource.done }).then(function() {
+        PrToast.success('Operação realizada com sucesso.');
         vm.search(vm.paginator.currentPage);
       }, function(error) {
         PrToast.errorValidation(error.data, 'Não foi possível atualizar sua tarefa.');

@@ -215,6 +215,11 @@ a.logo {
   margin-top: 7px !important;
 }
 
+.md-dialog-transparent {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
 @each $align in $alignList {
   .md-text-#{$align} {
     text-align: #{$align} !important;

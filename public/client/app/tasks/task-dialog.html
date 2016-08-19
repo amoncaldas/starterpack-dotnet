@@ -1,0 +1,6 @@
+<md-dialog aria-label="Tarefas" flex="50" class="md-dialog-transparent">
+  <content-body>
+    <div flex ng-include src="'client/app/tasks/task-dialog-form.html'" ng-show="tasksCtrl.viewForm"></div>
+    <div flex ng-include src="'client/app/tasks/task-dialog-list.html'" ng-hide="tasksCtrl.viewForm"></div>
+  </content-body>
+</md-dialog>

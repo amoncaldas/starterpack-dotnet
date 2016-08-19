@@ -15,7 +15,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::resource('projects', 'ProjectsController');
 
         Route::group(['prefix' => 'tasks'], function () {
-            Route::resource('/', 'TasksController');
+            Route::resource('/', 'TasksController', ['except' => ['toggleDone']]);
             Route::put('/toggleDone', 'TasksController@toggleDone');
         });
 
