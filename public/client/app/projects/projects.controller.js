@@ -8,7 +8,8 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function ProjectsController(Global, $controller, ProjectService, $mdDialog, $mdMedia, PrDialog) {
+  //function ProjectsController(Global, $controller, ProjectService, $mdDialog, $mdMedia, PrDialog) {
+  function ProjectsController($controller, ProjectService, PrDialog) {
     var vm = this;
 
     //Attributes Block
@@ -20,21 +21,21 @@
     // instantiate base controller
     $controller('CRUDController', { vm: vm, modelService: ProjectService, options: { redirectAfterSave: false } });
 
+    //function viewTasks() {
     function viewTasks(projectId) {
 
-      PrDialog.show('alert');
-
-      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
-
-      $mdDialog.show({
+      var options = {
         locals: { projectId: projectId },
         controller: 'TasksDialogController',
         controllerAs: 'tasksCtrl',
-        bindToController: true,
-        templateUrl: Global.clientPath + '/tasks/task-dialog.html',
-        clickOutsideToClose: true,
-        fullscreen: useFullScreen
-      });
+        templateUrl: '/tasks/task-dialog.html'
+      };
+
+      PrDialog.show('custom', options)
+        .then(function(response) {
+          console.log(response);
+          vm.search(vm.paginator.currentPage);
+        });
 
     }
 

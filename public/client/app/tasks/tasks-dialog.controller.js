@@ -45,7 +45,7 @@
 
     function closeModal() {
       vm.cleanForm();
-      $mdDialog.cancel();
+      $mdDialog.hide('return to controller parent with parameters');
     }
 
     function toggleDone(resource) {
