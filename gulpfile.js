@@ -43,7 +43,8 @@ paths.angularScripts = [
   paths.bower + '/ng-prodeb/dist/ng-prodeb.min.js'
 ];
 paths.vendorsScripts = [
-  paths.bower + '/lodash/dist/lodash.min.js'
+  paths.bower + '/lodash/dist/lodash.min.js',
+  paths.bower + '/moment/min/moment.min.js'
 ];
 paths.scripts = [
   paths.app + '/app.js',
