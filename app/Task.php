@@ -17,8 +17,6 @@ class Task extends BaseModel
         'project_id'
     ];
 
-    protected $dates = ['scheduled_to'];
-
     /**
     * Retorna o projeto de um projeto
     */

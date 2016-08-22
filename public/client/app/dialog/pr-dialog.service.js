@@ -88,6 +88,12 @@
         fullscreen: ($mdMedia('sm') || $mdMedia('xs'))
       };
 
+      //não fazemos merge da propriedade locals para não estourar o limite de recursividade
+      if (angular.isDefined(options.locals)) {
+        defaultOptions.locals = options.locals;
+        delete options.locals;
+      }
+
       angular.merge(defaultOptions, options);
 
       /**

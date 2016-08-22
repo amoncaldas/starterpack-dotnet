@@ -45,9 +45,9 @@
               <td md-cell>{{log.user.name}}</td>
               <td md-cell>{{log.owner_type}}</td>
               <td md-cell>{{log.type}}</td>
-              <td md-cell>{{log.updated_at | date : "shortDate"}}</td>
+              <td md-cell>{{log.updated_at | prDatetime}}</td>
               <td md-cell>
-                <md-button class="md-icon-button" ng-click="auditCtrl.edit(log)">
+                <md-button class="md-icon-button" ng-click="auditCtrl.viewDetail(log)">
                   <md-icon md-font-set="material-icons"
                     class="md-dark">search</md-icon>
                   <md-tooltip md-direction="bottom">Visualizar</md-tooltip>

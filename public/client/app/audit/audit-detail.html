@@ -1,0 +1,18 @@
+<md-dialog aria-label="Logs" flex="50" class="md-dialog-transparent">
+  <content-body>
+    <div flex="50" ng-if="auditDetailCtrl.auditDetail.old_value">
+      <box box-title="Antes">
+        <ul>
+          <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.old_value">{{key}}: {{value | auditValue:key}}</li>
+        </ul>
+      </box>
+    </div>
+    <div flex="50" ng-if="auditDetailCtrl.auditDetail.new_value">
+      <box box-title="Depois">
+        <ul>
+          <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.new_value">{{key}}: {{value | auditValue:key}}</li>
+        </ul>
+      </box>
+    </div>
+  </content-body>
+</md-dialog>

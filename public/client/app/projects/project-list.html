@@ -12,6 +12,7 @@
           <th md-column>Nome</th>
           <th md-column>Custo</th>
           <th md-column>Total de Tarefas</th>
+          <th md-column>Criado Em</th>
           <th md-column class="md-text-center">Ações</th>
         </tr>
       </thead>
@@ -20,6 +21,7 @@
           <td md-cell>{{project.name}}</td>
           <td md-cell >R$ {{project.cost | number: 2}}</td>
           <td md-cell>{{project.tasks.length}}</td>
+          <td md-cell>{{project.created_at | prDate}}</td>
           <td md-cell class="md-text-center">
             <md-button class="md-icon-button" ng-click="projectsCtrl.edit(project)">
               <md-icon md-font-set="material-icons"

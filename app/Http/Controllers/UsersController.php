@@ -82,8 +82,8 @@ class UsersController extends CrudController
         if( $oldRoles !== $newRoles )
         {
             $log = [
-                'new_value' => $newRoles,
-                'old_value' => $oldRoles
+                'new_value' => [ 'roles' => $newRoles ],
+                'old_value' => [ 'roles' => $oldRoles ]
             ];
 
             $user->audit($log, 'updated');

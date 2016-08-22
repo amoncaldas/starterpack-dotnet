@@ -8,12 +8,12 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function AuditController($controller, AuditService) {
+  function AuditController($controller, AuditService, PrDialog) {
     var vm = this;
 
     vm.onActivate = onActivate;
     vm.beforeSearch = beforeSearch;
-    vm.afterSearch = afterSearch;
+    vm.viewDetail = viewDetail;
 
     $controller('CRUDController', { vm: vm, modelService: AuditService, options: {} });
 
@@ -39,14 +39,20 @@
       angular.extend(vm.defaultQueryFilters, vm.queryFilters);
     }
 
-    function afterSearch() {
-      var items = vm.resources;
+    function viewDetail(auditDetail) {
+      var options = {
+        locals: { auditDetail: auditDetail },
+        /** @ngInject */
+        controller: function(auditDetail) {
+          var vm = this;
 
-      for (var i = 0; i < items.length; i++) {
-        items[i].updated_at = new Date(items[i].updated_at);
-      }
+          vm.auditDetail = auditDetail;
+        },
+        controllerAs: 'auditDetailCtrl',
+        templateUrl: '/audit/audit-detail.html'
+      };
 
-      vm.resources = items;
+      PrDialog.show('custom', options);
     }
 
 

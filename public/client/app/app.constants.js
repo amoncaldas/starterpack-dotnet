@@ -4,6 +4,7 @@
 
   angular
     .module('app')
-    .constant('lodash', _);
+    .constant('lodash', _)
+    .constant('moment', moment);
 
 }());

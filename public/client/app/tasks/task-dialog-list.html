@@ -33,7 +33,7 @@
       <tbody md-body>
         <tr md-row ng-repeat="task in tasksCtrl.resources" ng-if="tasksCtrl.resources.length > 0">
           <td md-cell>{{task.description}}</td>
-          <td md-cell>{{task.scheduled_to | date : 'dd-MM-yyyy'}}</td>
+          <td md-cell>{{task.scheduled_to | prDatetime}}</td>
           <td md-cell>{{task.priority}}</td>
           <td md-cell class="md-text-center">
             <md-switch aria-label="Não Feito/Feito" ng-model="task.done" ng-change="tasksCtrl.toggleDone(task)">
