@@ -31,7 +31,7 @@
       vm.viewForm = false;
       vm.resource = new modelService();
 
-      if (angular.isFunction(vm.onActivate)) vm.onActivate.call();
+      if (angular.isFunction(vm.onActivate)) vm.onActivate();
 
       vm.paginator = PrPagination.getInstance(search, vm.defaultOptions.perPage);
 
@@ -42,13 +42,13 @@
       vm.paginator.currentPage = (angular.isDefined(page)) ? page : 1;
       vm.defaultQueryFilters = { page: vm.paginator.currentPage, perPage: vm.paginator.perPage };
 
-      if (angular.isFunction(vm.beforeSearch) && vm.beforeSearch.call(page) === false) return false;
+      if (angular.isFunction(vm.beforeSearch) && vm.beforeSearch(page) === false) return false;
 
       modelService.paginate(vm.defaultQueryFilters).then(function (response) {
         vm.paginator.calcNumberOfPages(response.total);
         vm.resources = response.items;
 
-        if (angular.isFunction(vm.afterSearch)) vm.afterSearch.call(response);
+        if (angular.isFunction(vm.afterSearch)) vm.afterSearch(response);
       }, function () {
         PrToast.error('Não foi possível realizar a busca.');
       });
@@ -57,7 +57,7 @@
     function cleanForm() {
       vm.resource = new modelService();
 
-      if (angular.isFunction(vm.afterClean)) vm.afterClean.call();
+      if (angular.isFunction(vm.afterClean)) vm.afterClean();
     }
 
     function edit(resource) {
@@ -65,16 +65,16 @@
 
       vm.resource = angular.copy(resource);
 
-      if (angular.isFunction(vm.afterEdit)) vm.afterEdit.call();
+      if (angular.isFunction(vm.afterEdit)) vm.afterEdit();
     }
 
     function save() {
-      if (angular.isFunction(vm.beforeSave) && vm.beforeSave.call() === false) return false;
+      if (angular.isFunction(vm.beforeSave) && vm.beforeSave() === false) return false;
 
       vm.resource.$save().then(function (resource) {
         vm.resource = resource;
 
-        if (angular.isFunction(vm.afterSave)) vm.afterSave.call(resource);
+        if (angular.isFunction(vm.afterSave)) vm.afterSave(resource);
 
         if (vm.defaultOptions.redirectAfterSave) {
           vm.cleanForm();
@@ -90,7 +90,7 @@
     }
 
     function remove(resource) {
-      if (angular.isFunction(vm.beforeRemove) && vm.beforeRemove.call(resource) === false) return false;
+      if (angular.isFunction(vm.beforeRemove) && vm.beforeRemove(resource) === false) return false;
 
       resource.$destroy().then(function () {
         vm.search();
