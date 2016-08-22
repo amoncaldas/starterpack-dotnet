@@ -21,7 +21,9 @@
       { url: 'widgets', titulo: 'Widgets', icon: 'widgets', subItens: [] },
       { url: '#', titulo: 'Plugins', icon: 'extension',
         subItens: [
-          { url: 'toast', titulo: 'Toast', icon: 'tab' }
+          { url: 'pr-toast', titulo: 'PrToast', icon: 'tab' },
+          { url: 'pr-spinner', titulo: 'PrSpinner', icon: 'replay' },
+          { url: 'pr-dialog', titulo: 'PrDialog', icon: 'view_carousel' }
         ]
       },
       { url: '#', titulo: 'Administração', icon: 'settings_applications', profiles: ['admin'],
