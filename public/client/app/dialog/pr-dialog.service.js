@@ -73,17 +73,23 @@
 
     }
 
+    /**
+     * Método que exibe o modal na tela
+     * @param {string} type - Tipo do dialog que será exibido.
+     * @param {object} options - Objeto contendo as demais configurações
+     * @returns {promisse} Retorna uma promisse para ser resolvida
+     */
     function show(type, options) {
       var defaultOptions = {
         hasBackdrop: true,
         escapeToClose: false,
         bindToController: true,
         clickOutsideToClose: true,
-        title: 'This is an alert title',
-        textContent: 'You can specify some description text in here.',
-        ariaLabel: 'Alert Dialog Demo',
-        ok: 'Got it!',
-        cancel: 'Cancel it!',
+        title: 'Título do dialog',
+        textContent: 'Você pode inserir o conteúdo do dialog aqui.',
+        ariaLabel: 'Demo do dialog',
+        ok: 'Ok',
+        cancel: 'Cancelar',
         fullscreen: ($mdMedia('sm') || $mdMedia('xs'))
       };
 

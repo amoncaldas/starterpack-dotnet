@@ -98,6 +98,10 @@ table.condensed .md-cell {
   top: 47px;
 }
 
+.menu-icon {
+  margin-top: 7px !important;
+}
+
 @media only screen and (min-width: 240px) {
   .md-breadcrumb {
     font-size: 53% !important;
@@ -228,10 +232,6 @@ a.logo {
   text-align: center;
   font-size: small;
   border-top: 1px solid #ddd;
-}
-
-.menu-icon {
-  margin-top: 7px !important;
 }
 
 .md-dialog-transparent {

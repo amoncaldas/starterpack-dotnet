@@ -15,7 +15,9 @@
         <label>Prioridade</label>
         <input type="number" step="1" min="1" max="10" ng-model="tasksCtrl.resource.priority">
       </md-input-container>
-      <mdp-date-picker mdp-placeholder="Date" ng-model="tasksCtrl.resource.scheduled_to"></mdp-date-picker>
+      <mdp-date-picker mdp-placeholder="Date" ng-model="tasksCtrl.resource.scheduled_to">
+
+      </mdp-date-picker>
       <!--md-datepicker ng-model="tasksCtrl.resource.scheduled_to"
         md-placeholder="Agendar para"
         md-min-date="tasksCtrl.now">
