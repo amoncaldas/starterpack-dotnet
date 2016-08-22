@@ -3,14 +3,14 @@
     <div flex="50" ng-if="auditDetailCtrl.auditDetail.old_value">
       <box box-title="Antes">
         <ul>
-          <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.old_value">{{key}}: {{value | auditValue:key}}</li>
+          <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.old_value">{{key | tAttr}}: {{value | auditValue:key}}</li>
         </ul>
       </box>
     </div>
     <div flex="50" ng-if="auditDetailCtrl.auditDetail.new_value">
       <box box-title="Depois">
         <ul>
-          <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.new_value">{{key}}: {{value | auditValue:key}}</li>
+          <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.new_value">{{ key | tAttr}}: {{value | auditValue:key}}</li>
         </ul>
       </box>
     </div>

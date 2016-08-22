@@ -14,6 +14,10 @@
         return $filter('prDatetime')(value);
       }
 
+      if (typeof value === 'boolean') {
+        return $filter('translate')((value) ? 'yes' : 'no');
+      }
+
       return value;
     }
   }

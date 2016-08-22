@@ -6,7 +6,14 @@
     .config(config);
 
   /** @ngInject */
-  function config($authProvider, Global, $mdThemingProvider, $modelFactoryProvider) {
+  // eslint-disable-next-line max-params
+  function config($authProvider, Global, $mdThemingProvider, $modelFactoryProvider,
+    $translateProvider) {
+
+    $translateProvider
+      .preferredLanguage('pt-BR')
+      .useLoader('languageLoader')
+      .useSanitizeValueStrategy('escape');
 
     $modelFactoryProvider.defaultOptions.prefix = Global.apiVersion;
 

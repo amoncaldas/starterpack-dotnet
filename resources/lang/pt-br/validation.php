@@ -108,7 +108,10 @@ return [
         'title' => 'título',
         'description' => 'descrição',
         'priority' => 'prioridade',
-        'scheduled_to' => 'agendar para'
+        'scheduled_to' => 'agendar para',
+        'cost' => 'custo',
+        'done' => 'feito',
+        'project_id' => 'projeto'
     ],
 
 ];

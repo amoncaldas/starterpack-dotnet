@@ -12,5 +12,6 @@
     'modelFactory',
     'md.data.table',
     'mdPickers',
-    'satellizer']);
+    'satellizer',
+    'pascalprecht.translate']);
 })();
