@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('ngProdeb')
@@ -12,48 +12,47 @@
     };
 
     function alert(defaultOptions) {
-
       return $mdDialog.alert()
-              .hasBackdrop(defaultOptions.hasBackdrop)
-              .escapeToClose(defaultOptions.escapeToClose)
-              .clickOutsideToClose(defaultOptions.clickOutsideToClose)
-              .title(defaultOptions.title)
-              .textContent(defaultOptions.textContent)
-              .ariaLabel(defaultOptions.textContent)
-              .ok(defaultOptions.ok)
-              .targetEvent(defaultOptions.targetEvent)
-              .fullscreen(defaultOptions.fullscreen);;
+        .hasBackdrop(defaultOptions.hasBackdrop)
+        .escapeToClose(defaultOptions.escapeToClose)
+        .clickOutsideToClose(defaultOptions.clickOutsideToClose)
+        .title(defaultOptions.title)
+        .textContent(defaultOptions.textContent)
+        .ariaLabel(defaultOptions.textContent)
+        .ok(defaultOptions.ok)
+        .targetEvent(defaultOptions.targetEvent)
+        .fullscreen(defaultOptions.fullscreen);;
     }
 
     function confirm(defaultOptions) {
 
       return $mdDialog.confirm()
-              .hasBackdrop(defaultOptions.hasBackdrop)
-              .escapeToClose(defaultOptions.escapeToClose)
-              .clickOutsideToClose(defaultOptions.clickOutsideToClose)
-              .title(defaultOptions.title)
-              .textContent(defaultOptions.textContent)
-              .ariaLabel(defaultOptions.textContent)
-              .ok(defaultOptions.ok)
-              .targetEvent(defaultOptions.targetEvent)
-              .fullscreen(defaultOptions.fullscreen);;
+        .hasBackdrop(defaultOptions.hasBackdrop)
+        .escapeToClose(defaultOptions.escapeToClose)
+        .clickOutsideToClose(defaultOptions.clickOutsideToClose)
+        .title(defaultOptions.title)
+        .textContent(defaultOptions.textContent)
+        .ariaLabel(defaultOptions.textContent)
+        .ok(defaultOptions.ok)
+        .targetEvent(defaultOptions.targetEvent)
+        .fullscreen(defaultOptions.fullscreen);;
     }
 
     function prompt(defaultOptions) {
 
       return $mdDialog.prompt()
-              .hasBackdrop(defaultOptions.hasBackdrop)
-              .escapeToClose(defaultOptions.escapeToClose)
-              .clickOutsideToClose(defaultOptions.clickOutsideToClose)
-              .title(defaultOptions.title)
-              .placeholder(defaultOptions.placeholder)
-              .textContent(defaultOptions.textContent)
-              .ariaLabel(defaultOptions.textContent)
-              .initialValue(defaultOptions.initialValue)
-              .ok(defaultOptions.ok)
-              .cancel(defaultOptions.cancel)
-              .targetEvent(defaultOptions.targetEvent)
-              .fullscreen(defaultOptions.fullscreen);
+        .hasBackdrop(defaultOptions.hasBackdrop)
+        .escapeToClose(defaultOptions.escapeToClose)
+        .clickOutsideToClose(defaultOptions.clickOutsideToClose)
+        .title(defaultOptions.title)
+        .placeholder(defaultOptions.placeholder)
+        .textContent(defaultOptions.textContent)
+        .ariaLabel(defaultOptions.textContent)
+        .initialValue(defaultOptions.initialValue)
+        .ok(defaultOptions.ok)
+        .cancel(defaultOptions.cancel)
+        .targetEvent(defaultOptions.targetEvent)
+        .fullscreen(defaultOptions.fullscreen);
     }
 
     function custom(defaultOptions) {
