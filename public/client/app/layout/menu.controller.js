@@ -12,11 +12,24 @@
 
     vm.itensMenu = [
       { url: 'dashboard', titulo: 'Dashboard', icon: 'dashboard', subItens: [] },
-      { url: 'project', titulo: 'Projetos', icon: 'extension', subItens: [] },
+      { url: 'project', titulo: 'Projetos', icon: 'star', subItens: [] },
+      { url: 'chart', titulo: 'Gráficos', icon: 'pie_chart', subItens: [] },
+      { url: 'ui-elements', titulo: 'UI Elements', icon: 'explicit', subItens: [] },
+      { url: 'forms', titulo: 'Forms', icon: 'dns', subItens: [] },
+      { url: 'table', titulo: 'Tables', icon: 'view_comfy', subItens: [] },
+      { url: 'mailbox', titulo: 'Mailbox', icon: 'mail_outline', subItens: [] },
+      { url: 'widgets', titulo: 'Widgets', icon: 'widgets', subItens: [] },
+      { url: '#', titulo: 'Plugins', icon: 'extension',
+        subItens: [
+          { url: 'pr-toast', titulo: 'PrToast', icon: 'tab' },
+          { url: 'pr-spinner', titulo: 'PrSpinner', icon: 'replay' },
+          { url: 'pr-dialog', titulo: 'PrDialog', icon: 'view_carousel' }
+        ]
+      },
       { url: '#', titulo: 'Administração', icon: 'settings_applications', profiles: ['admin'],
         subItens: [
           { url: 'user', titulo: 'Usuários', icon: 'people' },
-          { url: 'audit', titulo: 'Auditoria', icon: 'people' }
+          { url: 'audit', titulo: 'Auditoria', icon: 'storage' }
         ]
       }
     ];
