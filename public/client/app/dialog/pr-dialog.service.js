@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('ngProdeb')
@@ -12,48 +12,47 @@
     };
 
     function alert(defaultOptions) {
-
       return $mdDialog.alert()
-              .hasBackdrop(defaultOptions.hasBackdrop)
-              .escapeToClose(defaultOptions.escapeToClose)
-              .clickOutsideToClose(defaultOptions.clickOutsideToClose)
-              .title(defaultOptions.title)
-              .textContent(defaultOptions.textContent)
-              .ariaLabel(defaultOptions.textContent)
-              .ok(defaultOptions.ok)
-              .targetEvent(defaultOptions.targetEvent)
-              .fullscreen(defaultOptions.fullscreen);;
+        .hasBackdrop(defaultOptions.hasBackdrop)
+        .escapeToClose(defaultOptions.escapeToClose)
+        .clickOutsideToClose(defaultOptions.clickOutsideToClose)
+        .title(defaultOptions.title)
+        .textContent(defaultOptions.textContent)
+        .ariaLabel(defaultOptions.textContent)
+        .ok(defaultOptions.ok)
+        .targetEvent(defaultOptions.targetEvent)
+        .fullscreen(defaultOptions.fullscreen);;
     }
 
     function confirm(defaultOptions) {
 
       return $mdDialog.confirm()
-              .hasBackdrop(defaultOptions.hasBackdrop)
-              .escapeToClose(defaultOptions.escapeToClose)
-              .clickOutsideToClose(defaultOptions.clickOutsideToClose)
-              .title(defaultOptions.title)
-              .textContent(defaultOptions.textContent)
-              .ariaLabel(defaultOptions.textContent)
-              .ok(defaultOptions.ok)
-              .targetEvent(defaultOptions.targetEvent)
-              .fullscreen(defaultOptions.fullscreen);;
+        .hasBackdrop(defaultOptions.hasBackdrop)
+        .escapeToClose(defaultOptions.escapeToClose)
+        .clickOutsideToClose(defaultOptions.clickOutsideToClose)
+        .title(defaultOptions.title)
+        .textContent(defaultOptions.textContent)
+        .ariaLabel(defaultOptions.textContent)
+        .ok(defaultOptions.ok)
+        .targetEvent(defaultOptions.targetEvent)
+        .fullscreen(defaultOptions.fullscreen);;
     }
 
     function prompt(defaultOptions) {
 
       return $mdDialog.prompt()
-              .hasBackdrop(defaultOptions.hasBackdrop)
-              .escapeToClose(defaultOptions.escapeToClose)
-              .clickOutsideToClose(defaultOptions.clickOutsideToClose)
-              .title(defaultOptions.title)
-              .placeholder(defaultOptions.placeholder)
-              .textContent(defaultOptions.textContent)
-              .ariaLabel(defaultOptions.textContent)
-              .initialValue(defaultOptions.initialValue)
-              .ok(defaultOptions.ok)
-              .cancel(defaultOptions.cancel)
-              .targetEvent(defaultOptions.targetEvent)
-              .fullscreen(defaultOptions.fullscreen);
+        .hasBackdrop(defaultOptions.hasBackdrop)
+        .escapeToClose(defaultOptions.escapeToClose)
+        .clickOutsideToClose(defaultOptions.clickOutsideToClose)
+        .title(defaultOptions.title)
+        .placeholder(defaultOptions.placeholder)
+        .textContent(defaultOptions.textContent)
+        .ariaLabel(defaultOptions.textContent)
+        .initialValue(defaultOptions.initialValue)
+        .ok(defaultOptions.ok)
+        .cancel(defaultOptions.cancel)
+        .targetEvent(defaultOptions.targetEvent)
+        .fullscreen(defaultOptions.fullscreen);
     }
 
     function custom(defaultOptions) {
@@ -74,17 +73,23 @@
 
     }
 
+    /**
+     * Método que exibe o modal na tela
+     * @param {string} type - Tipo do dialog que será exibido.
+     * @param {object} options - Objeto contendo as demais configurações
+     * @returns {promisse} Retorna uma promisse para ser resolvida
+     */
     function show(type, options) {
       var defaultOptions = {
         hasBackdrop: true,
         escapeToClose: false,
         bindToController: true,
         clickOutsideToClose: true,
-        title: 'This is an alert title',
-        textContent: 'You can specify some description text in here.',
-        ariaLabel: 'Alert Dialog Demo',
-        ok: 'Got it!',
-        cancel: 'Cancel it!',
+        title: 'Título do dialog',
+        textContent: 'Você pode inserir o conteúdo do dialog aqui.',
+        ariaLabel: 'Demo do dialog',
+        ok: 'Ok',
+        cancel: 'Cancelar',
         fullscreen: ($mdMedia('sm') || $mdMedia('xs'))
       };
 
