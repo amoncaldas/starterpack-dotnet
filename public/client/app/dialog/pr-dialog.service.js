@@ -8,7 +8,6 @@
   function dialogService(Global, $mdDialog, $mdMedia) {
 
     return {
-      alert: alert,
       show: show
     };
 
