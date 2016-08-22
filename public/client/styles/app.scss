@@ -55,6 +55,13 @@ form.condensed md-input-container {
   margin: 0px;
 }
 
+table.condensed .md-column {
+  padding: 0 12px !important;
+}
+table.condensed .md-cell {
+  padding: 0 10px !important;
+}
+
 .md-button.md-mini {
   line-height: 20px;
   min-width: 30px;

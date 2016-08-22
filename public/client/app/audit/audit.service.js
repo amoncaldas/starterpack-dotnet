@@ -10,7 +10,24 @@
   function AuditService(serviceFactory) {
     var model = serviceFactory('audit', {
       actions: { },
-      instance: { }
+      instance: { },
+      listTypes: function() {
+        return [
+          { id: '', label: 'Todos' },
+          { id: 'created', label: 'Cadastrado' },
+          { id: 'updated', label: 'Atualizado' },
+          { id: 'deleted', label: 'Removido' }
+        ];
+      },
+
+      listModels: function() {
+        return [
+          { id: '', label: 'Todos Recursos' },
+          { id: 'Project', label: 'Projeto' },
+          { id: 'Task', label: 'Tarefa' },
+          { id: 'User', label: 'Usuário' }
+        ];
+      }
     });
 
     return model;
