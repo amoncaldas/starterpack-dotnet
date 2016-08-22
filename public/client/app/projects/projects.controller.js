@@ -32,8 +32,7 @@
       };
 
       PrDialog.show('custom', options)
-        .then(function(response) {
-          console.log(response);
+        .then(function() {
           vm.search(vm.paginator.currentPage);
         });
 
