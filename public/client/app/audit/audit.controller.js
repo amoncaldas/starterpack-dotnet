@@ -18,19 +18,8 @@
     $controller('CRUDController', { vm: vm, modelService: AuditService, options: {} });
 
     function onActivate() {
-      vm.models = [
-        { id: '', label: 'Todos Recursos' },
-        { id: 'Project', label: 'Projeto' },
-        { id: 'Task', label: 'Tarefa' },
-        { id: 'User', label: 'Usuário' }
-      ];
-
-      vm.types = [
-        { id: '', label: 'Todos' },
-        { id: 'created', label: 'Cadastrado' },
-        { id: 'updated', label: 'Atualizado' },
-        { id: 'deleted', label: 'Removido' }
-      ]
+      vm.models = AuditService.listModels();
+      vm.types = AuditService.listTypes();
 
       vm.queryFilters = { type: vm.types[0].id, model: vm.models[0].id };
     }

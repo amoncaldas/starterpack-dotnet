@@ -18,10 +18,10 @@
       </thead>
       <tbody md-body>
         <tr md-row ng-repeat="project in projectsCtrl.resources" ng-if="projectsCtrl.resources.length > 0">
-          <td md-cell>{{project.name}}</td>
-          <td md-cell >R$ {{project.cost | number: 2}}</td>
-          <td md-cell>{{project.tasks.length}}</td>
-          <td md-cell>{{project.created_at | prDate}}</td>
+          <td md-cell>{{ ::project.name}}</td>
+          <td md-cell >R$ {{ ::project.cost | number: 2}}</td>
+          <td md-cell>{{ ::project.tasks.length}}</td>
+          <td md-cell>{{ ::project.created_at | prDate}}</td>
           <td md-cell class="md-text-center">
             <md-button class="md-icon-button" ng-click="projectsCtrl.edit(project)">
               <md-icon md-font-set="material-icons"
