@@ -1,16 +1,16 @@
-<md-dialog aria-label="Logs" flex="50" class="md-dialog-transparent">
+<md-dialog aria-label="Logs" flex="60" class="md-dialog-transparent">
   <content-body>
     <div flex="50" ng-if="auditDetailCtrl.auditDetail.old_value">
-      <box box-title="Antes">
+      <box box-title="{{ ::auditDetailCtrl.auditDetail | auditDetailTitle:'before' }}">
         <ul>
-          <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.old_value">{{key | tAttr}}: {{value | auditValue:key}}</li>
+          <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.old_value">{{ ::key | tAttr}}: {{ ::value | auditValue:key}}</li>
         </ul>
       </box>
     </div>
     <div flex="50" ng-if="auditDetailCtrl.auditDetail.new_value">
-      <box box-title="Depois">
+      <box box-title="{{ ::auditDetailCtrl.auditDetail | auditDetailTitle:'after' }}">
         <ul>
-          <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.new_value">{{ key | tAttr}}: {{value | auditValue:key}}</li>
+          <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.new_value">{{ ::key | tAttr}}: {{ ::value | auditValue:key}}</li>
         </ul>
       </box>
     </div>

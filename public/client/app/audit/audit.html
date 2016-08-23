@@ -4,13 +4,18 @@
       <md-content layout-padding md-whiteframe="1" class="bottom-4">
         <form class="condensed">
           <div layout="row">
-            <md-input-container flex>
+            <md-input-container flex=30>
               <input type="date" placeholder="Data Inicial" ng-model="auditCtrl.queryFilters.dateStart">
             </md-input-container>
-            <md-input-container flex>
+            <md-input-container flex=30>
               <input type="date" placeholder="Data Final" ng-model="auditCtrl.queryFilters.dateEnd">
             </md-input-container>
-            <md-input-container flex>
+            <md-input-container flex=30>
+              <input type="text" placeholder="Usuário" ng-model="auditCtrl.queryFilters.user">
+            </md-input-container>
+          </div>
+          <div layout="row">
+            <md-input-container flex=90>
               <md-select placeholder="Recurso" ng-model="auditCtrl.queryFilters.model">
                 <md-option ng-repeat="model in auditCtrl.models" value="{{model.id}}">
                   {{model.label}}
@@ -18,7 +23,7 @@
               </md-select>
             </md-input-container>
           </div>
-          <div layout="row">
+          <div layout="row" class="top-10">
             <md-input-container flex>
               <md-radio-group ng-model="auditCtrl.queryFilters.type" layout="row">
                 <md-radio-button value="{{type.id}}" ng-repeat="type in auditCtrl.types">{{type.label}}</md-radio-button>

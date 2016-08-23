@@ -10,7 +10,10 @@
   // eslint-disable-next-line max-params
   function tAttr($filter) {
     return function(id) {
-      return $filter('translate')('attributes.' + id);
+      var key = 'attributes.' + id;
+      var translate = $filter('translate')('attributes.' + id);
+
+      return (translate === key) ? id : translate;
     }
   }
 

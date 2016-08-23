@@ -103,6 +103,7 @@ return [
     */
 
     'attributes' => [
+        'id' => 'id',
         'password' => 'senha',
         'name' => 'nome',
         'title' => 'título',
@@ -111,7 +112,10 @@ return [
         'scheduled_to' => 'agendar para',
         'cost' => 'custo',
         'done' => 'feito',
-        'project_id' => 'projeto'
+        'project_id' => 'projeto',
+        'created_at' => 'criado em',
+        'updated_at' => 'atualizado em',
+        'roles' => 'Perfis'
     ],
 
 ];

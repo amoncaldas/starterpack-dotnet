@@ -23,7 +23,8 @@
     function activate() {
       vm.defaultOptions = {
         redirectAfterSave: true,
-        searchOnInit: true
+        searchOnInit: true,
+        perPage: 8
       }
 
       angular.merge(vm.defaultOptions, options);

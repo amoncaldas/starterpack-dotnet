@@ -6,7 +6,7 @@
       <ng-transclude ng-transclude-slot="toolbarButtons"></ng-transclude>
     </div>
   </md-toolbar>
-  <md-content layout-padding layout-xs="column">
+  <md-content class="padding-top-16 padding-8" layout-xs="column">
     <ng-transclude></ng-transclude>
     <md-card-actions ng-if="$ctrl.transclude.isSlotFilled('footerButtons')" layout="row" layout-align="end center" ng-transclude="footerButtons">
     </md-card-actions>

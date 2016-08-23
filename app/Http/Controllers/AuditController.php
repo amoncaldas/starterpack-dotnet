@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class AuditController extends Controller
@@ -25,7 +26,14 @@ class AuditController extends Controller
      */
     public function index(Request $request)
     {
-        $baseQuery = Log::with(['user']);
+        // DB::enableQueryLog();
+        $baseQuery = Log::with('user');
+
+        $baseQuery = $baseQuery->whereHas('user', function($query) use ($request) {
+            if($request->has('user')) {
+                $query->where('name',  'ilike', '%'.$request->user.'%');
+            }
+        });
 
         if($request->has('type'))
             $baseQuery = $baseQuery->where('type', $request->type);
@@ -50,6 +58,10 @@ class AuditController extends Controller
 
         $data['total'] = $countQuery
             ->count();
+
+        // dd(
+        //     DB::getQueryLog()
+        // );
 
         return $data;
     }
