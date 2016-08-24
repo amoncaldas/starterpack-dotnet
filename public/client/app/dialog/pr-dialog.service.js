@@ -5,7 +5,8 @@
     .factory('PrDialog', dialogService);
 
   /** @ngInject */
-  function dialogService(Global, $mdDialog, $mdMedia, $mdPanel, $q, $log) {
+  // eslint-disable-next-line max-params
+  function dialogService(Global, $mdMedia, $mdPanel, $q, $log) {
 
     return {
       custom: custom,
@@ -69,6 +70,7 @@
         escapeToClose: false,
         bindToController: true,
         clickOutsideToClose: true,
+        focusOnOpen: true,
         locals: {},
         fullscreen: ($mdMedia('sm') || $mdMedia('xs'))
       };
@@ -83,8 +85,7 @@
 
       if (angular.isUndefined(defaultOptions.position)) {
         var position = $mdPanel.newPanelPosition()
-          .absolute()
-          .center();
+          .centerHorizontally();
 
         defaultOptions.position = position;
       }

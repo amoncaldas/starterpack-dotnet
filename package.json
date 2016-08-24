@@ -17,6 +17,7 @@
     "eslint-plugin-angular": "^1.3.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.2",
+    "babel-preset-es2015": "^6.9.0",
     "gulp-changed": "^1.3.0",
     "gulp-clean-css": "^2.0.11",
     "gulp-concat": "^2.6.0",

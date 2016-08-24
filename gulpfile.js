@@ -6,6 +6,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
+var babel = require('gulp-babel');
 var changed = require('gulp-changed');
 var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
@@ -100,6 +101,10 @@ function scriptsApplication() {
   return gulp.src(paths.scripts)
     .pipe(plumber())
     .pipe(sourcemaps.init())
+    .pipe(changed(paths.destination))
+    .pipe(babel({
+      presets: ['es2015']
+    }))
     .pipe(concat('application.js'))
     .pipe(ngAnnotate({
       add: true
