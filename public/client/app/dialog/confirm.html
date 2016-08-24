@@ -1,0 +1,13 @@
+<div role="dialog" aria-label="{{::ctrl.attrs.title}}" layout="column" layout-align="center center">
+  <content-body>
+    <box box-title="{{::ctrl.attrs.title}}">
+      <div class="demo-dialog-content">
+        <p>{{::ctrl.attrs.description}}</p>
+      </div>
+      <box-footer-buttons>
+        <md-button class="md-primary md-raised" ng-click="ctrl.closeDialog(true)">Sim</md-button>
+        <md-button class="md-raised" ng-click="ctrl.closeDialog(false)">Não</md-button>
+      </box-footer-buttons>
+    </box>
+  </content-body>
+</div>

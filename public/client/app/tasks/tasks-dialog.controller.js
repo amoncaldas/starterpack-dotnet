@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function TasksDialogController($mdDialog, $controller, TaskDialogService, projectId, PrToast) {
+  function TasksDialogController(mdPanelRef, $controller, TaskDialogService, projectId, PrToast, PrDialog) {
     var vm = this;
 
     //Functions Block
@@ -18,6 +18,7 @@
     vm.beforeSave   = beforeSave;
     vm.afterSave    = afterSave;
     vm.toggleDone   = toggleDone;
+    vm.removeTask   = removeTask;
 
     // instantiate base controller
     $controller('CRUDController', { vm: vm, modelService: TaskDialogService, options: {
@@ -45,7 +46,7 @@
 
     function closeModal() {
       vm.cleanForm();
-      $mdDialog.hide('return to controller parent with parameters');
+      PrDialog.close(mdPanelRef);
     }
 
     function toggleDone(resource) {
@@ -55,6 +56,18 @@
       }, function(error) {
         PrToast.errorValidation(error.data, 'Não foi possível atualizar sua tarefa.');
       });
+    }
+
+    function removeTask(resource) {
+      var config = {
+        title: 'Confirmar remoção',
+        description: 'Deseja remover permanentemente a tarefa selecionada?',
+        yesAction: function() {
+          vm.remove(resource);
+        }
+      }
+
+      PrDialog.confirm(config);
     }
 
   }

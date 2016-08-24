@@ -5,91 +5,71 @@
     .factory('PrDialog', dialogService);
 
   /** @ngInject */
-  function dialogService(Global, $mdDialog, $mdMedia) {
+  function dialogService(Global, $mdDialog, $mdMedia, $mdPanel, $q, $log) {
 
     return {
-      show: show
+      custom: custom,
+      confirm: confirm,
+      close: close
     };
 
-    function alert(defaultOptions) {
-      return $mdDialog.alert()
-        .hasBackdrop(defaultOptions.hasBackdrop)
-        .escapeToClose(defaultOptions.escapeToClose)
-        .clickOutsideToClose(defaultOptions.clickOutsideToClose)
-        .title(defaultOptions.title)
-        .textContent(defaultOptions.textContent)
-        .ariaLabel(defaultOptions.textContent)
-        .ok(defaultOptions.ok)
-        .targetEvent(defaultOptions.targetEvent)
-        .fullscreen(defaultOptions.fullscreen);;
-    }
+    function confirm(config) {
+      if (!angular.isObject(config)) {
+        $log.error('Parãmentro inválido: é esperando um objeto como parãmentro.');
+        return;
+      }
+      if (angular.isUndefined(config.options)) config.options = {};
+      var defaultOptions = build(config.options);
 
-    function confirm(defaultOptions) {
-
-      return $mdDialog.confirm()
-        .hasBackdrop(defaultOptions.hasBackdrop)
-        .escapeToClose(defaultOptions.escapeToClose)
-        .clickOutsideToClose(defaultOptions.clickOutsideToClose)
-        .title(defaultOptions.title)
-        .textContent(defaultOptions.textContent)
-        .ariaLabel(defaultOptions.textContent)
-        .ok(defaultOptions.ok)
-        .targetEvent(defaultOptions.targetEvent)
-        .fullscreen(defaultOptions.fullscreen);;
-    }
-
-    function prompt(defaultOptions) {
-
-      return $mdDialog.prompt()
-        .hasBackdrop(defaultOptions.hasBackdrop)
-        .escapeToClose(defaultOptions.escapeToClose)
-        .clickOutsideToClose(defaultOptions.clickOutsideToClose)
-        .title(defaultOptions.title)
-        .placeholder(defaultOptions.placeholder)
-        .textContent(defaultOptions.textContent)
-        .ariaLabel(defaultOptions.textContent)
-        .initialValue(defaultOptions.initialValue)
-        .ok(defaultOptions.ok)
-        .cancel(defaultOptions.cancel)
-        .targetEvent(defaultOptions.targetEvent)
-        .fullscreen(defaultOptions.fullscreen);
-    }
-
-    function custom(defaultOptions) {
-
-      return {
-        hasBackdrop: defaultOptions.hasBackdrop,
-        escapeToClose: defaultOptions.escapeToClose,
-        locals: defaultOptions.locals,
-        parent: defaultOptions.parent,
-        controller: defaultOptions.controller,
-        controllerAs: defaultOptions.controllerAs,
-        bindToController: defaultOptions.bindToController,
-        templateUrl: Global.clientPath + defaultOptions.templateUrl,
-        clickOutsideToClose: defaultOptions.clickOutsideToClose,
-        targetEvent: defaultOptions.targetEvent,
-        fullscreen: defaultOptions.fullscreen
+      defaultOptions.locals.attrs = {
+        title: (angular.isDefined(config.title) ? config.title : 'Title não declarado'),
+        description: (angular.isDefined(config.description) ? config.description : 'Description não declarado'),
+        yesAction: (angular.isDefined(config.yesAction) ? config.yesAction : null),
+        noAction: (angular.isDefined(config.noAction) ? config.noAction : null)
       };
 
+      /** @ngInject */
+      defaultOptions.controller = function(mdPanelRef, attrs) {
+        var vm = this;
+
+        vm.attrs = attrs;
+        vm._mdPanelRef = mdPanelRef;
+
+        vm.closeDialog = function(yes) {
+          close(this._mdPanelRef).then(function() {
+            if (yes && attrs.yesAction !== null) attrs.yesAction();
+            if (!yes && attrs.noAction !== null) attrs.noAction();
+          });
+        }
+      };
+      defaultOptions.locals = defaultOptions.locals;
+      defaultOptions.controllerAs = 'ctrl';
+      defaultOptions.templateUrl = Global.clientPath + '/dialog/confirm.html';
+      defaultOptions.clickOutsideToClose = false;
+      defaultOptions.zIndex = 90;
+
+      return $mdPanel.open(defaultOptions);
     }
 
-    /**
-     * Método que exibe o modal na tela
-     * @param {string} type - Tipo do dialog que será exibido.
-     * @param {object} options - Objeto contendo as demais configurações
-     * @returns {promisse} Retorna uma promisse para ser resolvida
-     */
-    function show(type, options) {
+    function close(panelRef) {
+      var deferred = $q.defer();
+
+      panelRef && panelRef.close().then(function() {
+        panelRef.destroy();
+
+        return deferred.resolve();
+      });
+
+      return deferred.promise;
+    }
+
+    function build(options) {
       var defaultOptions = {
         hasBackdrop: true,
         escapeToClose: false,
         bindToController: true,
         clickOutsideToClose: true,
-        title: 'Título do dialog',
-        textContent: 'Você pode inserir o conteúdo do dialog aqui.',
-        ariaLabel: 'Demo do dialog',
-        ok: 'Ok',
-        cancel: 'Cancelar',
+        locals: {},
         fullscreen: ($mdMedia('sm') || $mdMedia('xs'))
       };
 
@@ -101,26 +81,32 @@
 
       angular.merge(defaultOptions, options);
 
-      /**
-       * Verifica o tipo do dialog e o exibe
-       * retornando ao fechar uma promisse
-       * resolvida no metodo hide() que pode
-       * ou não aceitar parâmetros ou no metodo
-       * cancel() que não aceita parâmetros
-       */
-      switch (type) {
-        case 'alert':
-          return $mdDialog.show(alert(defaultOptions));
-        case 'confirm':
-          return $mdDialog.show(confirm(defaultOptions));
-        case 'prompt':
-          return $mdDialog.show(prompt(defaultOptions));
-        case 'custom':
-          return $mdDialog.show(custom(defaultOptions));
-        default:
-          break;
+      if (angular.isUndefined(defaultOptions.position)) {
+        var position = $mdPanel.newPanelPosition()
+          .absolute()
+          .center();
+
+        defaultOptions.position = position;
       }
+
+      return defaultOptions;
     }
+
+    /**
+     * Método que exibe o modal na tela
+     * @param {object} options - Objeto contendo as demais configurações
+     * @returns {promisse} Retorna uma promisse para ser resolvida
+     */
+    function custom(options) {
+      var defaultOptions = build(options);
+
+      if (angular.isDefined(defaultOptions.templateUrl)) {
+        defaultOptions.templateUrl = Global.clientPath + defaultOptions.templateUrl;
+      }
+
+      return $mdPanel.open(defaultOptions);
+    }
+
   }
 
 })();

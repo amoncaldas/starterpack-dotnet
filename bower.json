@@ -23,7 +23,7 @@
     "angular-material-data-table": "^0.10.9",
     "ng-prodeb": "git@git.prodeb.ba.gov.br:ngprodeb.git#0.1.1",
     "moment": "^2.14.1",
-    "mdPickers": "0.7.1",
+    "mdPickers": "^0.7.5",
     "angular-model-factory": "^1.0.3",
     "angular-i18n": "^1.5.8",
     "angular-moment": "^0.10.3",

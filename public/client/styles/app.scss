@@ -21,14 +21,9 @@ body {
   opacity: 1;
 }
 
-
-md-toolbar, section {
+md-toolbar {
   border-radius: 4px 4px 0 0;
   box-shadow: 0 2px rgba(255, 255, 255, 0.1);
-}
-
-section {
-  border-radius: 4px;
 }
 
 @for $i from 1 through 5 {

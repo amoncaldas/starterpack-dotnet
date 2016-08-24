@@ -94,6 +94,8 @@
       if (angular.isFunction(vm.beforeRemove) && vm.beforeRemove(resource) === false) return false;
 
       resource.$destroy().then(function () {
+        if (angular.isFunction(vm.afterRemove)) vm.afterRemove(resource);
+
         vm.search();
         PrToast.info('Remoção realizada com sucesso.');
       }, function (error) {

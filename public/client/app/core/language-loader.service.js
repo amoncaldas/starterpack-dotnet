@@ -16,6 +16,8 @@
 
       SupportService.langs().then(function(langs) {
         var data = {
+          list: 'Listar',
+          add: 'Adicionar',
           yes: 'sim',
           no: 'não',
           all: 'todos',
