@@ -8,22 +8,30 @@
   <md-content layout-padding md-whiteframe="1" class="bottom-4">
     <form class="condensed">
       <div layout="row">
-        <pr-datepicker
-            ng-model="tasksCtrl.queryFilters.dateStart"
+        <pr-date-time-picker
+            ng-model="projectsCtrl.queryFilters.dateStart"
             placeholder-date="Data Inicial"
-            open-on-click
-            with-time="true"></pr-datepicker>
-        <!--md-datepicker flex ng-model="tasksCtrl.queryFilters.dateStart" md-placeholder="Data Inicial">
-        </md-datepicker-->
-        <md-datepicker flex ng-model="tasksCtrl.queryFilters.dateEnd" md-placeholder="Data Final">
-        </md-datepicker>
-        <md-switch flex aria-label="Não Feito/Feito" ng-model="tasksCtrl.queryFilters.done">
-          Não Feito/Feito
-        </md-switch>
+            placeholder-time="Horário Inicial"
+            open-on-click="true"
+            with-time="true">
+        </pr-date-time-picker>
+      </div>
+      <div layout="row">
+        <pr-date-time-picker
+            ng-model="projectsCtrl.queryFilters.dateEnd"
+            placeholder-date="Data Final"
+            placeholder-time="Horário Final"
+            open-on-click="true"
+            with-time="true">
+        </pr-date-time-picker>
+      </div>
+      <div layout="row">
+        <div flex></div>
         <md-button class="md-raised md-primary md-mini" ng-click="tasksCtrl.search(vm.paginator.currentPage)">Filtrar</md-button>
       </div>
     </form>
   </md-content>
+
   <md-table-container>
     <table md-table class="condensed">
       <thead md-head>

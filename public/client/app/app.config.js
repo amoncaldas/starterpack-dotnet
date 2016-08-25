@@ -8,14 +8,19 @@
   /** @ngInject */
   // eslint-disable-next-line max-params
   function config($authProvider, Global, $mdThemingProvider, $modelFactoryProvider,
-    $translateProvider) {
+    $translateProvider, $mdpDatePickerProvider, $mdpTimePickerProvider, moment) {
 
     $translateProvider
       .preferredLanguage('pt-BR')
       .useLoader('languageLoader')
       .useSanitizeValueStrategy('escape');
 
+    moment.locale('pt-BR');
+
     $modelFactoryProvider.defaultOptions.prefix = Global.apiVersion;
+
+    $mdpDatePickerProvider.setCancelButtonLabel('Cancelar');
+    $mdpTimePickerProvider.setCancelButtonLabel('Cancelar')
 
     // Satellizer configuration that specifies which API
     // route the JWT should be retrieved from

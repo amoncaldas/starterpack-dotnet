@@ -16,17 +16,6 @@
               min="0.10"
               ng-model="projectsCtrl.resource.cost">
     </md-input-container>
-    <!--md-list>
-      <md-list-item ng-repeat="task in projectsCtrl.resource.taks">
-        <md-icon md-font-set="material-icons" class="md-primary">assignment</md-icon>
-        <p> {{ task.name }} </p>
-        <md-switch class="md-secondary" ng-click="projectsCtrl.setDone(task)" ng-model="task.enabled">
-          <md-tooltip md-direction="left">
-            Mudar para Feito
-          </md-tooltip>
-        </md-switch>
-      </md-list-item>
-    </md-list-->
   </form>
   <box-footer-buttons>
     <md-button class="md-primary md-raised" ng-click="projectsCtrl.save()">Salvar</md-button>
