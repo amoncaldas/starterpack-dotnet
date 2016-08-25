@@ -44,12 +44,12 @@ paths.angularScripts = [
   paths.bower + '/angular-material-data-table/dist/md-data-table.min.js',
   paths.bower + '/angular-model-factory/dist/angular-model-factory.js',
   paths.bower + '/ng-prodeb/dist/ng-prodeb.min.js',
-  paths.bower + '/moment/moment.js',
   paths.bower + '/mdPickers/dist/mdPickers.min.js'
 ];
 paths.vendorsScripts = [
   paths.bower + '/lodash/dist/lodash.min.js',
-  paths.bower + '/moment/min/moment.min.js'
+  paths.bower + '/moment/min/moment.min.js',
+  paths.bower + '/moment/locale/pt-br.js'
 ];
 paths.scripts = [
   paths.app + '/app.js',

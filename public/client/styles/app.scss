@@ -59,6 +59,10 @@ form.condensed md-input-container {
   margin: 0px;
 }
 
+form.condensed mdp-date-picker .md-button.md-icon-button, form.condensed mdp-time-picker .md-button.md-icon-button {
+  margin: 0px !important;
+}
+
 table.condensed .md-row {
   height: 28px !important;
 }
