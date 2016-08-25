@@ -1,13 +1,13 @@
-<div role="dialog" aria-label="{{::ctrl.attrs.title}}" layout="column" layout-align="center center">
+<md-dialog flex=50 aria-label="{{::ctrl.title}}" class="md-dialog-transparent">
   <content-body>
-    <box box-title="{{::ctrl.attrs.title}}">
-      <div class="demo-dialog-content">
-        <p>{{::ctrl.attrs.description}}</p>
+    <box box-title="{{::ctrl.title}}">
+      <div>
+        <p>{{::ctrl.description}}</p>
       </div>
       <box-footer-buttons>
-        <md-button class="md-primary md-raised" ng-click="ctrl.closeDialog(true)">Sim</md-button>
-        <md-button class="md-raised" ng-click="ctrl.closeDialog(false)">Não</md-button>
+        <md-button class="md-raised" md-colors="::{background:'default-{{ctrl.yesBgColor}}'}" ng-click="ctrl.yesAction()">Sim</md-button>
+        <md-button class="md-raised" md-colors="::{background:'default-{{ctrl.noBgColor}}'}" ng-click="ctrl.noAction()">Não</md-button>
       </box-footer-buttons>
     </box>
   </content-body>
-</div>
+</md-dialog>

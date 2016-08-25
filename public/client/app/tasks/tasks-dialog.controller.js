@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function TasksDialogController(mdPanelRef, $controller, TaskDialogService, projectId, PrToast, PrDialog) {
+  function TasksDialogController($controller, TaskDialogService, projectId, PrToast, PrDialog) {
     var vm = this;
 
     //Functions Block
@@ -46,7 +46,7 @@
 
     function closeModal() {
       vm.cleanForm();
-      PrDialog.close(mdPanelRef);
+      PrDialog.close();
     }
 
     function toggleDone(resource) {
@@ -61,13 +61,12 @@
     function removeTask(resource) {
       var config = {
         title: 'Confirmar remoção',
-        description: 'Deseja remover permanentemente a tarefa selecionada?',
-        yesAction: function() {
-          vm.remove(resource);
-        }
+        description: 'Deseja remover permanentemente a tarefa selecionada?'
       }
 
-      PrDialog.confirm(config);
+      PrDialog.confirm(config).then(function() {
+        vm.remove(resource);
+      });
     }
 
   }

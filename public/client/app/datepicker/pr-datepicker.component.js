@@ -11,9 +11,10 @@
     .module('app')
     .component('prDatepicker', {
       template: `
+
             <mdp-date-picker
               ng-model="$ctrl.ngModel"
-              mdp-placeholder="{{$ctrl.placeholderDate}}"
+              ng-attr-mdp-placeholder="{{$ctrl.placeholderDate}}"
               {{$ctrl.name}}
               {{$ctrl.openOnClick}}
               {{$ctrl.required}}
