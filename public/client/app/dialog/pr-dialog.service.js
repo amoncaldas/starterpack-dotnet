@@ -6,7 +6,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function dialogService(Global, $mdMedia, $mdPanel, $q, $log) {
+  function dialogService(Global, $mdMedia, $log, $mdDialog, $mdUtil, $rootScope, $animate, $document) {
 
     return {
       custom: custom,
@@ -19,58 +19,44 @@
         $log.error('Parãmentro inválido: é esperando um objeto como parãmentro.');
         return;
       }
-      if (angular.isUndefined(config.options)) config.options = {};
-      var defaultOptions = build(config.options);
 
-      defaultOptions.locals.attrs = {
+      config.templateUrl = Global.clientPath + '/dialog/confirm.html';
+      var defaultOptions = build(config);
+
+      defaultOptions.locals = {
         title: (angular.isDefined(config.title) ? config.title : 'Title não declarado'),
         description: (angular.isDefined(config.description) ? config.description : 'Description não declarado'),
-        yesAction: (angular.isDefined(config.yesAction) ? config.yesAction : null),
-        noAction: (angular.isDefined(config.noAction) ? config.noAction : null)
+        yesBgColor: (angular.isDefined(config.yesBgColor) ? config.yesBgColor : 'primary'),
+        noBgColor: (angular.isDefined(config.noBgColor) ? config.noBgColor : 'accent')
       };
-
-      /** @ngInject */
-      defaultOptions.controller = function(mdPanelRef, attrs) {
+      defaultOptions.clickOutsideToClose = false;
+      defaultOptions.controller = function($mdDialog) {
         var vm = this;
 
-        vm.attrs = attrs;
-        vm._mdPanelRef = mdPanelRef;
+        vm.noAction = vm.noAction;
+        vm.yesAction = vm.yesAction;
 
-        vm.closeDialog = function(yes) {
-          close(this._mdPanelRef).then(function() {
-            if (yes && attrs.yesAction !== null) attrs.yesAction();
-            if (!yes && attrs.noAction !== null) attrs.noAction();
-          });
+        vm.noAction = function() {
+          $mdDialog.cancel();
+        }
+        vm.yesAction = function() {
+          $mdDialog.hide();
         }
       };
-      defaultOptions.locals = defaultOptions.locals;
       defaultOptions.controllerAs = 'ctrl';
-      defaultOptions.templateUrl = Global.clientPath + '/dialog/confirm.html';
-      defaultOptions.clickOutsideToClose = false;
-      defaultOptions.zIndex = 90;
+      defaultOptions.hasBackdrop = true;
 
-      return $mdPanel.open(defaultOptions);
-    }
-
-    function close(panelRef) {
-      var deferred = $q.defer();
-
-      panelRef && panelRef.close().then(function() {
-        panelRef.destroy();
-
-        return deferred.resolve();
-      });
-
-      return deferred.promise;
+      return $mdDialog.show(defaultOptions);
     }
 
     function build(options) {
       var defaultOptions = {
-        hasBackdrop: true,
+        hasBackdrop: false,
         escapeToClose: false,
         bindToController: true,
         clickOutsideToClose: true,
-        focusOnOpen: true,
+        autoWrap: true,
+        skipHide: true,
         locals: {},
         fullscreen: ($mdMedia('sm') || $mdMedia('xs'))
       };
@@ -83,13 +69,6 @@
 
       angular.merge(defaultOptions, options);
 
-      if (angular.isUndefined(defaultOptions.position)) {
-        var position = $mdPanel.newPanelPosition()
-          .centerHorizontally();
-
-        defaultOptions.position = position;
-      }
-
       return defaultOptions;
     }
 
@@ -98,14 +77,50 @@
      * @param {object} options - Objeto contendo as demais configurações
      * @returns {promisse} Retorna uma promisse para ser resolvida
      */
-    function custom(options) {
-      var defaultOptions = build(options);
+    function custom(config) {
+      if (!angular.isObject(config)) {
+        $log.error('Parãmentro inválido: é esperando um objeto como parãmentro.');
+        return;
+      }
+
+      var defaultOptions = build(config);
 
       if (angular.isDefined(defaultOptions.templateUrl)) {
         defaultOptions.templateUrl = Global.clientPath + defaultOptions.templateUrl;
+      } else {
+        $log.error('templateUrl indefinido: é esperando um templateUrl como atributo.');
+        return;
       }
 
-      return $mdPanel.open(defaultOptions);
+      //Criado o backdrop manualmente para diminuir o z-index através de uma classe css
+      //o z-index tem que ficar menor devido ao dialog.confirm usar o z-index original de 80
+      if (defaultOptions.hasBackdrop) {
+        var backdrop = $mdUtil.createBackdrop($rootScope, 'md-dialog-backdrop md-opaque md-backdrop-custom');
+
+        $animate.enter(backdrop, angular.element($document.find('body')));
+
+        defaultOptions.onRemoving = function () {
+          backdrop.remove();
+        }
+
+        defaultOptions.onComplete = function (scope, element) {
+          angular.element(document.querySelector('.md-backdrop-custom')).addClass('md-dialog-backdrop-custom');
+          element.addClass('md-dialog-container-custom');
+        }
+      }
+
+      defaultOptions.hasBackdrop = false;
+
+      return $mdDialog.show(defaultOptions);
+
+    }
+
+    function close(response) {
+      if (angular.isDefined(response)) {
+        $mdDialog.hide(response);
+      } else {
+        $mdDialog.cancel();
+      }
     }
 
   }

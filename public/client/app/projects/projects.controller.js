@@ -23,16 +23,19 @@
 
     function viewTasks(projectId) {
       var options = {
-        locals: { projectId: projectId },
+        locals: {
+          projectId: projectId
+        },
         controller: 'TasksDialogController',
         controllerAs: 'tasksCtrl',
-        templateUrl: '/tasks/task-dialog.html',
-        onRemoving: function() {
-          vm.afterSave();
-        }
+        templateUrl: '/tasks/task-dialog.html'
       };
 
-      PrDialog.custom(options);
+      PrDialog.custom(options).then(function() {
+
+      }, function() {
+        vm.afterSave();
+      });
 
     }
 
@@ -44,13 +47,12 @@
     function removeProject(resource) {
       var config = {
         title: 'Confirmar remoção',
-        description: 'Deseja remover permanentemente o projeto '+ resource.name +'?',
-        yesAction: function() {
-          vm.remove(resource);
-        }
+        description: 'Deseja remover permanentemente o projeto '+ resource.name +'?'
       }
 
-      PrDialog.confirm(config);
+      PrDialog.confirm(config).then(function() {
+        vm.remove(resource);
+      });
     }
 
   }
