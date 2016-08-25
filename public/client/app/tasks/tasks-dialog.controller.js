@@ -64,9 +64,11 @@
         description: 'Deseja remover permanentemente a tarefa selecionada?'
       }
 
-      PrDialog.confirm(config).then(function() {
-        vm.remove(resource);
-      });
+      PrDialog.build(config)
+        .confirm(config)
+        .then(function() {
+          vm.remove(resource);
+        });
     }
 
   }

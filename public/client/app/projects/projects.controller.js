@@ -22,20 +22,21 @@
     $controller('CRUDController', { vm: vm, modelService: ProjectService, options: { redirectAfterSave: false } });
 
     function viewTasks(projectId) {
-      var options = {
+      var config = {
         locals: {
           projectId: projectId
         },
         controller: 'TasksDialogController',
         controllerAs: 'tasksCtrl',
-        templateUrl: '/tasks/task-dialog.html'
+        templateUrl: '/tasks/task-dialog.html',
+        hasBackdrop: true
       };
 
-      PrDialog.custom(options).then(function() {
-
-      }, function() {
-        vm.afterSave();
-      });
+      PrDialog.build(config)
+        .custom()
+        .then(function() {
+          vm.afterSave();
+        });
 
     }
 
@@ -50,9 +51,11 @@
         description: 'Deseja remover permanentemente o projeto '+ resource.name +'?'
       }
 
-      PrDialog.confirm(config).then(function() {
-        vm.remove(resource);
-      });
+      PrDialog.build(config)
+        .confirm()
+        .then(function() {
+          vm.remove(resource);
+        });
     }
 
   }
