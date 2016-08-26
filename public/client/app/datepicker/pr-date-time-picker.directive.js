@@ -16,13 +16,13 @@
 
         return `
           <mdp-date-picker
-            ng-model="ngModel"
+            ng-model="ctrl.model"
             mdp-placeholder="${attr.placeholderDate || ''}"
             ${openOnClick}
             ng-attr-mdp-format="${format}"
             ng-attr-mdp-min-date="${ angular.isDefined(attr.minDate) ? moment(attr.minDate, format) : '' }"
             ng-attr-mdp-max-date="${ angular.isDefined(attr.maxDate) ? moment(attr.maxDate, format) : '' }"
-            ng-attr-mdp-date-filter="dateFilter"
+            ng-attr-mdp-date-filter="ctrl.dateFilter"
             ${(angular.isDefined(attr.disabledDate) ? 'mdp-disabled' : '')}>
           </mdp-date-picker>
         `
@@ -31,12 +31,12 @@
       function buildTimePicker(attr, openOnClick) {
         return `
           <mdp-time-picker
-            ng-if="withTime"
-            ng-model="ngModel"
+            ng-if="ctrl.withTime"
+            ng-model="ctrl.model"
             mdp-placeholder="${attr.placeholderTime || ''}"
             ${openOnClick}
             ng-attr-mdp-format="${attr.formatTime || 'HH:mm'}"
-            ng-attr-mdp-auto-switch="autoSwitch"
+            ng-attr-mdp-auto-switch="ctrl.autoSwitch"
             ${(angular.isDefined(attr.disabledTime) ? 'mdp-disabled' : '')}>
           </mdp-time-picker>
         `
@@ -58,8 +58,11 @@
         require: {
           ngModel: '^ngModel'
         },
+        controller: angular.noop,
+        controllerAs: 'ctrl',
+        bindToController: true,
         scope: {
-          ngModel: '=',
+          model: '=ngModel',
           layout: '=',
           openOnClick: '=?',
           withTime: '=?',
