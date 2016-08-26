@@ -1,20 +1,30 @@
+<md-content class="md-padding autocomplete" layout="column" flex>
+  <md-contact-chips
+    ng-model="mailCtrl.asyncContacts"
+    md-contacts="mailCtrl.delayedQuerySearch($query)"
+    md-contact-name="name"
+    md-contact-email="email"
+    md-require-match="true"
+    md-highlight-flags="i"
+    filter-selected="mailCtrl.filterSelected"
+    placeholder="Para">
+  </md-contact-chips>
+</md-content>
 <content-body>
   <box box-title="Enviar e-mail" flex>
     <div layout="row">
-      <form name="mailForm" flex class="top-30">
-        <md-input-container md-no-float class="md-block">
-          <label>Para</label>
-          <input type="email" required md-no-asterisk name="email" ng-model="mailCtrl.email">
-        </md-input-container>
-        <md-input-container md-no-float class="md-block">
-          <label>Assunto</label>
-          <input type="text" name="assunto" ng-model="mailCtrl.assunto">
-        </md-input-container>
-        <md-input-container class="md-block">
-          <label>Mensagem</label>
-          <textarea ng-model="mailCtrl.mensagem" rows="5" md-select-on-focus></textarea>
-        </md-input-container>
-      </form>
+        <form name="mailForm" flex>
+
+          <md-button class="md-primary md-raised" ng-click="mailCtrl.userDialog()">Add</md-button>
+          <md-input-container md-no-float class="md-block">
+            <label>Assunto</label>
+            <input type="text" name="assunto" ng-model="mailCtrl.mail.subscribe">
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Mensagem</label>
+            <textarea ng-model="mailCtrl.mail.message" rows="5" md-select-on-focus></textarea>
+          </md-input-container>
+        </form>
     </div>
     <box-footer-buttons>
       <md-button class="md-primary md-raised" ng-click="mailCtrl.send()">Enviar</md-button>

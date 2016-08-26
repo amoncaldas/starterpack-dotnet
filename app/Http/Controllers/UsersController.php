@@ -32,6 +32,14 @@ class UsersController extends CrudController
 
         if($request->has('name'))
             $query = $query->where('name', 'like', '%'.$request->name.'%');
+
+        if($request->has('email'))
+            $query = $query->where('email', 'like', '%'.$request->email.'%');
+
+        if($request->has('nameOrEmail'))
+            $query = $query
+                ->where('name', 'like', '%'.$request->nameOrEmail.'%')
+                ->orWhere('email', 'like', '%'.$request->nameOrEmail.'%');
     }
 
     protected function beforeSearch(Request $request, $dataQuery, $countQuery) {

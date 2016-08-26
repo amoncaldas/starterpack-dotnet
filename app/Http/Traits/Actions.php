@@ -34,13 +34,21 @@ trait Actions
 
         $this->callback('beforeSearch', $request, $dataQuery, $countQuery);
 
-        $data['items'] = $dataQuery
-            ->skip(($request->page - 1) * $request->perPage)
-            ->take($request->perPage)
-            ->get();
+        if( $request->has('perPage') && $request->has('page') )
+        {
+            $data['items'] = $dataQuery
+                ->skip(($request->page - 1) * $request->perPage)
+                ->take($request->perPage)
+                ->get();
 
-        $data['total'] = $countQuery
-            ->count();
+            $data['total'] = $countQuery
+                ->count();
+        } else {
+            if($request->has('limit'))
+                $data = $dataQuery->take($request->limit)->get();
+            else
+                $data = $dataQuery->get();
+        }
 
         return $data;
     }
