@@ -60,8 +60,7 @@
         },
         controller: angular.noop,
         controllerAs: 'ctrl',
-        bindToController: true,
-        scope: {
+        bindToController: {
           model: '=ngModel',
           layout: '=',
           openOnClick: '=?',
@@ -75,6 +74,8 @@
           maxDate: '=?',
           required: '=?',
           dateFilter: '=?'
+        },
+        scope: {
         }
       }
     });

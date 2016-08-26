@@ -11,7 +11,6 @@ use App\Http\Controllers\CrudController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Carbon\Carbon;
 
 class TasksController extends CrudController
 {
@@ -36,10 +35,10 @@ class TasksController extends CrudController
            $query = $query->where('done', '=', $request->done);
 
         if($request->has('dateStart'))
-           $query = $query->where('scheduled_to', '>=', Carbon::parse($request->dateEnd));
+           $query = $query->where('scheduled_to', '>=', \Prodeb::parseDate($request->dateStart));
 
         if($request->has('dateEnd'))
-           $query = $query->where('scheduled_to', '<=', Carbon::parse($request->dateEnd));
+           $query = $query->where('scheduled_to', '<=', \Prodeb::parseDate($request->dateEnd));
     }
 
     protected function beforeSearch(Request $request, $dataQuery, $countQuery) {

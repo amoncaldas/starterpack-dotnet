@@ -16,7 +16,9 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->string('name', 100)->unique()->index();
             $table->decimal('cost', 12, 2);
-            $table->timestamps();
+
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

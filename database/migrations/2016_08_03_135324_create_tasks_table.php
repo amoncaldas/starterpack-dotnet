@@ -17,13 +17,14 @@ class CreateTasksTable extends Migration
             $table->text('description');
             $table->boolean('done');
             $table->tinyInteger('priority');
-            $table->dateTime('scheduled_to')->nullable();
+            $table->dateTimeTz('scheduled_to')->nullable();
 
             $table->integer('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects')
                 ->onDelete('cascade');
 
-            $table->timestamps();
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

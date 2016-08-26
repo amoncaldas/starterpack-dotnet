@@ -20,7 +20,8 @@ class CreateLogTable extends Migration
             $table->text('old_value')->nullable();
             $table->text('new_value')->nullable();
             $table->string('type');
-            $table->timestamps();
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

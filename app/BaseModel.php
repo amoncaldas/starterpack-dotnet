@@ -18,6 +18,8 @@ class BaseModel extends Model
     protected $casts = [];
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
+    protected $dateFormat = 'Y-m-d H:i:sO';
+
     protected function addCast($moreAttributes = [])
     {
         $this->casts = array_merge($this->casts, $moreAttributes);

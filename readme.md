@@ -33,8 +33,7 @@
 - composer install
 - php artisan key:generate
 - php artisan jwt:secret
-- php artisan migrate
-- php artisan db:seed
+- php artisan migrate --seed
 
 > Execute o comando abaixo para processar os arquivos .sass e concatenar os .js e .css injetando no index.html.
 > O comando fica observando futuras modificações e repetindo o processo automaticamente 

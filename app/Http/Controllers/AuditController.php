@@ -45,7 +45,7 @@ class AuditController extends Controller
             $baseQuery = $baseQuery->where('created_at', '>=', $request->dateStart);
 
         if($request->has('dateEnd'))
-            $baseQuery = $baseQuery->where('created_at', '<=', Carbon::parse($request->dateEnd)->endOfDay());
+            $baseQuery = $baseQuery->where('created_at', '<=', \Prodeb::parseDate($request->dateEnd)->endOfDay());
 
         $dataQuery = clone $baseQuery;
         $countQuery = clone $baseQuery;
