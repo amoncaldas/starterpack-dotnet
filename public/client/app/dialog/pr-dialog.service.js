@@ -8,10 +8,8 @@
   // eslint-disable-next-line max-params
   function dialogService(Global, $mdMedia, $log, $mdDialog, $mdUtil, $rootScope, $animate, $document) {
     var defaultOptions = {};
-    var buildCalled = false;
 
     return {
-      build: build,
       custom: custom,
       confirm: confirm,
       close: close
@@ -24,7 +22,6 @@
      * @returns {dialogService} - Retorna o service
      */
     function build(config) {
-      buildCalled = true;
 
       if (!angular.isObject(config)) {
         $log.error('PrDialog: Parãmentro inválido, é esperando um objeto como parãmentro.');
@@ -60,13 +57,9 @@
      * de uma determinada ação
      * @returns {promisse} - Retorna uma promisse que pode ou não ser resolvida
      */
-    function confirm() {
+    function confirm(config) {
 
-      //Verifica se a função build() foi chamada
-      if (!buildCalled) {
-        $log.error('PrDialog: Função build() indefinida, a função build() deve ser chamada antes da função confirm().');
-        return;
-      };
+      build(config);
 
       defaultOptions.templateUrl = Global.clientPath + '/dialog/confirm.html';
       defaultOptions.locals = {
@@ -92,8 +85,6 @@
       defaultOptions.clickOutsideToClose = false;
       defaultOptions.hasBackdrop = true;
 
-      buildCalled = false;
-
       return $mdDialog.show(defaultOptions);
     }
 
@@ -101,13 +92,9 @@
      * Método que exibe o dialog customizado na tela depois que o build e invocado
      * @returns {promisse} - Retorna uma promisse que pode ou não ser resolvida
      */
-    function custom() {
+    function custom(config) {
 
-      //Verifica se a função build() foi chamada
-      if (!buildCalled) {
-        $log.error('PrDialog: Função build() indefinida, a função build() deve ser chamada antes da função confirm().');
-        return;
-      };
+      build(config);
 
       if (angular.isDefined(defaultOptions.templateUrl)) {
         defaultOptions.templateUrl = Global.clientPath + defaultOptions.templateUrl;
@@ -121,8 +108,6 @@
       addBackdrop();
 
       defaultOptions.hasBackdrop = false;
-
-      buildCalled = false;
 
       return $mdDialog.show(defaultOptions);
 

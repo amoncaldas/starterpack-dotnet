@@ -81,6 +81,5 @@ class TasksController extends CrudController
 
         $task->save();
 
-        return $task;
     }
 }

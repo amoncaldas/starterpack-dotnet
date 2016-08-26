@@ -9,7 +9,7 @@
     <form class="condensed">
       <div layout="row">
         <pr-date-time-picker
-            ng-model="projectsCtrl.queryFilters.dateStart"
+            ng-model="tasksCtrl.queryFilters.dateStart"
             placeholder-date="Data Inicial"
             placeholder-time="Horário Inicial"
             open-on-click="true"
@@ -18,7 +18,7 @@
       </div>
       <div layout="row">
         <pr-date-time-picker
-            ng-model="projectsCtrl.queryFilters.dateEnd"
+            ng-model="tasksCtrl.queryFilters.dateEnd"
             placeholder-date="Data Final"
             placeholder-time="Horário Final"
             open-on-click="true"
@@ -45,9 +45,9 @@
       </thead>
       <tbody md-body>
         <tr md-row ng-repeat="task in tasksCtrl.resources" ng-if="tasksCtrl.resources.length > 0">
-          <td md-cell>{{task.description}}</td>
-          <td md-cell>{{task.scheduled_to | prDatetime}}</td>
-          <td md-cell>{{task.priority}}</td>
+          <td md-cell>{{ ::task.description}}</td>
+          <td md-cell>{{ ::task.scheduled_to | prDatetime}}</td>
+          <td md-cell>{{ ::task.priority}}</td>
           <td md-cell class="md-text-center">
             <md-switch aria-label="Não Feito/Feito" ng-model="task.done" ng-change="tasksCtrl.toggleDone(task)">
             </md-switch>

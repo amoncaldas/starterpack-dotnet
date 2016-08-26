@@ -17,6 +17,7 @@
         url: '#', titulo: 'Administração', icon: 'settings_applications', profiles: ['admin'],
         subItens: [
           { url: 'user', titulo: 'Usuários', icon: 'people' },
+          { url: 'mail', titulo: 'Envio de e-mail', icon: 'mail' },
           { url: 'audit', titulo: 'Auditoria', icon: 'storage' }
         ]
       }

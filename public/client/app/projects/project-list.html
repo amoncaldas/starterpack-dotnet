@@ -1,8 +1,8 @@
-<box box-title="Lista">
+<box box-title="{{ ::'list' | translate}}">
   <box-toolbar-buttons>
     <md-button class="md-icon-button" ng-click="projectsCtrl.goTo('form')">
       <md-icon md-font-set="material-icons" class="md-warn">add</md-icon>
-      <md-tooltip md-direction="bottom">Adicionar</md-tooltip>
+      <md-tooltip md-direction="bottom">{{ ::'add' | translate}}</md-tooltip>
     </md-button>
   </box-toolbar-buttons>
   <md-table-container>
@@ -19,7 +19,7 @@
       <tbody md-body>
         <tr md-row ng-repeat="project in projectsCtrl.resources" ng-if="projectsCtrl.resources.length > 0">
           <td md-cell>{{ ::project.name}}</td>
-          <td md-cell >R$ {{ ::project.cost | number: 2}}</td>
+          <td md-cell>{{ ::project.cost | real}}</td>
           <td md-cell>{{ ::project.tasks.length}}</td>
           <td md-cell>{{ ::project.created_at | prDate}}</td>
           <td md-cell class="md-text-center">

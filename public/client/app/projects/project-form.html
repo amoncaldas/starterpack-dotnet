@@ -2,7 +2,7 @@
   <box-toolbar-buttons>
     <md-button class="md-icon-button" ng-click="projectsCtrl.goTo('list')">
       <md-icon md-font-set="material-icons" class="md-warn">view_list</md-icon>
-      <md-tooltip md-direction="bottom">Lista</md-tooltip>
+      <md-tooltip md-direction="bottom">{{ ::'list' | translate}}</md-tooltip>
     </md-button>
   </box-toolbar-buttons>
   <form>
@@ -10,10 +10,9 @@
       <input type="text" placeholder="Nome" ng-model="projectsCtrl.resource.name">
     </md-input-container>
     <md-input-container class="md-block" flex>
-      <input  type="number"
+      <input  type="text"
               placeholder="Custo"
-              step="0.10"
-              min="0.10"
+              ui-money-mask="2"
               ng-model="projectsCtrl.resource.cost">
     </md-input-container>
   </form>

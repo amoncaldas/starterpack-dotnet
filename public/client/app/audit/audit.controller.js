@@ -29,7 +29,7 @@
     }
 
     function viewDetail(auditDetail) {
-      var options = {
+      var config = {
         locals: { auditDetail: auditDetail },
         /** @ngInject */
         controller: function(auditDetail) {
@@ -38,10 +38,11 @@
           vm.auditDetail = auditDetail;
         },
         controllerAs: 'auditDetailCtrl',
-        templateUrl: '/audit/audit-detail.html'
+        templateUrl: '/audit/audit-detail.html',
+        hasBackdrop: true
       };
 
-      PrDialog.show('custom', options);
+      PrDialog.custom(config);
     }
 
 

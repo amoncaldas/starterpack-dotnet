@@ -32,11 +32,9 @@
         hasBackdrop: true
       };
 
-      PrDialog.build(config)
-        .custom()
-        .then(function() {
-          vm.afterSave();
-        });
+      PrDialog.custom(config).then(function() {
+        vm.afterSave();
+      });
 
     }
 
@@ -51,11 +49,9 @@
         description: 'Deseja remover permanentemente o projeto '+ resource.name +'?'
       }
 
-      PrDialog.build(config)
-        .confirm()
-        .then(function() {
-          vm.remove(resource);
-        });
+      PrDialog.confirm(config).then(function() {
+        vm.remove(resource);
+      });
     }
 
   }

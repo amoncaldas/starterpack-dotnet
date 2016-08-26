@@ -63,17 +63,14 @@
     }
 
     function removeUser(resource) {
-      var options = {
-        clickOutsideToClose: false,
+      var config = {
         title: 'Confirmar remoção',
-        textContent: 'Deseja remover permanentemente o usuário '+resource.name+'?',
-        ok: 'Sim'
+        description: 'Deseja remover permanentemente o usuário '+resource.name+'?'
       };
 
-      PrDialog.show('confirm', options)
-        .then(function() {
-          vm.remove(resource)
-        });
+      PrDialog.confirm(config).then(function() {
+        vm.remove(resource)
+      });
     }
 
   }
