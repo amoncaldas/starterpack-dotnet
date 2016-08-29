@@ -95,7 +95,7 @@ return [
     |
     */
 
-    'log' => 'single',
+    'log' => 'daily',
 
     /*
     |--------------------------------------------------------------------------
@@ -149,7 +149,8 @@ return [
          * External
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        OwenIt\Auditing\AuditingServiceProvider::class
+        OwenIt\Auditing\AuditingServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class
     ],
 
     /*

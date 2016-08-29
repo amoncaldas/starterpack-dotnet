@@ -11,6 +11,7 @@
 - Preferencialmente utilize o Linux com o gerenciador APT
 - node versão 4 ou superior [tutorial para instalar](https://nodejs.org/en/download/package-manager/)
 - php versão 5.6 ou superior [tutorial para instalar](http://tecadmin.net/install-php5-on-ubuntu/)
+- extenções php_fileinfo, php_mbstring, php_pdo_pgsql, php_pgsql, php_openssl
 - composer [tutorial para instalar](https://getcomposer.org/doc/00-intro.md#globally)
 - editor decente [vscode](https://code.visualstudio.com/) ou [atom.io](https://atom.io/)
 - postgres
@@ -48,7 +49,7 @@
 
 > Abra o navegador
 
-- acesse htt://localhost:5000
+- acesse http://localhost:5000
 - logue com os dados email: **admin-base@prodeb.com** pass: **Prodeb01**
 
 > Outros comandos
@@ -62,3 +63,9 @@
 ### Erro no watch no linux
 
 - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+> Para ver os logs
+
+- acessar a url http://localhost:5000/developer/log-viewer
+- digitar o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
+- digitar a senha conforme a variável de ambiente no arquivo .env DEVELOP_PASSWORD
