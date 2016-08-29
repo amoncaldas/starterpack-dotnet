@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function ProjectsController($controller, ProjectService, PrDialog) {
+  function ProjectsController($controller, ProjectsService, PrDialog) {
     var vm = this;
 
     //Attributes Block
@@ -19,7 +19,7 @@
     vm.removeProject = removeProject;
 
     // instantiate base controller
-    $controller('CRUDController', { vm: vm, modelService: ProjectService, options: { redirectAfterSave: false } });
+    $controller('CRUDController', { vm: vm, modelService: ProjectsService, options: { redirectAfterSave: false } });
 
     function viewTasks(projectId) {
       var config = {
@@ -28,7 +28,7 @@
         },
         controller: 'TasksDialogController',
         controllerAs: 'tasksCtrl',
-        templateUrl: '/tasks/task-dialog.html',
+        templateUrl: '/tasks/tasks-dialog.html',
         hasBackdrop: true
       };
 

@@ -145,8 +145,6 @@ ul.menu-sidenav li {
 }
 
 .md-block {
-  margin: 0 !important;
-  margin-bottom: 10px !important;
   width: 100%;
 }
 
@@ -254,3 +252,9 @@ a.logo {
     text-align: #{$align} !important;
   }
 }
+
+.prContactChips md-content.autocomplete input {
+  min-width: 400px;
+}
+
+

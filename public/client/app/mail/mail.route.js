@@ -17,7 +17,7 @@
       .state('mail', {
         url: '/email',
         templateUrl: Global.clientPath + '/mail/sender-mail-user.html',
-        controller: 'MailController as mailCtrl',
+        controller: 'MailsController as mailsCtrl',
         data: { breadcrumbs: 'Administração > Envio de e-mail', needProfile: ['admin'] }
       });
 

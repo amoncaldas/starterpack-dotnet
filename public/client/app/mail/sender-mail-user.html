@@ -1,34 +1,41 @@
-<md-content class="md-padding autocomplete" layout="column" flex>
-  <md-contact-chips
-    ng-model="mailCtrl.asyncContacts"
-    md-contacts="mailCtrl.delayedQuerySearch($query)"
-    md-contact-name="name"
-    md-contact-email="email"
-    md-require-match="true"
-    md-highlight-flags="i"
-    filter-selected="mailCtrl.filterSelected"
-    placeholder="Para">
-  </md-contact-chips>
-</md-content>
 <content-body>
   <box box-title="Enviar e-mail" flex>
     <div layout="row">
         <form name="mailForm" flex>
-
-          <md-button class="md-primary md-raised" ng-click="mailCtrl.userDialog()">Add</md-button>
-          <md-input-container md-no-float class="md-block">
+          <div class="prContactChips" layout="row" flex>
+            <md-content class="autocomplete" flex md-no-cache="false">
+                <md-contact-chips
+                  ng-model="mailsCtrl.mail.users"
+                  md-contacts="mailsCtrl.loadUsers($query)"
+                  md-contact-name="name"
+                  md-contact-email="email"
+                  md-require-match="true"
+                  md-highlight-flags="i"
+                  placeholder="Para"
+                  secondary-placeholder="Para"
+                  filter-selected="mailsCtrl.filterSelected">
+                </md-contact-chips>
+            </md-content>
+            <md-button class="md-primary md-fab md-mini" flex=9 ng-click="mailsCtrl.openUserDialog()">
+              <md-icon md-font-set="material-icons">
+                search
+              </md-icon>
+              <md-tooltip md-direction="buttom">Buscar</md-tooltip>
+            </md-button>
+          </div>
+          <md-input-container md-no-float class="md-block top-20" flex>
             <label>Assunto</label>
-            <input type="text" name="assunto" ng-model="mailCtrl.mail.subscribe">
+            <input type="text" name="assunto" ng-model="mailsCtrl.mail.subject">
           </md-input-container>
-          <md-input-container class="md-block">
+          <md-input-container md-no-float class="md-block">
             <label>Mensagem</label>
-            <textarea ng-model="mailCtrl.mail.message" rows="5" md-select-on-focus></textarea>
+            <textarea ng-model="mailsCtrl.mail.message" rows="5" md-select-on-focus></textarea>
           </md-input-container>
         </form>
     </div>
     <box-footer-buttons>
-      <md-button class="md-primary md-raised" ng-click="mailCtrl.send()">Enviar</md-button>
-      <md-button class="md-raised" ng-click="mailCtrl.cleanForm()">Limpar</md-button>
+      <md-button class="md-primary md-raised" ng-click="mailsCtrl.send()">Enviar</md-button>
+      <md-button class="md-raised" ng-click="mailsCtrl.cleanForm()">Limpar</md-button>
     </box-footer-buttons>
   </box>
 </content-body>

@@ -21,6 +21,9 @@ Route::group(['prefix' => 'v1'], function () {
         Route::put('/tasks/toggleDone', 'TasksController@toggleDone');
         Route::resource('tasks', 'TasksController');
 
+        Route::resource('mails', 'MailsController',
+            ['only' => ['store']]);
+
         Route::group([], function () {
             Route::put('profile', 'UsersController@updateProfile');
         });

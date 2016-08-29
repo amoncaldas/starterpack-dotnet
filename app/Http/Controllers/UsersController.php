@@ -40,6 +40,9 @@ class UsersController extends CrudController
             $query = $query
                 ->where('name', 'like', '%'.$request->nameOrEmail.'%')
                 ->orWhere('email', 'like', '%'.$request->nameOrEmail.'%');
+
+        if($request->has('notUsers'))
+            $query = $query->whereNotIn('id', explode(',', $request->notUsers));
     }
 
     protected function beforeSearch(Request $request, $dataQuery, $countQuery) {

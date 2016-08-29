@@ -1,20 +1,26 @@
 <content-body layout-align="center center">
-    <div flex=100 flex-sm=80 flex-gt-sm=50>
-      <div layout="row" layout-align="center center">
-        <img  src="client/images/logo-governo.png"  alt="logo"/>
-      </div>
-      <box box-title="{{ ::global.appName}}">
-        <form>
-          <md-input-container class="md-block" flex>
-            <md-icon md-font-set="material-icons">email</md-icon>
-            <input type="email" placeholder="Email" ng-model="loginCtrl.credentials.email">
-          </md-input-container>
-          <md-input-container class="md-block" flex>
-            <md-icon md-font-set="material-icons">lock</md-icon>
-            <input type="password" placeholder="Senha" ng-model="loginCtrl.credentials.password">
-          </md-input-container>
-          <md-button class="md-raised md-primary md-block" ng-click="loginCtrl.login()">Entrar</md-button>
+    <box box-title="{{ ::global.appName}}" flex=60>
+      <div layout="row" layout-sm="column" flex>
+        <div flex=30 flex-sm=99 flex-gt-sm=99 layout-align="center center">
+          <img src="client/images/governo-do-estado-da-bahia.gif" alt="logo" />
+        </div>
+        <form flex>
+          <div layout="row" flex layout-align="center center">
+            <md-input-container flex class="bottom-5">
+              <md-icon md-font-set="material-icons">email</md-icon>
+              <input type="email" placeholder="Email" ng-model="loginCtrl.credentials.email">
+            </md-input-container>
+          </div>
+          <div layout="row" flex layout-align="center center">
+            <md-input-container flex class="top-1">
+              <md-icon md-font-set="material-icons">lock</md-icon>
+              <input type="password" flex=99 placeholder="Senha" ng-model="loginCtrl.credentials.password">
+            </md-input-container>
+          </div>
+          <div layout="row" flex layout-align="center center">
+            <md-button class="md-raised md-primary" flex ng-click="loginCtrl.login()">Entrar</md-button>
+          </div>
         </form>
-      </box>
-    </div>
+      </div>
+    </box>
 </content-body>
