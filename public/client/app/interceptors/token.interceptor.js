@@ -15,7 +15,7 @@
   /** @ngInject */
   function tokenInterceptor($httpProvider, $provide, Global) {
 
-    function redirectWhenServerLoggedOut($q, $injector) {
+    function redirectWhenServerLoggedOut($q, $injector, $translate) {
 
       return {
         response: function(response) {
@@ -42,7 +42,7 @@
                 // only the first will redirect and notified
                 if (!$state.is(Global.loginState)) {
                   $injector.get('PrToast')
-                    .warn('Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente');
+                    .warn($translate.instant('messages.logoutInactive'));
 
                   $state.go(Global.loginState);
                 }

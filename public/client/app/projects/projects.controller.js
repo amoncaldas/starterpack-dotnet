@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function ProjectsController($controller, ProjectsService, PrDialog) {
+  function ProjectsController($controller, ProjectsService, PrDialog, $translate) {
     var vm = this;
 
     //Attributes Block
@@ -45,8 +45,8 @@
 
     function removeProject(resource) {
       var config = {
-        title: 'Confirmar remoção',
-        description: 'Deseja remover permanentemente o projeto '+ resource.name +'?'
+        title: $translate.instant('project.confirm.title'),
+        description: $translate.instant('project.confirm.title', resource)
       }
 
       PrDialog.confirm(config).then(function() {

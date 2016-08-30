@@ -1,4 +1,4 @@
-(function () {
+(function() {
 
   'use strict';
 
@@ -7,18 +7,19 @@
     .controller('MenuController', MenuController);
 
   /** @ngInject */
-  function MenuController() {
+  // eslint-disable-next-line max-params
+  function MenuController($translate) {
     var vm = this;
 
     vm.itensMenu = [
-      { url: 'dashboard', titulo: 'Dashboard', icon: 'dashboard', subItens: [] },
-      { url: 'project', titulo: 'Projetos', icon: 'star', subItens: [] },
+      { url: 'dashboard', titulo: $translate.instant('layout.menu.dashboard'), icon: 'dashboard', subItens: [] },
+      { url: 'project', titulo: $translate.instant('layout.menu.projects'), icon: 'star', subItens: [] },
       {
-        url: '#', titulo: 'Administração', icon: 'settings_applications', profiles: ['admin'],
+        url: '#', titulo: $translate.instant('layout.menu.admin'), icon: 'settings_applications', profiles: ['admin'],
         subItens: [
-          { url: 'user', titulo: 'Usuários', icon: 'people' },
-          { url: 'mail', titulo: 'Envio de e-mail', icon: 'mail' },
-          { url: 'audit', titulo: 'Auditoria', icon: 'storage' }
+          { url: 'user', titulo: $translate.instant('layout.menu.users'), icon: 'people' },
+          { url: 'mail', titulo: $translate.instant('layout.menu.sendMail'), icon: 'mail' },
+          { url: 'audit', titulo: $translate.instant('layout.menu.audit'), icon: 'storage' }
         ]
       }
     ];

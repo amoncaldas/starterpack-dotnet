@@ -8,17 +8,21 @@
           <div layout="row" flex layout-align="center center">
             <md-input-container flex class="bottom-5">
               <md-icon md-font-set="material-icons">email</md-icon>
-              <input type="email" placeholder="Email" ng-model="loginCtrl.credentials.email">
+              <label>{{::'login.email' | translate}}</label>
+              <input type="email" ng-model="loginCtrl.credentials.email">
             </md-input-container>
           </div>
           <div layout="row" flex layout-align="center center">
             <md-input-container flex class="top-1">
               <md-icon md-font-set="material-icons">lock</md-icon>
-              <input type="password" flex=99 placeholder="Senha" ng-model="loginCtrl.credentials.password">
+              <label>{{::'login.password' | translate}}</label>
+              <input type="password" flex=99 ng-model="loginCtrl.credentials.password">
             </md-input-container>
           </div>
           <div layout="row" flex layout-align="center center">
-            <md-button class="md-raised md-primary" flex ng-click="loginCtrl.login()">Entrar</md-button>
+            <md-button class="md-raised md-primary" flex ng-click="loginCtrl.login()">
+              {{::'login.in' | translate}}
+            </md-button>
           </div>
         </form>
       </div>

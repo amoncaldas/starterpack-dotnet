@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function UsersController($controller, lodash, UserService, RoleService, PrToast, Auth, PrDialog) {
+  function UsersController($controller, lodash, UserService, RoleService, PrToast, Auth, PrDialog, $translate) {
     var vm = this;
 
     vm.onActivate = onActivate;
@@ -57,15 +57,15 @@
 
     function beforeRemove(resource) {
       if (resource.id === Auth.currentUser.id) {
-        PrToast.error('Você não pode remover seu próprio usuário');
+        PrToast.error($translate.instant('user.beforeRemoveError'));
         return false;
       };
     }
 
     function removeUser(resource) {
       var config = {
-        title: 'Confirmar remoção',
-        description: 'Deseja remover permanentemente o usuário '+resource.name+'?'
+        title: $translate.instant('user.confirm.title'),
+        description: $translate.instant('user.confirm.description', resource)
       };
 
       PrDialog.confirm(config).then(function() {

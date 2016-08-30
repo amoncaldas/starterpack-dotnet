@@ -1,16 +1,18 @@
-<box box-title="Formulário de Cadastro">
+<box box-title="{{::'form.titleRegister' | translate}}">
   <box-toolbar-buttons>
     <md-button class="md-icon-button" ng-click="usersCtrl.goTo('list')">
       <md-icon md-font-set="material-icons">view_list</md-icon>
-      <md-tooltip md-direction="bottom">Lista</md-tooltip>
+      <md-tooltip md-direction="bottom">{{::'list' | translate}}</md-tooltip>
     </md-button>
   </box-toolbar-buttons>
   <form>
     <md-input-container class="md-block" flex>
-      <input type="text" placeholder="Nome" ng-model="usersCtrl.resource.name">
+      <label>{{::'user.form.name' | translate}}</label>
+      <input type="text" ng-model="usersCtrl.resource.name">
     </md-input-container>
     <md-input-container class="md-block" flex>
-      <input type="email" placeholder="Email" ng-model="usersCtrl.resource.email">
+      <label>{{::'user.form.email' | translate}}</label>
+      <input type="email" ng-model="usersCtrl.resource.email">
     </md-input-container>
     <div md-input-container class="md-block" >
       <div ng-repeat="role in usersCtrl.roles">
@@ -19,8 +21,8 @@
     </div>
   </form>
   <box-footer-buttons>
-    <md-button class="md-primary md-raised" ng-click="usersCtrl.save()">Salvar</md-button>
-    <md-button class="md-raised" ng-click="usersCtrl.cleanForm()">Limpar</md-button>
+    <md-button class="md-primary md-raised" ng-click="usersCtrl.save()">{{::'form.save' | translate}}</md-button>
+    <md-button class="md-raised" ng-click="usersCtrl.cleanForm()">{{::'form.clear' | translate}}</md-button>
   </box-footer-buttons>
 </box>
 

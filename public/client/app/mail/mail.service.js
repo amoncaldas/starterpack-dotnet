@@ -7,7 +7,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function MailService(Global, serviceFactory) {
+  function MailService(serviceFactory) {
     var model = serviceFactory('mails', {});
 
     return model;

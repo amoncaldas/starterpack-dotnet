@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function MailsController(MailService, UserService, PrDialog, PrToast, $q, lodash) {
+  function MailsController(MailService, UserService, PrDialog, PrToast, $q, lodash, $translate) {
     var vm = this;
 
     vm.filterSelected = false;
@@ -71,7 +71,7 @@
       var users = lodash.find(vm.mail.users, { email: user.email });
 
       if (vm.mail.users.length > 0 && angular.isDefined(users)) {
-        PrToast.warn('Usuário já adicionado!');
+        PrToast.warn($translate.instant('mail.userExists'));
       } else {
         vm.mail.users.push({ name: user.name, email: user.email })
       }
@@ -79,24 +79,9 @@
 
     function send() {
 
-      if (vm.mail.users.length === 0) {
-        PrToast.warn('Informe ao menos um e-mail de destinatário.');
-        return;
-      }
-
-      if (angular.isUndefined(vm.mail.subject)) {
-        PrToast.warn('Campo assunto é obrigratório.');
-        return;
-      }
-
-      if (angular.isUndefined(vm.mail.message)) {
-        PrToast.warn('Campo mensagem é obrigratório.');
-        return;
-      }
-
       vm.mail.$save().then(function(response) {
         if (response.length > 0) {
-          var msg = 'Ocorreu um erro nos seguintes emails abaixo:\n';
+          var msg = $translate.instant('mail.mailErrors');
 
           for (var i=0; i < response.length; i++) {
             msg += response + '\n';
@@ -104,9 +89,11 @@
           PrToast.error(msg);
           vm.cleanForm();
         } else {
-          PrToast.success('Email enviado com sucesso!');
+          PrToast.success($translate.instant('mail.sendMailSuccess'));
           vm.cleanForm();
         }
+      }, function(response) {
+        PrToast.errorValidation(response.data, $translate.instant('mail.sendMailError'));
       });
     }
 

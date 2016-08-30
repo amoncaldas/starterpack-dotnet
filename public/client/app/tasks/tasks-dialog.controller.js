@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function TasksDialogController($controller, TaskDialogService, projectId, PrToast, PrDialog) {
+  function TasksDialogController($controller, TaskDialogService, projectId, PrToast, PrDialog, $translate) {
     var vm = this;
 
     //Functions Block
@@ -51,17 +51,17 @@
 
     function toggleDone(resource) {
       TaskDialogService.toggleDone({ id: resource.id, done: resource.done }).then(function() {
-        PrToast.success('Operação realizada com sucesso.');
+        PrToast.success($translate.instant('task.toggleDoneSuccess'));
         vm.search(vm.paginator.currentPage);
       }, function(error) {
-        PrToast.errorValidation(error.data, 'Não foi possível atualizar sua tarefa.');
+        PrToast.errorValidation(error.data, $translate.instant('task.toggleDoneError'));
       });
     }
 
     function removeTask(resource) {
       var config = {
-        title: 'Confirmar remoção',
-        description: 'Deseja remover permanentemente a tarefa selecionada?'
+        title: $translate.instant('task.confirm.title'),
+        description: $translate.instant('task.confirm.description')
       }
 
       PrDialog.confirm(config).then(function() {

@@ -1,4 +1,4 @@
-<box box-title="Formulário de Cadastro">
+<box box-title="{{::'form.titleRegister' | translate}}">
   <box-toolbar-buttons>
     <md-button class="md-icon-button" ng-click="projectsCtrl.goTo('list')">
       <md-icon md-font-set="material-icons" class="md-warn">view_list</md-icon>
@@ -17,8 +17,8 @@
     </md-input-container>
   </form>
   <box-footer-buttons>
-    <md-button class="md-primary md-raised" ng-click="projectsCtrl.save()">Salvar</md-button>
-    <md-button class="md-raised" ng-click="projectsCtrl.cleanForm()">Limpar</md-button>
+    <md-button class="md-primary md-raised" ng-click="projectsCtrl.save()">{{::'form.save' | translate}}</md-button>
+    <md-button class="md-raised" ng-click="projectsCtrl.cleanForm()">{{::'form.clear' | translate}}</md-button>
   </box-footer-buttons>
 
 </box>

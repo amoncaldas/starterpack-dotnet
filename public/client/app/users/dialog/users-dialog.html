@@ -1,6 +1,6 @@
-<md-dialog flex=50 aria-label="Usuários" class="md-dialog-transparent">
+<md-dialog flex=50 aria-label="{{::'user.ariaLabel' | translate}}" class="md-dialog-transparent">
   <content-body flex>
-    <box box-title="Lista de Usuários" flex>
+    <box box-title="{{::'user.dialog.title' | translate}}" flex>
       <md-table-container>
         <table md-table class="condensed">
           <thead md-head>
@@ -17,7 +17,7 @@
               <td md-cell>
                 <md-button class="md-icon-button" ng-click="ctrl.transferUser(user)">
                   <md-icon md-font-set="material-icons" class="md-dark">swap_horiz</md-icon>
-                  <md-tooltip md-direction="top">Transferir</md-tooltip>
+                  <md-tooltip md-direction="top">{{::'user.dialog.transfer' | translate}}</md-tooltip>
                 </md-button>
               </td>
             </tr>

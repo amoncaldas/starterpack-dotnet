@@ -1,5 +1,5 @@
 <content-body>
-  <box box-title="Enviar e-mail" flex>
+  <box box-title="{{::'mail.title' | translate}}" flex>
     <div layout="row">
         <form name="mailForm" flex>
           <div class="prContactChips" layout="row" flex>
@@ -11,8 +11,8 @@
                   md-contact-email="email"
                   md-require-match="true"
                   md-highlight-flags="i"
-                  placeholder="Para"
-                  secondary-placeholder="Para"
+                  placeholder="{{::'mail.form.to' | translate}}"
+                  secondary-placeholder="{{::'mail.form.to' | translate}}"
                   filter-selected="mailsCtrl.filterSelected">
                 </md-contact-chips>
             </md-content>
@@ -20,22 +20,22 @@
               <md-icon md-font-set="material-icons">
                 search
               </md-icon>
-              <md-tooltip md-direction="buttom">Buscar</md-tooltip>
+              <md-tooltip md-direction="buttom">{{::'form.search' | translate}}</md-tooltip>
             </md-button>
           </div>
           <md-input-container md-no-float class="md-block top-20" flex>
-            <label>Assunto</label>
+            <label>{{::'mail.form.subject' | translate}}</label>
             <input type="text" name="assunto" ng-model="mailsCtrl.mail.subject">
           </md-input-container>
           <md-input-container md-no-float class="md-block">
-            <label>Mensagem</label>
+            <label>{{::'mail.form.message' | translate}}</label>
             <textarea ng-model="mailsCtrl.mail.message" rows="5" md-select-on-focus></textarea>
           </md-input-container>
         </form>
     </div>
     <box-footer-buttons>
-      <md-button class="md-primary md-raised" ng-click="mailsCtrl.send()">Enviar</md-button>
-      <md-button class="md-raised" ng-click="mailsCtrl.cleanForm()">Limpar</md-button>
+      <md-button class="md-primary md-raised" ng-click="mailsCtrl.send()">{{::'form.send' | translate}}</md-button>
+      <md-button class="md-raised" ng-click="mailsCtrl.cleanForm()">{{::'form.clear' | translate}}</md-button>
     </box-footer-buttons>
   </box>
 </content-body>

@@ -1,18 +1,22 @@
 <content-body layout-align="center center">
   <div flex=100 flex-sm=80 flex-gt-sm=60>
-    <box box-title="Formulário de Atualização">
+    <box box-title="{{::'form.titleUpdate' | translate}}">
       <form>
         <md-input-container class="md-block" flex>
-          <input type="text" placeholder="Nome" ng-model="profileCtrl.user.name">
+          <label>{{::'user.profile.form.name' | translate}}</label>
+          <input type="text" ng-model="profileCtrl.user.name">
         </md-input-container>
         <md-input-container class="md-block" flex>
-          <input type="email" placeholder="Email" ng-model="profileCtrl.user.email">
+          <label>{{::'user.profile.form.email' | translate}}</label>
+          <input type="email" ng-model="profileCtrl.user.email">
         </md-input-container>
         <md-input-container class="md-block" flex>
-          <input type="password" placeholder="Senha" ng-model="profileCtrl.user.password">
+          <label>{{::'user.profile.form.password' | translate}}</label>
+          <input type="password" ng-model="profileCtrl.user.password">
         </md-input-container>
         <md-input-container class="md-block" flex>
-          <input type="password_confirmation" placeholder="Confirmação da Senha" ng-model="profileCtrl.user.password_confirmation">
+          <label>{{::'user.profile.form.confirmPassword' | translate}}</label>
+          <input type="password_confirmation" ng-model="profileCtrl.user.password_confirmation">
         </md-input-container>
         <div md-input-container class="md-block" >
           <div ng-repeat="role in profileCtrl.roles">
@@ -21,7 +25,7 @@
         </div>
       </form>
       <box-footer-buttons>
-        <md-button class="md-primary md-raised" ng-click="profileCtrl.update()">Atualizar</md-button>
+        <md-button class="md-primary md-raised" ng-click="profileCtrl.update()">{{::'form.update' | translate}}</md-button>
       </box-footer-buttons>
     </box>
   </div>

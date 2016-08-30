@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function CRUDController(vm, modelService, options, PrToast, PrPagination) {
+  function CRUDController(vm, modelService, options, PrToast, PrPagination, $translate) {
 
     //Functions Block
     vm.search = search;
@@ -51,7 +51,7 @@
 
         if (angular.isFunction(vm.afterSearch)) vm.afterSearch(response);
       }, function () {
-        PrToast.error('Não foi possível realizar a busca.');
+        PrToast.error($translate.instant('controllers.crud.searchError'));
       });
     }
 
@@ -83,10 +83,10 @@
           vm.goTo('list');
         }
 
-        PrToast.success('Operação realizada com sucesso');
+        PrToast.success($translate.instant('controllers.crud.saveSuccess'));
 
       }, function (error) {
-        PrToast.errorValidation(error.data, 'Não foi possível salvar.');
+        PrToast.errorValidation(error.data, $translate.instant('controllers.crud.saveError'));
       });
     }
 
@@ -97,9 +97,9 @@
         if (angular.isFunction(vm.afterRemove)) vm.afterRemove(resource);
 
         vm.search();
-        PrToast.info('Remoção realizada com sucesso.');
+        PrToast.info($translate.instant('controllers.crud.removeSuccess'));
       }, function (error) {
-        PrToast.errorValidation(error.data, 'Não foi possível remover.');
+        PrToast.errorValidation(error.data, $translate.instant('controllers.crud.removeError'));
       });
     }
 

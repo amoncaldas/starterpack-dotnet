@@ -1,8 +1,8 @@
-<box box-title="Lista">
+<box box-title="{{::'list' | translate}}">
   <box-toolbar-buttons>
     <md-button class="md-icon-button" ng-click="usersCtrl.goTo('form')">
       <md-icon md-font-set="material-icons" class="md-warn">add</md-icon>
-      <md-tooltip md-direction="bottom">Adicionar</md-tooltip>
+      <md-tooltip md-direction="bottom">{{::'add' | translate}}</md-tooltip>
     </md-button>
   </box-toolbar-buttons>
   <md-table-container>
@@ -24,12 +24,12 @@
             <md-button class="md-icon-button" ng-click="usersCtrl.edit(user)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">create</md-icon>
-              <md-tooltip md-direction="bottom">Editar</md-tooltip>
+              <md-tooltip md-direction="bottom">{{::'form.edit' | translate}}</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="usersCtrl.removeUser(user)">
               <md-icon md-font-set="material-icons"
                 class="md-warn">delete</md-icon>
-              <md-tooltip md-direction="bottom">Apagar</md-tooltip>
+              <md-tooltip md-direction="bottom">{{::'form.remove' | translate}}</md-tooltip>
             </md-button>
           </td>
         </tr>

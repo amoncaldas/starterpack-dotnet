@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 
 class MailsController extends Controller{
@@ -23,10 +24,11 @@ class MailsController extends Controller{
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'name' => 'required',
-        //     'email' => 'required|email',
-        // ]);
+        $this->validate($request, [
+            'users' => 'required',
+            'subject' => 'required',
+            'message' => 'required'
+        ]);
 
         Mail::send('mails.index', ['mail' => $request->only('subject','message')], function($message) use ($request) {
             $message->from(config('mail.from.address'), config('mail.from.name'));

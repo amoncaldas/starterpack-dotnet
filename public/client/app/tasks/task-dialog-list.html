@@ -1,8 +1,8 @@
-<box box-title="Lista de Tarefas">
+<box box-title="{{::'task.title' | translate}}">
   <box-toolbar-buttons>
     <md-button class="md-icon-button" ng-click="tasksCtrl.goTo('form')">
       <md-icon md-font-set="material-icons" class="md-warn">add</md-icon>
-      <md-tooltip md-direction="bottom">Adicionar</md-tooltip>
+      <md-tooltip md-direction="bottom">{{::'add' | translate}}</md-tooltip>
     </md-button>
   </box-toolbar-buttons>
   <md-content layout-padding md-whiteframe="1" class="bottom-4">
@@ -27,7 +27,9 @@
       </div>
       <div layout="row">
         <div flex></div>
-        <md-button class="md-raised md-primary md-mini" ng-click="tasksCtrl.search(vm.paginator.currentPage)">Filtrar</md-button>
+        <md-button class="md-raised md-primary md-mini" ng-click="tasksCtrl.search(vm.paginator.currentPage)">
+          {{::'form.filter' | translate}}
+        </md-button>
       </div>
     </form>
   </md-content>
@@ -55,17 +57,17 @@
           <td md-cell>
             <md-button class="md-icon-button" ng-click="tasksCtrl.edit(task)">
               <md-icon md-font-set="material-icons" class="md-dark">create</md-icon>
-              <md-tooltip md-direction="top">Editar</md-tooltip>
+              <md-tooltip md-direction="top">{{::'form.edit' | translate}}</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="tasksCtrl.removeTask(task)">
               <md-icon md-font-set="material-icons" class="md-warn">delete</md-icon>
-              <md-tooltip md-direction="top">Apagar</md-tooltip>
+              <md-tooltip md-direction="top">{{::'form.remove' | translate}}</md-tooltip>
             </md-button>
           </td>
         </tr>
         <tr md-row ng-if="tasksCtrl.resources.length == 0">
           <td md-cell colspan="5">
-            <div layout="row" layout-align="center center">Nenhuma tarefa agendada para este projeto.</div>
+            <div layout="row" layout-align="center center">{{::'notFound' | translate}}</div>
           </td>
         </tr>
       </tbody>
@@ -78,7 +80,7 @@
         <pr-pagination paginator="tasksCtrl.paginator"></pr-pagination>
       </div>
       <div>
-        <md-button class="md-warn" ng-click="tasksCtrl.closeModal()">Sair</md-button>
+        <md-button class="md-warn" ng-click="tasksCtrl.closeModal()">{{::'form.getOut' | translate}}</md-button>
       </div>
     </div>
   </box-footer-buttons>

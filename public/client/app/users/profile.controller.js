@@ -7,7 +7,7 @@
     .controller('ProfileController', ProfileController);
 
   /** @ngInject */
-  function ProfileController(UserService, Auth, PrToast) {
+  function ProfileController(UserService, Auth, PrToast, $translate) {
     var vm = this;
 
     vm.update = update;
@@ -22,7 +22,7 @@
       UserService.updateProfile(vm.user).then(function (response) {
         Auth.updateCurrentUser(response.data);
       }, function (error) {
-        PrToast.errorValidation(error.data, 'Não foi possível atualizar seu profile');
+        PrToast.errorValidation(error.data, $translate('user.profile.updateError'));
       });
     }
   }

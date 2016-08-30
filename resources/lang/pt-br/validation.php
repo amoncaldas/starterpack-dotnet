@@ -115,7 +115,10 @@ return [
         'project_id' => 'projeto',
         'created_at' => 'criado em',
         'updated_at' => 'atualizado em',
-        'roles' => 'Perfis'
+        'roles' => 'Perfis',
+        'users' => 'Para',
+        'subject' => 'Assunto',
+        'message' => 'Mensagem'
     ],
 
 ];

@@ -7,7 +7,8 @@
     .controller('LoginController', LoginController);
 
   /** @ngInject */
-  function LoginController($state, Auth, Global, PrToast, PrDialog) {
+  // eslint-disable-next-line max-params
+  function LoginController($state, Auth, Global, PrToast, PrDialog, $translate) {
     var vm = this;
 
     vm.login = login;
@@ -28,8 +29,8 @@
         $state.go(Global.homeState);
       }, function(error) {
         var message = (error.data.error === 'invalid_credentials')
-          ? 'Credenciais inválidas'
-          : 'Não foi possível realizar o login';
+          ? $translate.instant('login.invalidCredentials')
+          : $translate.instant('login.errorLogin');
 
         PrToast.error(message);
 

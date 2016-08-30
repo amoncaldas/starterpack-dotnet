@@ -26,23 +26,23 @@
             <md-button class="md-icon-button" ng-click="projectsCtrl.edit(project)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">create</md-icon>
-              <md-tooltip md-direction="top">Editar</md-tooltip>
+              <md-tooltip md-direction="top">{{::'project.edit' | translate}}</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="projectsCtrl.viewTasks(project.id)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">assignment</md-icon>
-              <md-tooltip md-direction="top">Listar Tarefas</md-tooltip>
+              <md-tooltip md-direction="top">{{::'project.listTask' | translate}}</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="projectsCtrl.removeProject(project)">
               <md-icon md-font-set="material-icons"
                 class="md-warn">delete</md-icon>
-              <md-tooltip md-direction="top">Apagar</md-tooltip>
+              <md-tooltip md-direction="top">{{::'form.remove' | translate}}</md-tooltip>
             </md-button>
           </td>
         </tr>
         <tr md-row ng-if="projectsCtrl.resources.length == 0">
           <td md-cell colspan="4">
-            <div layout="row" layout-align="center center">Nenhum registro encontrado</div>
+            <div layout="row" layout-align="center center">{{::'notFound' | translate}}</div>
           </td>
         </tr>
       </tbody>

@@ -16,14 +16,14 @@
      * @param {any} $injector
      * @returns
      */
-    function showHideSpinner($q, $injector) {
+    function showHideSpinner($q, $injector, $translate) {
 
       return {
         request: function (config) {
           if (config.method === 'GET') {
-            $injector.get('PrSpinner').show('Carregando...');
+            $injector.get('PrSpinner').show($translate.instant('loading'));
           } else {
-            $injector.get('PrSpinner').show('Processando...');
+            $injector.get('PrSpinner').show($translate.instant('processing'));
           }
           return config;
         },
