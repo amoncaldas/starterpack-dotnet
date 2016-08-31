@@ -15,12 +15,11 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Http\Traits\Callbacks,
-    App\Http\Traits\Actions,
-    App\Http\Traits\Validation;
+    App\Http\Traits\Actions;
 
 abstract class CrudController extends Controller
 {
-    use Callbacks, Actions, Validation;
+    use Callbacks, Actions;
     /**
      * The array of booted controllers.
      *

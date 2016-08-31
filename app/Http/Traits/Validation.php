@@ -8,8 +8,8 @@
 
 namespace App\Http\Traits;
 
-use Illuminate\Foundation\Validation\ValidatesRequests,
-    Illuminate\Http\Request;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 
 /**
  * Validation
