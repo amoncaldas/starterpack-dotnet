@@ -3,11 +3,11 @@
 
   angular
     .module('app')
-    .factory('MailService', MailService);
+    .factory('MailsService', MailsService);
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function MailService(serviceFactory) {
+  function MailsService(serviceFactory) {
     var model = serviceFactory('mails', {});
 
     return model;
