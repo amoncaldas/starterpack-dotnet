@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function LoginController($state, Auth, Global, PrToast, PrDialog, $translate) {
+  function LoginController($state, Auth, Global, PrToast, $translate) {
     var vm = this;
 
     vm.login = login;
@@ -33,9 +33,6 @@
           : $translate.instant('login.errorLogin');
 
         PrToast.error(message);
-
-        PrDialog.close();
-
       });
     }
   }

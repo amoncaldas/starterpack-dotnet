@@ -59,10 +59,6 @@ class AuditController extends Controller
         $data['total'] = $countQuery
             ->count();
 
-        // dd(
-        //     DB::getQueryLog()
-        // );
-
         return $data;
     }
 }

@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function UsersController($controller, lodash, UserService, RoleService, PrToast, Auth, PrDialog, $translate) {
+  function UsersController($controller, lodash, UsersService, RolesService, PrToast, Auth, PrDialog, $translate) {
     var vm = this;
 
     vm.onActivate = onActivate;
@@ -20,10 +20,10 @@
     vm.removeUser = removeUser;
 
     // instantiate base controller
-    $controller('CRUDController', { vm: vm, modelService: UserService, options: {} });
+    $controller('CRUDController', { vm: vm, modelService: UsersService, options: {} });
 
     function onActivate() {
-      vm.roles = RoleService.query().then(function (response) {
+      vm.roles = RolesService.query().then(function (response) {
         vm.roles = response;
       });
     }

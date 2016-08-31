@@ -3,10 +3,10 @@
 
   angular
     .module('app')
-    .factory('RoleService', RoleService);
+    .factory('RolesService', RolesService);
 
   /** @ngInject */
-  function RoleService(serviceFactory) {
+  function RolesService(serviceFactory) {
     var model = serviceFactory('roles');
 
     return model;

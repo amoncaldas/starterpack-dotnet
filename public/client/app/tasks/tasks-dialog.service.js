@@ -3,10 +3,10 @@
 
   angular
     .module('app')
-    .factory('TaskDialogService', TaskDialogService);
+    .factory('TasksDialogService', TasksDialogService);
 
   /** @ngInject */
-  function TaskDialogService(serviceFactory) {
+  function TasksDialogService(serviceFactory) {
     var model = serviceFactory('tasks', {
       actions: {
         /**

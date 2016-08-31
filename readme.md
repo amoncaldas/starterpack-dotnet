@@ -56,7 +56,7 @@
 
 - gulp check (verifica a formatação do código javascript) 
   - parametros opcionais 
-    - **--fix** (para corrigir os erros 'auto corrigidos')
+    - **--fix** (para corrigir os erros que podem ser corrigidos automaticamente)
 - npm run package (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
 
 

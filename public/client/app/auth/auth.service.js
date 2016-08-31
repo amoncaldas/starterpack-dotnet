@@ -7,7 +7,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function Auth($http, $auth, $q, Global, UserService) {
+  function Auth($http, $auth, $q, Global, UsersService) {
     var auth = {
       login: login,
       logout: logout,
@@ -33,7 +33,7 @@
       var user = localStorage.getItem('user');
 
       if (user) {
-        auth.currentUser = angular.merge(new UserService(), angular.fromJson(user));
+        auth.currentUser = angular.merge(new UsersService(), angular.fromJson(user));
       }
     }
 
@@ -49,7 +49,7 @@
      */
     function updateCurrentUser(user) {
       if (user) {
-        user = auth.currentUser = angular.merge(new UserService(), user);
+        user = auth.currentUser = angular.merge(new UsersService(), user);
 
         var jsonUser = angular.toJson(user);
 

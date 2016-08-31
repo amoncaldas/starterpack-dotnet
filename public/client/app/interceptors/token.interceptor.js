@@ -41,10 +41,14 @@
                 // in case multiple ajax request fail at same time because token problems,
                 // only the first will redirect and notified
                 if (!$state.is(Global.loginState)) {
+                  $state.go(Global.loginState);
+                  //close any dialog that is opened
+                  $injector.get('PrDialog').close();
+
                   $injector.get('PrToast')
                     .warn($translate.instant('messages.logoutInactive'));
 
-                  $state.go(Global.loginState);
+                  event.preventDefault();
                 }
               });
             }

@@ -19,7 +19,7 @@
     vm.removeProject = removeProject;
 
     // instantiate base controller
-    $controller('CRUDController', { vm: vm, modelService: ProjectsService, options: { redirectAfterSave: false } });
+    $controller('CRUDController', { vm: vm, modelService: ProjectsService, options: { } });
 
     function viewTasks(projectId) {
       var config = {

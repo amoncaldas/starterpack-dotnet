@@ -10,9 +10,8 @@
     var model = serviceFactory('support', {
       actions: {
       /**
-       * Atualiza os dados do perfil do usuário logado
+       * Pega as traduções que estão no servidor
        *
-       * @param {object} attributes
        * @returns {promise} Uma promise com o resultado do chamada no backend
        */
         langs: {

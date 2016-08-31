@@ -25,6 +25,11 @@ class BaseModel extends Model
         $this->casts = array_merge($this->casts, $moreAttributes);
     }
 
+    protected function addDates($moreAttributes = [])
+    {
+        $this->dates = array_merge($this->dates, $moreAttributes);
+    }
+
     public function setAttribute($key, $value)
     {
         if (in_array($key, $this->dates) && is_string($value)) {

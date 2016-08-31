@@ -3,11 +3,11 @@
 
   angular
     .module('app')
-    .factory('UserService', UserService);
+    .factory('UsersService', UsersService);
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function UserService(lodash, Global, serviceFactory) {
+  function UsersService(lodash, Global, serviceFactory) {
     var model = serviceFactory('users', {
       // only called on empty inits
       defaults: {

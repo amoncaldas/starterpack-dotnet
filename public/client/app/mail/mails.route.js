@@ -6,7 +6,7 @@
     .config(routes);
 
   /**
-   * Arquivo de configuração com as rotas específicas do recurso user
+   * Arquivo de configuração com as rotas específicas do recurso em questão
    *
    * @param {any} $stateProvider
    * @param {any} Global
@@ -16,7 +16,7 @@
     $stateProvider
       .state('mail', {
         url: '/email',
-        templateUrl: Global.clientPath + '/mail/sender-mail-user.html',
+        templateUrl: Global.clientPath + '/mail/mails-send.html',
         controller: 'MailsController as mailsCtrl',
         data: { breadcrumbs: 'Administração > Envio de e-mail', needProfile: ['admin'] }
       });
