@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function TasksDialogController($controller, TaskDialogService, projectId, PrToast, PrDialog) {
+  function TasksDialogController($controller, TasksDialogService, projectId, PrToast, PrDialog) {
     var vm = this;
 
     //Functions Block
@@ -21,7 +21,7 @@
     vm.removeTask   = removeTask;
 
     // instantiate base controller
-    $controller('CRUDController', { vm: vm, modelService: TaskDialogService, options: {
+    $controller('CRUDController', { vm: vm, modelService: TasksDialogService, options: {
       redirectAfterSave: false,
       perPage: 5
     } });
@@ -50,7 +50,7 @@
     }
 
     function toggleDone(resource) {
-      TaskDialogService.toggleDone({ id: resource.id, done: resource.done }).then(function() {
+      TasksDialogService.toggleDone({ id: resource.id, done: resource.done }).then(function() {
         PrToast.success('Operação realizada com sucesso.');
         vm.search(vm.paginator.currentPage);
       }, function(error) {

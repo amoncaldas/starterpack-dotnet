@@ -18,6 +18,11 @@
         return $filter('translate')((value) ? 'yes' : 'no');
       }
 
+      //check is float
+      if (Number(value) === value && value % 1 !== 0) {
+        return $filter('real')(value);
+      }
+
       return value;
     }
   }

@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function UsersDialogController($controller, UserService, userDialogInput) {
+  function UsersDialogController($controller, UsersService, userDialogInput) {
     var vm = this;
 
     vm.onActivate = onActivate;
@@ -18,7 +18,7 @@
     // instantiate base controller
     $controller('CRUDController', {
       vm: vm,
-      modelService: UserService,
+      modelService: UsersService,
       options: {
         perPage: 5
       }

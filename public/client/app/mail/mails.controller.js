@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function MailsController(MailService, UserService, PrDialog, PrToast, $q, lodash) {
+  function MailsController(MailsService, UsersService, PrDialog, PrToast, $q, lodash) {
     var vm = this;
 
     vm.filterSelected = false;
@@ -33,7 +33,7 @@
     function loadUsers(criteria) {
       var deferred = $q.defer();
 
-      UserService.query({
+      UsersService.query({
         nameOrEmail: criteria,
         notUsers: lodash.map(vm.mail.users, lodash.property('id')).toString(),
         limit: 5
@@ -111,7 +111,7 @@
     }
 
     function cleanForm() {
-      vm.mail = new MailService();
+      vm.mail = new MailsService();
       vm.mail.users = [];
     }
 

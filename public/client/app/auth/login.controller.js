@@ -7,7 +7,8 @@
     .controller('LoginController', LoginController);
 
   /** @ngInject */
-  function LoginController($state, Auth, Global, PrToast, PrDialog) {
+  // eslint-disable-next-line max-params
+  function LoginController($state, Auth, Global, PrToast) {
     var vm = this;
 
     vm.login = login;
@@ -32,9 +33,6 @@
           : 'Não foi possível realizar o login';
 
         PrToast.error(message);
-
-        PrDialog.close();
-
       });
     }
   }
