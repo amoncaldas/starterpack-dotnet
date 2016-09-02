@@ -43,6 +43,8 @@
   - parametros opcionais 
     - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
 
+# Uso
+
 > Em outra aba do terminal.
 
 - npm run server (Este comando inicia o servidor php na porta 5000)
@@ -59,6 +61,14 @@
     - **--fix** (para corrigir os erros que podem ser corrigidos automaticamente)
 - npm run package (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
 
+> Use o gerador de estrutura de arquivo para gerar os arquivos necessários para o recurso,
+> foi usado o YEOMAN para criar o gerador
+
+- cd laravel_angular_base
+- yo prgenerator
+- escolha a estrutura na lista
+- digite o nome do recurso
+- Para mais informações e como usar o YEOMAN acesse: http://yeoman.io
 
 ### Erro no watch no linux
 
@@ -69,3 +79,4 @@
 - acessar a url http://localhost:5000/developer/log-viewer
 - digitar o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
 - digitar a senha conforme a variável de ambiente no arquivo .env DEVELOP_PASSWORD
+

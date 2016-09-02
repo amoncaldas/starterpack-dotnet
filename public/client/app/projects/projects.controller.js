@@ -46,7 +46,7 @@
     function removeProject(resource) {
       var config = {
         title: $translate.instant('project.confirm.title'),
-        description: $translate.instant('project.confirm.title', resource)
+        description: $translate.instant('project.confirm.description', resource)
       }
 
       PrDialog.confirm(config).then(function() {

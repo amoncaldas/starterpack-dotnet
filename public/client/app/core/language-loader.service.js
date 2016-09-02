@@ -38,8 +38,15 @@
             remover: 'Remover',
             getOut: 'Sair'
           },
+          dialog: {
+            confirmTitle: 'Confirmação',
+            confirmDescription: 'Confirma a ação?'
+          },
           messages: {
             logoutInactive: 'Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente.'
+          },
+          breadcrumbs: {
+
           },
           models: {
             user: 'Usuário'
