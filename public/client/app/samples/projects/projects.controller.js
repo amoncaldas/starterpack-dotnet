@@ -28,7 +28,7 @@
         },
         controller: 'TasksDialogController',
         controllerAs: 'tasksCtrl',
-        templateUrl: '/tasks/tasks-dialog.html',
+        templateUrl: '/samples/tasks/tasks-dialog.html',
         hasBackdrop: true
       };
 

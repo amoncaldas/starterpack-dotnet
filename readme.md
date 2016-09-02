@@ -70,13 +70,43 @@
 - digite o nome do recurso
 - Para mais informações e como usar o YEOMAN acesse: http://yeoman.io
 
+# Componentes
+
+> Componentes e frameworks disponíveis no projeto
+
+- AngularJS 1.5 - https://angularjs.org
+- Angular Material 1.1.0 (ou superior) - https://material.angularjs.org
+- NgProdeb 0.0.2 - git@git.prodeb.ba.gov.br:ngprodeb.git
+
+# Exemplos de uso
+
+> Implementação de alguns exemplos dos componentes que podem ser usados no projeto
+
+- Box
+<pre>
+  <box box-title="Titúlo do box">
+    <box-toolbar-buttons>
+      Botões no toolbar do box (Opcional)
+    </box-toolbar-buttons>
+
+      Conteúdo do box
+
+    <box-footer-buttons>
+      Botões no rodapé do box (Opcional)
+    </box-footer-buttons>
+  </box>
+</pre>
+
 ### Erro no watch no linux
 
 - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+# Log
 
 > Para ver os logs
 
 - acessar a url http://localhost:5000/developer/log-viewer
 - digitar o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
 - digitar a senha conforme a variável de ambiente no arquivo .env DEVELOP_PASSWORD
+
 
