@@ -15,8 +15,8 @@
   function routes($stateProvider, Global) {
     $stateProvider
       .state('project', {
-        url: '/projects',
-        templateUrl: Global.clientPath + '/projects/projects.html',
+        url: '/projetos',
+        templateUrl: Global.clientPath + '/samples/projects/projects.html',
         controller: 'ProjectsController as projectsCtrl',
         data: { breadcrumbs: 'Projeto', needProfile: ['admin'] }
       });

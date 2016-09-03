@@ -18,7 +18,12 @@
     function activate() {
       vm.itensMenu = [
         { url: 'dashboard', titulo: $translate.instant('layout.menu.dashboard'), icon: 'dashboard', subItens: [] },
-        { url: 'project', titulo: 'Projetos', icon: 'star', subItens: [] },
+        {
+          url: '#', titulo: 'Exemplos', icon: 'view_carousel', profiles: ['admin'],
+          subItens: [
+            { url: 'project', titulo: 'Projetos', icon: 'star' }
+          ]
+        },
         {
           url: '#', titulo: 'Administração', icon: 'settings_applications', profiles: ['admin'],
           subItens: [

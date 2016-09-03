@@ -26,7 +26,7 @@
             <md-button class="md-icon-button" ng-click="projectsCtrl.edit(project)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">create</md-icon>
-              <md-tooltip md-direction="top">{{::'project.edit' | translate}}</md-tooltip>
+              <md-tooltip md-direction="top">{{::'form.edit' | translate}}</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="projectsCtrl.viewTasks(project.id)">
               <md-icon md-font-set="material-icons"
@@ -41,7 +41,7 @@
           </td>
         </tr>
         <tr md-row ng-if="projectsCtrl.resources.length == 0">
-          <td md-cell colspan="4">
+          <td md-cell colspan="5">
             <div layout="row" layout-align="center center">{{::'notFound' | translate}}</div>
           </td>
         </tr>

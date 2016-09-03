@@ -1,0 +1,4 @@
+<content-body>
+  <div flex ng-include src="'client/app/projects/<%= resource_name %>-form.html'" ng-show="<%= alias_controller %>.viewForm"></div>
+  <div flex ng-include src="'client/app/projects/<%= resource_name %>-list.html'" ng-hide="<%= alias_controller %>.viewForm"></div>
+</content-body>

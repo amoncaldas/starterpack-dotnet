@@ -43,6 +43,8 @@
   - parametros opcionais 
     - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
 
+# Uso
+
 > Em outra aba do terminal.
 
 - npm run server (Este comando inicia o servidor php na porta 5000)
@@ -59,13 +61,51 @@
     - **--fix** (para corrigir os erros que podem ser corrigidos automaticamente)
 - npm run package (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
 
+> Use o gerador de estrutura de arquivo para gerar os arquivos necessários para o recurso,
+> foi usado o YEOMAN(http://yeoman.io) para criar o gerador
+
+- cd laravel_angular_base
+- yo prgenerator
+- escolha a estrutura na lista
+- digite o nome do recurso
+
+# Componentes
+
+> Componentes e frameworks disponíveis no projeto
+
+- AngularJS 1.5 - https://angularjs.org
+- Angular Material 1.1.0 (ou superior) - https://material.angularjs.org
+- NgProdeb 0.0.2 - git@git.prodeb.ba.gov.br:ngprodeb.git
+
+# Exemplos de uso
+
+> Implementação de alguns exemplos dos componentes que podem ser usados no projeto
+
+- Box
+<pre>
+  <box box-title="Titúlo do box">
+    <box-toolbar-buttons>
+      Botões no toolbar do box (Opcional)
+    </box-toolbar-buttons>
+
+      Conteúdo do box
+
+    <box-footer-buttons>
+      Botões no rodapé do box (Opcional)
+    </box-footer-buttons>
+  </box>
+</pre>
 
 ### Erro no watch no linux
 
 - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+# Log
 
 > Para ver os logs
 
 - acessar a url http://localhost:5000/developer/log-viewer
 - digitar o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
 - digitar a senha conforme a variável de ambiente no arquivo .env DEVELOP_PASSWORD
+
+
