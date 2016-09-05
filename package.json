@@ -4,7 +4,6 @@
   "description": "StarterPack em PHP usando Laravel com Angular",
   "version": "1.0.0",
   "scripts": {
-    "install": "node installer.js",
     "postinstall": "bower install",
     "server": "php artisan serve --port=5000",
     "package": "gulp --production",
@@ -12,7 +11,7 @@
     "check": "gulp check"
   },
   "devDependencies": {
-    "package-script": "^0.0.8",
+    "yo": "^1.8.5",
     "bower": "^1.7.9",
     "browser-sync": "^2.13.0",
     "eslint": "^3.1.1",

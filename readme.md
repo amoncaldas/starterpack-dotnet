@@ -98,7 +98,10 @@
 
 ### Erro no watch no linux
 
+> watch:
 - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+> sh: 1: node: not found
+- rode o npm install nodejs-legacy
 
 # Log
 

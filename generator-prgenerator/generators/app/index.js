@@ -44,13 +44,15 @@ var PrGenerator =  yeoman.Base.extend({
     var verify = function(pathNotExists, htmlController) {
 
       var asks = [];
-      if (pathNotExists === true && !htmlController) asks = [questions.structure];
-      if (pathNotExists === false && htmlController) asks = [questions.htmlConfirm];
-      if (pathNotExists !== true && !htmlController) asks = [questions.name];
+
+      if (pathNotExists === true && !htmlController)
+        asks = [questions.structure];
+      else if (pathNotExists === false)
+        asks = (htmlController) ? [questions.htmlConfirm] : [questions.name];
 
       var prompt = me.prompt(asks).then(function (answers) {
         if (answers.structure === 'exit') {
-          console.log(chalk.cyan.bold('\n\n#######      Obrigado por ter usado nosso gerador!      #######\n'));
+          me.log(chalk.cyan.bold('\n\n#######      Obrigado por ter usado nosso gerador!      #######\n'));
           process.exit();
         }
         if (answers.structure) me.props.structure = answers.structure;
@@ -72,6 +74,10 @@ var PrGenerator =  yeoman.Base.extend({
             done();
           } else {
             me.log(response);
+
+            if (typeof response === 'string')
+              response = false;
+
             verify(response, false);
           }
         });

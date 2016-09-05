@@ -91,15 +91,22 @@
     }
 
     function remove(resource) {
-      if (angular.isFunction(vm.beforeRemove) && vm.beforeRemove(resource) === false) return false;
+      var config = {
+        title: $translate.instant('dialog.confirmTitle'),
+        description: $translate.instant('dialog.confirmDescription', resource)
+      }
 
-      resource.$destroy().then(function () {
-        if (angular.isFunction(vm.afterRemove)) vm.afterRemove(resource);
+      PrDialog.confirm(config).then(function() {
+        if (angular.isFunction(vm.beforeRemove) && vm.beforeRemove(resource) === false) return false;
 
-        vm.search();
-        PrToast.info($translate.instant('controllers.crud.removeSuccess'));
-      }, function (error) {
-        PrToast.errorValidation(error.data, $translate.instant('controllers.crud.removeError'));
+        resource.$destroy().then(function () {
+          if (angular.isFunction(vm.afterRemove)) vm.afterRemove(resource);
+
+          vm.search();
+          PrToast.info($translate.instant('controllers.crud.removeSuccess'));
+        }, function (error) {
+          PrToast.errorValidation(error.data, $translate.instant('controllers.crud.removeError'));
+        });
       });
     }
 
