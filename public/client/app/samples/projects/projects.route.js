@@ -15,10 +15,10 @@
   function routes($stateProvider, Global) {
     $stateProvider
       .state('project', {
-        url: '/projects',
+        url: '/projetos',
         templateUrl: Global.clientPath + '/samples/projects/projects.html',
         controller: 'ProjectsController as projectsCtrl',
-        data: { breadcrumbs: 'Projeto', needProfile: ['admin'] }
+        data: { breadcrumbs: $translate.instant('breadcrumbs.projects'), needProfile: ['admin'] }
       });
   }
 }());

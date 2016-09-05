@@ -12,19 +12,19 @@
    * @param {any} Global
    */
   /** @ngInject */
-  function routes($stateProvider, Global) {
+  function routes($stateProvider, Global, $translate) {
     $stateProvider
       .state('user', {
         url: '/usuario',
         templateUrl: Global.clientPath + '/users/users.html',
         controller: 'UsersController as usersCtrl',
-        data: { breadcrumbs: 'Administração > Usuário', needProfile: ['admin'] }
+        data: { breadcrumbs: $translate.instant('breadcrumbs.users'), needProfile: ['admin'] }
       })
       .state('user-profile', {
         url: '/usuario/perfil',
         templateUrl: Global.clientPath + '/users/profile.html',
         controller: 'ProfileController as profileCtrl',
-        data: { breadcrumbs: 'Perfil' }
+        data: { breadcrumbs: $translate.instant('breadcrumbs.perfil') }
       });
 
   }

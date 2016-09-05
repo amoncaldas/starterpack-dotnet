@@ -3,7 +3,7 @@
 var path = require('path');
 var slash = require('slash');
 var chalk = require('chalk');
-var pathExists = require('path-exists');
+var Promise = require('promise');
 
 /**
  * Turn str into simplest form, remove trailing slash
@@ -85,52 +85,9 @@ function verifyInput(value) {
   return true;
 }
 
-/**
- * Válida se o diretório ou o arquivo já existe
- * @params {String, String, String} path, value, structure - Caminho do arquivo ou diretório
- * nome do recurso e estrutura a ser criada
- */
-function verifyDirAndFile(path, value, structure) {
-  var response = {path: '', message: ''};
-
-  switch(structure) {
-    case 'complete':
-      response.path = path + value;
-      response.message = 'Diretório do recurso já existe, tente novamente.';
-    break;
-    case 'html':
-      response.path = path + value + '/' + value + '.html';
-      response.message = 'Diretório do recurso já existe e contém os arquivos html, tente novamente.';
-    break;
-    case 'controller':
-      response.path = path + value + '/' + value + '.controller.js';
-      response.message = 'Diretório do recurso já existe e contém o controller, tente novamente.';
-    break;
-    case 'service':
-      response.path = path + value + '/' + value + '.service.js';
-      response.message = 'Diretório do recurso já existe e contém o service, tente novamente.';
-    break;
-    case 'route':
-      response.path = path + value + '/' + value + '.route.js';
-      response.message = 'Diretório do recurso já existe e contém o route, tente novamente.';
-    break;
-  }
-
-  return pathExists(response.path).then(exists => {
-    if (exists) {
-      return chalk.red(response.message);
-    } else {
-      return true;
-    }
-  });
-
-}
-
-
 module.exports = {
   normalizePath: normalizePath,
   formatNameResource: formatNameResource,
-  verifyDirAndFile: verifyDirAndFile,
   verifyInput: verifyInput,
   logoProdeb: logoProdeb
 }

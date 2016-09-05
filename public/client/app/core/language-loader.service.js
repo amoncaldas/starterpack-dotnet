@@ -46,7 +46,11 @@
             logoutInactive: 'Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente.'
           },
           breadcrumbs: {
-
+            users: 'Administração > Usuário',
+            perfil: 'Perfil',
+            audit: 'Administração > Auditoria',
+            mails: 'Administração > Envio de e-mail',
+            projects: 'Projetos'
           },
           models: {
             user: 'Usuário'

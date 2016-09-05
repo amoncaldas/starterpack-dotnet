@@ -62,13 +62,12 @@
 - npm run package (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
 
 > Use o gerador de estrutura de arquivo para gerar os arquivos necessários para o recurso,
-> foi usado o YEOMAN para criar o gerador
+> foi usado o YEOMAN(http://yeoman.io) para criar o gerador
 
 - cd laravel_angular_base
 - yo prgenerator
 - escolha a estrutura na lista
 - digite o nome do recurso
-- Para mais informações e como usar o YEOMAN acesse: http://yeoman.io
 
 # Componentes
 
@@ -99,7 +98,10 @@
 
 ### Erro no watch no linux
 
+> watch:
 - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+> sh: 1: node: not found
+- rode o npm install nodejs-legacy
 
 # Log
 
