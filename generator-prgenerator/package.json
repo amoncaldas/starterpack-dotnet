@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "generator-prgenerator",
   "version": "0.1.1",
   "description": "Gerador automatico da estrutura de arquivos",
@@ -41,7 +42,9 @@
     "gulp-nsp": "^2.1.0",
     "gulp-coveralls": "^0.1.0",
     "mkdirp": "^0.5.1",
-    "path-exists": "^3.0.0"
+    "path-exists": "^3.0.0",
+    "promise": "^7.1.1",
+    "inquirer": "^1.1.3"
   },
   "eslintConfig": {
     "extends": "xo-space",

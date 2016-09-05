@@ -3,152 +3,93 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
-var mkdirp = require('mkdirp');
 var utils = require('./utils');
+var file = require('./file');
+var prPrompt = require('./prPrompt');
+var Promise = require('promise');
 
 var PrGenerator =  yeoman.Base.extend({
 
   prompting: function() {
-    var done = this.async();
-    var prefixPath = "public/client/app/";
+    var me = this;
+    me.props = {resourceName:'', structure:''};
+    me.prefixPath = "public/client/app/";
 
-    this.log(utils.logoProdeb());
+    var done = me.async();
+
+    me.log(utils.logoProdeb());
 
     //Montando as perguntas que serão exibidas no prompt
-    var askList = {
-      type: 'list',
-      name: 'structure',
-      message: chalk.yellow('Escolha qual estrutura a ser gerada?'),
-      choices: [
-        {name: chalk.yellow('Gerar estrutura completa.'), value: 'complete'},
-        {name: chalk.yellow('Gerar estrutura html.'), value: 'html'},
-        {name: chalk.yellow('Gerar estrutura do controllerJS.'), value: 'controller'},
-        {name: chalk.yellow('Gerar estrutura do serviceJS.'), value: 'service'},
-        {name: chalk.yellow('Gerar estrutura de routeJS.'), value: 'route'},
-        {name: chalk.yellow('Sair.'), value: 'exit'}
-      ]
-    };
-    var askName = {
-      when: function(answer) {
-        if (answer.structure === 'exit') {
+    var questions = prPrompt.mountQuestions();
+
+    var validNameResource = function() {
+      var resources = me.props.resourceName.split(":");
+      var regex = new RegExp('^[a-zA-Z]+:[a-zA-Z]+$');
+      var error = false;
+
+      if (resources.length > 1 && !regex.test(me.props.resourceName)) {
+        me.log(chalk.red('Nome do recurso é inválido, tente novamente.'));
+        error = true;
+      }
+
+      regex = new RegExp('^[a-zA-Z]+$');
+      if (resources.length == 1 && !regex.test(me.props.resourceName)) {
+        me.log(chalk.red('Nome do recurso é inválido, tente novamente.'));
+        error = true;
+      }
+
+      return error;
+    }
+
+    var verify = function(pathNotExists, htmlController) {
+
+      var asks = [];
+      if (pathNotExists === true && !htmlController) asks = [questions.structure];
+      if (pathNotExists === false && htmlController) asks = [questions.htmlConfirm];
+      if (pathNotExists !== true && !htmlController) asks = [questions.name];
+
+      var prompt = me.prompt(asks).then(function (answers) {
+        if (answers.structure === 'exit') {
           console.log(chalk.cyan.bold('\n\n#######      Obrigado por ter usado nosso gerador!      #######\n'));
           process.exit();
         }
-        return true;
-      },
-      type: 'input',
-      name: 'resourceName',
-      message: chalk.yellow('Digite o nome do recurso?'),
-      validate: function (value) {
-        return utils.verifyInput(value);
-      }
-    };
+        if (answers.structure) me.props.structure = answers.structure;
+        if (answers.htmlController !== undefined) me.props.htmlController = answers.htmlController;
+        if (answers.resourceName) me.props.resourceName = answers.resourceName;
 
-    var verify = function(askList, askName, me, notExists) {
-
-      var asks = notExists === true ? [askList, askName] : [askName];
-
-      var prompt = me.prompt(asks).then(function (answers) {
-        me.props = answers;
-
-        if (me.props.structure === 'exit') process.exit();
-
-        me.path = prefixPath + me.props.resourceName;
+        if (me.props.structure === 'controller' && me.props.htmlController === undefined) {
+          verify(false, true);
+        } else if (me.props.resourceName === '') {
+          verify(false, false);
+        } else if (me.props.resourceName !== '' && validNameResource()) {
+          verify(false, false);
+        } else {
 
         //Verifica se o diretório ou arquivo já existe.
-        utils.verifyDirAndFile(prefixPath, me.props.resourceName, me.props.structure).then(function(notExists){
-          if (notExists === true) {
-            mkdirp(me.path, function(err) {
-              if(err) me.log(chalk.red(err));
-            });
+        file.verifyDirAndFile(me.prefixPath, me.props).then(response => {
+          if (response === true) {
+            me.path = file.createDirectory(me.prefixPath, me.props);
             done();
           } else {
-            me.log(notExists);
-            verify(askList, askName, me, notExists);
+            me.log(response);
+            verify(response, false);
           }
         });
+
+      }
 
       }.bind(me));
 
       return prompt;
     }
 
-    var me = this;
-    var notExists = true;
-
-    return verify(askList, askName, me, notExists);
+    return verify(true, false);
 
   },
 
   writing: function() {
-    //Copia os aquivos html
-    var resourceHtml = function(context, options) {
-      context.fs.copyTpl(
-        context.templatePath('_resource.html'),
-        context.destinationPath(context.path + '/' + options.resource_name + '.html'),
-        options
-      );
 
-      context.fs.copyTpl(
-        context.templatePath('_resource-form.html'),
-        context.destinationPath(context.path + '/' + options.resource_name + '-form.html'),
-        options
-      );
-
-      context.fs.copyTpl(
-        context.templatePath('_resource-list.html'),
-        context.destinationPath(context.path + '/' + options.resource_name + '-list.html'),
-        options
-      );
-    }
-    //Copia o arquivo do controller.js
-    var resourceController = function(context, options) {
-      context.fs.copyTpl(
-        context.templatePath('_resource.controller.js'),
-        context.destinationPath(context.path + '/' + options.resource_name + '.controller.js'),
-        options
-      );
-    }
-    //Copia o arquivo do route.js
-    var resourceRoute = function(context, options) {
-      context.fs.copyTpl(
-        context.templatePath('_resource.route.js'),
-        context.destinationPath(context.path + '/' + options.resource_name + '.route.js'),
-        options
-      );
-    }
-    //Copia o arquivo do service.js
-    var resourceService = function(context, options) {
-      context.fs.copyTpl(
-        context.templatePath('_resource.service.js'),
-        context.destinationPath(context.path + '/' + options.resource_name + '.service.js'),
-        options
-      );
-    }
-
-    //Formata a string para os formatos usados no template
-    var options = utils.formatNameResource(this.props.resourceName);
-    var structure = this.props.structure;
-
-    switch (structure) {
-      case 'html':
-        resourceHtml(this, options);
-      break;
-      case 'controller':
-        resourceController(this, options);
-      break;
-      case 'route':
-        resourceRoute(this, options);
-      break;
-      case 'service':
-        resourceService(this, options);
-      break;
-      default:
-        resourceHtml(this, options);
-        resourceController(this, options);
-        resourceRoute(this, options);
-        resourceService(this, options);
-    };
+    file.copyFiles(this);
 
   },
 
