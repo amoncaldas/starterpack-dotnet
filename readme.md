@@ -82,7 +82,7 @@
 > Implementação de alguns exemplos dos componentes que podem ser usados no projeto
 
 - Box
-<pre>
+```html
   <box box-title="Titúlo do box">
     <box-toolbar-buttons>
       Botões no toolbar do box (Opcional)
@@ -94,7 +94,7 @@
       Botões no rodapé do box (Opcional)
     </box-footer-buttons>
   </box>
-</pre>
+```
 
 ### Erro no watch no linux
 

@@ -16,7 +16,8 @@
      * @param {any} $injector
      * @returns
      */
-    function showHideSpinner($q, $injector, $translate) {
+    function showHideSpinner($q, $injector) {
+      var $translate = $injector.get('$translate');
 
       return {
         request: function (config) {

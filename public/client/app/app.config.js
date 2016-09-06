@@ -15,6 +15,8 @@
       .useLoader('languageLoader')
       .useSanitizeValueStrategy('escape');
 
+    $translateProvider.usePostCompiling(true);      
+
     moment.locale('pt-BR');
 
     $modelFactoryProvider.defaultOptions.prefix = Global.apiVersion;

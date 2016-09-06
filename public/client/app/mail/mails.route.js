@@ -18,7 +18,7 @@
         url: '/email',
         templateUrl: Global.clientPath + '/mail/mails-send.html',
         controller: 'MailsController as mailsCtrl',
-        data: { breadcrumbs: $translate.instant('breadcrumbs.mails'), needProfile: ['admin'] }
+        data: { needProfile: ['admin'] }
       });
 
   }

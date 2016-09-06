@@ -30,7 +30,7 @@ paths.destination = paths.client + '/build';
 paths.angularScripts = [
   paths.bower + '/deep-diff/index.js',
   paths.bower + '/uri-templates/uri-templates.js',
-  paths.bower + '/angular/angular.min.js',
+  paths.bower + '/angular/angular.js',
   paths.bower + '/angular-aria/angular-aria.js',
   paths.bower + '/angular-sanitize/angular-sanitize.js',
   paths.bower + '/angular-animate/angular-animate.js',

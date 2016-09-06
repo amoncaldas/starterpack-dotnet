@@ -18,7 +18,7 @@
         url: '/auditoria',
         templateUrl: Global.clientPath + '/audit/audit.html',
         controller: 'AuditController as auditCtrl',
-        data: { breadcrumbs: $translate.instant('breadcrumbs.audit'), needProfile: ['admin'] }
+        data: { needProfile: ['admin'] }
       });
 
   }
