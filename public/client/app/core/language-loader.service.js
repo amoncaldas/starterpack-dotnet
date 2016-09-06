@@ -50,7 +50,7 @@
             dashboard: 'Dashboard',
             'user-profile': 'Perfil',
             audit: 'Administração - Auditoria',
-            mail: 'Administração - Envio de e-mail',
+            mail: 'Administração > Envio de e-mail',
             project: 'Exemplos - Projetos'
           },
           models: {

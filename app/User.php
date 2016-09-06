@@ -39,6 +39,13 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     protected $hidden = ['password', 'remember_token'];
     protected $dontKeepLogOf = ['password', 'remember_token'];
 
+    /**
+     * Atributo usado para amazenar temporáriamente a senha para envio no email
+     *
+     * @var string
+     */
+    public $passwordConteiner = '';
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 
+use Mail;
 use Hash;
 use Log;
 
@@ -65,7 +66,8 @@ class UsersController extends CrudController
 
     protected function beforeStore(Request $request, Model $obj)
     {
-        $obj->password = bcrypt(str_random(10));
+        $obj->passwordConteiner = str_random(10);
+        $obj->password = bcrypt($obj->passwordConteiner);
     }
 
     protected function beforeUpdate(Request $request, Model $obj)
@@ -82,6 +84,13 @@ class UsersController extends CrudController
         $this->auditRoles($obj, $request->oldRoles, $newRoles);
 
         $obj->roles = $newRoles;
+
+        Mail::send('mails.confirmRegister',
+            ['user' => $obj, 'url' => config('app.url'), 'appName' => config('app_name')], function($message) use ($obj) {
+                $message->from(config('mail.from.address'), config('mail.from.name'));
+                $message->to($obj->email);
+                $message->subject("Confirmação de cadastro");
+        });
     }
 
     protected function auditRoles($user, $oldRoles, $newRoles) {
