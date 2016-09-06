@@ -4,13 +4,13 @@
 
   angular
     .module('app')
-    .filter('tAttr', tAttr);
+    .filter('tBreadcrumb', tBreadcrumb);
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function tAttr($filter) {
+  function tBreadcrumb($filter) {
     return function(id) {
-      var key = 'attributes.' + id;
+      var key = 'breadcrumbs.' + id;
       var translate = $filter('translate')(key);
 
       return (translate === key) ? id : translate;

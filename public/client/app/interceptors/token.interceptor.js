@@ -15,7 +15,8 @@
   /** @ngInject */
   function tokenInterceptor($httpProvider, $provide, Global) {
 
-    function redirectWhenServerLoggedOut($q, $injector, $translate) {
+    function redirectWhenServerLoggedOut($q, $injector) {
+      var $translate = $injector.get('$translate');
 
       return {
         response: function(response) {

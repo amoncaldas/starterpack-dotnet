@@ -7,7 +7,7 @@
     .controller('MenuController', MenuController);
 
   /** @ngInject */
-  function MenuController($translate) {
+  function MenuController() {
     var vm = this;
 
     //Bloco de declaracoes de funcoes
@@ -16,20 +16,22 @@
     activate();
 
     function activate() {
+      var menuPrefix = 'layout.menu.';
+
       vm.itensMenu = [
-        { url: 'dashboard', titulo: $translate.instant('layout.menu.dashboard'), icon: 'dashboard', subItens: [] },
+        { url: 'dashboard', titulo: menuPrefix + 'dashboard', icon: 'dashboard', subItens: [] },
         {
-          url: '#', titulo: 'Exemplos', icon: 'view_carousel', profiles: ['admin'],
+          url: '#', titulo: menuPrefix + 'examples', icon: 'view_carousel', profiles: ['admin'],
           subItens: [
-            { url: 'project', titulo: 'Projetos', icon: 'star' }
+            { url: 'project', titulo: menuPrefix + 'project', icon: 'star' }
           ]
         },
         {
-          url: '#', titulo: 'Administração', icon: 'settings_applications', profiles: ['admin'],
+          url: '#', titulo: menuPrefix + 'admin', icon: 'settings_applications', profiles: ['admin'],
           subItens: [
-            { url: 'user', titulo: 'Usuários', icon: 'people' },
-            { url: 'mail', titulo: 'Envio de e-mail', icon: 'mail' },
-            { url: 'audit', titulo: 'Auditoria', icon: 'storage' }
+            { url: 'user', titulo: menuPrefix + 'user', icon: 'people' },
+            { url: 'mail', titulo: menuPrefix + 'mail', icon: 'mail' },
+            { url: 'audit', titulo: menuPrefix + 'audit', icon: 'storage' }
           ]
         }
       ];
