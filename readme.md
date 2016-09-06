@@ -1,4 +1,4 @@
-# Sobre
+# Sobre #
 
 - Este projeto tem como objetivo servir de base para futuros projetos da Prodeb.
 - O mesmo utiliza Laravel 5.1 com Angular 1.5.
@@ -6,7 +6,7 @@
 - O sistema não faz uso de sessão para identificação do usuário, toda a informação é através do token enviado/recebido
 - Todas as funcionalidades retornam json contendo as informações da requisitadas.
 
-# Pré requisitos
+# Pré requisitos #
 
 - Preferencialmente utilize o Linux com o gerenciador APT
 - node versão 4 ou superior [tutorial para instalar](https://nodejs.org/en/download/package-manager/)
@@ -15,8 +15,8 @@
 - composer [tutorial para instalar](https://getcomposer.org/doc/00-intro.md#globally)
 - editor decente [vscode](https://code.visualstudio.com/) ou [atom.io](https://atom.io/)
 - postgres
-
-# Configuração
+ 
+# Configuração #
 
 > Rode os comandos abaixo.
 > Todos os comandos devem ser executados no terminal do linux. No caso do windows utilize o Git Bash.
@@ -43,7 +43,7 @@
   - parametros opcionais 
     - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
 
-# Uso
+# Uso #
 
 > Em outra aba do terminal.
 
@@ -69,7 +69,7 @@
 - escolha a estrutura na lista
 - digite o nome do recurso
 
-# Componentes
+# Componentes #
 
 > Componentes e frameworks disponíveis no projeto
 
@@ -77,11 +77,12 @@
 - Angular Material 1.1.0 (ou superior) - https://material.angularjs.org
 - NgProdeb 0.0.2 - git@git.prodeb.ba.gov.br:ngprodeb.git
 
-# Exemplos de uso
+# Exemplos de uso #
 
 > Implementação de alguns exemplos dos componentes que podem ser usados no projeto
 
 - Box
+
 ```html
   <box box-title="Titúlo do box">
     <box-toolbar-buttons>
@@ -96,14 +97,14 @@
   </box>
 ```
 
-### Erro no watch no linux
+### Erro no watch no linux ###
 
 > watch:
 - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 > sh: 1: node: not found
 - rode o npm install nodejs-legacy
 
-# Log
+# Log #
 
 > Para ver os logs
 
