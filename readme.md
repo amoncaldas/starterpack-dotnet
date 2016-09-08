@@ -15,6 +15,14 @@
 - composer [tutorial para instalar](https://getcomposer.org/doc/00-intro.md#globally)
 - editor decente [vscode](https://code.visualstudio.com/) ou [atom.io](https://atom.io/)
 - postgres
+
+# Componentes #
+
+> Componentes e frameworks disponíveis no projeto
+
+- [AngularJS 1.5](https://angularjs.org)
+- [Angular Material 1.1.0 (ou superior)](https://material.angularjs.org)
+- [NgProdeb 0.1.2](git@git.prodeb.ba.gov.br:ngprodeb.git)
  
 # Configuração #
 
@@ -59,13 +67,12 @@
 - gulp check (verifica a formatação do código javascript) 
   - parametros opcionais 
     - **--fix** (para corrigir os erros que podem ser corrigidos automaticamente)
-- npm run package (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
 
 > Use o gerador de estrutura de arquivo para gerar os arquivos necessários para o recurso,
 > foi usado o [YEOMAN](http://yeoman.io) para criar o gerador.
 
 - cd laravel_angular_base
-- yo prgenerator
+- yo ngprodeb
 - escolha a estrutura na lista
 - digite o nome do recurso
 
@@ -96,7 +103,6 @@
 - adicione a linha ```.constant('NOME_CONSTANTE', NOME_BIBLIOTECA);```
 
 > ### Constantes ###
-> (as costantes são usadas para acessar dados mais facilmente em qualquer lugar do sistema)
 
 - acesse o arquivo /public/client/app/app.global.js
 - adicione um novo atributo contendo o nome da constante e o seu valor
@@ -139,30 +145,24 @@
 
 - o conjunto de arquivos são chamados de recurso(resource) localizados sempre no caminho /public/client/app
 - cada recurso pode pussuir os seguintes arquivos:
-  - recurso.html(index)
-  - recurso-list.html
-  - recurso-form.html
-  - recurso.controller.js
-  - recurso.route.js
-  - recurso.service.js
+  - recursos.html(index)
+  - recursos-list.html
+  - recursos-form.html
+  - recursos.controller.js
+  - recursos.route.js
+  - recursos.service.js
 - deve ser usado o gerador de estrutura de arquivos para gerar os arquivos no padrão informado acima
-- a pasta /public/client/app/samples deve ser excluida antes de gerar o pacote para produção
 - no lado servidor ao ser criado o controller deve-se mudar a heranças de Controller para CrudController
 o mesmo acontece quando um model é criado deve-ser mudar a herança de Model para BaseModel
 - as imagens devem ser armazenadas no caminho /public/client/images
 - para alterar as propriedades de css acesse o arquivo /public/client/styles/app.scss
 - os templates dos emails devem ser salvos no caminho /resources/views/mais
 
-# Componentes #
-
-> Componentes e frameworks disponíveis no projeto
-
-- [AngularJS 1.5](https://angularjs.org)
-- [Angular Material 1.1.0 (ou superior)](https://material.angularjs.org)
-- [NgProdeb 0.1.2](git@git.prodeb.ba.gov.br:ngprodeb.git)
-
-### Exemplos de uso #
+### Exemplos de uso ###
 ___
+
+> Existe exemplos de funcionalidade utilizando os componentes fornecidos, estes podem ser encontrados
+> na pasta /public/client/app/samples.
 
 > ### Exemplo de implementação de alguns dos componentes que podem ser usados no projeto. ###
 
@@ -220,3 +220,7 @@ ___
 - digite a senha conforme a variável de ambiente no arquivo .env DEVELOP_PASSWORD
 
 
+# Produção #
+
+- Remover a pasta /public/client/app/samples. 
+- npm run package (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
