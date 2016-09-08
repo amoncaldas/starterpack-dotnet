@@ -12,7 +12,7 @@
    * @param {any} Global
    */
   /** @ngInject */
-  function routes($stateProvider, Global, $translate) {
+  function routes($stateProvider, Global) {
     $stateProvider
       .state('audit', {
         url: '/auditoria',

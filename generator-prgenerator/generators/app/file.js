@@ -54,7 +54,7 @@ var resourceController = function(context, options) {
     options = utils.formatNameResource(resources[1]);
     if (context.props.htmlController) {
       updateRoute(context, resources, options); //Atualiza o arquivo de rota
-      resourceHtml(context, options);
+      resourceHtml(context, options); //copia os html
     }
   }
   context.fs.copyTpl(

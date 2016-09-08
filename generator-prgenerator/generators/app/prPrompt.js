@@ -3,6 +3,11 @@
 var chalk = require('chalk');
 var utils = require('./utils');
 
+/**
+ *
+ * Monta as questões para serem exibidas no console
+ * @return {Object} - Retorna um objeto contendo as questões
+ */
 function mountQuestions() {
   var questions = {};
 

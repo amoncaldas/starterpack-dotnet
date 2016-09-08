@@ -15,7 +15,7 @@
       .useLoader('languageLoader')
       .useSanitizeValueStrategy('escape');
 
-    $translateProvider.usePostCompiling(true);      
+    $translateProvider.usePostCompiling(true);
 
     moment.locale('pt-BR');
 
@@ -27,6 +27,8 @@
     // Satellizer configuration that specifies which API
     // route the JWT should be retrieved from
     $authProvider.loginUrl = Global.apiVersion + '/authenticate';
+
+    // Configuration theme
     $mdThemingProvider.theme('default')
       .primaryPalette('blue', {
         default: '700'

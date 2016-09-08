@@ -18,7 +18,6 @@
     vm.beforeSave   = beforeSave;
     vm.afterSave    = afterSave;
     vm.toggleDone   = toggleDone;
-    vm.removeTask   = removeTask;
 
     // instantiate base controller
     $controller('CRUDController', { vm: vm, modelService: TasksDialogService, options: {
@@ -55,17 +54,6 @@
         vm.search(vm.paginator.currentPage);
       }, function(error) {
         PrToast.errorValidation(error.data, $translate.instant('task.toggleDoneError'));
-      });
-    }
-
-    function removeTask(resource) {
-      var config = {
-        title: $translate.instant('task.confirm.title'),
-        description: $translate.instant('task.confirm.description')
-      }
-
-      PrDialog.confirm(config).then(function() {
-        vm.remove(resource);
       });
     }
 

@@ -35,7 +35,7 @@
             edit: 'Editar',
             cancel: 'Cancelar',
             update: 'Atualizar',
-            remover: 'Remover',
+            remove: 'Remover',
             getOut: 'Sair'
           },
           dialog: {

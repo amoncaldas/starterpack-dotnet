@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function CRUDController(vm, modelService, options, PrToast, PrPagination, $translate) {
+  function CRUDController(vm, modelService, options, PrToast, PrPagination, PrDialog, $translate) {
 
     //Functions Block
     vm.search = search;

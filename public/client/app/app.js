@@ -11,7 +11,6 @@
     'ngMaterial',
     'modelFactory',
     'md.data.table',
-    'mdPickers',
     'satellizer',
     'pascalprecht.translate']);
 })();

@@ -52,7 +52,7 @@
 > Abra o navegador
 
 - acesse http://localhost:5000
-- logue com os dados email: **admin-base@prodeb.com** pass: **Prodeb01**
+- logue com os dados email: **admin-base@prodeb.com** senha: **Prodeb01**
 
 > Outros comandos
 
@@ -62,26 +62,128 @@
 - npm run package (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
 
 > Use o gerador de estrutura de arquivo para gerar os arquivos necessários para o recurso,
-> foi usado o YEOMAN(http://yeoman.io) para criar o gerador
+> foi usado o [YEOMAN](http://yeoman.io) para criar o gerador.
 
 - cd laravel_angular_base
 - yo prgenerator
 - escolha a estrutura na lista
 - digite o nome do recurso
 
+#### (Para mais detalhes sobre o uso do gerador acesse  [PrGenerator](git@git.prodeb.ba.gov.br:generator-generator-prgenerator.git))
+
+> ### Adicionando novo módulo angular ###
+
+- adicione a dependência no arquivo bower.json
+- adicione o caminho da dependência no arquivo gulpfile.js
+  - para importação angular adicione no array 'paths.angularScripts'
+  - ao adicionar um novo módulo o gulp deve ser reiniciado
+- adicione o módulo no arquivo public/client/app/app.js
+
+> ### Configuração ###
+
+- acesse o arquivo /public/client/app/app.config.js
+- $translateProvider
+  - configura o módulo de tradução das strings
+- moment.locale('');
+  - configura o idioma das datas
+- $mdThemingProvider
+  - configura o tema do angular material
+
+> ### Bibliotecas Externas ###
+> (bibliotecas que não são módulos do angular)
+
+- acesse o arquivo /public/client/app/app.external.js
+- adicione a linha ```.constant('NOME_CONSTANTE', NOME_BIBLIOTECA);```
+
+> ### Constantes ###
+> (as costantes são usadas para acessar dados mais facilmente em qualquer lugar do sistema)
+
+- acesse o arquivo /public/client/app/app.global.js
+- adicione um novo atributo contendo o nome da constante e o seu valor
+
+> ### Menu (adicionando itens ao menu) ###
+
+- acesse o arquivo /public/client/app/layout/menu.controller.js
+- adicione um objeto no array ```vm.itensMenu```<br>
+  > exemlo do objeto sem sub-item:<br>
+  ```
+  { url: 'dashboard', titulo: menuPrefix + 'dashboard', icon: 'dashboard', subItens: [] }
+  ```
+  > exemplo do objeto com sub-itens:<br>
+  ```
+  {
+    url: '#', titulo: menuPrefix + 'admin', icon: 'settings_applications', profiles: ['admin'],
+    subItens: [
+      { url: 'user', titulo: menuPrefix + 'user', icon: 'people' },
+      { url: 'mail', titulo: menuPrefix + 'mail', icon: 'mail' },
+      { url: 'audit', titulo: menuPrefix + 'audit', icon: 'storage' }
+    ]
+  }
+  ```
+
+> ### Internacionalização ###
+
+- todas as strings usadas no sistema devem ser armazenadas no objeto data localizado no arquivo /public/client/app/core/language-loader.service.js
+- estrutura do arquivo:
+  - no primeiro momento estão as strings comuns ao sistema como um todo
+  - em seguida as strings comuns aos formulários
+  - strings aos dialogs
+  - strings das mensagens do toast
+  - strings dos breadcrumbs
+  - strings comuns a todos os models(recurso)
+  - strings comuns aos controllers
+  - por fim as strings comuns a cada recurso
+
+> ### Convenções ###
+> (convenções adotadas para padronização do projeto)
+
+- o conjunto de arquivos são chamados de recurso(resource) localizados sempre no caminho /public/client/app
+- cada recurso pode pussuir os seguintes arquivos:
+  - recurso.html(index)
+  - recurso-list.html
+  - recurso-form.html
+  - recurso.controller.js
+  - recurso.route.js
+  - recurso.service.js
+- deve ser usado o gerador de estrutura de arquivos para gerar os arquivos no padrão informado acima
+- a pasta /public/client/app/samples deve ser excluida antes de gerar o pacote para produção
+- no lado servidor ao ser criado o controller deve-se mudar a heranças de Controller para CrudController
+o mesmo acontece quando um model é criado deve-ser mudar a herança de Model para BaseModel
+- as imagens devem ser armazenadas no caminho /public/client/images
+- para alterar as propriedades de css acesse o arquivo /public/client/styles/app.scss
+- os templates dos emails devem ser salvos no caminho /resources/views/mais
+
 # Componentes #
 
 > Componentes e frameworks disponíveis no projeto
 
-- AngularJS 1.5 - https://angularjs.org
-- Angular Material 1.1.0 (ou superior) - https://material.angularjs.org
-- NgProdeb 0.0.2 - git@git.prodeb.ba.gov.br:ngprodeb.git
+- [AngularJS 1.5](https://angularjs.org)
+- [Angular Material 1.1.0 (ou superior)](https://material.angularjs.org)
+- [NgProdeb 0.1.2](git@git.prodeb.ba.gov.br:ngprodeb.git)
 
-# Exemplos de uso #
+### Exemplos de uso #
+___
 
-> Implementação de alguns exemplos dos componentes que podem ser usados no projeto
+> ### Exemplo de implementação de alguns dos componentes que podem ser usados no projeto. ###
 
-- Box
+- __ContentHeader__
+
+```html
+  <content-header title="" description="">
+    Conteúdo do content header
+  </content-header>
+```
+
+- __ContentBody__
+
+```html
+  <content-body layoutAlign="">
+    Conteúdo do content header.
+  </content-body>
+```
+
+- __Box__<br>
+(obs.: o box deve estar dentro de um ContentBody)
 
 ```html
   <box box-title="Titúlo do box">
@@ -97,19 +199,24 @@
   </box>
 ```
 
-### Erro no watch no linux ###
+- ( para mais exemplos consulte /public/client/app/samples ) 
 
-> watch:
-- echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-> sh: 1: node: not found
-- rode o npm install nodejs-legacy
+> ### Componentes NgProdeb ###
+
+- Para saber como usar os componentes acesse: [Git NgProdeb](https://StudioEFE@bitbucket.org/thiagoaos/ngprodeb.git)
+> ### Erro no watch no linux (rode os comandos no terminal) ###
+
+- > watch:
+  - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+- > sh: 1: node: not found
+  - npm install nodejs-legacy
 
 # Log #
 
 > Para ver os logs
 
-- acessar a url http://localhost:5000/developer/log-viewer
-- digitar o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
-- digitar a senha conforme a variável de ambiente no arquivo .env DEVELOP_PASSWORD
+- acesse http://localhost:5000/developer/log-viewer
+- digite o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
+- digite a senha conforme a variável de ambiente no arquivo .env DEVELOP_PASSWORD
 
 

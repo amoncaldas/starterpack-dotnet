@@ -46,6 +46,31 @@ function formatNameResource(resource) {
 }
 
 /**
+ * Válida se o nome do resource foi digitado corretamente
+ * nos seguintes padrões: resource ou resource:subresource
+ * @param {String} resourceName - Nome do recurso digitado
+ * @return {boolean} Retorna um boolean para validação
+ */
+function validNameResource(resourceName) {
+  var resources = resourceName.split(":");
+  var regex = new RegExp('^[a-zA-Z]+:[a-zA-Z]+$');
+  var error = false;
+
+  if (resources.length > 1 && !regex.test(resourceName)) {
+    me.log(chalk.red('Nome do recurso é inválido, tente novamente.'));
+    error = true;
+  }
+
+  regex = new RegExp('^[a-zA-Z]+$');
+  if (resources.length == 1 && !regex.test(resourceName)) {
+    me.log(chalk.red('Nome do recurso é inválido, tente novamente.'));
+    error = true;
+  }
+
+  return error;
+}
+
+/**
  * Desenha o logo no console
  * @return {String} retorna uma string personalizada da logo
  */
@@ -89,5 +114,6 @@ module.exports = {
   normalizePath: normalizePath,
   formatNameResource: formatNameResource,
   verifyInput: verifyInput,
-  logoProdeb: logoProdeb
+  logoProdeb: logoProdeb,
+  validNameResource: validNameResource
 }

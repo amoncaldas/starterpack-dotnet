@@ -11,7 +11,6 @@
     "check": "gulp check"
   },
   "devDependencies": {
-    "yo": "^1.8.5",
     "bower": "^1.7.9",
     "browser-sync": "^2.13.0",
     "eslint": "^3.1.1",
