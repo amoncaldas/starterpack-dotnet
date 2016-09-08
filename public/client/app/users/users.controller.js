@@ -17,6 +17,7 @@
     vm.beforeSave = beforeSave;
     vm.afterSave = afterSave;
     vm.beforeRemove = beforeRemove;
+    vm.removeUser = removeUser;
 
     // instantiate base controller
     $controller('CRUDController', { vm: vm, modelService: UsersService, options: {} });
@@ -59,6 +60,11 @@
         PrToast.error($translate.instant('user.beforeRemoveError'));
         return false;
       };
+    }
+
+    function removeUser(resource) {
+      resource.$destroy();
+      vm.search();
     }
 
   }

@@ -8,10 +8,11 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function LoginController($state, Auth, Global, PrToast, $translate) {
+  function LoginController($state, Auth, Global, PrToast, PrDialog, $translate) {
     var vm = this;
 
     vm.login = login;
+    vm.openDialogResetPass = openDialogResetPass;
 
     activate();
 
@@ -35,6 +36,39 @@
         PrToast.error(message);
       });
     }
+
+    function openDialogResetPass() {
+      var config = {
+        templateUrl: Global.clientPath + '/auth/reset-pass-dialog.html',
+        controller: function(PrDialog) {
+          vm = this;
+          vm.reset = {email: ''};
+
+          vm.closeDialog = closeDialog;
+          vm.cleanForm = cleanForm;
+          vm.sendResetPass = sendResetPass;
+
+          function closeDialog() {
+            PrDialog.close();
+          }
+
+          function cleanForm() {
+            vm.reset.email = '';
+          }
+
+          function sendResetPass() {
+            Auth.sendResetPassword(vm.reset);
+          }
+
+        },
+        controllerAs: 'ctrl',
+        hasBackdrop: true
+      }
+
+      PrDialog.custom(config);
+
+    }
+
   }
 
 })();

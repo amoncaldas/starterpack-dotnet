@@ -8,6 +8,9 @@ Route::group(['prefix' => 'v1'], function () {
     //public area
     Route::post('authenticate', 'AuthenticateController@authenticate');
 
+    Route::post('password/email', 'PasswordController@postEmail');
+    Route::post('password/reset', 'PasswordController@postReset');
+    
     Route::group(['prefix' => 'support'], function () {
         Route::get('langs', 'SupportController@langs');
     });
