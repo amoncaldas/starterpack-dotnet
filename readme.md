@@ -183,7 +183,7 @@ bower install
 
 > ### Internacionalização ###
 
-  - todas as strings usadas no sistema devem ser armazenadas no objeto data localizado no arquivo **public/client/app/core/language-loader.service.js**
+  - todas as strings usadas no sistema devem ser armazenadas no objeto data localizado no arquivo **public/client/app/i18n/language-loader.service.js**
   - estrutura do arquivo:
     - no primeiro momento estão as strings comuns ao sistema como um todo
     - em seguida as strings comuns aos formulários
