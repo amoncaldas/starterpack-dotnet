@@ -29,33 +29,42 @@
 > Rode os comandos abaixo.
 > Todos os comandos devem ser executados no terminal do linux. No caso do windows utilize o Git Bash.
 
-- git clone git@git.prodeb.ba.gov.br:thiagoantonius.souza/laravel_angular_base.git
-- cd laravel_angular_base
-- composer global require "laravel/installer=~1.1"
-- npm install
-- chmod **777** -R storage
-- chmod **777** -R bootstrap/cache
-- cp .env.example .env
+```sh
+git clone git@git.prodeb.ba.gov.br:thiagoantonius.souza/laravel_angular_base.git
+cd laravel_angular_base
+composer global require "laravel/installer=~1.1"
+npm install
+chmod **777** -R storage
+chmod **777** -R bootstrap/cache
+cp .env.example .env
+```
 
 > Configure o .env com os dados da conexão do postgres
 
-- composer install
-- php artisan key:generate
-- php artisan jwt:secret
-- php artisan migrate --seed
+```sh
+composer install
+php artisan key:generate
+php artisan jwt:secret
+php artisan migrate --seed
+```
 
 > Execute o comando abaixo para processar os arquivos .sass e concatenar os .js e .css injetando no index.html.
 > O comando fica observando futuras modificações e repetindo o processo automaticamente 
 
-- gulp
+```sh
+gulp
+```
   - parametros opcionais 
     - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
+
 
 # Uso #
 
 > Em outra aba do terminal.
 
-- npm run server (Este comando inicia o servidor php na porta 5000)
+```sh
+npm run server (Este comando inicia o servidor php na porta 5000)
+```
 
 > Abra o navegador
 
@@ -64,43 +73,54 @@
 
 > Outros comandos
 
-- gulp check (verifica a formatação do código javascript) 
+```sh
+gulp check 
+```
+- (verifica a formatação do código javascript) 
   - parametros opcionais 
     - **--fix** (para corrigir os erros que podem ser corrigidos automaticamente)
 
 > Use o gerador de estrutura de arquivo para gerar os arquivos necessários para o recurso,
 > foi usado o [YEOMAN](http://yeoman.io) para criar o gerador.
 
-- cd laravel_angular_base
-- yo ngprodeb
+```sh
+cd laravel_angular_base
+npm install -g yo
+npm install generator-ngprodeb
+yo ngprodeb
+```
 - escolha a estrutura na lista
 - digite o nome do recurso
 
-#### (Para mais detalhes sobre o uso do gerador acesse  [PrGenerator](git@git.prodeb.ba.gov.br:generator-generator-prgenerator.git))
+- #### Para mais detalhes sobre o uso do gerador acesse  [PrGenerator](git@git.prodeb.ba.gov.br:generator-generator-prgenerator.git)
 
 > ### Adicionando novo módulo angular ###
 
-- adicione a dependência no arquivo bower.json
-- adicione o caminho da dependência no arquivo gulpfile.js
-  - para importação angular adicione no array 'paths.angularScripts'
-  - ao adicionar um novo módulo o gulp deve ser reiniciado
-- adicione o módulo no arquivo public/client/app/app.js
+  - adicione a dependência no arquivo bower.json
+  - adicione o caminho da dependência no arquivo gulpfile.js
+    - para importação angular adicione no array 'paths.angularScripts'
+    - ao adicionar um novo módulo o gulp deve ser reiniciado
+  - adicione o módulo no arquivo public/client/app/app.js
 
 > ### Configuração ###
 
-- acesse o arquivo /public/client/app/app.config.js
-- $translateProvider
-  - configura o módulo de tradução das strings
-- moment.locale('');
-  - configura o idioma das datas
-- $mdThemingProvider
-  - configura o tema do angular material
+  - acesse o arquivo /public/client/app/app.config.js
+  - $translateProvider
+    - configura o módulo de tradução das strings
+  - moment.locale('');
+    - configura o idioma das datas
+  - $mdThemingProvider
+    - configura o tema do angular material
 
 > ### Bibliotecas Externas ###
 > (bibliotecas que não são módulos do angular)
 
 - acesse o arquivo /public/client/app/app.external.js
-- adicione a linha ```.constant('NOME_CONSTANTE', NOME_BIBLIOTECA);```
+- adicione a linha: 
+```javascript
+.constant('NOME_CONSTANTE', NOME_BIBLIOTECA);
+
+```
 
 > ### Constantes ###
 
@@ -110,53 +130,64 @@
 > ### Menu (adicionando itens ao menu) ###
 
 - acesse o arquivo /public/client/app/layout/menu.controller.js
-- adicione um objeto no array ```vm.itensMenu```<br>
-  > exemlo do objeto sem sub-item:<br>
-  ```
-  { url: 'dashboard', titulo: menuPrefix + 'dashboard', icon: 'dashboard', subItens: [] }
+- adicione um objeto no array ```vm.itensMenu```
+  > exemlo do objeto sem sub-item:
+  ```json
+  { 
+    url: 'dashboard', 
+    titulo: menuPrefix + 'dashboard', 
+    icon: 'dashboard', 
+    subItens: [] 
+  }
   ```
   > exemplo do objeto com sub-itens:<br>
-  ```
+  ```json
   {
-    url: '#', titulo: menuPrefix + 'admin', icon: 'settings_applications', profiles: ['admin'],
+    url: '#', 
+    titulo: menuPrefix + 'admin', 
+    icon: 'settings_applications', 
+    profiles: ['admin'],
     subItens: [
-      { url: 'user', titulo: menuPrefix + 'user', icon: 'people' },
-      { url: 'mail', titulo: menuPrefix + 'mail', icon: 'mail' },
-      { url: 'audit', titulo: menuPrefix + 'audit', icon: 'storage' }
+      { 
+        url: 'user', 
+        titulo: menuPrefix + 'user', 
+        icon: 'people' 
+      }
     ]
   }
   ```
 
 > ### Internacionalização ###
 
-- todas as strings usadas no sistema devem ser armazenadas no objeto data localizado no arquivo /public/client/app/core/language-loader.service.js
-- estrutura do arquivo:
-  - no primeiro momento estão as strings comuns ao sistema como um todo
-  - em seguida as strings comuns aos formulários
-  - strings aos dialogs
-  - strings das mensagens do toast
-  - strings dos breadcrumbs
-  - strings comuns a todos os models(recurso)
-  - strings comuns aos controllers
-  - por fim as strings comuns a cada recurso
+  - todas as strings usadas no sistema devem ser armazenadas no objeto data localizado no arquivo /public/client/app/core/language-loader.service.js
+  - estrutura do arquivo:
+    - no primeiro momento estão as strings comuns ao sistema como um todo
+    - em seguida as strings comuns aos formulários
+    - strings aos dialogs
+    - strings das mensagens do toast
+    - strings dos breadcrumbs
+    - strings comuns a todos os models(recurso)
+    - strings comuns aos controllers
+    - por fim as strings comuns a cada recurso
 
 > ### Convenções ###
 > (convenções adotadas para padronização do projeto)
 
-- o conjunto de arquivos são chamados de recurso(resource) localizados sempre no caminho /public/client/app
-- cada recurso pode pussuir os seguintes arquivos:
-  - recursos.html(index)
-  - recursos-list.html
-  - recursos-form.html
-  - recursos.controller.js
-  - recursos.route.js
-  - recursos.service.js
-- deve ser usado o gerador de estrutura de arquivos para gerar os arquivos no padrão informado acima
-- no lado servidor ao ser criado o controller deve-se mudar a heranças de Controller para CrudController
-o mesmo acontece quando um model é criado deve-ser mudar a herança de Model para BaseModel
-- as imagens devem ser armazenadas no caminho /public/client/images
-- para alterar as propriedades de css acesse o arquivo /public/client/styles/app.scss
-- os templates dos emails devem ser salvos no caminho /resources/views/mais
+  - o conjunto de arquivos são chamados de recurso(resource) localizados sempre no caminho /public/client/app
+  - cada recurso pode pussuir os seguintes arquivos:
+    - recurso.html(index)
+    - recurso-list.html
+    - recurso-form.html
+    - recurso.controller.js
+    - recurso.route.js
+    - recurso.service.js
+  - deve ser usado o gerador de estrutura de arquivos para gerar os arquivos no padrão informado acima
+  - a pasta /public/client/app/samples deve ser excluida antes de gerar o pacote para produção
+  - no lado servidor ao ser criado o controller deve-se mudar a heranças de Controller para CrudController
+  o mesmo acontece quando um model é criado deve-ser mudar a herança de Model para BaseModel
+  - as imagens devem ser armazenadas no caminho /public/client/images
+  - para alterar as propriedades de css acesse o arquivo /public/client/styles/app.scss
+  - os templates dos emails devem ser salvos no caminho /resources/views/mais
 
 ### Exemplos de uso ###
 ___
@@ -182,7 +213,7 @@ ___
   </content-body>
 ```
 
-- __Box__<br>
+- __Box__
 (obs.: o box deve estar dentro de um ContentBody)
 
 ```html
@@ -204,12 +235,16 @@ ___
 > ### Componentes NgProdeb ###
 
 - Para saber como usar os componentes acesse: [Git NgProdeb](https://StudioEFE@bitbucket.org/thiagoaos/ngprodeb.git)
+
 > ### Erro no watch no linux (rode os comandos no terminal) ###
 
-- > watch:
-  - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-- > sh: 1: node: not found
-  - npm install nodejs-legacy
+### watch:
+___
+- echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+### sh: 1: node: not found
+___
+- npm install nodejs-legacy
 
 # Log #
 

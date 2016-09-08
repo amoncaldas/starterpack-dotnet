@@ -93,7 +93,7 @@
     function remove(resource) {
       var config = {
         title: $translate.instant('dialog.confirmTitle'),
-        description: $translate.instant('dialog.confirmDescription', resource)
+        description: $translate.instant('dialog.confirmDescription')
       }
 
       PrDialog.confirm(config).then(function() {
