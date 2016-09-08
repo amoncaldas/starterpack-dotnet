@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function UsersController($controller, lodash, UsersService, RolesService, PrToast, Auth, PrDialog, $translate) {
+  function UsersController($controller, lodash, UsersService, RolesService, PrToast, Auth, $translate) {
     var vm = this;
 
     vm.onActivate = onActivate;
