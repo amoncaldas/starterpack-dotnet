@@ -56,6 +56,8 @@
     }
 
     function cleanForm() {
+      if (angular.isFunction(vm.beforeClean) && vm.beforeClean() === false) return false;
+
       vm.resource = new modelService();
 
       if (angular.isFunction(vm.afterClean)) vm.afterClean();
