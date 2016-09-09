@@ -77,6 +77,7 @@
             email: 'Email',
             password: 'Senha',
             in: 'Entrar',
+            resetPassword: 'Esqueci minha senha',
             invalidCredentials: 'Credenciais Inválidas',
             errorLogin: 'Não foi possível realizar o login'
           },

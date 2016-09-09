@@ -86,7 +86,7 @@ class UsersController extends CrudController
         $obj->roles = $newRoles;
 
         Mail::send('mails.confirmRegister',
-            ['user' => $obj, 'url' => config('app.url'), 'appName' => config('app_name')], function($message) use ($obj) {
+            ['user' => $obj, 'url' => config('app.url'), 'appName' => config('app.app_name')], function($message) use ($obj) {
                 $message->from(config('mail.from.address'), config('mail.from.name'));
                 $message->to($obj->email);
                 $message->subject("Confirmação de cadastro");

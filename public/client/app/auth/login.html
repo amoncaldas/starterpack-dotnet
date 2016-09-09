@@ -13,7 +13,7 @@
             </md-input-container>
           </div>
           <div layout="row" flex layout-align="center center">
-            <md-input-container flex class="top-1">
+            <md-input-container flex class="top-1 bottom-1">
               <md-icon md-font-set="material-icons">lock</md-icon>
               <label>{{::'login.password' | translate}}</label>
               <input type="password" flex=99 ng-model="loginCtrl.credentials.password">
@@ -22,6 +22,11 @@
           <div layout="row" flex layout-align="center center">
             <md-button class="md-raised md-primary" flex ng-click="loginCtrl.login()">
               {{::'login.in' | translate}}
+            </md-button>
+          </div>
+          <div layout="row" flex layout-align="center center">
+            <md-button class="md-primary" flex ng-click="loginCtrl.openDialogResetPass()">
+              {{::'login.resetPassword' | translate}}
             </md-button>
           </div>
         </form>

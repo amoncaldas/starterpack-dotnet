@@ -14,6 +14,7 @@
       updateCurrentUser: updateCurrentUser,
       retrieveUserFromLocalStorage: retrieveUserFromLocalStorage,
       authenticated: authenticated,
+      sendResetPassword: sendResetPassword,
       currentUser: null
     };
 
@@ -102,6 +103,27 @@
       });
 
       return deferred.promise;
+    }
+
+    /**
+     * Envia um email para recuperação de senha
+     * @param {Object} resetData - Objeto contendo o email
+     * @return {Promise} - Retorna uma promise para ser resolvida
+     */
+    function sendResetPassword(resetData) {
+      var deferred = $q.defer();
+
+      $http.post(Global.apiVersion + '/password/email', resetData)
+        .then(function(response) {
+          console.log(response);
+          deferred.resolve(response);
+        }, function(error) {
+          console.log(error);
+          deferred.reject(error);
+        });
+      
+      return deferred.promise;
+
     }
 
     return auth;

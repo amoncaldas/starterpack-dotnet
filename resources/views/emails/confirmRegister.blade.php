@@ -10,15 +10,17 @@
                 style="max-width: 30%;">
             <hr>
             <div style="font-size: 20px;font-weight: bold;">
-                <h2>Prezado {{$user['name']}}, </h2>
+                <h2 style="text-transform: uppercase;">Prezado {{$user['name']}}, </h2>
                 <p>Você foi cadastrado com êxito no sistema {{$appName}}.</p>
                 <p>Seguem seus dados de acesso abaixo:</p>
             </div>
             <hr>
             <table style="border: none">
                 <tr>
-                    <td><b>Login: {{$user['email']}}</b></td>
-                    <td>Senha: {{$user['passwordConteiner']}}</td>
+                    <td><b>Login:</b> {{$user['email']}}</td>
+                </tr>
+                <tr>
+                    <td><b>Senha:</b> {{$user['passwordConteiner']}}</td>
                 </tr>
                 <tr>
                     <td><a href="{{$url}}">Clique aqui para acessar o sistema</a></td>
