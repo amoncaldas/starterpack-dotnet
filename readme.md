@@ -268,33 +268,33 @@ bower install nome-da-biblioteca
 
    - Exemplo
 
-      ```javascript
+    ```javascript
 
-      angular
-        .module('app')
-        .controller('AuditController', AuditController);
+    angular
+      .module('app')
+      .controller('AuditController', AuditController);
 
-      function AuditController($controller, AuditService, PrDialog) {
-        var vm = this;
+    function AuditController($controller, AuditService, PrDialog) {
+      var vm = this;
 
-        vm.onActivate = onActivate;
-        vm.applyFilters = applyFilters;
+      vm.onActivate = onActivate;
+      vm.applyFilters = applyFilters;
 
-        $controller('CRUDController', { vm: vm, modelService: AuditService, options: {} });
+      $controller('CRUDController', { vm: vm, modelService: AuditService, options: {} });
 
-        function onActivate() {
-          vm.models = AuditService.listModels();
-          vm.types = AuditService.listTypes();
+      function onActivate() {
+        vm.models = AuditService.listModels();
+        vm.types = AuditService.listTypes();
 
-          vm.queryFilters = { type: vm.types[0].id, model: vm.models[0].id };
-        }
-
-        function applyFilters(defaultQueryFilters) {
-          return angular.extend(defaultQueryFilters, vm.queryFilters);
-        }
-
+        vm.queryFilters = { type: vm.types[0].id, model: vm.models[0].id };
       }
-      ```  
+
+      function applyFilters(defaultQueryFilters) {
+        return angular.extend(defaultQueryFilters, vm.queryFilters);
+      }
+
+    }
+    ```  
        
 - No Server - **CrudController.php** (app/Http/controllers/CrudController.php)
 
@@ -341,45 +341,45 @@ bower install nome-da-biblioteca
     ```
 
    - Exemplo
-   
-      ```php
-      class ProjectsController extends CrudController
-      {
-          public function __construct()
-          {
-          }
 
-          protected function getModel()
-          {
-              return Project::class;
-          }
+    ```php
+    class ProjectsController extends CrudController
+    {
+        public function __construct()
+        {
+        }
 
-          protected function applyFilters(Request $request, $query) {
-              $query = $query->with('tasks');
+        protected function getModel()
+        {
+            return Project::class;
+        }
 
-              if($request->has('name'))
-                  $query = $query->where('name', 'like', '%'.$request->name.'%');
-          }
+        protected function applyFilters(Request $request, $query) {
+            $query = $query->with('tasks');
 
-          protected function beforeSearch(Request $request, $dataQuery, $countQuery) {
-              $dataQuery->orderBy('name', 'asc');
-          }
+            if($request->has('name'))
+                $query = $query->where('name', 'like', '%'.$request->name.'%');
+        }
 
-          protected function getValidationRules(Request $request, Model $obj)
-          {
-              $rules = [
-                  'name' => 'required|max:100|unique:projects',
-                  'cost' => 'required|min:1'
-              ];
+        protected function beforeSearch(Request $request, $dataQuery, $countQuery) {
+            $dataQuery->orderBy('name', 'asc');
+        }
 
-              if ( strpos($request->route()->getName(), 'projects.update') !== false ) {
-                  $rules['name'] = 'required|max:255|unique:projects,name,'.$obj->id;
-              }
+        protected function getValidationRules(Request $request, Model $obj)
+        {
+            $rules = [
+                'name' => 'required|max:100|unique:projects',
+                'cost' => 'required|min:1'
+            ];
 
-              return $rules;
-          }
-      }
-      ``` 
+            if ( strpos($request->route()->getName(), 'projects.update') !== false ) {
+                $rules['name'] = 'required|max:255|unique:projects,name,'.$obj->id;
+            }
+
+            return $rules;
+        }
+    }
+    ```
 
 > ### Diretivas ###
 
