@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function AuditController($controller, AuditService, PrDialog) {
+  function AuditController($controller, AuditService, PrDialog, Global) {
     var vm = this;
 
     vm.onActivate = onActivate;
@@ -38,7 +38,7 @@
           vm.auditDetail = auditDetail;
         },
         controllerAs: 'auditDetailCtrl',
-        templateUrl: '/audit/audit-detail.html',
+        templateUrl: Global.clientPath + '/audit/audit-detail.html',
         hasBackdrop: true
       };
 

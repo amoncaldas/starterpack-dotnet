@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function MailsController(MailsService, UsersService, PrDialog, PrToast, $q, lodash, $translate) {
+  function MailsController(MailsService, UsersService, PrDialog, PrToast, $q, lodash, $translate, Global) {
     var vm = this;
 
     vm.filterSelected = false;
@@ -59,7 +59,7 @@
         },
         controller: 'UsersDialogController',
         controllerAs: 'ctrl',
-        templateUrl: '/users/dialog/users-dialog.html',
+        templateUrl: Global.clientPath + '/users/dialog/users-dialog.html',
         hasBackdrop: true
       };
 

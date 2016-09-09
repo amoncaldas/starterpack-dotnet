@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function ProjectsController(Global, $controller, ProjectsService, PrDialog, $translate) {
+  function ProjectsController(Global, $controller, ProjectsService, PrDialog) {
     var vm = this;
 
     //Attributes Block

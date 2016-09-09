@@ -119,7 +119,7 @@ yo ngprodeb
 - adicione a dependência no arquivo bower.json
 - rode o comando 
 ```sh 
-bower install
+bower install nome-da-biblioteca
 ```
 - adicione o caminho da dependência no arquivo gulpfile.js
   - para importação angular adicione no array **paths.angularScripts**
@@ -377,11 +377,13 @@ bower install
 (obs.: o box deve estar dentro de um ContentBody)
 
 ```html
-  <box box-title="Titúlo do box">
+  <box box-title="Título do box">
     Conteúdo do box
   </box>
+```
 
-  <box box-title="Titúlo do box">
+```html
+  <box box-title="Título do box">
     <box-toolbar-buttons>
       Botões no toolbar do box (Opcional)
     </box-toolbar-buttons>
