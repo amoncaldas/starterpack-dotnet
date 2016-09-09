@@ -14,7 +14,7 @@
     //Functions Block
     vm.onActivate   = onActivate;
     vm.closeModal   = closeModal;
-    vm.beforeSearch = beforeSearch;
+    vm.applyFilters = applyFilters;
     vm.beforeSave   = beforeSave;
     vm.afterSave    = afterSave;
     vm.toggleDone   = toggleDone;
@@ -30,8 +30,8 @@
       vm.queryFilters = { projectId: projectId };
     }
 
-    function beforeSearch() {
-      angular.extend(vm.defaultQueryFilters, vm.queryFilters);
+    function applyFilters(defaultQueryFilters) {
+      return angular.extend(defaultQueryFilters, vm.queryFilters);
     }
 
     function beforeSave() {

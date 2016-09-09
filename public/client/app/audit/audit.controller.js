@@ -12,7 +12,7 @@
     var vm = this;
 
     vm.onActivate = onActivate;
-    vm.beforeSearch = beforeSearch;
+    vm.applyFilters = applyFilters;
     vm.viewDetail = viewDetail;
 
     $controller('CRUDController', { vm: vm, modelService: AuditService, options: {} });
@@ -24,8 +24,8 @@
       vm.queryFilters = { type: vm.types[0].id, model: vm.models[0].id };
     }
 
-    function beforeSearch() {
-      angular.extend(vm.defaultQueryFilters, vm.queryFilters);
+    function applyFilters(defaultQueryFilters) {
+      return angular.extend(defaultQueryFilters, vm.queryFilters);
     }
 
     function viewDetail(auditDetail) {

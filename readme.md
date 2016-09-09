@@ -241,6 +241,8 @@ bower install nome-da-biblioteca
   - Gatilhos 
     ```javascript    
     onActivate()
+    applyFilters(defaultQueryFilters) 
+      //recebe um objeto com os filtros de página aplicado e deve devolver este objeto com demais filtros
     beforeSearch(page) //retornando false cancela o fluxo
     afterSearch(response)
     beforeClean //retornando false cancela o fluxo
@@ -261,7 +263,7 @@ bower install nome-da-biblioteca
         var vm = this;
 
         vm.onActivate = onActivate;
-        vm.beforeSearch = beforeSearch;
+        vm.applyFilters = applyFilters;
 
         $controller('CRUDController', { vm: vm, modelService: AuditService, options: {} });
 
@@ -272,9 +274,10 @@ bower install nome-da-biblioteca
           vm.queryFilters = { type: vm.types[0].id, model: vm.models[0].id };
         }
 
-        function beforeSearch() {
-          angular.extend(vm.defaultQueryFilters, vm.queryFilters);
+        function applyFilters(defaultQueryFilters) {
+          return angular.extend(defaultQueryFilters, vm.queryFilters);
         }
+
       }
       ```   
 - No Server - **CrudController.php** (app/Http/controllers/CrudController.php)

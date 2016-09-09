@@ -50,7 +50,7 @@
      */
     function updateCurrentUser(user) {
       if (user) {
-        user = auth.currentUser = angular.merge(new UsersService(), user);
+        user = angular.merge(new UsersService(), user);
 
         var jsonUser = angular.toJson(user);
 

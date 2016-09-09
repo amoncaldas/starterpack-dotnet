@@ -4,7 +4,7 @@
         <div flex=30 flex-sm=99 flex-gt-sm=99 layout-align="center center">
           <img src="client/images/governo-do-estado-da-bahia.png" alt="logo" />
         </div>
-        <form flex>
+        <form flex ng-submit="loginCtrl.login()">
           <div layout="row" flex layout-align="center center">
             <md-input-container flex class="bottom-5">
               <md-icon md-font-set="material-icons">email</md-icon>
@@ -20,7 +20,7 @@
             </md-input-container>
           </div>
           <div layout="row" flex layout-align="center center">
-            <md-button class="md-raised md-primary" flex ng-click="loginCtrl.login()">
+            <md-button type="submit" class="md-raised md-primary" flex>
               {{::'login.in' | translate}}
             </md-button>
           </div>

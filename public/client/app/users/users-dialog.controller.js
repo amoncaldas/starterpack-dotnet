@@ -12,7 +12,7 @@
     var vm = this;
 
     vm.onActivate = onActivate;
-    vm.beforeSearch = beforeSearch;
+    vm.applyFilters = applyFilters;
     vm.transferUser = userDialogInput.transferUserFn;
 
     // instantiate base controller
@@ -28,8 +28,8 @@
       vm.queryFilters = {};
     }
 
-    function beforeSearch() {
-      angular.extend(vm.defaultQueryFilters, vm.queryFilters);
+    function applyFilters(defaultQueryFilters) {
+      return angular.extend(defaultQueryFilters, vm.queryFilters);
     }
 
   }

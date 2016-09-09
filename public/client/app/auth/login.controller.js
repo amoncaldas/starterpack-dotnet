@@ -41,7 +41,7 @@
       var config = {
         templateUrl: Global.clientPath + '/auth/reset-pass-dialog.html',
         controller: function(PrDialog) {
-          vm = this;
+          var vm = this;
           vm.reset = {email: ''};
 
           vm.closeDialog = closeDialog;

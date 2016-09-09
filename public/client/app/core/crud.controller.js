@@ -43,7 +43,8 @@
       vm.paginator.currentPage = (angular.isDefined(page)) ? page : 1;
       vm.defaultQueryFilters = { page: vm.paginator.currentPage, perPage: vm.paginator.perPage };
 
-      if (angular.isFunction(vm.beforeSearch) && vm.beforeSearch(page) === false) return false;
+      if (angular.isFunction(vm.applyFilters)) vm.defaultQueryFilters = vm.applyFilters(vm.defaultQueryFilters);
+      if (angular.isFunction(vm.beforeSearch) && vm.beforeSearch(page) === false) return false;      
 
       modelService.paginate(vm.defaultQueryFilters).then(function (response) {
         vm.paginator.calcNumberOfPages(response.total);

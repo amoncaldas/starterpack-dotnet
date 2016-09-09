@@ -20,7 +20,8 @@
 
     function update() {
       UsersService.updateProfile(vm.user).then(function (response) {
-        Auth.updateCurrentUser(response.data);
+        Auth.updateCurrentUser(response);
+        PrToast.success($translate.instant('controllers.crud.saveSuccess'));
       }, function (error) {
         PrToast.errorValidation(error.data, $translate('user.profile.updateError'));
       });

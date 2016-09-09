@@ -1,7 +1,7 @@
 <content-body layout-align="center center">
   <div flex=100 flex-sm=80 flex-gt-sm=60>
-    <box box-title="{{::'form.titleUpdate' | translate}}">
-      <form>
+    <form flex ng-submit="profileCtrl.update()">
+      <box box-title="{{::'form.titleUpdate' | translate}}">      
         <md-input-container class="md-block" flex>
           <label>{{::'user.profile.form.name' | translate}}</label>
           <input type="text" ng-model="profileCtrl.user.name">
@@ -23,10 +23,10 @@
             <md-checkbox ng-model="role.selected">{{role.title}}</md-checkbox>
           </div>
         </div>
-      </form>
-      <box-footer-buttons>
-        <md-button class="md-primary md-raised" ng-click="profileCtrl.update()">{{::'form.update' | translate}}</md-button>
-      </box-footer-buttons>
-    </box>
+        <box-footer-buttons >
+          <md-button type="submit" class="md-primary md-raised">{{::'form.update' | translate}}</md-button>
+        </box-footer-buttons>                
+      </box>
+    </form>
   </div>
 </content-body>
