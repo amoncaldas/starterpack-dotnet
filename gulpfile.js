@@ -49,7 +49,7 @@ paths.angularScripts = [
 paths.vendorsScripts = [
   paths.bower + '/lodash/dist/lodash.min.js',
   paths.bower + '/moment/min/moment.min.js',
-  paths.bower + '/moment/min/locales.min.js',
+  paths.bower + '/moment/min/locales.min.js'
 ];
 paths.scripts = [
   paths.app + '/app.js',
@@ -66,13 +66,13 @@ paths.styles = [
 var minifierJSChannel = lazypipe()
   .pipe(uglify)
   .pipe(rename, {
-    suffix: 'min'
+    suffix: '.min'
   });
 
 var minifierCSSChannel = lazypipe()
   .pipe(cleanCSS)
   .pipe(rename, {
-    suffix: 'min'
+    suffix: '.min'
   });
 
 function scriptsVendors() {
