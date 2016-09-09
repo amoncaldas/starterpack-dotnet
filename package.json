@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "bower install",
     "server": "php artisan serve --port=5000",
-    "package": "gulp --production",
+    "package": "sh deploy.sh",
     "build": "gulp",
     "check": "gulp check"
   },

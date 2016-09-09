@@ -9,15 +9,15 @@ node_modules/
 bower_components/
 public/client/build/
 
-### Generators ###
-generator/
-
 npm-debug.log
 
 ### Laravel ###
 .env
 Homestead.yaml
 Homestead.json
+
+### Production ###
+deploy.tar.gz
 
 ### Editores ###
 
