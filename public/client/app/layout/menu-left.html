@@ -19,6 +19,7 @@
           <md-button
             class="md-button md-buttom-menu"
             ui-sref="{{::item.url}}"
+            ui-sref-active="active"
             ng-click="menuCtrl.openMenu($mdOpenMenu, $event, item.subItens.length)">
             <md-icon md-font-set="material-icons"
               class="pull-left menu-icon" style="color:#fff;">
@@ -28,7 +29,7 @@
           </md-button>
           <md-menu-content width="4">
             <md-menu-item ng-repeat="subItem in item.subItens">
-              <md-button ui-sref="{{::subItem.url}}" ng-if="!subItem.profiles || (subItem.profiles && auth.currentUser.hasProfile(subItem.profiles, subItem.allProfiles))">
+              <md-button ui-sref="{{::subItem.url}}" ui-sref-active="active" ng-if="!subItem.profiles || (subItem.profiles && auth.currentUser.hasProfile(subItem.profiles, subItem.allProfiles))">
                 <span md-menu-align-target>
                   <md-icon md-font-set="material-icons" class="pull-left menu-icon">
                     {{::subItem.icon}}

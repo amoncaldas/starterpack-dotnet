@@ -49,7 +49,7 @@
           event.preventDefault();
         }
       } else {
-        if (toState.name !== Global.loginState) {
+        if (toState.data.needAuthentication !== false) {  
           $state.go(Global.loginState);
           event.preventDefault();
         }

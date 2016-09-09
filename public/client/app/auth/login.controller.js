@@ -39,6 +39,7 @@
 
     function openDialogResetPass() {
       var config = {
+<<<<<<< HEAD
         templateUrl: Global.clientPath + '/auth/reset-pass-dialog.html',
         controller: function(PrDialog) {
           var vm = this;
@@ -62,6 +63,10 @@
 
         },
         controllerAs: 'ctrl',
+=======
+        templateUrl: Global.clientPath + '/auth/send-reset-dialog.html',
+        controller: 'PasswordController as passCtrl',
+>>>>>>> 30cb1099faae4545ad847adc621175b02146c687
         hasBackdrop: true
       }
 

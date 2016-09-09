@@ -15,11 +15,6 @@
         controller: 'DashboardController as dashboardCtrl',
         data: { breadcrumbs: 'Dashboard' }
       })
-      .state(Global.loginState, {
-        url: '/login',
-        templateUrl: Global.clientPath + '/auth/login.html',
-        controller: 'LoginController as loginCtrl'
-      })
       .state('not-authorized', {
         url: '/acesso-negado',
         templateUrl: Global.clientPath + '/layout/404.html',
