@@ -18,7 +18,7 @@
       .state('not-authorized', {
         url: '/acesso-negado',
         templateUrl: Global.clientPath + '/layout/404.html',
-        data: { breadcrumbs: 'Acesso Negado' }
+        data: { breadcrumbs: 'Acesso Negado', needAuthentication: false }
       });
 
     $urlRouterProvider.otherwise(Global.loginState);
