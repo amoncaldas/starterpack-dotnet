@@ -39,29 +39,8 @@
 
     function openDialogResetPass() {
       var config = {
-        templateUrl: Global.clientPath + '/auth/reset-pass-dialog.html',
-        controller: function(PrDialog) {
-          vm = this;
-          vm.reset = {email: ''};
-
-          vm.closeDialog = closeDialog;
-          vm.cleanForm = cleanForm;
-          vm.sendResetPass = sendResetPass;
-
-          function closeDialog() {
-            PrDialog.close();
-          }
-
-          function cleanForm() {
-            vm.reset.email = '';
-          }
-
-          function sendResetPass() {
-            Auth.sendResetPassword(vm.reset);
-          }
-
-        },
-        controllerAs: 'ctrl',
+        templateUrl: Global.clientPath + '/auth/send-reset-dialog.html',
+        controller: 'PasswordController as passCtrl',
         hasBackdrop: true
       }
 

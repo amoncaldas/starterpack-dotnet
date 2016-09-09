@@ -15,6 +15,11 @@
         controller: 'DashboardController as dashboardCtrl',
         data: { breadcrumbs: 'Dashboard' }
       })
+      .state(Global.resetPasswordState, {
+        url: '/password/reset/:token',
+        templateUrl: Global.clientPath + '/auth/reset-pass-form.html',
+        controller: 'PasswordController as passCtrl'
+      })
       .state(Global.loginState, {
         url: '/login',
         templateUrl: Global.clientPath + '/auth/login.html',

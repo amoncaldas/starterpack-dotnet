@@ -49,7 +49,7 @@
           event.preventDefault();
         }
       } else {
-        if (toState.name !== Global.loginState) {
+        if (toState.name !== Global.loginState && toState.name !== Global.resetPasswordState) {
           $state.go(Global.loginState);
           event.preventDefault();
         }

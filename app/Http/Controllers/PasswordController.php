@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PasswordController extends Controller
 {
@@ -40,16 +41,14 @@ class PasswordController extends Controller
         $this->validate($request, ['email' => 'required|email']);
 
         $response = Password::sendResetLink($request->only('email'), function (Message $message) {
-            $message->subject('Recuperação de senha');
+            $message->subject('Redefinição de senha');
         });
 
         switch ($response) {
             case Password::RESET_LINK_SENT:
-                return response()->json(['status' => trans($response)], 400);
-                //return redirect()->back()->with('status', trans($response));
+                return response()->json(['msg' => trans($response)], 200);
             case Password::INVALID_USER:
-                return response()->json(['error_invalid_user' => trans($response)], 400);
-                //return redirect()->back()->withErrors(['email' => trans($response)]);
+                return response()->json(['msg' => trans($response)], 400);
         }
     }
 
@@ -74,12 +73,24 @@ class PasswordController extends Controller
         });
         switch ($response) {
             case Password::PASSWORD_RESET:
-                return redirect($this->redirectPath())->with('status', trans($response));
+                return response()->json(['msg' => trans($response)], 200);
             default:
-                return redirect()->back()
-                            ->withInput($request->only('email'))
-                            ->withErrors(['email' => trans($response)]);
+                return response()->json(['msg' => trans($response)], 400);
         }
+    }
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
+    protected function resetPassword($user, $password)
+    {
+        $user->password = bcrypt($password);
+        $user->save();
+        Auth::login($user);
     }
 
 }

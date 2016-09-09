@@ -8,6 +8,7 @@
       clientPath: 'client/app',
       homeState: 'dashboard',
       loginState: 'login',
+      resetPasswordState: 'password-reset',
       notAuthorizedState: 'not-authorized',
       apiVersion: 'v1',
       layout: {

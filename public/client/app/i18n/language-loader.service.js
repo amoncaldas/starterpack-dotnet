@@ -78,6 +78,12 @@
             password: 'Senha',
             in: 'Entrar',
             resetPassword: 'Esqueci minha senha',
+            resetForm: {
+              title: 'Redefinir minha senha',
+              email: '@:login.email',
+              password: '@:login.password',
+              confimPassword: 'Confirmar senha'
+            },
             invalidCredentials: 'Credenciais Inválidas',
             errorLogin: 'Não foi possível realizar o login'
           },
