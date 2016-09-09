@@ -117,7 +117,8 @@ yo ngprodeb
 > ### Adicionar novo módulo angular ###
 
 - adicione a dependência no arquivo bower.json
-- rode o comando 
+- rode o comando
+
 ```sh 
 bower install nome-da-biblioteca
 ```
@@ -140,7 +141,8 @@ bower install nome-da-biblioteca
 > (bibliotecas que não são módulos do angular)
 
 - acesse o arquivo **public/client/app/app.external.js**
-- adicione a linha: 
+- adicione a linha:
+
 ```javascript
 .constant('NOME_CONSTANTE', NOME_BIBLIOTECA);
 
@@ -156,6 +158,7 @@ bower install nome-da-biblioteca
 - acesse o arquivo **public/client/app/layout/menu.controller.js**
 - adicione um objeto no array **vm.itensMenu**
   > exemplo de um item no menu:
+
   ```javascript
   { 
     url: 'dashboard', 
@@ -163,8 +166,11 @@ bower install nome-da-biblioteca
     icon: 'dashboard', 
     subItens: [] 
   }
+
   ```
+
   > exemplo de um item no menu com sub itens:<br>
+
   ```javascript
   {
     url: '#', 
@@ -217,10 +223,13 @@ bower install nome-da-biblioteca
 - Existe 2 controllers base contendo todas as ações padrões de um CRUD, são eles:
 - No client - **crud.controller.js** (public/client/app/core/crud.controller.js)
   - Para herdar as funciolidades basta, no controller executar:
+
     ```javascript
     $controller('CRUDController', { vm: vm, modelService: ProjectsService, options: { } });
     ```
+
   - Opções
+
     ```javascript
     {
       redirectAfterSave: true,
@@ -228,7 +237,9 @@ bower install nome-da-biblioteca
       perPage: 8
     }
     ```
+
   - Ações Implementadas
+  
     ```javascript
     activate()
     search(page)
@@ -238,7 +249,9 @@ bower install nome-da-biblioteca
     goTo(viewName)
     cleanForm()
     ```
-  - Gatilhos 
+
+  - Gatilhos
+
     ```javascript    
     onActivate()
     applyFilters(defaultQueryFilters) 
@@ -252,7 +265,9 @@ bower install nome-da-biblioteca
     beforeRemove(resource) //retornando false cancela o fluxo
     afterRemove(resource)
     ```
+
    - Exemplo
+
       ```javascript
 
       angular
@@ -279,21 +294,27 @@ bower install nome-da-biblioteca
         }
 
       }
-      ```   
+      ```  
+       
 - No Server - **CrudController.php** (app/Http/controllers/CrudController.php)
 
   - Para herdar as funciolidades basta, no controller executar:
+
     ```php
     use App\Http\Controllers\CrudController;
 
     class ProjectsController extends CrudController
     ```
+
   - Deve ser implementado os métodos
+
     ```php
       getModel() //retornar a classe referente ao model
       getValidationRules(Request $request, Model $obj) //retornar um array com as regras de validação
     ```
+
   - Ações Implementadas
+
     ```php
     index(Request $request)
     store(Request $request)
@@ -302,7 +323,9 @@ bower install nome-da-biblioteca
     saveOrUpdate(Request $request, $obj, $action)
     destroy(Request $request, $id)
     ```
+
   - Gatilhos 
+
     ```php    
     applyFilters(page, $request, $baseQuery)
     beforeAll($request)    
@@ -316,7 +339,9 @@ bower install nome-da-biblioteca
     afterUpdate($request, $obj)
     afterDestroy($request, $obj)     
     ```
+
    - Exemplo
+   
       ```php
       class ProjectsController extends CrudController
       {
