@@ -154,7 +154,7 @@ bower install nome-da-biblioteca
 > ### Menu (adicionando itens ao menu) ###
 
 - acesse o arquivo **public/client/app/layout/menu.controller.js**
-- adicione um objeto no array ```vm.itensMenu```
+- adicione um objeto no array **vm.itensMenu**
   > exemplo de um item no menu:
   ```javascript
   { 
