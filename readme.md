@@ -25,7 +25,7 @@
 - [Angular Material](https://material.angularjs.org)
 - [NgProdeb](git@git.prodeb.ba.gov.br:ngprodeb.git)
 - [momentjs](http://momentjs.com/)
- 
+
 # Instalação #
 
 > Rode os comandos abaixo.
@@ -35,7 +35,7 @@
 git clone git@git.prodeb.ba.gov.br:thiagoantonius.souza/laravel_angular_base.git
 cd pasta_do_projeto
 composer global require "laravel/installer=~1.1"
-npm install -g yo gulp eslint eslint-plugin-angular bower git+ssh://git@git.prodeb.ba.gov.br:generator-ngprodeb.git
+npm install -g yo gulp gulp-babel babel-preset-es2015 eslint eslint-plugin-angular bower git+ssh://git@git.prodeb.ba.gov.br:generator-ngprodeb.git
 npm install
 chmod **777** -R storage
 chmod **777** -R bootstrap/cache
@@ -54,13 +54,13 @@ php artisan migrate --seed
 # Colocar para Rodar #
 
 > Execute o comando abaixo para processar os arquivos .sass e concatenar os .js e .css injetando no index.html.
-> O comando fica observando futuras modificações e repetindo o processo automaticamente 
+> O comando fica observando futuras modificações e repetindo o processo automaticamente
 
 ```sh
 cd pasta_do_projeto
 gulp
 ```
-  - parametros opcionais 
+  - parametros opcionais
     - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
 
  - Caso dê erro sobre quantidade de arquivos observados no linux, execute o comandos no terminal
@@ -81,10 +81,10 @@ npm run server (Este comando inicia o servidor php na porta 5000)
 > Outros comandos
 
 ```sh
-gulp check 
+gulp check
 ```
-- (verifica a formatação do código javascript) 
-  - parametros opcionais 
+- (verifica a formatação do código javascript)
+  - parametros opcionais
     - **--fix** (para corrigir os erros que podem ser corrigidos automaticamente)
 
 # Desenvolvimento #
@@ -119,7 +119,7 @@ yo ngprodeb
 - adicione a dependência no arquivo bower.json
 - rode o comando
 
-```sh 
+```sh
 bower install nome-da-biblioteca
 ```
 - adicione o caminho da dependência no arquivo gulpfile.js
@@ -160,11 +160,11 @@ bower install nome-da-biblioteca
   > exemplo de um item no menu:
 
   ```javascript
-  { 
-    url: 'dashboard', 
-    titulo: menuPrefix + 'dashboard', 
-    icon: 'dashboard', 
-    subItens: [] 
+  {
+    url: 'dashboard',
+    titulo: menuPrefix + 'dashboard',
+    icon: 'dashboard',
+    subItens: []
   }
 
   ```
@@ -173,15 +173,15 @@ bower install nome-da-biblioteca
 
   ```javascript
   {
-    url: '#', 
-    titulo: menuPrefix + 'admin', 
-    icon: 'settings_applications', 
+    url: '#',
+    titulo: menuPrefix + 'admin',
+    icon: 'settings_applications',
     profiles: ['admin'],
     subItens: [
-      { 
-        url: 'user', 
-        titulo: menuPrefix + 'user', 
-        icon: 'people' 
+      {
+        url: 'user',
+        titulo: menuPrefix + 'user',
+        icon: 'people'
       }
     ]
   }
@@ -239,7 +239,7 @@ bower install nome-da-biblioteca
     ```
 
   - Ações Implementadas
-  
+
     ```javascript
     activate()
     search(page)
@@ -252,14 +252,14 @@ bower install nome-da-biblioteca
 
   - Gatilhos
 
-    ```javascript    
+    ```javascript
     onActivate()
-    applyFilters(defaultQueryFilters) 
+    applyFilters(defaultQueryFilters)
       //recebe um objeto com os filtros de página aplicado e deve devolver este objeto com demais filtros
     beforeSearch(page) //retornando false cancela o fluxo
     afterSearch(response)
     beforeClean //retornando false cancela o fluxo
-    afterClean()    
+    afterClean()
     beforeSave() //retornando false cancela o fluxo
     afterSave(resource)
     beforeRemove(resource) //retornando false cancela o fluxo
@@ -294,8 +294,8 @@ bower install nome-da-biblioteca
       }
 
     }
-    ```  
-       
+    ```
+
 - No Server - **CrudController.php** (app/Http/controllers/CrudController.php)
 
   - Para herdar as funciolidades basta, no controller executar:
@@ -324,20 +324,20 @@ bower install nome-da-biblioteca
     destroy(Request $request, $id)
     ```
 
-  - Gatilhos 
+  - Gatilhos
 
-    ```php    
+    ```php
     applyFilters(page, $request, $baseQuery)
-    beforeAll($request)    
+    beforeAll($request)
     beforeSearch($request, $dataQuery, $countQuery)
     beforeSave($request, $obj)
-    beforeStore($request, $obj)    
+    beforeStore($request, $obj)
     beforeUpdate($request, $obj)
     beforeDestroy($request, $obj)
     afterSave($request, $obj)
-    afterStore($request, $obj)    
+    afterStore($request, $obj)
     afterUpdate($request, $obj)
-    afterDestroy($request, $obj)     
+    afterDestroy($request, $obj)
     ```
 
    - Exemplo
@@ -415,16 +415,14 @@ bower install nome-da-biblioteca
     <box-toolbar-buttons>
       Botões no toolbar do box (Opcional)
     </box-toolbar-buttons>
-
-    Conteúdo do box
-
+      Conteúdo do box
     <box-footer-buttons>
       Botões no rodapé do box (Opcional)
     </box-footer-buttons>
   </box>
 ```
 
-- ( para mais exemplos consulte **public/client/app/samples** ) 
+- ( para mais exemplos consulte **public/client/app/samples** )
 
 > ### Componentes NgProdeb ###
 
@@ -440,7 +438,6 @@ bower install nome-da-biblioteca
 
 # Produção #
 
-- Remover a pasta **public/client/app/samples**. 
+- altere os dados do arquivo .env.production com as configurações de produção (banco, smtp, nível de log), desative o debug.
 - npm run package (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
-- crie um .env com as configurações de produção (banco, smtp, nível de log), desative o debug.
-- empacote todo o projeto com exceção das pastas node_modules e bower_components 
+- suba o arquivo deploy.tar.gz que foi gerado na raiz do projeto para o ftp de produção
