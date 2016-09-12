@@ -20,12 +20,14 @@
 
       vm.itensMenu = [
         { url: 'dashboard', titulo: menuPrefix + 'dashboard', icon: 'dashboard', subItens: [] },
+        // Não coloque nada entre as linhas 23 e 29, pois estas linhas serão eliminadas em produção
         {
           url: '#', titulo: menuPrefix + 'examples', icon: 'view_carousel', profiles: ['admin'],
           subItens: [
             { url: 'project', titulo: menuPrefix + 'project', icon: 'star' }
           ]
         },
+        // Coloque seus itens de menu a partir deste ponto
         {
           url: '#', titulo: menuPrefix + 'admin', icon: 'settings_applications', profiles: ['admin'],
           subItens: [
