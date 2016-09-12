@@ -438,6 +438,6 @@ bower install nome-da-biblioteca
 
 # Produção #
 
-- altere os dados do arquivo .env.production com as configurações de produção (banco, smtp, nível de log), desative o debug.
-- npm run package (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
-- suba o arquivo deploy.tar.gz que foi gerado na raiz do projeto para o ftp de produção
+- altere os dados do arquivo .env.production com as configurações de produção (banco, smtp, nível de log) e desative o debug.
+- rode o comando **npm run package** (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
+- suba o arquivo **deploy.tar.gz** que foi gerado na raiz do projeto para o ftp de produção
