@@ -12,7 +12,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::post('password/reset', 'PasswordController@postReset');
     
     Route::group(['prefix' => 'support'], function () {
-        Route::get('langs', 'SupportController@langs');
+        Route::get('langs', 'SupportController@langs');        
     });
 
     //authenticated area
@@ -34,6 +34,8 @@ Route::group(['prefix' => 'v1'], function () {
         //admin area
         Route::group(['middleware' => ['acl.role:admin']], function () {
             Route::get('audit', 'AuditController@index');
+            Route::get('audit/models', 'AuditController@models');
+
             Route::resource('users', 'UsersController', ['except' => ['updateProfile']]);
             Route::resource('roles', 'RolesController');
         });

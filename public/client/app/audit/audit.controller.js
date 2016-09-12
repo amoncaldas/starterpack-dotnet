@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function AuditController($controller, AuditService, PrDialog, Global) {
+  function AuditController($controller, AuditService, PrDialog, Global, $translate) {
     var vm = this;
 
     vm.onActivate = onActivate;
@@ -18,10 +18,30 @@
     $controller('CRUDController', { vm: vm, modelService: AuditService, options: {} });
 
     function onActivate() {
-      vm.models = AuditService.listModels();
-      vm.types = AuditService.listTypes();
+      vm.models = [];
+      vm.queryFilters = {};
 
-      vm.queryFilters = { type: vm.types[0].id, model: vm.models[0].id };
+      //Pega todos os models do server e monta uma lista pro ComboBox
+      AuditService.getAuditedModels().then(function(data) {
+        var models = [{ id: '', label: $translate.instant('all') }];
+
+        data.models.sort();
+
+        for (var index = 0; index < data.models.length; index++) {
+          var model = data.models[index];
+          
+          models.push({
+            id: model,
+            label: $translate.instant('models.' + model.toLowerCase())
+          });
+        }
+
+        vm.models = models;
+        vm.queryFilters.model = vm.models[0].id;  
+      });        
+
+      vm.types = AuditService.listTypes();
+      vm.queryFilters.type = vm.types[0].id;       
     }
 
     function applyFilters(defaultQueryFilters) {

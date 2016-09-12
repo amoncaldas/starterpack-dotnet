@@ -54,7 +54,9 @@
             project: 'Exemplos - Projetos'
           },
           models: {
-            user: 'Usuário'
+            user: 'Usuário',
+            task: 'Tarefa',
+            project: 'Projeto'
           },
           controllers: {
             crud: {

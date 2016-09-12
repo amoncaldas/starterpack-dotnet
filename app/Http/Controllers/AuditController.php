@@ -61,4 +61,26 @@ class AuditController extends Controller
 
         return $data;
     }
+
+    public function models(Request $request)
+    {
+        $path = app_path();
+        $files = scandir($path);
+
+        $models = array();        
+
+        //models que não são auditados
+        $ignoredModels = array("BaseModel.php", "Permission.php", "Role.php");
+
+        foreach($files as $file) {
+            //skip all dirs and ignoredModels
+            if ($file === '.' || $file === '..' || is_dir($path . '/' . $file) || in_array($file, $ignoredModels)) continue;
+            
+            $models[] = preg_replace('/\.php$/', '', $file);
+        }        
+
+        return [
+            'models' => $models
+        ];
+    }      
 }
