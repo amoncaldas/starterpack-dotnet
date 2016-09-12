@@ -31,7 +31,8 @@
           subItens: [
             { url: 'user', titulo: menuPrefix + 'user', icon: 'people' },
             { url: 'mail', titulo: menuPrefix + 'mail', icon: 'mail' },
-            { url: 'audit', titulo: menuPrefix + 'audit', icon: 'storage' }
+            { url: 'audit', titulo: menuPrefix + 'audit', icon: 'storage' },
+            { url: 'dinamic-query', titulo: menuPrefix + 'dinamicQuery', icon: 'storage' }
           ]
         }
       ];

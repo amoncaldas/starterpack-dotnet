@@ -15,6 +15,11 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('langs', 'SupportController@langs');        
     });
 
+    Route::group(['prefix' => 'dinamicQuery'], function () {
+        Route::get('/', 'DinamicQueryController@index');      
+        Route::get('models', 'DinamicQueryController@models');  
+    });    
+
     //authenticated area
     Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function () {
         Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');

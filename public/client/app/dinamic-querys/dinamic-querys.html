@@ -1,0 +1,95 @@
+<content-body>
+  <div flex="100">
+    <box box-title="{{::'audit.title' | translate}}">
+      <md-content layout-padding md-whiteframe="1" class="bottom-4">
+        <form class="condensed">
+          <div layout="row">
+            <md-input-container flex=90>
+              <md-select placeholder="{{::'dinamicQuery.resource' | translate}}"
+                 ng-model="dinamicQueryCtrl.queryFilters.model"
+                 ng-change="dinamicQueryCtrl.loadAttributes()">
+                <md-option ng-repeat="model in dinamicQueryCtrl.models" ng-value="model">
+                  {{::'models.' + model.name.toLowerCase() | translate}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>          
+          <div layout="row">
+            <md-input-container flex=45>
+              <md-select placeholder="{{::'dinamicQuery.attribute' | translate}}" 
+              ng-model="dinamicQueryCtrl.queryFilters.attribute"
+              ng-change="dinamicQueryCtrl.loadOperators()">
+                <md-option ng-repeat="attribute in dinamicQueryCtrl.attributes" ng-value="attribute">
+                  {{::attribute.name | tAttr}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container flex=45>
+              <md-select placeholder="{{::'dinamicQuery.operator' | translate}}" 
+                ng-model="dinamicQueryCtrl.queryFilters.operator">
+                <md-option ng-repeat="operator in dinamicQueryCtrl.operators" ng-value="operator">
+                  {{::operator.label}}
+                </md-option>
+              </md-select>
+            </md-input-container>            
+            <md-input-container flex=45>
+              <input type="text" placeholder="Valor" ng-model="dinamicQueryCtrl.queryFilters.value">    
+            </md-input-container>            
+          </div>
+          <div layout="row" class="top-10">
+            <md-button class="md-raised md-primary md-mini" ng-click="dinamicQueryCtrl.addFilter()">
+              {{::'form.add' | translate}}
+            </md-button>            
+            <md-button class="md-raised md-primary md-mini" ng-click="dinamicQueryCtrl.search(vm.paginator.currentPage)">
+              {{::'form.filter' | translate}}
+            </md-button>
+          </div>
+        </form>
+      </md-content>
+
+      <h3>Filtros</h3>
+
+      <md-table-container>
+        <table md-table class="condensed">
+          <thead md-head>
+            <tr md-row>
+              <th md-column>Model</th>
+              <th md-column>Atributo</th>
+              <th md-column>Operador</th>
+              <th md-column>Valor</th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row ng-repeat="filter in dinamicQueryCtrl.addedFilters">
+              <td md-cell>{{ ::filter.model.name}}</td>
+              <td md-cell>{{ ::filter.attribute.name }}</td>
+              <td md-cell>{{ ::filter.operator.label}}</td>
+              <td md-cell>{{ ::filter.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>    
+
+      <h3>Resultado</h3>
+
+      <md-table-container>
+        <table md-table class="condensed">
+          <thead md-head>
+            <tr md-row>
+              <th md-column ng-repeat="key in dinamicQueryCtrl.keys">{{::key}}</th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row ng-repeat="resource in dinamicQueryCtrl.resources">
+              <td md-cell ng-repeat="key in dinamicQueryCtrl.keys">{{ ::resource[key]}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>      
+
+      <box-footer-buttons>
+        <pr-pagination paginator="dinamicQueryCtrl.paginator"></pr-pagination>
+      </box-footer-buttons>
+    </box>
+  </div>
+</content-body>

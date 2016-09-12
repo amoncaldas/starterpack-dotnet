@@ -24,5 +24,5 @@ class SupportController extends Controller
         return [
             'attributes' => trans('validation.attributes')
         ];
-    }
+    }  
 }

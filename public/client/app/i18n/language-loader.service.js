@@ -36,7 +36,8 @@
             cancel: 'Cancelar',
             update: 'Atualizar',
             remove: 'Remover',
-            getOut: 'Sair'
+            getOut: 'Sair',
+            add: 'Adicionar'
           },
           dialog: {
             confirmTitle: 'Confirmação',
@@ -51,7 +52,8 @@
             'user-profile': 'Perfil',
             audit: 'Administração - Auditoria',
             mail: 'Administração - Envio de e-mail',
-            project: 'Exemplos - Projetos'
+            project: 'Exemplos - Projetos',
+            'dinamic-query': 'Consultas Dinamicas'
           },
           models: {
             user: 'Usuário',
@@ -80,6 +82,11 @@
               deleted: 'Removido'
             }
           },
+          attribute: {
+            attribute: 'Atributo',
+            operator: 'Operador',
+            resource: 'Recurso'
+          },
           login: {
             email: 'Email',
             password: 'Senha',
@@ -107,7 +114,8 @@
               examples: 'Exemplos',
               user: 'Usuários',
               mail: 'Enviar e-mail',
-              audit: 'Auditoria'
+              audit: 'Auditoria',
+              dinamicQuery: 'Consultas Dinamicas'
             }
           },
           mail: {
