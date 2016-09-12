@@ -73,7 +73,12 @@
             dateEnd: 'Data Final',
             resource: 'Recurso',
             user: '@:models.user',
-            viewDetail: 'Visualizar Detalhamento'
+            viewDetail: 'Visualizar Detalhamento',
+            type: {
+              created: 'Cadastrado',
+              updated: 'Atualizado',
+              deleted: 'Removido'
+            }
           },
           login: {
             email: 'Email',
