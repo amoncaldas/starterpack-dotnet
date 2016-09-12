@@ -8,12 +8,12 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function auditModel(lodash, AuditService) {
+  function auditModel(lodash, $translate) {
     return function(modelId) {
       modelId = modelId.replace('App\\', '');
-      var model = lodash.find(AuditService.listModels(), { id: modelId });
+      var model = $translate.instant('models.' + modelId.toLowerCase());
 
-      return (model) ? model.label : model;
+      return (model) ? model : modelId;
     }
   }
 

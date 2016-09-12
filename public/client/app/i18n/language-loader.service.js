@@ -54,7 +54,9 @@
             project: 'Exemplos - Projetos'
           },
           models: {
-            user: 'Usuário'
+            user: 'Usuário',
+            task: 'Tarefa',
+            project: 'Projeto'
           },
           controllers: {
             crud: {
@@ -71,7 +73,12 @@
             dateEnd: 'Data Final',
             resource: 'Recurso',
             user: '@:models.user',
-            viewDetail: 'Visualizar Detalhamento'
+            viewDetail: 'Visualizar Detalhamento',
+            type: {
+              created: 'Cadastrado',
+              updated: 'Atualizado',
+              deleted: 'Removido'
+            }
           },
           login: {
             email: 'Email',

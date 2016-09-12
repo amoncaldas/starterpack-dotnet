@@ -20,8 +20,8 @@
           <div layout="row">
             <md-input-container flex=90>
               <md-select placeholder="{{::'audit.resource' | translate}}" ng-model="auditCtrl.queryFilters.model">
-                <md-option ng-repeat="model in auditCtrl.models" value="{{model.id}}">
-                  {{model.label}}
+                <md-option ng-repeat="model in auditCtrl.models" value="{{::model.id}}">
+                  {{::model.label}}
                 </md-option>
               </md-select>
             </md-input-container>
@@ -29,7 +29,7 @@
           <div layout="row" class="top-10">
             <md-input-container flex>
               <md-radio-group ng-model="auditCtrl.queryFilters.type" layout="row">
-                <md-radio-button value="{{type.id}}" ng-repeat="type in auditCtrl.types">{{type.label}}</md-radio-button>
+                <md-radio-button value="{{::type.id}}" ng-repeat="type in auditCtrl.types">{{::type.label}}</md-radio-button>
               </md-radio-group>
             </md-input-container>
             <md-button class="md-raised md-primary md-mini" ng-click="auditCtrl.search(vm.paginator.currentPage)">

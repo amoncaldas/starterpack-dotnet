@@ -7,25 +7,22 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function AuditService(serviceFactory) {
+  function AuditService(serviceFactory, $translate) {
     var model = serviceFactory('audit', {
-      actions: { },
-      instance: { },
+      actions: { 
+        getAuditedModels: {
+          method: 'GET',
+          url: 'models'          
+        }        
+      },
+      instance: {
+      },
       listTypes: function() {
         return [
-          { id: '', label: 'Todos' },
-          { id: 'created', label: 'Cadastrado' },
-          { id: 'updated', label: 'Atualizado' },
-          { id: 'deleted', label: 'Removido' }
-        ];
-      },
-
-      listModels: function() {
-        return [
-          { id: '', label: 'Todos Recursos' },
-          { id: 'Project', label: 'Projeto' },
-          { id: 'Task', label: 'Tarefa' },
-          { id: 'User', label: 'Usuário' }
+          { id: '', label: $translate.instant('all') },
+          { id: 'created', label: $translate.instant('audit.type.created') },
+          { id: 'updated', label: $translate.instant('audit.type.updated') },
+          { id: 'deleted', label: $translate.instant('audit.type.deleted') }
         ];
       }
     });
