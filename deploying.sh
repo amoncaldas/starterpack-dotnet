@@ -33,6 +33,10 @@ copy public deploy
 copy resources deploy
 copy storage deploy
 copy vendor deploy
+copy artisan deploy
+copy server.php deploy
+copy gulpfile.js deploy
+copy bower_components deploy
 
 cd deploy/
 
@@ -40,9 +44,10 @@ php artisan cache:clear
 php artisan route:clear
 php artisan view:clear
 php artisan config:clear
-php artisan config:cache
 php artisan auth:clear-resets
 php artisan clear-compiled
+
+sed -i".bak" '23,29d' public/client/app/layout/menu.controller.js
 
 gulp --production
 
@@ -50,9 +55,11 @@ rm -rf storage/logs/* storage/framework/sessions/* storage/framework/cache/*
 
 rm -rf public/client/app/**/*.js
 
+rm -rf public/client/app/layout/menu.controller.js.bak
+
 rm -rf public/client/app/samples
 
-tar -cf deploy.tar app/ bootstrap/ config/ public/ resources/ storage/ vendor/ .env
+tar -cf deploy.tar server.php artisan app/ bootstrap/ config/ public/ resources/ storage/ vendor/ .env
 
 gzip -9 deploy.tar
 
