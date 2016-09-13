@@ -17,7 +17,7 @@
       .state('dinamic-query', {
         url: '/consultas-dinamicas',
         templateUrl: Global.clientPath + '/dinamic-querys/dinamic-querys.html',
-        controller: 'DinamicQueryController as dinamicQueryCtrl',
+        controller: 'DinamicQuerysController as dinamicQueryCtrl',
         data: { needAuthentication: true, needAdmin: true }
       });
 

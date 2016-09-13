@@ -30,6 +30,7 @@
             send: 'Enviar',
             save: 'Salvar',
             clear: 'Limpar',
+            clearAll: 'Limpar Tudo',
             filter: 'Filtrar',
             search: 'Pesquisar',
             edit: 'Editar',

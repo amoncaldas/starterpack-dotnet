@@ -2,45 +2,52 @@
   <div flex="100">
     <box box-title="{{::'audit.title' | translate}}">
       <md-content layout-padding md-whiteframe="1" class="bottom-4">
-        <form class="condensed">
+        <form class="condensed" ng-submit="dinamicQueryCtrl.search(vm.paginator.currentPage)">
           <div layout="row">
-            <md-input-container flex=90>
+            <md-input-container class="top-10 bottom-20" flex=33>
+              <label>Model</label>
               <md-select placeholder="{{::'dinamicQuery.resource' | translate}}"
-                 ng-model="dinamicQueryCtrl.queryFilters.model"
+                 ng-model="dinamicQueryCtrl.queryFilters.model" required ng-disabled="dinamicQueryCtrl.addedFilters.length > 0"
                  ng-change="dinamicQueryCtrl.loadAttributes()">
                 <md-option ng-repeat="model in dinamicQueryCtrl.models" ng-value="model">
                   {{::'models.' + model.name.toLowerCase() | translate}}
                 </md-option>
               </md-select>
             </md-input-container>
-          </div>          
+          </div>
           <div layout="row">
-            <md-input-container flex=45>
-              <md-select placeholder="{{::'dinamicQuery.attribute' | translate}}" 
-              ng-model="dinamicQueryCtrl.queryFilters.attribute"
-              ng-change="dinamicQueryCtrl.loadOperators()">
+            <md-input-container flex>
+              <label>Atributo</label>
+              <md-select placeholder="{{::'dinamicQuery.attribute' | translate}}"
+                ng-model="dinamicQueryCtrl.queryFilters.attribute" required
+                ng-change="dinamicQueryCtrl.loadOperators()">
                 <md-option ng-repeat="attribute in dinamicQueryCtrl.attributes" ng-value="attribute">
                   {{::attribute.name | tAttr}}
                 </md-option>
               </md-select>
             </md-input-container>
-            <md-input-container flex=45>
-              <md-select placeholder="{{::'dinamicQuery.operator' | translate}}" 
-                ng-model="dinamicQueryCtrl.queryFilters.operator">
+            <md-input-container flex>
+              <label>Atributo</label>
+              <md-select placeholder="{{::'dinamicQuery.operator' | translate}}"
+                ng-model="dinamicQueryCtrl.queryFilters.operator" required>
                 <md-option ng-repeat="operator in dinamicQueryCtrl.operators" ng-value="operator">
                   {{::operator.label}}
                 </md-option>
               </md-select>
-            </md-input-container>            
-            <md-input-container flex=45>
-              <input type="text" placeholder="Valor" ng-model="dinamicQueryCtrl.queryFilters.value">    
-            </md-input-container>            
+            </md-input-container>
+            <md-input-container flex>
+              <label>Valor</label>
+              <input type="text" ng-model="dinamicQueryCtrl.queryFilters.value" required>
+            </md-input-container>
           </div>
           <div layout="row" class="top-10">
+            <md-button class="md-raised md-primary md-mini" ng-click="dinamicQueryCtrl.clearAll()">
+              {{::'form.clearAll' | translate}}
+            </md-button>
             <md-button class="md-raised md-primary md-mini" ng-click="dinamicQueryCtrl.addFilter()">
               {{::'form.add' | translate}}
-            </md-button>            
-            <md-button class="md-raised md-primary md-mini" ng-click="dinamicQueryCtrl.search(vm.paginator.currentPage)">
+            </md-button>
+            <md-button class="md-raised md-primary md-mini" type="submit">
               {{::'form.filter' | translate}}
             </md-button>
           </div>
@@ -48,8 +55,9 @@
       </md-content>
 
       <h3>Filtros</h3>
+      <md-divider></md-divider>
 
-      <md-table-container>
+      <md-table-container ng-if="dinamicQueryCtrl.addedFilters.length > 0">
         <table md-table class="condensed">
           <thead md-head>
             <tr md-row>
@@ -57,6 +65,7 @@
               <th md-column>Atributo</th>
               <th md-column>Operador</th>
               <th md-column>Valor</th>
+              <th md-column style="text-align:center;">Ações</th>
             </tr>
           </thead>
           <tbody md-body>
@@ -65,14 +74,25 @@
               <td md-cell>{{ ::filter.attribute.name }}</td>
               <td md-cell>{{ ::filter.operator.label}}</td>
               <td md-cell>{{ ::filter.value }}</td>
+              <td md-cell style="text-align:center;">
+                <md-button class="md-mini" ng-click="dinamicQueryCtrl.editFilter($index, filter)">
+                  <md-icon md-font-set="material-icons">edit</md-icon>
+                  <md-tooltip md-direction="bottom">{{::'form.edit' | translate}}</md-tooltip>
+                </md-button>
+                <md-button class="md-mini" ng-click="dinamicQueryCtrl.removeFilter($index)">
+                  <md-icon md-font-set="material-icons">delete</md-icon>
+                  <md-tooltip md-direction="bottom">{{::'form.remove' | translate}}</md-tooltip>
+                </md-button>
+              </td>
             </tr>
           </tbody>
         </table>
-      </md-table-container>    
+      </md-table-container>
 
       <h3>Resultado</h3>
+      <md-divider></md-divider>
 
-      <md-table-container>
+      <md-table-container ng-if="dinamicQueryCtrl.resources.length > 0">
         <table md-table class="condensed">
           <thead md-head>
             <tr md-row>
@@ -85,7 +105,11 @@
             </tr>
           </tbody>
         </table>
-      </md-table-container>      
+      </md-table-container>
+
+      <div layout="row" layout-padding layout-align="center center" ng-if="dinamicQueryCtrl.resources.length === 0">
+        Nenhum resultado encontrado.
+      </div>
 
       <box-footer-buttons>
         <pr-pagination paginator="dinamicQueryCtrl.paginator"></pr-pagination>

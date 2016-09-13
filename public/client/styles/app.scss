@@ -34,11 +34,11 @@ md-toolbar {
 }
 
 @for $i from 1 through 30 {
-  .top-#{$i} { margin-top: 1px * $i; }
+  .top-#{$i} { margin-top: 1px * $i !important; }
 }
 
 @for $i from 1 through 30 {
-  .bottom-#{$i} { margin-bottom: 1px * $i; }
+  .bottom-#{$i} { margin-bottom: 1px * $i !important; }
 }
 
 @for $i from 1 through 30 {
