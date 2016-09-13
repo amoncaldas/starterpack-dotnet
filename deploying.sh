@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Script de deploy - Projeto Base Laravel
+
+removeFileOrDir() {
+  if [ -d "$1" ] || [ -f "$1" ];
+  then
+      rm -rf $1
+  fi
+}
+
 copy() {
     if [ ! -d "$2" ]
     then
@@ -25,7 +34,7 @@ copyEnv
 ## Copiando o arquivo artisan
 copy artisan deploy
 
-## Copiando os diretórios necessários para produção
+## Copiando os diretórios e arquivos necessários para produção
 copy app deploy
 copy bootstrap deploy
 copy config deploy
@@ -38,8 +47,10 @@ copy server.php deploy
 copy gulpfile.js deploy
 copy bower_components deploy
 
+## Acessando a pasta deploy
 cd deploy/
 
+## Limpando o cache do projeto
 php artisan cache:clear
 php artisan route:clear
 php artisan view:clear
@@ -47,27 +58,44 @@ php artisan config:clear
 php artisan auth:clear-resets
 php artisan clear-compiled
 
-sed -i".bak" '23,29d' public/client/app/layout/menu.controller.js
+## Otimizando o projeto
+php artisan optimize
 
+## Removendo o item de exemplos do menu
+if grep -Rq "##Examples" public/client/app/layout/menu.controller.js
+then
+  sed -i".bak" '23,30d' public/client/app/layout/menu.controller.js
+
+  ## Removendo o arquivo de backup do menu controller
+  removeFileOrDir public/client/app/layout/menu.controller.js.bak
+fi
+
+## Gerando os arquivos minificados .js e .css
 gulp --production
 
-rm -rf storage/logs/* storage/framework/sessions/* storage/framework/cache/*
+## Removendo os arquivos de log, sessions e cache
+removeFileOrDir storage/logs/*
+removeFileOrDir storage/framework/sessions/*
+removeFileOrDir storage/framework/cache/*
 
+## Removendo os arquivos .js
+rm -rf public/client/app/*.js
 rm -rf public/client/app/**/*.js
 
-rm -rf public/client/app/layout/menu.controller.js.bak
+## Removendo o diretório de exemplos
+removeFileOrDir public/client/app/samples
 
-rm -rf public/client/app/samples
-
+## Criando o pacote zipado do projeto
 tar -cf deploy.tar server.php artisan app/ bootstrap/ config/ public/ resources/ storage/ vendor/ .env
-
 gzip -9 deploy.tar
 
+## Copiando o pacote para a pasta raiz do projeto
 cp deploy.tar.gz ../
 
 cd ../
 
-rm -rf deploy
+## Removendo o diretório de deploy
+removeFileOrDir deploy
 
 echo '\n:::: Pacote deploy.tar.gz gerado com sucesso! ::::\n'
 
