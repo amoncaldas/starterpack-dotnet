@@ -20,19 +20,15 @@
     vm.editFilter = editFilter;
     vm.loadModels = loadModels;
     vm.removeFilter = removeFilter;
-    vm.clearAll = clearAll;
+    vm.clear = clear;
+    vm.restart = restart;
 
     $controller('CRUDController', { vm: vm, modelService: DinamicQueryService, options: {
       searchOnInit: false
     } });
 
-    function onActivate() {
-      vm.keys = [];
-      vm.addedFilters = [];
-      vm.queryFilters = {};
-      vm.index = -1;
-
-      vm.loadModels();
+    function onActivate() {      
+      vm.restart();      
     }
 
     function applyFilters(defaultQueryFilters) {
@@ -91,7 +87,7 @@
       vm.queryFilters.operator = vm.operators[0];
     }
 
-    function addFilter() {
+    function addFilter(form) {
       if (angular.isUndefined(vm.queryFilters.value) || vm.queryFilters.value === '') {
         PrToast.error('O campo valor é obrigratório');
       } else {
@@ -101,14 +97,17 @@
           vm.addedFilters[vm.index] = angular.copy(vm.queryFilters);
           vm.index = -1;
         }
+                
+        //reinicia o formulário e as validações existentes
         vm.queryFilters = {};
-        vm.loadModels();
+        form.$setPristine();
+        form.$setUntouched();             
       }
     }
 
     function editFilter($index, queryFilters) {
-      vm.index = $index;
-      vm.queryFilters = queryFilters;
+      vm.index = $index;     
+      vm.queryFilters = vm.addedFilters[$index];
     }
 
     function removeFilter($index) {
@@ -123,8 +122,16 @@
       })
     }
 
-    function clearAll() {
-      vm.onActivate();
+    function clear() {
+      vm.index = -1;
+      vm.queryFilters = {};
+    }
+
+    function restart() {
+      vm.keys = [];
+      vm.addedFilters = [];
+      vm.clear();
+      vm.loadModels();
     }
 
   }

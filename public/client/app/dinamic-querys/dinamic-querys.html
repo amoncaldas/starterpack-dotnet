@@ -2,14 +2,14 @@
   <div flex="100">
     <box box-title="{{::'audit.title' | translate}}">
       <md-content layout-padding md-whiteframe="1" class="bottom-4">
-        <form class="condensed" ng-submit="dinamicQueryCtrl.search(vm.paginator.currentPage)">
+        <form class="condensed" name="dinamicQueryForm" ng-submit="dinamicQueryCtrl.addFilter(dinamicQueryForm)">
           <div layout="row">
             <md-input-container class="top-10 bottom-20" flex=33>
-              <label>Model</label>
-              <md-select placeholder="{{::'dinamicQuery.resource' | translate}}"
+              <label>{{::'dinamicQuery.resource' | translate}}</label>
+              <md-select
                  ng-model="dinamicQueryCtrl.queryFilters.model" required ng-disabled="dinamicQueryCtrl.addedFilters.length > 0"
                  ng-change="dinamicQueryCtrl.loadAttributes()">
-                <md-option ng-repeat="model in dinamicQueryCtrl.models" ng-value="model">
+                <md-option ng-repeat="model in dinamicQueryCtrl.models track by model.name" ng-value="model">
                   {{::'models.' + model.name.toLowerCase() | translate}}
                 </md-option>
               </md-select>
@@ -17,20 +17,20 @@
           </div>
           <div layout="row">
             <md-input-container flex>
-              <label>Atributo</label>
-              <md-select placeholder="{{::'dinamicQuery.attribute' | translate}}"
+              <label>{{::'dinamicQuery.attribute' | translate}}</label>
+              <md-select
                 ng-model="dinamicQueryCtrl.queryFilters.attribute" required
                 ng-change="dinamicQueryCtrl.loadOperators()">
-                <md-option ng-repeat="attribute in dinamicQueryCtrl.attributes" ng-value="attribute">
+                <md-option ng-repeat="attribute in dinamicQueryCtrl.attributes track by attribute.name" ng-value="attribute">
                   {{::attribute.name | tAttr}}
                 </md-option>
               </md-select>
             </md-input-container>
             <md-input-container flex>
-              <label>Atributo</label>
-              <md-select placeholder="{{::'dinamicQuery.operator' | translate}}"
+              <label>{{::'dinamicQuery.operator' | translate}}</label>
+              <md-select
                 ng-model="dinamicQueryCtrl.queryFilters.operator" required>
-                <md-option ng-repeat="operator in dinamicQueryCtrl.operators" ng-value="operator">
+                <md-option ng-repeat="operator in dinamicQueryCtrl.operators track by operator.value" ng-value="operator">
                   {{::operator.label}}
                 </md-option>
               </md-select>
@@ -41,13 +41,18 @@
             </md-input-container>
           </div>
           <div layout="row" class="top-10">
-            <md-button class="md-raised md-primary md-mini" ng-click="dinamicQueryCtrl.clearAll()">
-              {{::'form.clearAll' | translate}}
+            <md-input-container flex>
+            </md-input-container>
+            <md-button class="md-raised md-mini" ng-click="dinamicQueryCtrl.clear()">
+              {{::'form.clear' | translate}}
             </md-button>
-            <md-button class="md-raised md-primary md-mini" ng-click="dinamicQueryCtrl.addFilter()">
-              {{::'form.add' | translate}}
-            </md-button>
+            <md-button class="md-raised md-warn md-mini" ng-click="dinamicQueryCtrl.restart()">
+              {{::'form.restart' | translate}}
+            </md-button>            
             <md-button class="md-raised md-primary md-mini" type="submit">
+              {{((dinamicQueryCtrl.index < 0) ? 'form.add' : 'form.update') | translate}}
+            </md-button>
+            <md-button class="md-raised md-primary md-mini" ng-click="dinamicQueryCtrl.search(vm.paginator.currentPage)">
               {{::'form.filter' | translate}}
             </md-button>
           </div>

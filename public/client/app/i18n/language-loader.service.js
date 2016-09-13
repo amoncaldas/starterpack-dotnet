@@ -31,6 +31,7 @@
             save: 'Salvar',
             clear: 'Limpar',
             clearAll: 'Limpar Tudo',
+            restart: 'Reiniciar',
             filter: 'Filtrar',
             search: 'Pesquisar',
             edit: 'Editar',
@@ -83,7 +84,7 @@
               deleted: 'Removido'
             }
           },
-          attribute: {
+          dinamicQuery: {
             attribute: 'Atributo',
             operator: 'Operador',
             resource: 'Recurso'
