@@ -66,7 +66,7 @@ trait Callbacks
      **/
     protected function callback($eventName)
     {
-        if ( ! isset( $this->registeredCallbacks[$eventName] ) ) throw new \ErrorException("Unknown callback: $eventName");
+        if ( ! isset( $this->registeredCallbacks[$eventName] ) ) throw new \App\Exceptions\CallbackException("Unknown callback: $eventName");
 
         $parameters = array_slice(func_get_args(), 1);
         $callbacks = $this->registeredCallbacks[$eventName];

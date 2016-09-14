@@ -28,8 +28,9 @@ class ProjectsController extends CrudController
     protected function applyFilters(Request $request, $query) {
         $query = $query->with('tasks');
 
-        if($request->has('name'))
+        if($request->has('name')) {
             $query = $query->where('name', 'like', '%'.$request->name.'%');
+        }
     }
 
     protected function beforeSearch(Request $request, $dataQuery, $countQuery) {

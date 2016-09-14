@@ -19,6 +19,7 @@
 
     moment.locale('pt-BR');
 
+    //os serviços referente aos models vai utilizar como base nas urls 
     $modelFactoryProvider.defaultOptions.prefix = Global.apiVersion;
 
     $mdpDatePickerProvider.setCancelButtonLabel('Cancelar');

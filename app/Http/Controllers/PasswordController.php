@@ -17,17 +17,17 @@ class PasswordController extends Controller
 {
 
     /**
-	 * Create a new password controller instance.
-	 *
-	 * @param  \Illuminate\Contracts\Auth\Guard  $auth
-	 * @param  \Illuminate\Contracts\Auth\PasswordBroker  $passwords
-	 * @return void
-	 */
-	public function __construct(Guard $auth, PasswordBroker $passwords)
-	{
-		$this->auth = $auth;
-		$this->passwords = $passwords;
-	}
+     * Create a new password controller instance.
+     *
+     * @param  \Illuminate\Contracts\Auth\Guard  $auth
+     * @param  \Illuminate\Contracts\Auth\PasswordBroker  $passwords
+     * @return void
+     */
+    public function __construct(Guard $auth, PasswordBroker $passwords)
+    {
+        $this->auth = $auth;
+        $this->passwords = $passwords;
+    }
 
 
     /**
@@ -65,17 +65,19 @@ class PasswordController extends Controller
             'email' => 'required|email',
             'password' => 'required|confirmed|min:6',
         ]);
+
         $credentials = $request->only(
             'email', 'password', 'password_confirmation', 'token'
         );
+        
         $response = Password::reset($credentials, function ($user, $password) {
             $this->resetPassword($user, $password);
         });
-        switch ($response) {
-            case Password::PASSWORD_RESET:
-                return response()->json(['msg' => trans($response)], 200);
-            default:
-                return response()->json(['msg' => trans($response)], 400);
+
+        if($response === Password::PASSWORD_RESET) {
+            return response()->json(['msg' => trans($response)], 200);
+        } else {
+            return response()->json(['msg' => trans($response)], 400);
         }
     }
 

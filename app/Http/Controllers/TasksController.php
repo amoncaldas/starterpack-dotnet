@@ -25,23 +25,29 @@ class TasksController extends CrudController
     }
 
     protected function applyFilters(Request $request, $query) {
-        if($request->has('projectId'))
+        if($request->has('projectId')) {
            $query = $query->where('project_id', '=', $request->projectId);
+        }
 
-        if($request->has('description'))
+        if($request->has('description')) {
             $query = $query->where('description', 'like', '%'.$request->description.'%');
+        }
 
-        if($request->has('done'))
+        if($request->has('done')) {
            $query = $query->where('done', '=', $request->done);
+        }
 
-        if($request->has('priority'))
+        if($request->has('priority')) {
            $query = $query->where('priority', '=', $request->priority);
+        }
 
-        if($request->has('dateStart'))
+        if($request->has('dateStart')) {
            $query = $query->where('scheduled_to', '>=', \Prodeb::parseDate($request->dateStart));
+        }
 
-        if($request->has('dateEnd'))
+        if($request->has('dateEnd')) {
            $query = $query->where('scheduled_to', '<=', \Prodeb::parseDate($request->dateEnd));
+        }
     }
 
     protected function beforeSearch(Request $request, $dataQuery, $countQuery) {

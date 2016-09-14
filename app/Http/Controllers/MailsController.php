@@ -15,10 +15,10 @@ class MailsController extends Controller{
     }
 
     /**
-     * Envia o email para uma lista de emails.
+     * Envia o email para um ou mais destinatários.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return array vazio em caso de sucesso ou contendo as falhas
      */
     public function store(Request $request)
     {
@@ -37,6 +37,7 @@ class MailsController extends Controller{
         });
 
         $failure = array();
+
         if(count(Mail::failures()) > 0){
             foreach (Mail::failures as $emails) {
                array_push($failure, $emails);

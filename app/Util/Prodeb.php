@@ -3,10 +3,22 @@
 namespace App\Util;
 
 class Prodeb {
+    /**
+     * Transforma uma data string em um objeto Carbon
+     *
+     * @param $date data no formato de string
+     * @return Objeto do Carbon com a data transformada
+     */    
     public static function parseDate($date) {
         return \Carbon::parse($date)->timezone(config('app.timezone'));
     }
 
+    /**
+     * Varre o diretório do aplicativo para encontrar os Models
+     *
+     * @param $ignoredModels Lista de modelos para serem ignorados da varredura
+     * @return array contendo todos os models 
+     */
     public static function modelNames($ignoredModels = array()) {
         $models = array();
         $path = app_path();

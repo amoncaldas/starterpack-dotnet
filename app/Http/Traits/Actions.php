@@ -80,9 +80,8 @@ trait Actions
         $this->callback('beforeAll', $request);
 
         $klass = $this->getClass();
-        $obj = $klass::findOrFail($id);
 
-        return $obj;
+        return $klass::findOrFail($id);
     }
 
     /**

@@ -44,7 +44,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      *
      * @var string
      */
-    private $passwordConteiner = '';
+    private $passwordConteiner;
 
     public function getPasswordConteiner() {
         return $this->passwordConteiner;

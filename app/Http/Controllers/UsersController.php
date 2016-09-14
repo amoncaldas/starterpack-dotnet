@@ -31,19 +31,23 @@ class UsersController extends CrudController
     {
         $query = $query->with('roles');
 
-        if($request->has('name'))
+        if($request->has('name')) {
             $query = $query->where('name', 'like', '%'.$request->name.'%');
+        }
 
-        if($request->has('email'))
+        if($request->has('email')) {
             $query = $query->where('email', 'like', '%'.$request->email.'%');
+        }
 
-        if($request->has('nameOrEmail'))
+        if($request->has('nameOrEmail')) {
             $query = $query
                 ->where('name', 'like', '%'.$request->nameOrEmail.'%')
                 ->orWhere('email', 'like', '%'.$request->nameOrEmail.'%');
+        }
 
-        if($request->has('notUsers'))
+        if($request->has('notUsers')) {
             $query = $query->whereNotIn('id', explode(',', $request->notUsers));
+        }
     }
 
     protected function beforeSearch(Request $request, $dataQuery, $countQuery) {
@@ -63,15 +67,18 @@ class UsersController extends CrudController
 
         return $rules;
     }
-
+    
     protected function beforeStore(Request $request, Model $obj)
     {
+        //coloca no container, sem criptografar, para poder emitir para o email do usuário 
         $obj->setPasswordConteiner(str_random(10));
         $obj->password = bcrypt($obj->getPasswordConteiner());
     }
 
     protected function beforeUpdate(Request $request, Model $obj)
     {
+        //adiciona no request os papeis antigos para depois ser possível auditar
+        //pois por padrão a solução de auditar não audita relacionamentos 1 para muitos 
         $request->merge(array('oldRoles' => array_pluck($obj->roles()->get()->toArray(), 'slug')));
     }
 
@@ -85,7 +92,8 @@ class UsersController extends CrudController
 
         $obj->roles = $newRoles;
 
-        Mail::send('mails.confirmRegister',
+        //Envia o email de confirmação para o usuário com o login e senha
+        Mail::send('emails.confirmRegister',
             ['user' => $obj, 'url' => config('app.url'), 'appName' => config('app.app_name')], function($message) use ($obj) {
                 $message->from(config('mail.from.address'), config('mail.from.name'));
                 $message->to($obj->email);
@@ -93,8 +101,17 @@ class UsersController extends CrudController
         });
     }
 
+
+    /**
+     * Audit os perfis do usuário
+     * @param  \App\User $user usuário;
+     * @param  $oldRoles array contendo os perfis antigos
+     * @param  $newRoles array contendo os perfis novos
+     */
     protected function auditRoles($user, $oldRoles, $newRoles) {
-        if( !isset($oldRoles) ) $oldRoles = [];
+        if( !isset($oldRoles) ) {
+            $oldRoles = [];
+        }
 
         sort($newRoles);
         sort($oldRoles);
@@ -126,8 +143,10 @@ class UsersController extends CrudController
         ]);
 
         $user->fill(Input::only('name', 'email'));
-        if($request->has('password'))
+
+        if($request->has('password')) {
             $user->password = Hash::make($request->password);
+        }
 
         $user->save();
 

@@ -42,6 +42,7 @@ class AuthenticateController extends Controller
             return response()->json(['user_not_found'], 404);
         }
 
+        //get simple string array with only a slug
         $user->roles = array_pluck($user->roles()->get()->toArray(), 'slug');
 
         // the token is valid and we have found the user via the sub claim

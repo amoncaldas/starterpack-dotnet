@@ -18,7 +18,10 @@ class SupportController extends Controller
     {
     }
 
-
+    /**
+     * Serviço que retorna as traduções dos atributos
+     * Estas traduções são utilizadas na view também
+     */
     public function langs(Request $request)
     {
         return [

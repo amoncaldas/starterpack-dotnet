@@ -7,6 +7,35 @@
     .controller('CRUDController', CRUDController);
 
   /** @ngInject */
+  /**
+   * Controlador Base que implementa todas as funções padrões de um CRUD
+   * 
+   * Ações implementadas
+   * activate()
+   * search(page)
+   * edit(resource)
+   * save()
+   * remove(resource)
+   * goTo(viewName)
+   * cleanForm()
+   *
+   * Gatilhos
+   * 
+   * onActivate()
+   * applyFilters(defaultQueryFilters)
+   * beforeSearch(page) //retornando false cancela o fluxo
+   * afterSearch(response)
+   * beforeClean //retornando false cancela o fluxo
+   * afterClean()
+   * beforeSave() //retornando false cancela o fluxo
+   * afterSave(resource)
+   * beforeRemove(resource) //retornando false cancela o fluxo
+   * afterRemove(resource)
+   * 
+   * @param {any} vm instancia do controller filho
+   * @param {any} modelService serviço do model que vai ser utilizado 
+   * @param {any} options opções para sobreescrever comportamentos padrões
+   */
   // eslint-disable-next-line max-params
   function CRUDController(vm, modelService, options, PrToast, PrPagination, PrDialog, $translate) {
 

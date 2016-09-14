@@ -17,10 +17,12 @@
             <hr>
             <table style="border: none">
                 <tr>
-                    <td><b>Login:</b> {{$user['email']}}</td>
+                    <td><b>Login:</b></td> 
+                    <td>{{$user['email']}}</td>
                 </tr>
                 <tr>
-                    <td><b>Senha:</b> {{$user['passwordConteiner']}}</td>
+                    <td><b>Senha:</b></td>
+                    <td>{{$user->getPasswordConteiner()}}</td>
                 </tr>
                 <tr>
                     <td><a href="{{$url}}">Clique aqui para acessar o sistema</a></td>

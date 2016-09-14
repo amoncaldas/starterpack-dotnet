@@ -2,6 +2,10 @@
 (function() {
   'use strict';
 
+  /**
+   * Transforma bibliotecas externas em serviços do angular para ser possível utilizar
+   * através da injeção de dependência
+   */
   angular
     .module('app')
     .constant('lodash', _)

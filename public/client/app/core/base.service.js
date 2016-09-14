@@ -16,6 +16,10 @@
       var model;
       var defaultOptions = {
         actions: {
+          /**
+           * Serviço comum para realizar busca com paginação
+           * O mesmo espera que seja retornado um objeto com items e total
+           */
           paginate: {
             method: 'GET',
             isArray: false,

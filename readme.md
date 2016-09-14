@@ -426,7 +426,7 @@ bower install nome-da-biblioteca
 
 > ### Componentes NgProdeb ###
 
-- Para saber como usar os componentes acesse: [Git NgProdeb](https://StudioEFE@bitbucket.org/thiagoaos/ngprodeb.git)
+- Para saber como usar os componentes acesse: [Git NgProdeb](http://git.prodeb.ba.gov.br/ngprodeb)
 
 # Log #
 

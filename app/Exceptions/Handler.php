@@ -78,16 +78,19 @@ class Handler extends ExceptionHandler
         }
 
         $token = null;
-
-        try {
-            $token = \JWTAuth::parseToken()->refresh();
-        } catch (Exception $ex) { }
-
+        
         $response = response()
             ->json($content,  method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500);
 
-        if( $token !== null )
-            $response= $response->header('Authorization', 'Bearer '. $token);
+        //Dá um refresh no token caso o mesmo exista para anexar a resposta
+        try {
+            $token = \JWTAuth::parseToken()->refresh();
+            
+            if( $token !== null )
+                $response= $response->header('Authorization', 'Bearer '. $token);
+        } catch (Exception $ex) {
+            Log::debug('Request without token');
+         }
 
         return $response;
     }

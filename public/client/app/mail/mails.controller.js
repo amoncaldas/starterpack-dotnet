@@ -27,6 +27,7 @@
 
     /**
      * Realiza a busca pelo usuário remotamente
+     * 
      * @params {string} - Recebe o valor para ser pesquisado
      * @return {promisse} - Retorna uma promisse que o componete resolve
      */
@@ -67,7 +68,6 @@
       };
 
       PrDialog.custom(config);
-
     }
 
     /**

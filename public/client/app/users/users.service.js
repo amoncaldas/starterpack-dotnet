@@ -9,14 +9,15 @@
   // eslint-disable-next-line max-params
   function UsersService(lodash, Global, serviceFactory) {
     var model = serviceFactory('users', {
-      // only called on empty inits
+      //quando instancia um usuário sem passar parametro, 
+      //o mesmo vai ter os valores defaults abaixo
       defaults: {
         roles: []
       },
 
       actions: {
         /**
-         * Atualiza os dados do perfil do usuário logado
+         * Serviço que atualiza os dados do perfil do usuário logado
          *
          * @param {object} attributes
          * @returns {promise} Uma promise com o resultado do chamada no backend
@@ -33,8 +34,9 @@
         /**
          * Verifica se o usuário tem os perfis informados.
          *
-         * @param {any} profile
-         * @returns {boolean}
+         * @param {any} roles perfis a serem verificados
+         * @param {boolean} all flag para indicar se vai chegar todos os perfis ou somente um deles
+         * @returns {boolean} 
          */
         hasProfile: function(roles, all) {
           roles = angular.isArray(roles) ? roles : [roles];
@@ -47,7 +49,7 @@
         },
 
         /**
-         * Verifica se o usuário é admin.
+         * Verifica se o usuário tem o perfil admin.
          *
          * @returns {boolean}
          */

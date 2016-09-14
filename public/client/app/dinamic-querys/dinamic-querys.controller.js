@@ -40,6 +40,8 @@
      * @returns
      */
     function applyFilters(defaultQueryFilters) {
+      var where = {};
+
       /**
        * o serviço espera um objeto com:
        *  o nome de um model 
@@ -48,7 +50,7 @@
       if (vm.addedFilters.length > 0) {
         var addedFilters = angular.copy(vm.addedFilters);
 
-        var where = { model: vm.addedFilters[0].model.name };
+        where.model = vm.addedFilters[0].model.name;
 
         for (var index = 0; index < addedFilters.length; index++) {
           var filter = addedFilters[index];
@@ -60,7 +62,7 @@
 
         where.filters = angular.toJson(addedFilters);
       } else {
-        var where = { model: vm.models[0].name };
+        where.model = vm.models[0].name;
       }
 
       return angular.extend(defaultQueryFilters, where);
