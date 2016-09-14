@@ -7,11 +7,12 @@
     .controller('MenuController', MenuController);
 
   /** @ngInject */
-  function MenuController() {
+  function MenuController($mdSidenav) {
     var vm = this;
 
     //Bloco de declaracoes de funcoes
-    vm.openMenu = openMenu;
+    vm.open = open;
+    vm.openSubMenu = openSubMenu;
 
     activate();
 
@@ -41,7 +42,11 @@
       ];
     }
 
-    function openMenu($mdOpenMenu, ev, subItens) {
+    function open() {
+      $mdSidenav('left').toggle();
+    }
+
+    function openSubMenu($mdOpenMenu, ev, subItens) {
       if (subItens > 0) {
         $mdOpenMenu(ev);
       }

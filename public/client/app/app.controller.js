@@ -7,14 +7,16 @@
     .controller('AppController', AppController);
 
   /** @ngInject */
-  function AppController($state, Auth, Global, $mdSidenav) {
+  /**
+   * Controlador responsável por funcionalidades que são acionadas em qualquer tela do sistema
+   * 
+   */
+  function AppController($state, Auth, Global) {
     var vm = this;
 
+    //ano atual para ser exibido no rodapé do sistema
     vm.anoAtual = null;
-    vm.isMobile = false;
 
-    //Bloco de declaracoes de funcoes
-    vm.openNavBar = openNavBar;
     vm.logout     = logout;
 
     activate();
@@ -23,13 +25,6 @@
       var date = new Date();
 
       vm.anoAtual = date.getFullYear();
-      if (screen.width < 1025) {
-        vm.isMobile = true;
-      }
-    }
-
-    function openNavBar() {
-      $mdSidenav('left').toggle();
     }
 
     function logout() {

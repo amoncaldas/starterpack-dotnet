@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 
-<html>
+<html ng-app="app" >
 
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sistema Base Laravel</title>
+    <title>{{::global.appName}}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -33,11 +33,11 @@
       <![endif]-->
   </head>
 
-  <body ng-app="app" ng-controller="AppController as appCtrl" ng-cloak>
+  <body ng-controller="AppController as appCtrl" ng-cloak>
     <pr-spinner></pr-spinner>
     <div layout="row" class="full-height" ng-controller="MenuController as menuCtrl">
 
-      <ng-include src="'client/app/layout/menu-left.html'" ng-if="auth.authenticated()"></ng-include>
+      <ng-include src="'client/app/layout/menu.html'" ng-if="auth.authenticated()"></ng-include>
 
       <div layout="column" flex class="full-height">
 

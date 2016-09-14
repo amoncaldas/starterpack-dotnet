@@ -13,14 +13,14 @@
   </header>
 
   <md-content layout-padding flex style="text-transform:uppercase;">
-    <ul class="menu-sidenav" ng-if="auth.authenticated() && (global.layout.menuTop || appCtrl.isMobile)">
+    <ul class="menu-sidenav" ng-if="auth.authenticated()">
       <li ng-repeat="item in menuCtrl.itensMenu">
         <md-menu md-offset="0 55" ng-if="!item.profiles || (item.profiles && auth.currentUser.hasProfile(item.profiles, item.allProfiles))">
           <md-button
             class="md-button md-buttom-menu"
             ui-sref="{{::item.url}}"
             ui-sref-active="active"
-            ng-click="menuCtrl.openMenu($mdOpenMenu, $event, item.subItens.length)">
+            ng-click="menuCtrl.openSubMenu($mdOpenMenu, $event, item.subItens.length)">
             <md-icon md-font-set="material-icons"
               class="pull-left menu-icon" style="color:#fff;">
               {{::item.icon}}

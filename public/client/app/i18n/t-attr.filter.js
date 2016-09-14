@@ -9,11 +9,17 @@
   /** @ngInject */
   // eslint-disable-next-line max-params
   function tAttr($filter) {
-    return function(id) {
-      var key = 'attributes.' + id;
+    /**
+     * Filtro para tradução de um atributo de um model
+     * 
+     * @param {any} name nome do atributo
+     * @returns o nome do atributo traduzido caso encontre se não o nome passado por parametro
+     */    
+    return function(name) {
+      var key = 'attributes.' + name;
       var translate = $filter('translate')(key);
 
-      return (translate === key) ? id : translate;
+      return (translate === key) ? name : translate;
     }
   }
 

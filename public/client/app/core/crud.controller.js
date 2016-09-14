@@ -20,6 +20,12 @@
 
     activate();
 
+    /**
+     * Prepara o controlador
+     * Faz o merge das opções
+     * Inicializa o recurso
+     * Inicializa o objeto paginador e realiza a pesquisa 
+     */
     function activate() {
       vm.defaultOptions = {
         redirectAfterSave: true,
@@ -39,6 +45,11 @@
       if (vm.defaultOptions.searchOnInit) vm.search();
     }
 
+    /**
+     * Realiza a pesquisa paginada com base nos filtros definidos
+     * 
+     * @param {any} page página que deve ser carregada
+     */
     function search(page) {
       vm.paginator.currentPage = (angular.isDefined(page)) ? page : 1;
       vm.defaultQueryFilters = { page: vm.paginator.currentPage, perPage: vm.paginator.perPage };
@@ -56,6 +67,9 @@
       });
     }
 
+    /**
+     * Limpa o formulário
+     */
     function cleanForm() {
       if (angular.isFunction(vm.beforeClean) && vm.beforeClean() === false) return false;
 
@@ -64,6 +78,11 @@
       if (angular.isFunction(vm.afterClean)) vm.afterClean();
     }
 
+    /**
+     * Carrega no formulário o recurso selecionado para edição
+     * 
+     * @param {any} resource recurso selecionado
+     */
     function edit(resource) {
       vm.goTo('form');
 
@@ -72,6 +91,13 @@
       if (angular.isFunction(vm.afterEdit)) vm.afterEdit();
     }
 
+    /**
+     * Salva ou atualiza o recurso corrente no formulário
+     * No comportamento padrão redireciona o usuário para view de listagem 
+     * depois da execução
+     * 
+     * @returns
+     */
     function save() {
       if (angular.isFunction(vm.beforeSave) && vm.beforeSave() === false) return false;
 
@@ -93,6 +119,12 @@
       });
     }
 
+    /**
+     * Remove o recurso informado.
+     * Antes exibe um dialogo de confirmação
+     * 
+     * @param {any} resource recurso escolhido
+     */
     function remove(resource) {
       var config = {
         title: $translate.instant('dialog.confirmTitle'),
@@ -113,6 +145,11 @@
       });
     }
 
+    /**
+     * Alterna entre a view do formulário e listagem
+     * 
+     * @param {any} viewName nome da view
+     */
     function goTo(viewName) {
       vm.viewForm = false;
 

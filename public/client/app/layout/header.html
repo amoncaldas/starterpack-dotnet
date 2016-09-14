@@ -2,7 +2,7 @@
 <md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar" aria-hidden="false">
   <div class="md-toolbar-tools" layout-wrap>
     <md-button
-      ng-click="appCtrl.openNavBar()"
+      ng-click="menuCtrl.open()"
       class="md-icon-button md-primary"
       hide-gt-sm
       aria-label="Menu">
@@ -28,5 +28,4 @@
 
     </div>
   </div>
-  <ng-include src="'client/app/layout/menu-top.html'" ng-if="!global.layout.menuTop && !appCtrl.isMobile"></ng-include>
 </md-toolbar>

@@ -12,8 +12,8 @@
     // return loaderFn
     return function() {
       var deferred = $q.defer();
-      // do something with $http, $q and key to load localization files
-
+      
+      //Carrega as langs que precisam e estão no servidor para não precisar repetir aqui
       SupportService.langs().then(function(langs) {
         var data = {
           loading: 'Carregando...',
@@ -40,6 +40,9 @@
             remove: 'Remover',
             getOut: 'Sair',
             add: 'Adicionar'
+          },
+          attributes: {
+            //é carregado do servido
           },
           dialog: {
             confirmTitle: 'Confirmação',

@@ -10,9 +10,6 @@
       loginState: 'login',
       resetPasswordState: 'password-reset',
       notAuthorizedState: 'not-authorized',
-      apiVersion: 'v1',
-      layout: {
-        menuTop: true
-      }
+      apiVersion: 'v1'
     });
 }());
