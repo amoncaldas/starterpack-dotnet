@@ -29,7 +29,7 @@
 
         for (var index = 0; index < data.models.length; index++) {
           var model = data.models[index];
-          
+
           models.push({
             id: model,
             label: $translate.instant('models.' + model.toLowerCase())
@@ -37,11 +37,11 @@
         }
 
         vm.models = models;
-        vm.queryFilters.model = vm.models[0].id;  
-      });        
+        vm.queryFilters.model = vm.models[0].id;
+      });
 
       vm.types = AuditService.listTypes();
-      vm.queryFilters.type = vm.types[0].id;       
+      vm.queryFilters.type = vm.types[0].id;
     }
 
     function applyFilters(defaultQueryFilters) {
@@ -52,10 +52,16 @@
       var config = {
         locals: { auditDetail: auditDetail },
         /** @ngInject */
-        controller: function(auditDetail) {
+        controller: function(auditDetail, PrDialog) {
           var vm = this;
 
           vm.auditDetail = auditDetail;
+          vm.closeDialog = closeDialog;
+
+          function closeDialog() {
+            PrDialog.close();
+          }
+
         },
         controllerAs: 'auditDetailCtrl',
         templateUrl: Global.clientPath + '/audit/audit-detail.html',
@@ -64,7 +70,6 @@
 
       PrDialog.custom(config);
     }
-
 
   }
 

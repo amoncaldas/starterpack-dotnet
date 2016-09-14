@@ -34,6 +34,9 @@ class TasksController extends CrudController
         if($request->has('done'))
            $query = $query->where('done', '=', $request->done);
 
+        if($request->has('priority'))
+           $query = $query->where('priority', '=', $request->priority);
+
         if($request->has('dateStart'))
            $query = $query->where('scheduled_to', '>=', \Prodeb::parseDate($request->dateStart));
 

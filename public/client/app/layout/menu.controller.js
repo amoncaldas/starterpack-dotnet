@@ -19,6 +19,7 @@
     function activate() {
       var menuPrefix = 'layout.menu.';
 
+      // Array contendo os itens que são mostrados no menu lateral
       vm.itensMenu = [
         { url: 'dashboard', titulo: menuPrefix + 'dashboard', icon: 'dashboard', subItens: [] },
         // ##Examples: Não coloque nada entre as linhas 23 e 29, pois estas linhas serão eliminadas em produção.
@@ -36,7 +37,7 @@
             { url: 'user', titulo: menuPrefix + 'user', icon: 'people' },
             { url: 'mail', titulo: menuPrefix + 'mail', icon: 'mail' },
             { url: 'audit', titulo: menuPrefix + 'audit', icon: 'storage' },
-            { url: 'dinamic-query', titulo: menuPrefix + 'dinamicQuery', icon: 'storage' }
+            { url: 'dinamic-query', titulo: menuPrefix + 'dinamicQuery', icon: 'location_searching' }
           ]
         }
       ];
@@ -46,6 +47,9 @@
       $mdSidenav('left').toggle();
     }
 
+    /**
+     * Método que exibe o sub menu dos itens do menu lateral
+     */
     function openSubMenu($mdOpenMenu, ev, subItens) {
       if (subItens > 0) {
         $mdOpenMenu(ev);

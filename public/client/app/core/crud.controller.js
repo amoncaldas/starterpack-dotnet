@@ -24,7 +24,7 @@
      * Prepara o controlador
      * Faz o merge das opções
      * Inicializa o recurso
-     * Inicializa o objeto paginador e realiza a pesquisa 
+     * Inicializa o objeto paginador e realiza a pesquisa
      */
     function activate() {
       vm.defaultOptions = {
@@ -47,7 +47,7 @@
 
     /**
      * Realiza a pesquisa paginada com base nos filtros definidos
-     * 
+     *
      * @param {any} page página que deve ser carregada
      */
     function search(page) {
@@ -55,7 +55,7 @@
       vm.defaultQueryFilters = { page: vm.paginator.currentPage, perPage: vm.paginator.perPage };
 
       if (angular.isFunction(vm.applyFilters)) vm.defaultQueryFilters = vm.applyFilters(vm.defaultQueryFilters);
-      if (angular.isFunction(vm.beforeSearch) && vm.beforeSearch(page) === false) return false;      
+      if (angular.isFunction(vm.beforeSearch) && vm.beforeSearch(page) === false) return false;
 
       modelService.paginate(vm.defaultQueryFilters).then(function (response) {
         vm.paginator.calcNumberOfPages(response.total);
@@ -80,7 +80,7 @@
 
     /**
      * Carrega no formulário o recurso selecionado para edição
-     * 
+     *
      * @param {any} resource recurso selecionado
      */
     function edit(resource) {
@@ -93,9 +93,9 @@
 
     /**
      * Salva ou atualiza o recurso corrente no formulário
-     * No comportamento padrão redireciona o usuário para view de listagem 
+     * No comportamento padrão redireciona o usuário para view de listagem
      * depois da execução
-     * 
+     *
      * @returns
      */
     function save() {
@@ -122,7 +122,7 @@
     /**
      * Remove o recurso informado.
      * Antes exibe um dialogo de confirmação
-     * 
+     *
      * @param {any} resource recurso escolhido
      */
     function remove(resource) {
@@ -147,7 +147,7 @@
 
     /**
      * Alterna entre a view do formulário e listagem
-     * 
+     *
      * @param {any} viewName nome da view
      */
     function goTo(viewName) {

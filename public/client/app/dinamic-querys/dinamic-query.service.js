@@ -9,14 +9,14 @@
   // eslint-disable-next-line max-params
   function DinamicQueryService(serviceFactory) {
     var model = serviceFactory('dinamicQuery', {
-      actions: { 
-        /**
-         * ação adicionada para pegar uma lista de models existentes no servidor
-         */
+      /**
+       * ação adicionada para pegar uma lista de models existentes no servidor
+       */
+      actions: {
         getModels: {
           method: 'GET',
-          url: 'models'          
-        }        
+          url: 'models'
+        }
       },
       instance: {
       }

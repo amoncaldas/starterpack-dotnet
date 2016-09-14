@@ -37,6 +37,9 @@
       });
     }
 
+    /**
+     * Exibe o dialog para recuperação de senha
+     */
     function openDialogResetPass() {
       var config = {
         templateUrl: Global.clientPath + '/auth/send-reset-dialog.html',

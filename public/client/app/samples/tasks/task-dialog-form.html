@@ -5,7 +5,7 @@
       <md-tooltip md-direction="bottom">{{ ::'list' | translate }}</md-tooltip>
     </md-button>
   </box-toolbar-buttons>
-  <form>
+  <form class="condensed">
     <md-input-container class="md-block">
       <label>{{::'task.description' | translate}}</label>
       <input type="text" ng-model="tasksCtrl.resource.description">
@@ -15,19 +15,15 @@
         <label>{{::'task.priority' | translate}}</label>
         <input type="number" step="1" min="1" max="10" ng-model="tasksCtrl.resource.priority">
       </md-input-container>
-
-      <div layout="row">
-        <pr-date-time-picker
-            ng-model="tasksCtrl.resource.scheduled_to"
-            placeholder-date="Data"
-            placeholder-time="Horário"
-            open-on-click="true"
-            with-time="true">
-        </pr-date-time-picker>
-      </div>      
     </div>
     <div layout="row">
-
+      <pr-date-time-picker
+        ng-model="tasksCtrl.resource.scheduled_to"
+        placeholder-date="Data"
+        placeholder-time="Horário"
+        open-on-click="true"
+        with-time="true">
+      </pr-date-time-picker>
     </div>
   </form>
   <box-footer-buttons>

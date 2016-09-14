@@ -22,6 +22,9 @@
       vm.reset = { email: '', token: $stateParams.token };
     }
 
+    /**
+     * Realiza a alteração da senha do usuário e o redireciona para a tela de login
+     */
     function sendReset() {
       $http.post(Global.apiVersion + '/password/reset', vm.reset)
         .then(function (response) {
@@ -48,14 +51,9 @@
         });
     }
 
-    function closeDialog() {
-      PrDialog.close();
-    }
-
-    function cleanForm() {
-      vm.reset.email = '';
-    }
-
+    /**
+     * Envia um email de recuperação de senha com o token do usuário
+     */
     function sendEmailResetPassword() {
 
       if (vm.reset.email === '') {
@@ -70,6 +68,14 @@
       }, function (error) {
         PrToast.error(error.data.msg);
       });
+    }
+
+    function closeDialog() {
+      PrDialog.close();
+    }
+
+    function cleanForm() {
+      vm.reset.email = '';
     }
 
   }

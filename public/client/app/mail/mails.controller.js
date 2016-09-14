@@ -39,7 +39,7 @@
         limit: 5
       }).then(function(data) {
 
-        //data tem email
+        // verifica se na lista de usuarios já existe o usuário com o email pesquisado
         data = lodash.filter(data, function(user) {
           return !lodash.find(vm.mail.users, { email: user.email });
         });
@@ -50,6 +50,9 @@
       return deferred.promise;
     }
 
+    /**
+     * Abre o dialog para pesquisa de usuários
+     */
     function openUserDialog() {
       var config = {
         locals: {
@@ -67,6 +70,9 @@
 
     }
 
+    /**
+     * Adiciona o usuário selecionado na lista para que seja enviado o email
+     */
     function addUserMail(user) {
       var users = lodash.find(vm.mail.users, { email: user.email });
 
@@ -77,6 +83,9 @@
       }
     }
 
+    /**
+     * Realiza o envio do email para a lista de usuários selecionados
+     */
     function send() {
 
       vm.mail.$save().then(function(response) {
@@ -97,6 +106,9 @@
       });
     }
 
+    /**
+     * Limpa o formulário de email
+     */
     function cleanForm() {
       vm.mail = new MailsService();
       vm.mail.users = [];

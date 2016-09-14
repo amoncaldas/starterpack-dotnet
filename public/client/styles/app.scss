@@ -46,6 +46,10 @@ md-toolbar {
 }
 
 @for $i from 1 through 30 {
+  .padding-left-#{$i} { padding-left: 1px * $i; }
+}
+
+@for $i from 1 through 30 {
   .padding-top-#{$i} { padding-top: 1px * $i; }
 }
 
@@ -106,6 +110,10 @@ table.condensed .md-cell {
   position: absolute;
   right: 35px;
   top: 47px;
+}
+
+.md-text-center {
+  text-align: center !important;
 }
 
 .menu-icon {

@@ -66,8 +66,8 @@ class UsersController extends CrudController
 
     protected function beforeStore(Request $request, Model $obj)
     {
-        $obj->passwordConteiner = str_random(10);
-        $obj->password = bcrypt($obj->passwordConteiner);
+        $obj->setPasswordConteiner(str_random(10));
+        $obj->password = bcrypt($obj->getPasswordConteiner());
     }
 
     protected function beforeUpdate(Request $request, Model $obj)

@@ -44,7 +44,15 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      *
      * @var string
      */
-    public $passwordConteiner = '';
+    private $passwordConteiner = '';
+
+    public function getPasswordConteiner() {
+        return $this->passwordConteiner;
+    }
+
+    public function setPasswordConteiner($passwordConteiner) {
+        $this->passwordConteiner = $passwordConteiner;
+    }
 
     public function getJWTIdentifier()
     {

@@ -5,6 +5,9 @@
         <ul>
           <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.old_value">{{ ::key | tAttr}}: {{ ::value | auditValue:key}}</li>
         </ul>
+        <box-footer-buttons>
+          <md-button class="md-raised md-warn" ng-click="auditDetailCtrl.closeDialog()">{{::'form.getOut' | translate}}</md-button>
+        </box-footer-buttons>
       </box>
     </div>
     <div flex="50" ng-if="auditDetailCtrl.auditDetail.new_value">
@@ -12,6 +15,9 @@
         <ul>
           <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.new_value">{{ ::key | tAttr}}: {{ ::value | auditValue:key}}</li>
         </ul>
+        <box-footer-buttons>
+          <md-button class="md-raised md-warn" ng-click="auditDetailCtrl.closeDialog()">{{::'form.getOut' | translate}}</md-button>
+        </box-footer-buttons>
       </box>
     </div>
   </content-body>

@@ -4,14 +4,18 @@
       <md-content layout-padding md-whiteframe="1" class="bottom-4">
         <form class="condensed">
           <div layout="row">
-            <md-input-container flex=30>
-              <label>{{::'audit.dateStart' | translate}}</label>
-              <input type="date" ng-model="auditCtrl.queryFilters.dateStart">
-            </md-input-container>
-            <md-input-container flex=30>
-              <label>{{::'audit.dateEnd' | translate}}</label>
-              <input type="date" ng-model="auditCtrl.queryFilters.dateEnd">
-            </md-input-container>
+            <pr-date-time-picker
+              ng-model="auditCtrl.queryFilters.dateStart"
+              placeholder-date="{{::'audit.dateStart' | translate}}"
+              open-on-click="true"
+              with-time="false">
+            </pr-date-time-picker>
+            <pr-date-time-picker
+              ng-model="auditCtrl.queryFilters.dateEnd"
+              placeholder-date="{{::'audit.dateEnd' | translate}}"
+              open-on-click="true"
+              with-time="false">
+            </pr-date-time-picker>
             <md-input-container flex=30>
               <label>{{::'audit.user' | translate}}</label>
               <input type="text" ng-model="auditCtrl.queryFilters.user">
