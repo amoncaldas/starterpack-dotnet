@@ -99,10 +99,15 @@
     /**
      * Limpa o formulário
      */
-    function cleanForm() {
+    function cleanForm(form) {
       if (angular.isFunction(vm.beforeClean) && vm.beforeClean() === false) return false;
-
+      
       vm.resource = new modelService();
+      
+      if (angular.isDefined(form)) {
+        form.$setPristine();
+        form.$setUntouched();
+      }
 
       if (angular.isFunction(vm.afterClean)) vm.afterClean();
     }
@@ -112,10 +117,9 @@
      *
      * @param {any} resource recurso selecionado
      */
-    function edit(resource) {
+    function edit(resource) {      
       vm.goTo('form');
-
-      vm.resource = angular.copy(resource);
+      vm.resource = new angular.copy(resource);
 
       if (angular.isFunction(vm.afterEdit)) vm.afterEdit();
     }
@@ -127,7 +131,7 @@
      *
      * @returns
      */
-    function save() {
+    function save(form) {
       if (angular.isFunction(vm.beforeSave) && vm.beforeSave() === false) return false;
 
       vm.resource.$save().then(function (resource) {
@@ -136,7 +140,7 @@
         if (angular.isFunction(vm.afterSave)) vm.afterSave(resource);
 
         if (vm.defaultOptions.redirectAfterSave) {
-          vm.cleanForm();
+          vm.cleanForm(form);
           vm.search(vm.paginator.currentPage);
           vm.goTo('list');
         }
