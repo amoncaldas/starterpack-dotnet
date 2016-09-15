@@ -17,6 +17,7 @@ Homestead.yaml
 Homestead.json
 
 ### Production ###
+package.tar.gz
 deploy.tar.gz
 
 ### Editores ###
