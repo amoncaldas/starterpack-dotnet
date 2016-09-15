@@ -1,9 +1,10 @@
 <content-body layout-align="center center">
-    <box box-title="{{ ::global.appName}}" flex=60>
-      <div layout="row" layout-sm="column" flex>
-        <div flex=30 flex-sm=99 flex-gt-sm=99 layout-align="center center">
-          <img src="client/images/governo-do-estado-da-bahia.png" alt="logo" />
-        </div>
+  <box box-title="{{ ::global.appName}}" flex=100 flex-gt-xs=100 flex-gt-sm=70 flex-gt-md=60>
+    <div layout-gt-xs="row" layout-xs="column">
+      <div flex-gt-xs=30 layout-align="center center" class="md-text-center">
+        <img src="client/images/governo-do-estado-da-bahia.png" alt="logo" />
+      </div>
+      <div flex layout-align="center center">
         <form flex ng-submit="loginCtrl.login()">
           <div layout="row" flex layout-align="center center">
             <md-input-container flex class="bottom-5">
@@ -31,5 +32,6 @@
           </div>
         </form>
       </div>
-    </box>
+    </div>
+  </box>
 </content-body>

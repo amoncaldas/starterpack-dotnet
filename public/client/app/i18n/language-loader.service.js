@@ -12,7 +12,7 @@
     // return loaderFn
     return function() {
       var deferred = $q.defer();
-      
+
       //Carrega as langs que precisam e estão no servidor para não precisar repetir aqui
       SupportService.langs().then(function(langs) {
         var data = {
@@ -42,7 +42,7 @@
             add: 'Adicionar'
           },
           attributes: {
-            //é carregado do servido
+            //é carregado do servidor
           },
           dialog: {
             confirmTitle: 'Confirmação',

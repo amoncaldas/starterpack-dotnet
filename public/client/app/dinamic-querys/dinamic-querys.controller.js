@@ -29,13 +29,13 @@
       searchOnInit: false
     } });
 
-    function onActivate() {      
-      vm.restart();      
+    function onActivate() {
+      vm.restart();
     }
 
     /**
      * Prepara e aplica os filtro que vão ser enviados para o serviço
-     * 
+     *
      * @param {any} defaultQueryFilters
      * @returns
      */
@@ -44,7 +44,7 @@
 
       /**
        * o serviço espera um objeto com:
-       *  o nome de um model 
+       *  o nome de um model
        *  uma lista de filtros
        */
       if (vm.addedFilters.length > 0) {
@@ -69,7 +69,7 @@
     }
 
     /**
-     * Carrega todos os models criados no servidor com seus atributos 
+     * Carrega todos os models criados no servidor com seus atributos
      */
     function loadModels() {
       //Pega todos os models do server e monta uma lista pro ComboBox
@@ -79,7 +79,7 @@
         vm.loadAttributes();
       });
     }
-    
+
     /**
      * Carrega os attributos do model escolhido
      */
@@ -96,15 +96,18 @@
     function loadOperators() {
       var operators = [
         { value: '=', label: 'Igual' },
-        { value: '<>', label: 'Diferente' },
-        { value: '>', label: 'Maior' },
-        { value: '>=', label: 'Maior ou Igual' },
-        { value: '<', label: 'Menor' },
-        { value: '<=', label: 'Menor ou Igual' }
+        { value: '<>', label: 'Diferente' }
       ]
 
       if (vm.queryFilters.attribute.type.indexOf('varying') !== -1) {
-        operators.push({ value: 'like', label: 'Contém' });
+        operators.push({ value: 'has', label: 'Contém' });
+        operators.push({ value: 'startWith', label: 'Inicia com' });
+        operators.push({ value: 'endWith', label: 'Finaliza com' });
+      } else {
+        operators.push({ value: '>', label: 'Maior' });
+        operators.push({ value: '>=', label: 'Maior ou Igual' });
+        operators.push({ value: '<', label: 'Menor' });
+        operators.push({ value: '<=', label: 'Menor ou Igual' });
       }
 
       vm.operators = operators;
@@ -112,9 +115,9 @@
     }
 
     /**
-     * Adiciona/edita um filtro  
-     * 
-     * @param {any} form elemento html do formulário para validações 
+     * Adiciona/edita um filtro
+     *
+     * @param {any} form elemento html do formulário para validações
      */
     function addFilter(form) {
       if (angular.isUndefined(vm.queryFilters.value) || vm.queryFilters.value === '') {
@@ -126,42 +129,42 @@
           vm.addedFilters[vm.index] = angular.copy(vm.queryFilters);
           vm.index = -1;
         }
-                
+
         //reinicia o formulário e as validações existentes
         vm.queryFilters = {};
         form.$setPristine();
-        form.$setUntouched();             
+        form.$setUntouched();
       }
     }
 
     /**
-     * Gatilho acionado depois da pesquisa responsável por identificar os atributos 
+     * Gatilho acionado depois da pesquisa responsável por identificar os atributos
      * contidos nos elementos resultantes da busca
-     * 
+     *
      * @param {any} data dados referente ao retorno da requisição
      */
     function afterSearch(data) {
       var keys = (data.items.length > 0) ? Object.keys(data.items[0]) : [];
 
-      //retira todos os atributos que começam com $. 
+      //retira todos os atributos que começam com $.
       //Esses atributos são adicionados pelo serviço e não deve aparecer na listagem
       vm.keys = lodash.filter(keys, function(key) {
         return !lodash.startsWith(key, '$');
       })
-    }    
+    }
 
     /**
      * Coloaca no formulário o filtro escolhido para edição
      * @param {any} $index indice no array do filtro escolhido
      */
     function editFilter($index) {
-      vm.index = $index;     
+      vm.index = $index;
       vm.queryFilters = vm.addedFilters[$index];
     }
 
     /**
      * Remove o filtro escolhido
-     * 
+     *
      * @param {any} $index indice no array do filtro escolhido
      */
     function removeFilter($index) {
@@ -180,7 +183,7 @@
 
     /**
      * Reinicia a construção da query limpando tudo
-     * 
+     *
      */
     function restart() {
       //guarda atributos do resultado da busca corrente

@@ -61,15 +61,6 @@ php artisan clear-compiled
 ## Otimizando o projeto
 php artisan optimize
 
-## Removendo o item de exemplos do menu
-if grep -Rq "##Examples" public/client/app/layout/menu.controller.js
-then
-  sed -i".bak" '23,30d' public/client/app/layout/menu.controller.js
-
-  ## Removendo o arquivo de backup do menu controller
-  removeFileOrDir public/client/app/layout/menu.controller.js.bak
-fi
-
 ## Gerando os arquivos minificados .js e .css
 gulp --production
 

@@ -29,8 +29,20 @@ class DinamicQueryController extends Controller
 
         if( $filters !== null ) {
             foreach($filters as $filter) {
-                if( $filter->operator === 'like' )
+                if( $filter->operator === 'has' ) {
+                    $filter->operator = 'ilike';
                     $filter->value = '%' . $filter->value . '%';
+                }
+
+                if( $filter->operator === 'startWith' ) {
+                    $filter->operator = 'ilike';
+                    $filter->value = $filter->value . '%';
+                }
+
+                if( $filter->operator === 'endWith' ) {
+                    $filter->operator = 'ilike';
+                    $filter->value = '%' . $filter->value;
+                }
 
                 $baseQuery = $baseQuery->where($filter->attribute, $filter->operator, $filter->value);
             }
@@ -46,19 +58,19 @@ class DinamicQueryController extends Controller
 
         $data['total'] = $countQuery
             ->count();
-     
+
 
         return $data;
     }
 
     /**
-     * Serviço responsável por pegar todos os modelos juntamento com uma 
+     * Serviço responsável por pegar todos os modelos juntamento com uma
      * lista dos atributos (contendo nome e tipo)
-     * 
+     *
      * @return array contendo uma lista de models com os seus atributos
      */
     public function models(Request $request)
-    {   
+    {
         $models = \Prodeb::modelNames(array("BaseModel.php", "Permission.php", "Role.php"));
         $data = array();
 
@@ -73,8 +85,8 @@ class DinamicQueryController extends Controller
                 'name' => $model,
                 'attributes' => $columnWithTypes
             ]);
-        }        
+        }
 
         return $data;
-    }    
+    }
 }

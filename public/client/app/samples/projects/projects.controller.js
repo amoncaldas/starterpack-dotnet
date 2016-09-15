@@ -31,7 +31,7 @@
       };
 
       PrDialog.custom(config).then(function() {
-        vm.afterSave();
+        vm.search(vm.paginator.currentPage);
       });
 
     }
