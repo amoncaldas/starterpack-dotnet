@@ -8,17 +8,18 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function auditDetailTitle() {
+  function auditDetailTitle($translate) {
     return function(auditDetail, status) {
       switch (auditDetail.type) {
-        case 'created': return 'Informações do Cadastro';
+        case 'created':
+          return $translate.instant('audit.dialog.title.created');
         case 'updated':
           if (status === 'before') {
-            return 'Antes da Atualização';
+            return $translate.instant('audit.dialog.title.updatedBefore');
           } else {
-            return 'Depois da Atualização';
+            return $translate.instant('audit.dialog.title.updatedAfter');
           }
-        case 'deleted': return 'Informações antes de remover';
+        case 'deleted': return $translate.instant('audit.dialog.title.deleted');
       }
     }
   }

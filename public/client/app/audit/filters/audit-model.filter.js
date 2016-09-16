@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function auditModel(lodash, $translate) {
+  function auditModel($translate) {
     return function(modelId) {
       modelId = modelId.replace('App\\', '');
       var model = $translate.instant('models.' + modelId.toLowerCase());

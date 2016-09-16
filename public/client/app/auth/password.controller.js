@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function PasswordController(Global, $stateParams, $http, $timeout, $state, PrToast, PrDialog, Auth) {
+  function PasswordController(Global, $stateParams, $http, $timeout, $state, PrToast, PrDialog, Auth, $translate) {
     var vm = this;
 
     vm.sendReset = sendReset;
@@ -39,7 +39,7 @@
               $state.go(Global.loginState);
             }, 2000);
           } else if (error.status === 500) {
-            PrToast.error('Ocorreu um erro interno, contate o administrador do sistema');
+            PrToast.error($translate.instant('messages.internalError'));
           } else {
             var msg = '';
 
@@ -57,7 +57,7 @@
     function sendEmailResetPassword() {
 
       if (vm.reset.email === '') {
-        PrToast.error('O campo email é obrigratório.');
+        PrToast.error($translate.instant('messages.validate.fieldRequired', { field: 'email' }));
         return;
       }
 

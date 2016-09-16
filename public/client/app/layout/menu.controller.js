@@ -7,12 +7,12 @@
     .controller('MenuController', MenuController);
 
   /** @ngInject */
-  function MenuController($mdSidenav) {
+  function MenuController($mdSidenav, $state) {
     var vm = this;
 
     //Bloco de declaracoes de funcoes
     vm.open = open;
-    vm.openSubMenu = openSubMenu;
+    vm.openMenuOrRedirectToState = openMenuOrRedirectToState;
 
     activate();
 
@@ -21,21 +21,21 @@
 
       // Array contendo os itens que são mostrados no menu lateral
       vm.itensMenu = [
-        { url: 'dashboard', titulo: menuPrefix + 'dashboard', icon: 'dashboard', subItens: [] },
+        { state: 'dashboard', titulo: menuPrefix + 'dashboard', icon: 'dashboard', subItens: [] },
         {
-          url: '#', titulo: menuPrefix + 'examples', icon: 'view_carousel', profiles: ['admin'],
+          state: '#', titulo: menuPrefix + 'examples', icon: 'view_carousel', profiles: ['admin'],
           subItens: [
-            { url: 'project', titulo: menuPrefix + 'project', icon: 'star' }
+            { state: 'project', titulo: menuPrefix + 'project', icon: 'star' }
           ]
         },
         // Coloque seus itens de menu a partir deste ponto
         {
-          url: '#', titulo: menuPrefix + 'admin', icon: 'settings_applications', profiles: ['admin'],
+          state: '#', titulo: menuPrefix + 'admin', icon: 'settings_applications', profiles: ['admin'],
           subItens: [
-            { url: 'user', titulo: menuPrefix + 'user', icon: 'people' },
-            { url: 'mail', titulo: menuPrefix + 'mail', icon: 'mail' },
-            { url: 'audit', titulo: menuPrefix + 'audit', icon: 'storage' },
-            { url: 'dinamic-query', titulo: menuPrefix + 'dinamicQuery', icon: 'location_searching' }
+            { state: 'user', titulo: menuPrefix + 'user', icon: 'people' },
+            { state: 'mail', titulo: menuPrefix + 'mail', icon: 'mail' },
+            { state: 'audit', titulo: menuPrefix + 'audit', icon: 'storage' },
+            { state: 'dinamic-query', titulo: menuPrefix + 'dinamicQuery', icon: 'location_searching' }
           ]
         }
       ];
@@ -46,11 +46,15 @@
     }
 
     /**
-     * Método que exibe o sub menu dos itens do menu lateral
+     * Método que exibe o sub menu dos itens do menu lateral caso tenha sub itens
+     * caso contrário redireciona para o state passado como parâmetro
      */
-    function openSubMenu($mdOpenMenu, ev, subItens) {
+    function openMenuOrRedirectToState($mdOpenMenu, ev, subItens, state) {
       if (subItens > 0) {
         $mdOpenMenu(ev);
+      } else {
+        $state.go(state);
+        $mdSidenav('left').close();
       }
     }
 

@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function DinamicQuerysController($controller, DinamicQueryService, lodash, PrToast) {
+  function DinamicQuerysController($controller, DinamicQueryService, lodash, PrToast, $translate) {
     var vm = this;
 
     //actions
@@ -18,6 +18,7 @@
     vm.loadOperators = loadOperators;
     vm.addFilter = addFilter;
     vm.afterSearch = afterSearch;
+    vm.runFilter = runFilter;
     vm.editFilter = editFilter;
     vm.loadModels = loadModels;
     vm.removeFilter = removeFilter;
@@ -41,6 +42,11 @@
      */
     function applyFilters(defaultQueryFilters) {
       var where = {};
+
+      if (angular.isUndefined(vm.queryFilters.value) || vm.queryFilters.value === '') {
+        PrToast.error($translate.instant('messages.validate.fieldRequired', { field: 'valor' }));
+        return;
+      }
 
       /**
        * o serviço espera um objeto com:
@@ -95,19 +101,19 @@
      */
     function loadOperators() {
       var operators = [
-        { value: '=', label: 'Igual' },
-        { value: '<>', label: 'Diferente' }
+        { value: '=', label: $translate.instant('dinamicQuery.operators.label.equals') },
+        { value: '<>', label: $translate.instant('dinamicQuery.operators.label.diferent') }
       ]
 
       if (vm.queryFilters.attribute.type.indexOf('varying') !== -1) {
-        operators.push({ value: 'has', label: 'Contém' });
-        operators.push({ value: 'startWith', label: 'Inicia com' });
-        operators.push({ value: 'endWith', label: 'Finaliza com' });
+        operators.push({ value: 'has', label: $translate.instant('dinamicQuery.operators.label.conteins') });
+        operators.push({ value: 'startWith', label: $translate.instant('dinamicQuery.operators.label.startWith') });
+        operators.push({ value: 'endWith', label: $translate.instant('dinamicQuery.operators.label.finishWith') });
       } else {
-        operators.push({ value: '>', label: 'Maior' });
-        operators.push({ value: '>=', label: 'Maior ou Igual' });
-        operators.push({ value: '<', label: 'Menor' });
-        operators.push({ value: '<=', label: 'Menor ou Igual' });
+        operators.push({ value: '>', label: $translate.instant('dinamicQuery.operators.label.larger') });
+        operators.push({ value: '>=', label: $translate.instant('dinamicQuery.operators.label.largerOrEquals') });
+        operators.push({ value: '<', label: $translate.instant('dinamicQuery.operators.label.smaller') });
+        operators.push({ value: '<=', label: $translate.instant('dinamicQuery.operators.label.smallerOrEquals') });
       }
 
       vm.operators = operators;
@@ -121,7 +127,8 @@
      */
     function addFilter(form) {
       if (angular.isUndefined(vm.queryFilters.value) || vm.queryFilters.value === '') {
-        PrToast.error('O campo valor é obrigratório');
+        PrToast.error($translate.instant('messages.validate.fieldRequired', { field: 'valor' }));
+        return;
       } else {
         if (vm.index < 0) {
           vm.addedFilters.push(angular.copy(vm.queryFilters));
@@ -135,6 +142,18 @@
         form.$setPristine();
         form.$setUntouched();
       }
+    }
+
+    /**
+     * Realiza a pesquisa tendo os filtros como parâmetros
+     */
+    function runFilter() {
+      if (angular.isUndefined(vm.queryFilters.value) || vm.queryFilters.value === '') {
+        PrToast.error($translate.instant('messages.validate.fieldRequired', { field: 'valor' }));
+        return;
+      }
+
+      vm.search(vm.paginator.currentPage);
     }
 
     /**
