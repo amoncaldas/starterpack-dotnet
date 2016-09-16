@@ -17,13 +17,6 @@ class Task extends BaseModel
         'project_id'
     ];
 
-    public function __construct($attributes = array())
-    {
-        parent::__construct($attributes);
-
-        $this->addDates(['scheduled_to']);
-    }
-
     /**
     * Retorna o projeto de um projeto
     */

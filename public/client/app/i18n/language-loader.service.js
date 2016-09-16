@@ -58,7 +58,8 @@
             audit: 'Administração - Auditoria',
             mail: 'Administração - Envio de e-mail',
             project: 'Exemplos - Projetos',
-            'dinamic-query': 'Consultas Dinamicas'
+            'dinamic-query': 'Consultas Dinamicas',
+            'not-authorized': 'Acesso Negado'
           },
           models: {
             user: 'Usuário',

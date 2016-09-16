@@ -39,6 +39,10 @@ class AuditController extends Controller
             $baseQuery = $baseQuery->where('type', $request->type);
         }
 
+        if($request->has('owner_id')) {
+            $baseQuery = $baseQuery->where('owner_id', $request->owner_id);
+        }
+
         if($request->has('model')) {
             $baseQuery = $baseQuery->where('owner_type', 'App\\' . $request->model);
         }

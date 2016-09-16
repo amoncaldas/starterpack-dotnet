@@ -4,37 +4,43 @@
       <md-content layout-padding md-whiteframe="1" class="bottom-4">
         <form class="condensed">
           <div layout="row">
-            <pr-date-time-picker
-              ng-model="auditCtrl.queryFilters.dateStart"
-              placeholder-date="{{::'audit.dateStart' | translate}}"
-              open-on-click="true"
-              with-time="false">
-            </pr-date-time-picker>
-            <pr-date-time-picker
-              ng-model="auditCtrl.queryFilters.dateEnd"
-              placeholder-date="{{::'audit.dateEnd' | translate}}"
-              open-on-click="true"
-              with-time="false">
-            </pr-date-time-picker>
-            <md-input-container flex=30>
-              <label>{{::'audit.user' | translate}}</label>
-              <input type="text" ng-model="auditCtrl.queryFilters.user">
-            </md-input-container>
-          </div>
-          <div layout="row">
-            <md-input-container flex=90>
+            <md-input-container flex=20>
+              <label>{{::'id' | tAttr}}</label>
+              <input type="text" ng-model="auditCtrl.queryFilters.owner_id">
+            </md-input-container>            
+            <md-input-container flex=60>
               <md-select placeholder="{{::'audit.resource' | translate}}" ng-model="auditCtrl.queryFilters.model">
                 <md-option ng-repeat="model in auditCtrl.models" value="{{::model.id}}">
                   {{::model.label}}
                 </md-option>
               </md-select>
             </md-input-container>
+            <md-input-container flex=20>
+              <label>{{::'audit.user' | translate}}</label>
+              <input type="text" ng-model="auditCtrl.queryFilters.user">
+            </md-input-container>             
           </div>
-          <div layout="row" class="top-10">
+          <div layout="row">           
+            <pr-date-time-picker flex=20
+              ng-model="auditCtrl.queryFilters.dateStart"
+              placeholder-date="{{::'audit.dateStart' | translate}}"
+              open-on-click="true"
+              with-time="false">
+            </pr-date-time-picker>
+            <pr-date-time-picker flex=20
+              ng-model="auditCtrl.queryFilters.dateEnd"
+              placeholder-date="{{::'audit.dateEnd' | translate}}"
+              open-on-click="true"
+              with-time="false">
+            </pr-date-time-picker>
             <md-input-container flex>
               <md-radio-group ng-model="auditCtrl.queryFilters.type" layout="row">
                 <md-radio-button value="{{::type.id}}" ng-repeat="type in auditCtrl.types">{{::type.label}}</md-radio-button>
               </md-radio-group>
+            </md-input-container>               
+          </div>          
+          <div layout="row">
+            <md-input-container flex>
             </md-input-container>
             <md-button class="md-raised md-primary md-mini" ng-click="auditCtrl.search(vm.paginator.currentPage)">
               {{::'form.filter' | translate}}
@@ -48,8 +54,9 @@
           <thead md-head>
             <tr md-row>
               <th md-column>Usuário</th>
-              <th md-column>Recurso</th>
               <th md-column>Ação</th>
+              <th md-column>Id</th>
+              <th md-column>Recurso</th>
               <th md-column>Data</th>
               <th md-column>Ações</th>
             </tr>
@@ -57,8 +64,9 @@
           <tbody md-body>
             <tr md-row ng-repeat="log in auditCtrl.resources">
               <td md-cell>{{ ::log.user.name}}</td>
-              <td md-cell>{{ ::log.owner_type | auditModel}}</td>
               <td md-cell>{{ ::log.type | auditType }}</td>
+              <td md-cell>{{ ::log.owner_id}}</td>
+              <td md-cell>{{ ::log.owner_type | auditModel}}</td>
               <td md-cell>{{ ::log.updated_at | prDatetime}}</td>
               <td md-cell>
                 <md-button class="md-icon-button" ng-click="auditCtrl.viewDetail(log)">

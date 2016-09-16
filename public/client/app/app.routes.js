@@ -9,16 +9,10 @@
 
   function routes($stateProvider, $urlRouterProvider, Global) {
     $stateProvider
-      .state(Global.homeState, {
-        url: '/',
-        templateUrl: Global.clientPath + '/dashboard/dashboard.html',
-        controller: 'DashboardController as dashboardCtrl',
-        data: { breadcrumbs: 'Dashboard' }
-      })
       .state('not-authorized', {
         url: '/acesso-negado',
         templateUrl: Global.clientPath + '/layout/404.html',
-        data: { breadcrumbs: 'Acesso Negado', needAuthentication: false }
+        data: { needAuthentication: false }
       });
 
     $urlRouterProvider.otherwise(Global.loginState);

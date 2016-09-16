@@ -16,7 +16,6 @@ class BaseModel extends Model
     protected $auditableTypes = ['created', 'saved', 'deleted'];
 
     protected $casts = [];
-    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     protected $dateFormat = 'Y-m-d H:i:sO';
 
@@ -25,15 +24,10 @@ class BaseModel extends Model
         $this->casts = array_merge($this->casts, $moreAttributes);
     }
 
-    protected function addDates($moreAttributes = [])
-    {
-        $this->dates = array_merge($this->dates, $moreAttributes);
-    }
-
     public function setAttribute($key, $value)
     {
         if (in_array($key, $this->dates) && is_string($value)) {
-            $this->attributes[$key] = new Carbon($value);
+            $this->attributes[$key] = \Prodeb::parseDate($value);
         } else {
             parent::setAttribute($key, $value);
         }
