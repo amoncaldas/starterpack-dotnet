@@ -2,8 +2,8 @@
   <div flex="100">
     <box box-title="{{::'dashboard.title' | translate}}">
       <div >
-        <h3>Seja bem Vindo {{auth.currentUser.name}}</h3>
-        <p>Utilize o menu para navegação.</p>
+        <h3>{{'dashboard.messages.welcome' | translate: '{userName: "' + auth.currentUser.name + '"}' }}</h3>
+        <p>{{'dashboard.messages.description' | translate}}</p>
       </div>
     </box>
   </div>

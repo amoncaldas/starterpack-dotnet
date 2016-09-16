@@ -10,9 +10,9 @@
       <thead md-head>
         <tr md-row>
           <th md-column>{{'name' | tAttr}}</th>
-          <th md-column>Email</th>
-          <th md-column>Perfis</th>
-          <th md-column>Ações</th>
+          <th md-column>{{'email' | tAttr}}</th>
+          <th md-column>{{'user.table.th.perfils' | translate}}</th>
+          <th md-column class="md-text-center">{{'user.table.th.actions' | translate}}</th>
         </tr>
       </thead>
       <tbody md-body>
@@ -20,7 +20,7 @@
           <td md-cell>{{ ::user.name}}</td>
           <td md-cell>{{ ::user.email}}</td>
           <td md-cell>{{ ::user.roles | rolesStr}}</td>
-          <td md-cell>
+          <td md-cell class="md-text-center">
             <md-button class="md-icon-button" ng-click="usersCtrl.edit(user)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">create</md-icon>

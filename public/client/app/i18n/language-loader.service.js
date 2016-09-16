@@ -41,6 +41,11 @@
             getOut: 'Sair',
             add: 'Adicionar'
           },
+          table: {
+            th: {
+              actions: 'Ações'
+            }
+          },
           attributes: {
             //é carregado do servidor
           },
@@ -49,7 +54,11 @@
             confirmDescription: 'Confirma a ação?'
           },
           messages: {
-            logoutInactive: 'Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente.'
+            logoutInactive: 'Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente.',
+            internalError: 'Ocorreu um erro interno, contate o administrador do sistema',
+            validate: {
+              fieldRequired: 'O campo {{field}} é obrigratório.'
+            }
           },
           breadcrumbs: {
             user: 'Administração - Usuário',
@@ -86,29 +95,81 @@
               created: 'Cadastrado',
               updated: 'Atualizado',
               deleted: 'Removido'
+            },
+            table: {
+              th: {
+                user: '@:models.user',
+                resource: 'Recurso',
+                action: 'Ação',
+                date: 'Data',
+                actions: '@:table.th.actions'
+              }
+            },
+            dialog: {
+              title: {
+                created: 'Informações do Cadastro',
+                updatedBefore: 'Antes da Atualização',
+                updatedAfter: 'Depois da Atualização',
+                deleted: 'Informações antes de remover'
+              }
             }
           },
           dinamicQuery: {
-            attribute: 'Atributo',
-            operator: 'Operador',
-            resource: 'Recurso'
+            filters: 'Filtros',
+            results: 'Resultados',
+            form: {
+              attribute: 'Atributo',
+              operator: 'Operador',
+              resource: 'Recurso',
+              value: 'Valor'
+            },
+            table: {
+              th: {
+                model: 'Model',
+                attribute: '@:dinamicQuery.form.attribute',
+                operator: '@:dinamicQuery.form.operator',
+                resource: '@:dinamicQuery.form.resource',
+                value: '@:dinamicQuery.form.value'
+              }
+            },
+            operators: {
+              label: {
+                equals: 'Igual',
+                diferent: 'Diferente',
+                conteins: 'Contém',
+                startWith: 'Inicia com',
+                finishWith: 'Finaliza com',
+                larger: 'Maior',
+                largerOrEquals: 'Maior ou Igual',
+                smaller: 'Menor',
+                smallerOrEquals: 'Menor ou Igual'
+              }
+            }
           },
           login: {
-            email: 'Email',
-            password: 'Senha',
+            email: '@:attributes.email',
+            password: '@:attributes.password',
             in: 'Entrar',
             resetPassword: 'Esqueci minha senha',
+            invalidCredentials: 'Credenciais Inválidas',
+            errorLogin: 'Não foi possível realizar o login',
             resetForm: {
               title: 'Redefinir minha senha',
               email: '@:login.email',
               password: '@:login.password',
               confimPassword: 'Confirmar senha'
             },
-            invalidCredentials: 'Credenciais Inválidas',
-            errorLogin: 'Não foi possível realizar o login'
+            resetDialog: {
+              title: 'Redefinir minha senha',
+              description: 'Digite abaixo o email cadastrado no sistema.'
+            }
           },
           dashboard: {
-            title: 'Página inicial'
+            title: 'Página inicial',
+            messages: {
+              welcome: 'Seja bem Vindo {{userName}}',
+              description: 'Utilize o menu para navegação.'
+            }
           },
           layout: {
             logout: '@:form.getOut',
@@ -141,6 +202,15 @@
             confirm: {
               title: 'Confirmar remoção',
               description: 'Deseja remover permanentemente o projeto {{name}}?'
+            },
+            table: {
+              th: {
+                name: '@:attributes.name',
+                cost: '@:attributes.cost',
+                totalTask: 'Total de Tarefas',
+                created_at: '@:attributes.created_at',
+                actions: '@:table.th.actions'
+              }
             }
           },
           task: {
@@ -153,13 +223,23 @@
             confirm: {
               title: '@:project.confirm.title',
               description: 'Deseja remover permanentemente a tarefa selecionada?'
+            },
+            table: {
+              th: {
+                description: '@:task.description',
+                scheduled_to: '@:attributes.scheduled_to',
+                priority: '@:task.priority',
+                done: 'Não Feito / Feito',
+                actions: '@:table.th.actions'
+              }
             }
           },
           user: {
             arialLabel: 'Usuários',
+            beforeRemoveError: 'Você não pode remover seu próprio usuário',
             dialog: {
               title: 'Lista de Usuários',
-              tranfer: 'Transferir'
+              transfer: 'Transferir'
             },
             profile: {
               updateError: 'Não foi possível atualizar seu profile',
@@ -178,7 +258,14 @@
               title: '@:project.confirm.title',
               description: 'Deseja remover permanentemente o usuário {{name}}?'
             },
-            beforeRemoveError: 'Você não pode remover seu próprio usuário'
+            table: {
+              th: {
+                name: '@:attributes.name',
+                email: '@:attributes.email',
+                perfils: 'Perfis',
+                actions: '@:table.th.actions'
+              }
+            }
           }
         }
 

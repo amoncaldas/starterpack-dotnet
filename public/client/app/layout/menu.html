@@ -13,14 +13,12 @@
   </header>
 
   <md-content layout-padding flex style="text-transform:uppercase;">
-    <ul class="menu-sidenav" ng-if="auth.authenticated()">
+    <ul class="menu-sidenav">
       <li ng-repeat="item in menuCtrl.itensMenu">
         <md-menu md-offset="0 55" ng-if="!item.profiles || (item.profiles && auth.currentUser.hasProfile(item.profiles, item.allProfiles))">
           <md-button
             class="md-button md-buttom-menu"
-            ui-sref="{{::item.url}}"
-            ui-sref-active="active"
-            ng-click="menuCtrl.openSubMenu($mdOpenMenu, $event, item.subItens.length)">
+            ng-click="menuCtrl.openMenuOrRedirectToState($mdOpenMenu, $event, item.subItens.length, item.state)">
             <md-icon md-font-set="material-icons"
               class="pull-left menu-icon" style="color:#fff;">
               {{::item.icon}}
@@ -29,7 +27,9 @@
           </md-button>
           <md-menu-content width="4">
             <md-menu-item ng-repeat="subItem in item.subItens">
-              <md-button ui-sref="{{::subItem.url}}" ui-sref-active="active" ng-if="!subItem.profiles || (subItem.profiles && auth.currentUser.hasProfile(subItem.profiles, subItem.allProfiles))">
+              <md-button
+                ng-click="menuCtrl.openMenuOrRedirectToState($mdOpenMenu, $event, 0, subItem.state)"
+                ng-if="!subItem.profiles || (subItem.profiles && auth.currentUser.hasProfile(subItem.profiles, subItem.allProfiles))">
                 <span md-menu-align-target>
                   <md-icon md-font-set="material-icons" class="pull-left menu-icon">
                     {{::subItem.icon}}
