@@ -54,8 +54,8 @@ md-toolbar {
 }
 
 form.condensed {
-  margin: 2px 0;
-  padding: 4px 0 0 0;
+  margin: 2px 0 !important;
+  padding: 4px 0 0 0 !important;
 }
 
 form.condensed md-input-container {
