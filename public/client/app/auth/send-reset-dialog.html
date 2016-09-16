@@ -1,19 +1,19 @@
 <md-dialog flex=50 aria-label="recSenha" class="md-dialog-transparent">
   <content-body>
-    <box box-title="{{'login.resetDialog.title' | translate}}">
+    <box box-title="{{'views.title.resetPassword' | translate}}">
       <md-content flex layout-padding>
-        {{'login.resetDialog.description' | translate}}
+        {{'dialog.login.resetPassword.description' | translate}}
         <form>
           <md-input-container class="md-block">
-            <label>Email</label>
+            <label>{{'attibutes.email' | translate}}</label>
             <input type="email" ng-model="passCtrl.reset.email" md-select-on-focus>
           </md-input-container>
         </form>
       </md-content>
       <box-footer-buttons>
-        <md-button class="md-warn" ng-click="passCtrl.closeDialog()">{{::'form.getOut' | translate}}</md-button>
-        <md-button class="md-raised" ng-click="passCtrl.cleanForm()">{{::'form.clear' | translate}}</md-button>
-        <md-button class="md-primary md-raised" ng-click="passCtrl.sendEmailResetPassword()">{{::'form.send' | translate}}</md-button>
+        <md-button class="md-warn" ng-click="passCtrl.closeDialog()">{{::'views.actions.getOut' | translate}}</md-button>
+        <md-button class="md-raised" ng-click="passCtrl.cleanForm()">{{::'views.actions.clear' | translate}}</md-button>
+        <md-button class="md-primary md-raised" ng-click="passCtrl.sendEmailResetPassword()">{{::'views.actions.send' | translate}}</md-button>
       </box-footer-buttons>
     </box>
   </content-body>

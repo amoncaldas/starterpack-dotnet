@@ -30,8 +30,8 @@
         $state.go(Global.homeState);
       }, function(error) {
         var message = (error.data.error === 'invalid_credentials')
-          ? $translate.instant('login.invalidCredentials')
-          : $translate.instant('login.errorLogin');
+          ? $translate.instant('messages.login.invalidCredentials')
+          : $translate.instant('messages.login.errorLogin');
 
         PrToast.error(message);
       });

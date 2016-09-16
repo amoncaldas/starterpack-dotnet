@@ -75,7 +75,7 @@ copy bower_components deploy
 ## Acessando a pasta deploy
 cd deploy/
 
-write 'Executando comandos do para limpeza o cache e logs\n'
+write 'Executando comandos do php artisan para limpeza do cache e logs\n'
 
 php artisan cache:clear
 php artisan route:clear

@@ -9,20 +9,20 @@
   // eslint-disable-next-line max-params
   function AuditService(serviceFactory, $translate) {
     var model = serviceFactory('audit', {
-      actions: { 
+      actions: {
         getAuditedModels: {
           method: 'GET',
-          url: 'models'          
-        }        
+          url: 'models'
+        }
       },
       instance: {
       },
       listTypes: function() {
         return [
           { id: '', label: $translate.instant('all') },
-          { id: 'created', label: $translate.instant('audit.type.created') },
-          { id: 'updated', label: $translate.instant('audit.type.updated') },
-          { id: 'deleted', label: $translate.instant('audit.type.deleted') }
+          { id: 'created', label: $translate.instant('view.fields.audit.type.created') },
+          { id: 'updated', label: $translate.instant('view.fields.audit.type.updated') },
+          { id: 'deleted', label: $translate.instant('view.fields.audit.type.deleted') }
         ];
       }
     });

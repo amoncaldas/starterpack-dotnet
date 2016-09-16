@@ -9,25 +9,25 @@
           <div layout="row" flex layout-align="center center">
             <md-input-container flex class="bottom-5">
               <md-icon md-font-set="material-icons">email</md-icon>
-              <label>{{::'login.email' | translate}}</label>
+              <label>{{::'attributes.email' | translate}}</label>
               <input type="email" ng-model="loginCtrl.credentials.email">
             </md-input-container>
           </div>
           <div layout="row" flex layout-align="center center">
             <md-input-container flex class="top-1 bottom-1">
               <md-icon md-font-set="material-icons">lock</md-icon>
-              <label>{{::'login.password' | translate}}</label>
+              <label>{{::'attributes.password' | translate}}</label>
               <input type="password" flex=99 ng-model="loginCtrl.credentials.password">
             </md-input-container>
           </div>
           <div layout="row" flex layout-align="center center">
             <md-button type="submit" class="md-raised md-primary" flex>
-              {{::'login.in' | translate}}
+              {{::'view.actions.in' | translate}}
             </md-button>
           </div>
           <div layout="row" flex layout-align="center center">
             <md-button class="md-primary" flex ng-click="loginCtrl.openDialogResetPass()">
-              {{::'login.resetPassword' | translate}}
+              {{::'view.fields.login.resetPassword' | translate}}
             </md-button>
           </div>
         </form>

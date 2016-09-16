@@ -12,14 +12,14 @@
     return function(auditDetail, status) {
       switch (auditDetail.type) {
         case 'created':
-          return $translate.instant('audit.dialog.title.created');
+          return $translate.instant('dialog.audit.created');
         case 'updated':
           if (status === 'before') {
-            return $translate.instant('audit.dialog.title.updatedBefore');
+            return $translate.instant('dialog.audit.updatedBefore');
           } else {
-            return $translate.instant('audit.dialog.title.updatedAfter');
+            return $translate.instant('dialog.audit.updatedAfter');
           }
-        case 'deleted': return $translate.instant('audit.dialog.title.deleted');
+        case 'deleted': return $translate.instant('dialog.audit.deleted');
       }
     }
   }
