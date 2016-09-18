@@ -49,10 +49,10 @@
 
     function toggleDone(resource) {
       TasksService.toggleDone({ id: resource.id, done: resource.done }).then(function() {
-        PrToast.success($translate.instant('task.toggleDoneSuccess'));
+        PrToast.success($translate.instant('messages.saveSuccess'));
         vm.search(vm.paginator.currentPage);
       }, function(error) {
-        PrToast.errorValidation(error.data, $translate.instant('task.toggleDoneError'));
+        PrToast.errorValidation(error.data, $translate.instant('messages.operationError'));
       });
     }
 

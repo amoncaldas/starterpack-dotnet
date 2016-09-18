@@ -75,7 +75,7 @@
               },
               login: {
                 resetPassword: 'Esqueci minha senha',
-                confimPassword: 'Confirmar senha'
+                confirmPassword: 'Confirmar senha'
               },
               mail: {
                 to: 'Para',
@@ -102,24 +102,26 @@
                   equalsOrLessThan: 'Menor ou Igual'
                 }
               },
-              layout: {
-                perfil: 'Perfil',
-                menu: {
-                  dashboard: 'Dashboard',
-                  project: 'Projetos',
-                  admin: 'Administração',
-                  examples: 'Exemplos',
-                  user: 'Usuários',
-                  mail: 'Enviar e-mail',
-                  audit: 'Auditoria',
-                  dinamicQuery: 'Consultas Dinamicas'
-                }
-              },
               project: {
                 totalTask: 'Total de Tarefas'
               },
+              task: {
+                done: 'Não Feito / Feito'
+              },
               user: {
                 perfils: 'Perfis'
+              }
+            },
+            layout: {
+              menu: {
+                dashboard: 'Dashboard',
+                project: 'Projetos',
+                admin: 'Administração',
+                examples: 'Exemplos',
+                user: 'Usuários',
+                mail: 'Enviar e-mail',
+                audit: 'Auditoria',
+                dinamicQuery: 'Consultas Dinamicas'
               }
             },
             tooltips: {
@@ -127,6 +129,7 @@
                 viewDetail: 'Visualizar Detalhamento'
               },
               user: {
+                perfil: 'Perfil',
                 transfer: 'Transferir'
               },
               task: {
@@ -160,11 +163,15 @@
             notFound: 'Nenhum registro encontrado',
             searchError: 'Não foi possível realizar a busca.',
             saveSuccess: 'Operação realizada com sucesso',
+            operationError: 'Erro ao realizar a operação',
             saveError: 'Não foi possível salvar.',
             removeSuccess: 'Remoção realizada com sucesso.',
             removeError: 'Não foi possível remover.',
             validate: {
               fieldRequired: 'O campo {{field}} é obrigratório.'
+            },
+            layout: {
+              error404: 'Você não tem acesso a esta página.'
             },
             login: {
               logoutInactive: 'Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente.',

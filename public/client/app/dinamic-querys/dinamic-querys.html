@@ -1,11 +1,11 @@
 <content-body>
   <div flex="100">
-    <box box-title="{{::'audit.title' | translate}}">
+    <box box-title="{{::'views.actions.search' | translate}}">
       <md-content layout-padding md-whiteframe="1" class="bottom-4">
         <form class="condensed" name="dinamicQueryForm" ng-submit="dinamicQueryCtrl.addFilter(dinamicQueryForm)">
           <div layout="row">
             <md-input-container class="top-10 bottom-20" flex=33>
-              <label>{{::'dinamicQuery.form.resource' | translate}}</label>
+              <label>{{::'views.fields.queryDinamic.resource' | translate}}</label>
               <md-select
                  ng-model="dinamicQueryCtrl.queryFilters.model" required ng-disabled="dinamicQueryCtrl.addedFilters.length > 0"
                  ng-change="dinamicQueryCtrl.loadAttributes()">
@@ -17,7 +17,7 @@
           </div>
           <div layout="row">
             <md-input-container flex>
-              <label>{{::'dinamicQuery.form.attribute' | translate}}</label>
+              <label>{{::'views.fields.queryDinamic.attribute' | translate}}</label>
               <md-select
                 ng-model="dinamicQueryCtrl.queryFilters.attribute" required
                 ng-change="dinamicQueryCtrl.loadOperators()">
@@ -27,7 +27,7 @@
               </md-select>
             </md-input-container>
             <md-input-container flex>
-              <label>{{::'dinamicQuery.form.operator' | translate}}</label>
+              <label>{{::'views.fields.queryDinamic.operator' | translate}}</label>
               <md-select
                 ng-model="dinamicQueryCtrl.queryFilters.operator" required>
                 <md-option ng-repeat="operator in dinamicQueryCtrl.operators track by operator.value" ng-value="operator">
@@ -36,7 +36,7 @@
               </md-select>
             </md-input-container>
             <md-input-container flex>
-              <label>{{::'dinamicQuery.form.value' | translate}}</label>
+              <label>{{::'views.fields.queryDinamic.value' | translate}}</label>
               <input type="text" ng-model="dinamicQueryCtrl.queryFilters.value" required>
             </md-input-container>
           </div>
@@ -44,33 +44,33 @@
             <md-input-container flex>
             </md-input-container>
             <md-button class="md-raised md-mini" ng-click="dinamicQueryCtrl.clear()">
-              {{::'form.clear' | translate}}
+              {{::'views.actions.clear' | translate}}
             </md-button>
             <md-button class="md-raised md-warn md-mini" ng-click="dinamicQueryCtrl.restart()">
-              {{::'form.restart' | translate}}
+              {{::'views.actions.restart' | translate}}
             </md-button>
             <md-button class="md-raised md-primary md-mini" type="submit">
-              {{((dinamicQueryCtrl.index < 0) ? 'form.add' : 'form.update') | translate}}
+              {{((dinamicQueryCtrl.index < 0) ? 'views.actions.add' : 'views.actions.update') | translate}}
             </md-button>
             <md-button class="md-raised md-primary md-mini" ng-click="dinamicQueryCtrl.runFilter()">
-              {{::'form.filter' | translate}}
+              {{::'views.actions.filter' | translate}}
             </md-button>
           </div>
         </form>
       </md-content>
 
-      <h3>{{'dinamicQuery.filters' | translate}}</h3>
+      <h3>{{'views.fields.queryDinamic.filters' | translate}}</h3>
       <md-divider></md-divider>
 
       <md-table-container ng-if="dinamicQueryCtrl.addedFilters.length > 0">
         <table md-table class="condensed">
           <thead md-head>
             <tr md-row>
-              <th md-column>{{::'dinamicQuery.table.th.model' | translate}}</th>
-              <th md-column>{{::'dinamicQuery.table.th.attribute' | translate}}</th>
-              <th md-column>{{::'dinamicQuery.table.th.operator' | translate}}</th>
-              <th md-column>{{::'dinamicQuery.table.th.value' | translate}}</th>
-              <th md-column class="md-text-center">{{::'table.th.actions' | translate}}</th>
+              <th md-column>{{::'views.fields.queryDinamic.model' | translate}}</th>
+              <th md-column>{{::'views.fields.queryDinamic.attribute' | translate}}</th>
+              <th md-column>{{::'views.fields.queryDinamic.operator' | translate}}</th>
+              <th md-column>{{::'views.fields.queryDinamic.value' | translate}}</th>
+              <th md-column class="md-text-center">{{::'views.fields.actions' | translate}}</th>
             </tr>
           </thead>
           <tbody md-body>
@@ -82,11 +82,11 @@
               <td md-cell class="md-text-center">
                 <md-button class="md-mini" ng-click="dinamicQueryCtrl.editFilter($index, filter)">
                   <md-icon md-font-set="material-icons">edit</md-icon>
-                  <md-tooltip md-direction="bottom">{{::'form.edit' | translate}}</md-tooltip>
+                  <md-tooltip md-direction="bottom">{{::'views.actions.edit' | translate}}</md-tooltip>
                 </md-button>
                 <md-button class="md-mini" ng-click="dinamicQueryCtrl.removeFilter($index)">
                   <md-icon md-font-set="material-icons">delete</md-icon>
-                  <md-tooltip md-direction="bottom">{{::'form.remove' | translate}}</md-tooltip>
+                  <md-tooltip md-direction="bottom">{{::'views.actions.remove' | translate}}</md-tooltip>
                 </md-button>
               </td>
             </tr>
@@ -94,7 +94,7 @@
         </table>
       </md-table-container>
 
-      <h3>{{'dinamicQuery.results' | translate}}</h3>
+      <h3>{{'views.fields.queryDinamic.results' | translate}}</h3>
       <md-divider></md-divider>
 
       <md-table-container ng-if="dinamicQueryCtrl.resources.length > 0">
@@ -113,7 +113,7 @@
       </md-table-container>
 
       <div layout="row" layout-padding layout-align="center center" ng-if="dinamicQueryCtrl.resources.length === 0">
-        {{'notFound' | translate}}
+        {{'messages.notFound' | translate}}
       </div>
 
       <box-footer-buttons>

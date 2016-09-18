@@ -11,8 +11,8 @@
         <tr md-row>
           <th md-column>{{'name' | tAttr}}</th>
           <th md-column>{{'email' | tAttr}}</th>
-          <th md-column>{{'user.table.th.perfils' | translate}}</th>
-          <th md-column class="md-text-center">{{'user.table.th.actions' | translate}}</th>
+          <th md-column>{{'views.fields.user.perfils' | translate}}</th>
+          <th md-column class="md-text-center">{{'views.fields.actions' | translate}}</th>
         </tr>
       </thead>
       <tbody md-body>
@@ -24,12 +24,12 @@
             <md-button class="md-icon-button" ng-click="usersCtrl.edit(user)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">create</md-icon>
-              <md-tooltip md-direction="bottom">{{::'form.edit' | translate}}</md-tooltip>
+              <md-tooltip md-direction="bottom">{{::'views.actions.edit' | translate}}</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="usersCtrl.remove(user)">
               <md-icon md-font-set="material-icons"
                 class="md-warn">delete</md-icon>
-              <md-tooltip md-direction="bottom">{{::'form.remove' | translate}}</md-tooltip>
+              <md-tooltip md-direction="bottom">{{::'views.actions.remove' | translate}}</md-tooltip>
             </md-button>
           </td>
         </tr>

@@ -9,11 +9,11 @@
     <table md-table class="condensed">
       <thead md-head>
         <tr md-row>
-          <th md-column>{{::'project.table.th.name' | translate}}</th>
-          <th md-column>{{::'project.table.th.cost' | translate}}</th>
-          <th md-column>{{::'project.table.th.totalTask' | translate}}</th>
-          <th md-column>{{::'project.table.th.created_at' | translate}}</th>
-          <th md-column class="md-text-center">{{::'project.table.th.actions' | translate}}</th>
+          <th md-column>{{::'attributes.name' | translate}}</th>
+          <th md-column>{{::'attributes.cost' | translate}}</th>
+          <th md-column>{{::'views.fields.project.totalTask' | translate}}</th>
+          <th md-column>{{::'attributes.created_at' | translate}}</th>
+          <th md-column class="md-text-center">{{::'views.fields.actions' | translate}}</th>
         </tr>
       </thead>
       <tbody md-body>
@@ -26,23 +26,23 @@
             <md-button class="md-icon-button" ng-click="projectsCtrl.edit(project)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">create</md-icon>
-              <md-tooltip md-direction="top">{{::'form.edit' | translate}}</md-tooltip>
+              <md-tooltip md-direction="top">{{::'views.actions.edit' | translate}}</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="projectsCtrl.viewTasks(project.id)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">assignment</md-icon>
-              <md-tooltip md-direction="top">{{::'project.listTask' | translate}}</md-tooltip>
+              <md-tooltip md-direction="top">{{::'views.tooltips.task.listTask' | translate}}</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="projectsCtrl.remove(project)">
               <md-icon md-font-set="material-icons"
                 class="md-warn">delete</md-icon>
-              <md-tooltip md-direction="top">{{::'form.remove' | translate}}</md-tooltip>
+              <md-tooltip md-direction="top">{{::'views.actions.remove' | translate}}</md-tooltip>
             </md-button>
           </td>
         </tr>
         <tr md-row ng-if="projectsCtrl.resources.length == 0">
           <td md-cell colspan="5">
-            <div layout="row" layout-align="center center">{{::'notFound' | translate}}</div>
+            <div layout="row" layout-align="center center">{{::'messages.notFound' | translate}}</div>
           </td>
         </tr>
       </tbody>

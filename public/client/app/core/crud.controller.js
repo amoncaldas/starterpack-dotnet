@@ -9,7 +9,7 @@
   /** @ngInject */
   /**
    * Controlador Base que implementa todas as funções padrões de um CRUD
-   * 
+   *
    * Ações implementadas
    * activate()
    * search(page)
@@ -20,7 +20,7 @@
    * cleanForm()
    *
    * Gatilhos
-   * 
+   *
    * onActivate()
    * applyFilters(defaultQueryFilters)
    * beforeSearch(page) //retornando false cancela o fluxo
@@ -31,9 +31,9 @@
    * afterSave(resource)
    * beforeRemove(resource) //retornando false cancela o fluxo
    * afterRemove(resource)
-   * 
+   *
    * @param {any} vm instancia do controller filho
-   * @param {any} modelService serviço do model que vai ser utilizado 
+   * @param {any} modelService serviço do model que vai ser utilizado
    * @param {any} options opções para sobreescrever comportamentos padrões
    */
   // eslint-disable-next-line max-params
@@ -92,7 +92,7 @@
 
         if (angular.isFunction(vm.afterSearch)) vm.afterSearch(response);
       }, function () {
-        PrToast.error($translate.instant('controllers.crud.searchError'));
+        PrToast.error($translate.instant('messages.searchError'));
       });
     }
 
@@ -101,9 +101,9 @@
      */
     function cleanForm(form) {
       if (angular.isFunction(vm.beforeClean) && vm.beforeClean() === false) return false;
-      
+
       vm.resource = new modelService();
-      
+
       if (angular.isDefined(form)) {
         form.$setPristine();
         form.$setUntouched();
@@ -117,7 +117,7 @@
      *
      * @param {any} resource recurso selecionado
      */
-    function edit(resource) {      
+    function edit(resource) {
       vm.goTo('form');
       vm.resource = new angular.copy(resource);
 
@@ -145,10 +145,10 @@
           vm.goTo('list');
         }
 
-        PrToast.success($translate.instant('controllers.crud.saveSuccess'));
+        PrToast.success($translate.instant('messages.saveSuccess'));
 
       }, function (error) {
-        PrToast.errorValidation(error.data, $translate.instant('controllers.crud.saveError'));
+        PrToast.errorValidation(error.data, $translate.instant('messages.saveError'));
       });
     }
 
@@ -171,9 +171,9 @@
           if (angular.isFunction(vm.afterRemove)) vm.afterRemove(resource);
 
           vm.search();
-          PrToast.info($translate.instant('controllers.crud.removeSuccess'));
+          PrToast.info($translate.instant('messages.removeSuccess'));
         }, function (error) {
-          PrToast.errorValidation(error.data, $translate.instant('controllers.crud.removeError'));
+          PrToast.errorValidation(error.data, $translate.instant('messages.removeError'));
         });
       });
     }

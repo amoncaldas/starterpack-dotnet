@@ -18,7 +18,7 @@
         <md-menu md-offset="0 55" ng-if="!item.profiles || (item.profiles && auth.currentUser.hasProfile(item.profiles, item.allProfiles))">
           <md-button
             class="md-button md-buttom-menu"
-            ng-click="menuCtrl.openMenuOrRedirectToState($mdOpenMenu, $event, item.subItens.length, item.state)">
+            ng-click="menuCtrl.openMenuOrRedirectToState($mdOpenMenu, $event, item)">
             <md-icon md-font-set="material-icons"
               class="pull-left menu-icon" style="color:#fff;">
               {{::item.icon}}
@@ -28,7 +28,7 @@
           <md-menu-content width="4">
             <md-menu-item ng-repeat="subItem in item.subItens">
               <md-button
-                ng-click="menuCtrl.openMenuOrRedirectToState($mdOpenMenu, $event, 0, subItem.state)"
+                ng-click="menuCtrl.openMenuOrRedirectToState($mdOpenMenu, $event, subItem)"
                 ng-if="!subItem.profiles || (subItem.profiles && auth.currentUser.hasProfile(subItem.profiles, subItem.allProfiles))">
                 <span md-menu-align-target>
                   <md-icon md-font-set="material-icons" class="pull-left menu-icon">

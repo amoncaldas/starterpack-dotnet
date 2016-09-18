@@ -21,11 +21,11 @@
 
     function update() {
       UsersService.updateProfile(vm.user).then(function (response) {
-        //atualiza o usuário corrente com as novas informações 
+        //atualiza o usuário corrente com as novas informações
         Auth.updateCurrentUser(response);
-        PrToast.success($translate.instant('controllers.crud.saveSuccess'));
+        PrToast.success($translate.instant('messages.saveSuccess'));
       }, function (error) {
-        PrToast.errorValidation(error.data, $translate('user.profile.updateError'));
+        PrToast.errorValidation(error.data, $translate('messages.user.profile.updateError'));
       });
     }
   }

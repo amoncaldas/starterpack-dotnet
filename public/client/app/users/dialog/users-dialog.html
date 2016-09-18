@@ -1,13 +1,13 @@
-<md-dialog flex=50 aria-label="{{::'user.ariaLabel' | translate}}" class="md-dialog-transparent">
+<md-dialog flex=50 aria-label="{{::'views.titles.userList' | translate}}" class="md-dialog-transparent">
   <content-body flex>
-    <box box-title="{{::'user.dialog.title' | translate}}" flex>
+    <box box-title="{{::'views.titles.userList' | translate}}" flex>
       <md-table-container>
         <table md-table class="condensed">
           <thead md-head>
             <tr md-row>
-              <th md-column>{{::'user.table.th.name' | translate}}</th>
-              <th md-column>{{::'user.table.th.email' | translate}}</th>
-              <th md-column>{{::'user.table.th.actions' | translate}}</th>
+              <th md-column>{{::'attributes.name' | translate}}</th>
+              <th md-column>{{::'attributes.email' | translate}}</th>
+              <th md-column>{{::'views.fields.actions' | translate}}</th>
             </tr>
           </thead>
           <tbody md-body>
@@ -17,7 +17,7 @@
               <td md-cell>
                 <md-button class="md-icon-button" ng-click="ctrl.transferUser(user)">
                   <md-icon md-font-set="material-icons" class="md-dark">swap_horiz</md-icon>
-                  <md-tooltip md-direction="top">{{::'user.dialog.transfer' | translate}}</md-tooltip>
+                  <md-tooltip md-direction="top">{{::'views.tooltips.user.transfer' | translate}}</md-tooltip>
                 </md-button>
               </td>
             </tr>

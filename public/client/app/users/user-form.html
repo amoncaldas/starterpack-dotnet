@@ -1,17 +1,17 @@
 <form ng-submit="usersCtrl.save()">
-  <box box-title="{{::'form.titleRegister' | translate}}">
+  <box box-title="{{::'views.titles.register' | translate}}">
     <box-toolbar-buttons>
       <md-button class="md-icon-button" ng-click="usersCtrl.goTo('list')">
         <md-icon md-font-set="material-icons">view_list</md-icon>
         <md-tooltip md-direction="bottom">{{::'list' | translate}}</md-tooltip>
       </md-button>
-    </box-toolbar-buttons>  
+    </box-toolbar-buttons>
     <md-input-container class="md-block" flex>
-      <label>{{::'user.form.name' | translate}}</label>
+      <label>{{::'attributes.name' | translate}}</label>
       <input type="text" ng-model="usersCtrl.resource.name">
     </md-input-container>
     <md-input-container class="md-block" flex>
-      <label>{{::'user.form.email' | translate}}</label>
+      <label>{{::'attributes.email' | translate}}</label>
       <input type="email" ng-model="usersCtrl.resource.email">
     </md-input-container>
     <div md-input-container class="md-block" >
@@ -20,9 +20,9 @@
       </div>
     </div>
     <box-footer-buttons layout-align="end center">
-      <md-button type="submit" class="md-primary md-raised">{{::'form.save' | translate}}</md-button>
-      <md-button class="md-raised" ng-click="usersCtrl.cleanForm()">{{::'form.clear' | translate}}</md-button>
-    </box-footer-buttons>        
+      <md-button type="submit" class="md-primary md-raised">{{::'views.actions.save' | translate}}</md-button>
+      <md-button class="md-raised" ng-click="usersCtrl.cleanForm()">{{::'views.actions.clear' | translate}}</md-button>
+    </box-footer-buttons>
   </box>
-</form>  
+</form>
 

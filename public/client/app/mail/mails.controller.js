@@ -27,7 +27,7 @@
 
     /**
      * Realiza a busca pelo usuário remotamente
-     * 
+     *
      * @params {string} - Recebe o valor para ser pesquisado
      * @return {promisse} - Retorna uma promisse que o componete resolve
      */
@@ -77,7 +77,7 @@
       var users = lodash.find(vm.mail.users, { email: user.email });
 
       if (vm.mail.users.length > 0 && angular.isDefined(users)) {
-        PrToast.warn($translate.instant('mail.userExists'));
+        PrToast.warn($translate.instant('messages.user.userExists'));
       } else {
         vm.mail.users.push({ name: user.name, email: user.email })
       }
@@ -90,7 +90,7 @@
 
       vm.mail.$save().then(function(response) {
         if (response.length > 0) {
-          var msg = $translate.instant('mail.mailErrors');
+          var msg = $translate.instant('messages.mail.mailErrors');
 
           for (var i=0; i < response.length; i++) {
             msg += response + '\n';
@@ -98,11 +98,11 @@
           PrToast.error(msg);
           vm.cleanForm();
         } else {
-          PrToast.success($translate.instant('mail.sendMailSuccess'));
+          PrToast.success($translate.instant('messages.mail.sendMailSuccess'));
           vm.cleanForm();
         }
       }, function(response) {
-        PrToast.errorValidation(response.data, $translate.instant('mail.sendMailError'));
+        PrToast.errorValidation(response.data, $translate.instant('messages.mail.sendMailError'));
       });
     }
 

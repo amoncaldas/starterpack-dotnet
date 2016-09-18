@@ -17,7 +17,7 @@
     activate();
 
     function activate() {
-      var menuPrefix = 'layout.menu.';
+      var menuPrefix = 'views.layout.menu.';
 
       // Array contendo os itens que são mostrados no menu lateral
       vm.itensMenu = [
@@ -49,11 +49,11 @@
      * Método que exibe o sub menu dos itens do menu lateral caso tenha sub itens
      * caso contrário redireciona para o state passado como parâmetro
      */
-    function openMenuOrRedirectToState($mdOpenMenu, ev, subItens, state) {
-      if (subItens > 0) {
+    function openMenuOrRedirectToState($mdOpenMenu, ev, item) {
+      if (angular.isDefined(item.subItens) && item.subItens.length > 0) {
         $mdOpenMenu(ev);
       } else {
-        $state.go(state);
+        $state.go(item.state);
         $mdSidenav('left').close();
       }
     }

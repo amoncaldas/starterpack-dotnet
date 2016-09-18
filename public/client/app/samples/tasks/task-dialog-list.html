@@ -1,4 +1,4 @@
-<box box-title="{{::'task.title' | translate}}">
+<box box-title="{{::'views.titles.taskList' | translate}}">
   <box-toolbar-buttons>
     <md-button class="md-icon-button" ng-click="tasksCtrl.goTo('form')">
       <md-icon md-font-set="material-icons" class="md-warn">add</md-icon>
@@ -10,14 +10,14 @@
       <div layout="row">
         <div flex>
           <md-input-container class="md-block">
-            <label>{{::'task.description' | translate}}</label>
+            <label>{{::'attributes.description' | translate}}</label>
             <input type="text" ng-model="tasksCtrl.queryFilters.description">
           </md-input-container>
         </div>
         <div flex=10></div>
         <div flex>
           <md-input-container class="md-block">
-            <label>{{::'task.priority' | translate}}</label>
+            <label>{{::'attributes.priority' | translate}}</label>
             <input type="number" step="1" min="1" max="10" ng-model="tasksCtrl.queryFilters.priority">
           </md-input-container>
         </div>
@@ -51,7 +51,7 @@
       <div layout="row">
         <div flex></div>
         <md-button class="md-raised md-primary md-mini" ng-click="tasksCtrl.search(vm.paginator.currentPage)">
-          {{::'form.filter' | translate}}
+          {{::'views.actions.filter' | translate}}
         </md-button>
       </div>
     </form>
@@ -61,11 +61,11 @@
     <table md-table class="condensed">
       <thead md-head>
         <tr md-row>
-          <th md-column><span>{{'task.table.th.description' | translate}}</span></th>
-          <th md-column>{{'task.table.th.scheduled_to' | translate}}</th>
-          <th md-column md-numeric><span>{{'task.table.th.priority' | translate}}</span></th>
-          <th md-column class="md-text-center">{{'task.table.th.done' | translate}}</th>
-          <th md-column class="md-text-center">{{'task.table.th.actions' | translate}}</th>
+          <th md-column><span>{{'attributes.description' | translate}}</span></th>
+          <th md-column>{{'attributes.scheduled_to' | translate}}</th>
+          <th md-column md-numeric><span>{{'attributes.priority' | translate}}</span></th>
+          <th md-column class="md-text-center">{{'views.fields.task.done' | translate}}</th>
+          <th md-column class="md-text-center">{{'views.fields.actions' | translate}}</th>
         </tr>
       </thead>
       <tbody md-body>
@@ -80,17 +80,17 @@
           <td md-cell class="md-text-center">
             <md-button class="md-icon-button" ng-click="tasksCtrl.edit(task)">
               <md-icon md-font-set="material-icons" class="md-dark">create</md-icon>
-              <md-tooltip md-direction="top">{{::'form.edit' | translate}}</md-tooltip>
+              <md-tooltip md-direction="top">{{::'views.actions.edit' | translate}}</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="tasksCtrl.remove(task)">
               <md-icon md-font-set="material-icons" class="md-warn">delete</md-icon>
-              <md-tooltip md-direction="top">{{::'form.remove' | translate}}</md-tooltip>
+              <md-tooltip md-direction="top">{{::'views.actions.remove' | translate}}</md-tooltip>
             </md-button>
           </td>
         </tr>
         <tr md-row ng-if="tasksCtrl.resources.length == 0">
           <td md-cell colspan="5">
-            <div layout="row" layout-align="center center">{{::'notFound' | translate}}</div>
+            <div layout="row" layout-align="center center">{{::'messages.notFound' | translate}}</div>
           </td>
         </tr>
       </tbody>
@@ -103,7 +103,7 @@
         <pr-pagination paginator="tasksCtrl.paginator"></pr-pagination>
       </div>
       <div>
-        <md-button class="md-warn" ng-click="tasksCtrl.closeModal()">{{::'form.getOut' | translate}}</md-button>
+        <md-button class="md-warn" ng-click="tasksCtrl.closeModal()">{{::'views.actions.getOut' | translate}}</md-button>
       </div>
     </div>
   </box-footer-buttons>

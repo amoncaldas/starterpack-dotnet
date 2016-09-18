@@ -101,19 +101,19 @@
      */
     function loadOperators() {
       var operators = [
-        { value: '=', label: $translate.instant('dinamicQuery.operators.label.equals') },
-        { value: '<>', label: $translate.instant('dinamicQuery.operators.label.diferent') }
+        { value: '=', label: $translate.instant('views.fields.queryDinamic.operators.equals') },
+        { value: '<>', label: $translate.instant('views.fields.queryDinamic.operators.diferent') }
       ]
 
       if (vm.queryFilters.attribute.type.indexOf('varying') !== -1) {
-        operators.push({ value: 'has', label: $translate.instant('dinamicQuery.operators.label.conteins') });
-        operators.push({ value: 'startWith', label: $translate.instant('dinamicQuery.operators.label.startWith') });
-        operators.push({ value: 'endWith', label: $translate.instant('dinamicQuery.operators.label.finishWith') });
+        operators.push({ value: 'has', label: $translate.instant('views.fields.queryDinamic.operators.conteins') });
+        operators.push({ value: 'startWith', label: $translate.instant('views.fields.queryDinamic.operators.startWith') });
+        operators.push({ value: 'endWith', label: $translate.instant('views.fields.queryDinamic.operators.finishWith') });
       } else {
-        operators.push({ value: '>', label: $translate.instant('dinamicQuery.operators.label.larger') });
-        operators.push({ value: '>=', label: $translate.instant('dinamicQuery.operators.label.largerOrEquals') });
-        operators.push({ value: '<', label: $translate.instant('dinamicQuery.operators.label.smaller') });
-        operators.push({ value: '<=', label: $translate.instant('dinamicQuery.operators.label.smallerOrEquals') });
+        operators.push({ value: '>', label: $translate.instant('views.fields.queryDinamic.operators.biggerThan') });
+        operators.push({ value: '>=', label: $translate.instant('views.fields.queryDinamic.operators.equalsOrBiggerThan') });
+        operators.push({ value: '<', label: $translate.instant('views.fields.queryDinamic.operators.lessThan') });
+        operators.push({ value: '<=', label: $translate.instant('views.fields.queryDinamic.operators.equalsOrLessThan') });
       }
 
       vm.operators = operators;

@@ -1,6 +1,6 @@
 <content-body>
   <div flex="100">
-    <box box-title="{{::'view.title.auditList' | translate}}">
+    <box box-title="{{::'views.title.auditList' | translate}}">
       <md-content layout-padding md-whiteframe="1" class="bottom-4">
         <form class="condensed">
           <div layout="row">
@@ -9,27 +9,27 @@
               <input type="text" ng-model="auditCtrl.queryFilters.owner_id">
             </md-input-container>
             <md-input-container flex=60>
-              <md-select placeholder="{{::'view.fields.audit.resource' | translate}}" ng-model="auditCtrl.queryFilters.model">
+              <md-select placeholder="{{::'views.fields.audit.resource' | translate}}" ng-model="auditCtrl.queryFilters.model">
                 <md-option ng-repeat="model in auditCtrl.models" value="{{::model.id}}">
                   {{::model.label}}
                 </md-option>
               </md-select>
             </md-input-container>
             <md-input-container flex=20>
-              <label>{{::'audit.user' | translate}}</label>
+              <label>{{::'models.user' | translate}}</label>
               <input type="text" ng-model="auditCtrl.queryFilters.user">
             </md-input-container>
           </div>
           <div layout="row">
             <pr-date-time-picker flex=20
               ng-model="auditCtrl.queryFilters.dateStart"
-              placeholder-date="{{::'view.fields.audit.dateStart' | translate}}"
+              placeholder-date="{{::'views.fields.audit.dateStart' | translate}}"
               open-on-click="true"
               with-time="false">
             </pr-date-time-picker>
             <pr-date-time-picker flex=20
               ng-model="auditCtrl.queryFilters.dateEnd"
-              placeholder-date="{{::'view.fields.audit.dateEnd' | translate}}"
+              placeholder-date="{{::'views.fields.audit.dateEnd' | translate}}"
               open-on-click="true"
               with-time="false">
             </pr-date-time-picker>
@@ -43,7 +43,7 @@
             <md-input-container flex>
             </md-input-container>
             <md-button class="md-raised md-primary md-mini" ng-click="auditCtrl.search(vm.paginator.currentPage)">
-              {{::'view.actions.filter' | translate}}
+              {{::'views.actions.filter' | translate}}
             </md-button>
           </div>
         </form>
@@ -54,10 +54,10 @@
           <thead md-head>
             <tr md-row>
               <th md-column>{{'models.user' | translate}}</th>
-              <th md-column>{{'view.fields.audit.resource' | translate}}</th>
-              <th md-column>{{'view.fields.action' | translate}}</th>
-              <th md-column>{{'view.fields.audit.date' | translate}}</th>
-              <th md-column>{{'view.fields.actions' | translate}}</th>
+              <th md-column>{{'views.fields.audit.resource' | translate}}</th>
+              <th md-column>{{'views.fields.action' | translate}}</th>
+              <th md-column>{{'attributes.date' | translate}}</th>
+              <th md-column>{{'views.fields.actions' | translate}}</th>
             </tr>
           </thead>
           <tbody md-body>
@@ -68,10 +68,10 @@
               <td md-cell>{{ ::log.owner_type | auditModel}}</td>
               <td md-cell>{{ ::log.updated_at | prDatetime}}</td>
               <td md-cell>
-                <md-button class="md-icon-button" ng-click="auditCtrl.viewDetail(log)">
+                <md-button class="md-icon-button" ng-click="auditCtrl.viewsDetail(log)">
                   <md-icon md-font-set="material-icons"
                     class="md-dark">search</md-icon>
-                  <md-tooltip md-direction="bottom">{{::'view.tooltips.audit.viewDetail' | translate}}</md-tooltip>
+                  <md-tooltip md-direction="bottom">{{::'views.tooltips.audit.viewsDetail' | translate}}</md-tooltip>
                 </md-button>
               </td>
             </tr>

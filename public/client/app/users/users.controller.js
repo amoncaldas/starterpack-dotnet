@@ -56,7 +56,7 @@
 
     function beforeRemove(resource) {
       if (resource.id === Auth.currentUser.id) {
-        PrToast.error($translate.instant('user.beforeRemoveError'));
+        PrToast.error($translate.instant('messages.user.beforeRemoveError'));
         return false;
       };
     }

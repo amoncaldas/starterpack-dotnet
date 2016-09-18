@@ -115,11 +115,12 @@ return [
         'done' => 'feito',
         'project_id' => 'projeto',
         'created_at' => 'Criado em',
-        'updated_at' => 'atualizado em',
+        'updated_at' => 'Atualizado em',
         'roles' => 'Perfis',
         'users' => 'Para',
         'subject' => 'Assunto',
-        'message' => 'Mensagem'
+        'message' => 'Mensagem',
+        'date' => 'Data'
     ],
 
 ];
