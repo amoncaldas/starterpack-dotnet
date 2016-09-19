@@ -12,6 +12,7 @@
     var vm = this;
 
     vm.onActivate = onActivate;
+    vm.applyFilters = applyFilters;
     vm.afterEdit = afterEdit;
     vm.afterClean = afterClean;
     vm.beforeSave = beforeSave;
@@ -22,10 +23,16 @@
     $controller('CRUDController', { vm: vm, modelService: UsersService, options: {} });
 
     function onActivate() {
+      vm.queryFilters = {};
+
       vm.roles = RolesService.query().then(function (response) {
         vm.roles = response;
       });
     }
+
+    function applyFilters(defaultQueryFilters) {
+      return angular.extend(defaultQueryFilters, vm.queryFilters);
+    }    
 
     function afterClean() {
       vm.roles.forEach(function(role) {

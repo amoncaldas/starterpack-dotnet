@@ -29,7 +29,7 @@
               audit: 'Administração - Auditoria',
               mail: 'Administração - Envio de e-mail',
               project: 'Exemplos - Projetos',
-              'dinamic-query': 'Consultas Dinamicas',
+              'dinamic-query': 'Administração - Consultas Dinâmicas',
               'not-authorized': 'Acesso Negado'
             },
             titles: {
@@ -37,7 +37,7 @@
               mailSend: 'Enviar e-mail',
               taskList: 'Lista de Tarefas',
               userList: 'Lista de Usuários',
-              auditList: 'Lista de Auditoria',
+              auditList: 'Lista de Logs',
               register: 'Formulário de Cadastro',
               resetPassword: 'Redefinir Senha',
               update: 'Formulário de Atualização'
@@ -109,7 +109,8 @@
                 done: 'Não Feito / Feito'
               },
               user: {
-                perfils: 'Perfis'
+                perfils: 'Perfis',
+                nameOrEmail: 'Nome ou Email'
               }
             },
             layout: {

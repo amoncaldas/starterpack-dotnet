@@ -6,28 +6,7 @@
     </md-button>
   </box-toolbar-buttons>
   <md-content layout-padding md-whiteframe="1" class="bottom-4">
-    <form class="condensed">
-      <div layout="row">
-        <div flex>
-          <md-input-container class="md-block">
-            <label>{{::'attributes.description' | translate}}</label>
-            <input type="text" ng-model="tasksCtrl.queryFilters.description">
-          </md-input-container>
-        </div>
-        <div flex=10></div>
-        <div flex>
-          <md-input-container class="md-block">
-            <label>{{::'attributes.priority' | translate}}</label>
-            <input type="number" step="1" min="1" max="10" ng-model="tasksCtrl.queryFilters.priority">
-          </md-input-container>
-        </div>
-        <div flex=10></div>
-        <div flex>
-          <md-switch aria-label="Não Feito/Feito" class="top-5" ng-model="tasksCtrl.queryFilters.done">
-            Não Feito / Feito
-          </md-switch>
-        </div>
-      </div>
+    <form class="condensed" ng-submit="tasksCtrl.search(vm.paginator.currentPage)">
       <div layout="row">
         <div layout="row">
           <pr-date-time-picker
@@ -49,11 +28,25 @@
         </div>
       </div>
       <div layout="row">
-        <div flex></div>
-        <md-button class="md-raised md-primary md-mini" ng-click="tasksCtrl.search(vm.paginator.currentPage)">
+        <md-input-container flex=25>
+          <label>{{::'attributes.description' | translate}}</label>
+          <input type="text" ng-model="tasksCtrl.queryFilters.description">
+        </md-input-container>
+        <md-input-container flex=25>
+          <label>{{::'attributes.priority' | translate}}</label>
+          <input type="number" step="1" min="1" max="10" ng-model="tasksCtrl.queryFilters.priority">
+        </md-input-container>
+        <md-input-container flex=25>
+          <md-switch aria-label="Não Feito/Feito" class="top-5" ng-model="tasksCtrl.queryFilters.done">
+            Não Feito / Feito
+          </md-switch>
+        </md-input-container>
+        <md-input-container flex>
+        </md-input-container>        
+        <md-button class="md-raised md-primary md-mini" type="submit">
           {{::'views.actions.filter' | translate}}
-        </md-button>
-      </div>
+        </md-button>        
+      </div>      
     </form>
   </md-content>
 

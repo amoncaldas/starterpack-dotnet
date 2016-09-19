@@ -1,6 +1,6 @@
 <content-body>
   <div flex="100">
-    <box box-title="{{::'views.title.auditList' | translate}}">
+    <box box-title="{{::'views.titles.auditList' | translate}}">
       <md-content layout-padding md-whiteframe="1" class="bottom-4">
         <form class="condensed">
           <div layout="row">
@@ -38,11 +38,9 @@
                 <md-radio-button value="{{::type.id}}" ng-repeat="type in auditCtrl.types">{{::type.label}}</md-radio-button>
               </md-radio-group>
             </md-input-container>
-          </div>
-          <div layout="row">
             <md-input-container flex>
             </md-input-container>
-            <md-button class="md-raised md-primary md-mini" ng-click="auditCtrl.search(vm.paginator.currentPage)">
+            <md-button class="md-raised md-primary md-mini" ng-click="auditCtrl.search(auditCtrl.paginator.currentPage)">
               {{::'views.actions.filter' | translate}}
             </md-button>
           </div>
