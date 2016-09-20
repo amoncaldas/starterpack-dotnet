@@ -2,142 +2,197 @@
 
 # Script de deploy - Projeto Base Laravel
 
-FILE_NAME='package.tar.gz'
-HOST='ftp.prodeb.gov.br'
-USER='homologasar'
-PASSWD='hsar@258'
-DESTIN_DIR='/test'
+EXTENSION='.tar.gz'
+DEPLOY_DIR='deploy'
 
-removeFileOrDir() {
-  if [ -d "$1" ] || [ -f "$1" ];
+## Color Block
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BCYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+
+## Funcoes que printam as mensagens no console
+write() { echo "${NO_COLOR}$1${NO_COLOR}"; }
+error() { echo "${RED}$1${NO_COLOR}"; }
+success() { echo "${BCYAN}$1${NO_COLOR}"; }
+
+createDeployDir() {
+  if [ ! -d "$DEPLOY_DIR" ]
   then
-      rm -rf $1
+      mkdir -p $DEPLOY_DIR
   fi
 }
 
-copy() {
-    if [ ! -d "$2" ]
+removeFileOrDir() {
+  for ORIGIN in $@ ; do
+    if [ -d "$ORIGIN" ] || [ -f "$ORIGIN" ] ;
     then
-        mkdir -p $2
+        rm -rf $ORIGIN
     fi
-    cp -r $1 $2
+  done
+}
+
+copy() {
+  for ORIGIN in $@
+  do
+    cp -r $ORIGIN $DEPLOY_DIR
+  done
 }
 
 copyEnv() {
-    if [ ! -f .env.production ]
-    then
-        echo "O arquivo .env.production não foi encontrado."
-        exit
-    else
-        copy .env.production deploy
-        mv "deploy/.env.production" "deploy/.env"
-    fi
+  if [ ! -f .env.production ]
+  then
+      error "O arquivo .env.production não foi encontrado."
+      exit
+  else
+      copy .env.production
+      mv "deploy/.env.production" "deploy/.env"
+  fi
 }
 
-write() { echo -e "\e[36m$1\e[0m"; }
-error() { echo -e "\e[31m$1\e[0m"; }
-success() { echo -e "\e[38;5;34m$1\e[0m"; }
+executePHPArtisan() {
+  for ORIGIN in $@
+  do
+    php artisan $ORIGIN
+  done
+}
 
-success ':::: Iniciando procedimento ::::'
+exitError() {
+  error "$1"
+  removeFileOrDir $DEPLOY_DIR $PACKAGE_NAME
+  exit
+}
+
+loadingEnvFile() {
+  . ./.env
+}
+
+getDadosFTP() {
+  write '\nAcessando dados de FTP no arquivo .env...'
+
+  if [ -z ${FTP_HOST+x} ] ;
+  then
+    exitError "\nFTP_HOST no arquivo .env.production não foi definido.\n"
+  fi
+
+  if [ -z ${FTP_USER+x} ] ;
+  then
+    exitError "\nFTP_USER no arquivo .env.production não foi definido.\n"
+  fi
+
+  if [ -z ${FTP_PASSWD+x} ] ;
+  then
+    exitError "\nFTP_PASSWD no arquivo .env.production não foi definido.\n"
+  fi
+
+  if [ -z ${FTP_DIR+x} ] ;
+  then
+    exitError "\nFTP_DIR no arquivo .env.production não foi definido.\n"
+  fi
+
+}
+
+# Cria o diretorio temporario(deploy)
+createDeployDir
+
+success ':::: Iniciando Procedimento ::::'
 
 SEND_TO_FTP=true
 
-echo "Deseja, no final, enviar o pacote gerado para o FTP?"
-select yn in "sim" "nao"; do
+PS3="Deseja, no final, enviar o pacote gerado para o FTP?"
+select yn in sim nao ; do
     case $yn in
-        sim ) SEND_TO_FTP=true; break;;
-        nao ) SEND_TO_FTP=false; break;;
+        "sim") SEND_TO_FTP=true; break;;
+        "nao") SEND_TO_FTP=false; break;;
         *) error "Opção inválida. Digite 1 para sim ou 2 para não.";continue;;
     esac
 done
 
-write '\nCopiando arquivos'
+write '\nCopiando arquivos...'
 
-## Copiando o arquivo .env.production
+## Copiando o arquivo .env.production e renomeando para .env
 copyEnv
 
 ## Copiando o arquivo artisan
-copy artisan deploy
+copy artisan
 
 ## Copiando os diretórios e arquivos necessários para produção
-copy app deploy
-copy bootstrap deploy
-copy config deploy
-copy public deploy
-copy resources deploy
-copy storage deploy
-copy vendor deploy
-copy artisan deploy
-copy server.php deploy
-copy gulpfile.js deploy
-copy bower_components deploy
+copy app bootstrap config public resources storage vendor artisan bower_components server.php gulpfile.js
 
 ## Acessando a pasta deploy
-cd deploy/
+cd $DEPLOY_DIR/
 
-write 'Executando comandos do php artisan para limpeza do cache e logs\n'
+write '\nExecutando comandos do php artisan para limpeza do cache e logs...\n'
 
-php artisan cache:clear
-php artisan route:clear
-php artisan view:clear
-php artisan config:clear
-php artisan clear-compiled
+## Limpando cache e logs do laravel
+executePHPArtisan cache:clear route:clear view:clear config:clear clear-compiled
+
+write '\nRemovendo os arquivos de log, sessions e cache...'
 
 ## Removendo os arquivos de log, sessions e cache
-removeFileOrDir storage/logs/*
-removeFileOrDir storage/framework/sessions/*
-removeFileOrDir storage/framework/cache/*
+removeFileOrDir storage/logs/* storage/framework/sessions/* storage/framework/cache/*
+
+write '\nOtimizando o projeto...\n'
 
 ## Otimizando o projeto
-php artisan optimize
+executePHPArtisan optimize
 
-write '\nExecutando gulp para minificar js e css\n'
+write '\nExecutando gulp para minificar js e css...'
 
 ## Gerando os arquivos minificados .js e .css
-gulp --production
+#gulp --production
 
-write '\nRemovendo fontes do js e css'
+write '\nRemovendo fontes do js e css...'
 
-## Removendo os arquivos .js
-rm -rf public/client/app/*.js
-rm -rf public/client/app/**/*.js
+## Removendo os arquivos .js e .css
+removeFileOrDir public/client/app/*.js public/client/app/**/*.js public/client/app/**/**/*.js public/client/styles/*.scss
 
-write 'Removendo diretorio de exemplos'
+write '\nRemovendo diretorio de exemplos...'
 
 ## Removendo o diretório de exemplos
 removeFileOrDir public/client/app/samples
 
-write 'Zipando'
+## Carregando dados do arquivo .env
+loadingEnvFile
+
+PACKAGE_NAME=$APP_NAME$EXTENSION
+
+write '\nZipando...'
 
 ## Criando o pacote zipado do projeto
-tar -zcf $FILE_NAME server.php artisan app/ bootstrap/ config/ public/ resources/ storage/ vendor/ .env
+tar -zcf $PACKAGE_NAME server.php artisan app/ bootstrap/ config/ public/ resources/ storage/ vendor/ .env
+
+write '\nCopiando pacote para a pasta raiz do projeto...'
 
 ## Copiando o pacote para a pasta raiz do projeto
-cp $FILE_NAME ../
+cp $PACKAGE_NAME ../
 
 cd ../
 
-write 'Removendo pasta deploy(temporaria)'
-
-## Removendo o diretório de deploy
-removeFileOrDir deploy
-
 if [ "$SEND_TO_FTP" = true ] ; then
 
-write 'Enviando para FTP'
+## Lendo os dados de FTP do arquivo .env
+getDadosFTP
+
+write '\nEnviando para FTP...'
 
 ## Transfere para o FTP
 
-ftp -n $HOST <<END_SCRIPT
-quote USER $USER
-quote PASS $PASSWD
-cd $DESTIN_DIR
-put $FILE_NAME
+ftp -n $FTP_HOST <<END_SCRIPT
+quote USER $FTP_USER
+quote PASS $FTP_PASSWD
+cd $FTP_DIR
+put $PACKAGE_NAME
 quit
 END_SCRIPT
 
 fi
 
-success "\n:::: $FILE_NAME gerado com sucesso! ::::"
+write '\nRemovendo pasta deploy(temporaria)...'
+
+## Removendo o diretório de deploy
+removeFileOrDir $DEPLOY_DIR
+
+success "\n:::: $PACKAGE_NAME gerado com sucesso! ::::\n"
 
 exit 0
