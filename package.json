@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "scripts": {
     "postinstall": "bower install",
-    "server": "php artisan serve --port=5000",
+    "server": "php artisan serve --port=5000 --host=0.0.0.0",
     "package": "sh deploying.sh",
     "build": "gulp",
     "check": "gulp check"
