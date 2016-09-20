@@ -9,6 +9,9 @@ node_modules/
 bower_components/
 public/client/build/
 
+### docker ###
+php-docker/
+
 npm-debug.log
 
 ### Laravel ###
@@ -32,11 +35,10 @@ deploy.tar.gz
 *.iws
 *.iml
 
-# mac
-
-.DS_Store
-
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
+
+### mac os x ####
+.DS_Store

@@ -36,12 +36,12 @@ git clone git@git.prodeb.ba.gov.br:thiagoantonius.souza/laravel_angular_base.git
 cd pasta_do_projeto
 cp .env.example .env
 ```
-
+> Ajuste o .env com os dados do banco, email ...
 > Siga a instalação manual ou com o Docker
 
 ### Manual ###
 
-> Instale todos os pre requisitos antes de seguir
+> Instale todos os pre requisitos (php, node ...) antes de seguir
 
 ```sh
 composer global require "laravel/installer=~1.1"
@@ -61,9 +61,12 @@ git clone git@git.prodeb.ba.gov.br:php-docker.git
 cd php-docker
 docker-compose build
 docker-compose up
-docker exec -it base-php-fpm bash
-sh configure.sh
+docker exec -it base-php-fpm sh configure.sh
 ```
+
+> caso queira acessar a linha de comando do container rode docker exec -it base-php-fpm bash
+> todos os comandos no restante da documentação tem que ser prefixado com o container docker, de dentro da pasta do php-docker ex:
+> docker exec -it base-php-fpm gulp , docker exec -it base-php-fpm bower installl ...
 
 # Colocar para Rodar #
 
@@ -73,13 +76,6 @@ sh configure.sh
 ```sh
 cd pasta_do_projeto
 gulp
-```
-
-> no docker
-
-```sh
-cd pasta_do_projeto/php-docker
-docker exec -it base-php-fpm gulp
 ```
 
   - parametros opcionais
@@ -93,13 +89,6 @@ docker exec -it base-php-fpm gulp
 
 ```sh
 npm run server (Este comando inicia o servidor php na porta 5000)
-```
-
-> no docker
-
-```sh
-cd pasta_do_projeto/php-docker
-docker exec -it base-php-fpm npm run server
 ```
 
 > Abra o navegador
