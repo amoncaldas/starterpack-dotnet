@@ -9,12 +9,12 @@
 # Pré requisitos #
 
 - Preferencialmente utilize o Linux com o gerenciador APT
+- editor decente [vscode](https://code.visualstudio.com/) ou [atom.io](https://atom.io/)
 - node versão 4 ou superior [tutorial para instalar](https://nodejs.org/en/download/package-manager/)
     - Configure o npm para rodar sem sudo [tutorial](https://docs.npmjs.com/getting-started/fixing-npm-permissions)
 - php versão 5.6 ou superior [tutorial para instalar](http://tecadmin.net/install-php5-on-ubuntu/)
 - extenções do php: xdebug, fileinfo, mbstring, pdo_pgsql, pgsql, openssl
 - composer [tutorial para instalar](https://getcomposer.org/doc/00-intro.md#globally)
-- editor decente [vscode](https://code.visualstudio.com/) ou [atom.io](https://atom.io/)
 - postgres
 
 # Componentes #
@@ -29,26 +29,40 @@
 # Instalação #
 
 > Rode os comandos abaixo.
-> Todos os comandos devem ser executados no terminal do linux. No caso do windows utilize o Git Bash.
+> Todos os comandos devem ser executados no terminal do linux.
 
 ```sh
 git clone git@git.prodeb.ba.gov.br:thiagoantonius.souza/laravel_angular_base.git
 cd pasta_do_projeto
+cp .env.example .env
+```
+
+> Siga a instalação manual ou com o Docker
+
+### Manual ###
+
+> Instale todos os pre requisitos antes de seguir
+
+```sh
 composer global require "laravel/installer=~1.1"
 npm install -g yo gulp gulp-babel babel-preset-es2015 eslint eslint-plugin-angular bower git+ssh://git@git.prodeb.ba.gov.br:generator-ngprodeb.git
-npm install
-chmod **777** -R storage
-chmod **777** -R bootstrap/cache
-cp .env.example .env
+sh configure.sh
 ```
 
 > Configure o .env com os dados da conexão do postgres
 
+### Docker ###
+
+> instale o docker
+
 ```sh
-composer install
-php artisan key:generate
-php artisan jwt:secret
-php artisan migrate --seed
+cp .env.example .env
+git clone git@git.prodeb.ba.gov.br:php-docker.git
+cd php-docker
+docker-compose build
+docker-compose up
+docker exec -it base-php-fpm bash
+sh configure.sh
 ```
 
 # Colocar para Rodar #
@@ -60,6 +74,14 @@ php artisan migrate --seed
 cd pasta_do_projeto
 gulp
 ```
+
+> no docker
+
+```sh
+cd pasta_do_projeto/php-docker
+docker exec -it base-php-fpm gulp
+```
+
   - parametros opcionais
     - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
 
@@ -71,6 +93,13 @@ gulp
 
 ```sh
 npm run server (Este comando inicia o servidor php na porta 5000)
+```
+
+> no docker
+
+```sh
+cd pasta_do_projeto/php-docker
+docker exec -it base-php-fpm npm run server
 ```
 
 > Abra o navegador
