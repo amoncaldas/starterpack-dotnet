@@ -188,6 +188,11 @@ cp $PACKAGE_NAME ../
 
 cd ../
 
+write '\nRemovendo pasta deploy(temporaria)...'
+
+## Removendo o diretório de deploy
+removeFileOrDir $DEPLOY_DIR
+
 if [ "$SEND_TO_FTP" = true ] ; then
 
 ## Lendo os dados de FTP do arquivo .env
@@ -205,13 +210,14 @@ put $PACKAGE_NAME
 quit
 END_SCRIPT
 
-fi
+removeFileOrDir $PACKAGE_NAME
 
-write '\nRemovendo pasta deploy(temporaria)...'
+success "\n:::: $PACKAGE_NAME enviado para o FTP com sucesso! ::::\n"
 
-## Removendo o diretório de deploy
-removeFileOrDir $DEPLOY_DIR
+else
 
 success "\n:::: $PACKAGE_NAME gerado com sucesso! ::::\n"
+
+fi
 
 exit 0

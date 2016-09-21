@@ -1,4 +1,37 @@
-# Sobre #
+
+# Sistema Base Laravel #
+
+> Iniciando
+- [Sobre](#sobre)
+- [Pré requisitos](#pre_requisitos)
+- [Componentes](#componentes)
+
+> Features
+- [Instalação](#instalacao)
+  - [Manual](#manual)
+  - [Docker](#docker)
+- [Colocar para Rodar](#rodando)
+- [Desenvolvimento](#desenvolvimento)
+  - [Editor](#editor)
+  - [Gerador de Código](#gerador)
+  - [Adicionar novo módulo angular](#novo_modulo)
+  - [Configuração](#configuracao)
+  - [Bibliotecas Externas](#bibliotecas)
+  - [Constantes](#constantes)
+  - [Menu](#menu)
+  - [Internacionalização](#language)
+  - [Convenções](#convencoes)
+  - [CRUD](#crud)
+    - [Cliente](#crud_cliente)
+    - [Servidor](#crud_servidor)
+  - [Diretivas](#diretivas)
+  - [Componentes NgProdeb](#componentesNgProdeb)
+  - [Ícones](#icons)
+- [Log](#log)
+- [Produção](#producao)
+
+___
+## <a name="sobre"></a> Sobre
 
 - Este projeto tem como objetivo servir de base para futuros projetos da Prodeb.
 - O mesmo utiliza Laravel 5.1 com Angular 1.5.
@@ -6,7 +39,7 @@
 - O sistema não faz uso de sessão para identificação do usuário, toda a informação é através do token enviado/recebido
 - Todas as funcionalidades retornam json contendo as informações da requisitadas.
 
-# Pré requisitos #
+## <a name="pre_requisitos"></a> Pré requisitos ##
 
 - Preferencialmente utilize o Linux com o gerenciador APT
 - editor decente [vscode](https://code.visualstudio.com/) ou [atom.io](https://atom.io/)
@@ -17,7 +50,7 @@
 - composer [tutorial para instalar](https://getcomposer.org/doc/00-intro.md#globally)
 - postgres
 
-# Componentes #
+## <a name="componentes"></a> Componentes ##
 
 > Componentes e frameworks utilizados no projeto
 
@@ -26,7 +59,7 @@
 - [NgProdeb](git@git.prodeb.ba.gov.br:ngprodeb.git)
 - [momentjs](http://momentjs.com/)
 
-# Instalação #
+## <a name="instalacao"></a> Instalação ##
 
 > Rode os comandos abaixo.
 > Todos os comandos devem ser executados no terminal do linux.
@@ -39,7 +72,7 @@ cp .env.example .env
 
 > Siga a instalação manual ou com o Docker
 
-### Manual ###
+### <a name="manual"></a> Manual ###
 
 > Instale todos os pre requisitos (php, node ...) antes de seguir
 > Ajuste o .env com os dados do banco, email ...
@@ -52,9 +85,10 @@ sh configure.sh
 
 > Configure o .env com os dados da conexão do postgres
 
-### Docker ###
+### <a name="docker"></a> Docker ###
 
-> instale o docker
+> instale o docker 
+> realize o logoff para que as configurações do docker sejam aplicadas
 > configure o .env com os dados contidos no **docker-compose.yml**
 
 ```sh
@@ -70,7 +104,7 @@ docker exec -it base-php-fpm sh configure.sh
 > todos os comandos no restante da documentação tem que ser prefixado com o container docker, de dentro da pasta do php-docker ex:
 > docker exec -it base-php-fpm gulp , docker exec -it base-php-fpm bower installl ...
 
-# Colocar para Rodar #
+## <a name="rodando"></a> Colocar para Rodar ##
 
 > Execute o comando abaixo para processar os arquivos .sass e concatenar os .js e .css injetando no index.html.
 > O comando fica observando futuras modificações e repetindo o processo automaticamente
@@ -107,9 +141,9 @@ gulp check
   - parametros opcionais
     - **--fix** (para corrigir os erros que podem ser corrigidos automaticamente)
 
-# Desenvolvimento #
+## <a name="desenvolvimento"></a> Desenvolvimento ##
 
-> ### Editor ###
+> ### <a name="editor"></a> Editor ###
 
 - [vscode](https://code.visualstudio.com/)
   - plugins utilizados:
@@ -121,7 +155,7 @@ gulp check
     - vscode-icons
     - path intellisense (autocomplete para php)
 
-> ### Gerador de Código ###
+> ### <a name="gerador"></a> Gerador de Código ###
 
 - Use o gerador de estrutura de arquivo para gerar os arquivos necessários para o recurso,
 - foi usado o [YEOMAN](http://yeoman.io) para criar o gerador.
@@ -132,9 +166,9 @@ yo ngprodeb
 ```
 - escolha a estrutura na lista
 - digite o nome do recurso
-- para mais detalhes sobre o uso do gerador acesse o repositório do mesmo [Generator NgProdeb](git@git.prodeb.ba.gov.br:generator-generator-prgenerator.git)
+- para mais detalhes sobre o uso do gerador acesse o repositório do mesmo [Generator NgProdeb](http://git.prodeb.ba.gov.br/generator-ngprodeb/tree/master)
 
-> ### Adicionar novo módulo angular ###
+> ### <a name="novo_modulo"></a> Adicionar novo módulo angular ###
 
 - adicione a dependência no arquivo bower.json
 - rode o comando
@@ -147,7 +181,7 @@ bower install nome-da-biblioteca
   - ao adicionar um novo módulo o gulp deve ser reiniciado
 - adicione o módulo no arquivo public/client/app/app.js
 
-> ### Configuração ###
+> ### <a name="configuracao"></a> Configuração ###
 
 - acesse o arquivo /public/client/app/app.config.js
 - $translateProvider
@@ -157,23 +191,23 @@ bower install nome-da-biblioteca
 - $mdThemingProvider
   - configura o tema do angular material
 
-> ### Bibliotecas Externas ###
+> ### <a name="bibliotecas"></a> Bibliotecas Externas ###
 > (bibliotecas que não são módulos do angular)
 
 - acesse o arquivo **public/client/app/app.external.js**
 - adicione a linha:
 
 ```javascript
-.constant('NOME_CONSTANTE', NOME_BIBLIOTECA);
+.constant('NOME_DA_CONSTANTE', NOME_BIBLIOTECA);
 
 ```
 
-> ### Constantes ###
+> ### <a name="constantes"></a> Constantes ###
 
 - acesse o arquivo **public/client/app/app.global.js**
 - adicione um novo atributo contendo o nome da constante e o seu valor
 
-> ### Menu (adicionando itens ao menu) ###
+> ### <a name="menu"></a> Menu (adicionando itens ao menu) ###
 
 - acesse o arquivo **public/client/app/layout/menu.controller.js**
 - adicione um objeto no array **vm.itensMenu**
@@ -183,7 +217,7 @@ bower install nome-da-biblioteca
   {
     url: 'dashboard',
     titulo: menuPrefix + 'dashboard',
-    icon: 'dashboard',
+    icon: 'icon_material_design',
     subItens: []
   }
 
@@ -195,19 +229,20 @@ bower install nome-da-biblioteca
   {
     url: '#',
     titulo: menuPrefix + 'admin',
-    icon: 'settings_applications',
+    icon: 'icon_material_design',
     profiles: ['admin'],
     subItens: [
       {
         url: 'user',
         titulo: menuPrefix + 'user',
-        icon: 'people'
+        icon: 'icon_material_design'
       }
     ]
   }
   ```
+  > os icones usados no sistema encontram-se em [Material Icons](https://design.google.com/icons/)
 
-> ### Internacionalização ###
+> ### <a name="language"></a> Internacionalização ###
 
   - todas as strings usadas no sistema devem ser armazenadas no objeto data localizado no arquivo **public/client/app/i18n/language-loader.service.js**
   - estrutura do arquivo:
@@ -220,7 +255,7 @@ bower install nome-da-biblioteca
     - strings comuns aos controllers
     - por fim as strings comuns a cada recurso
 
-> ### Convenções ###
+> ### <a name="convencoes"></a> Convenções ###
 > (convenções adotadas para padronização do projeto)
 
   - o conjunto de arquivos são chamados de recurso(resource) localizados sempre no caminho **public/client/app**
@@ -238,10 +273,10 @@ bower install nome-da-biblioteca
   - para alterar as propriedades de css acesse o arquivo **public/client/styles/app.scss**
   - os templates dos emails devem ser salvos no caminho **resources/views/mails**
 
-> ### CRUD ###
+> ### <a name="crud"></a> CRUD ###
 
 - Existe 2 controllers base contendo todas as ações padrões de um CRUD, são eles:
-- No client - **crud.controller.js** (public/client/app/core/crud.controller.js)
+- <a name="crud_cliente"></a> No client - **crud.controller.js** (public/client/app/core/crud.controller.js)
   - Para herdar as funciolidades basta, no controller executar:
 
     ```javascript
@@ -316,7 +351,7 @@ bower install nome-da-biblioteca
     }
     ```
 
-- No Server - **CrudController.php** (app/Http/controllers/CrudController.php)
+- <a name="crud_servidor"></a> No Server - **CrudController.php** (app/Http/controllers/CrudController.php)
 
   - Para herdar as funciolidades basta, no controller executar:
 
@@ -401,9 +436,9 @@ bower install nome-da-biblioteca
     }
     ```
 
-> ### Diretivas ###
+> ### <a name="diretivas"></a> Diretivas ###
 
-**  O uso de todos os componentes são demonstrados através das funcionalidades de exemplo adiconadas na pasta **public/client/app/samples**
+  O uso de todos os componentes são demonstrados através das funcionalidades de exemplo adiconadas na pasta **public/client/app/samples**
 
 - __ContentHeader__
 
@@ -444,11 +479,19 @@ bower install nome-da-biblioteca
 
 - ( para mais exemplos consulte **public/client/app/samples** )
 
-> ### Componentes NgProdeb ###
+> ### <a name="componentesNgProdeb"></a> Componentes NgProdeb ###
 
 - Para saber como usar os componentes acesse: [Git NgProdeb](http://git.prodeb.ba.gov.br/ngprodeb)
 
-# Log #
+> ### <a name="icons"></a> Ícones ###
+
+- Os icones usados no sistema são encontrados em [Material Icons](https://design.google.com/icons/) e seguem o padrão abaixo:
+
+```html
+<md-icon md-font-set="material-icons">3d_rotation</md-icon>
+```
+
+## <a name="log"></a> Log ##
 
 > Para ver os logs
 
@@ -456,8 +499,9 @@ bower install nome-da-biblioteca
 - digite o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
 - digite a senha conforme a variável de ambiente no arquivo .env DEVELOP_PASSWORD
 
-# Produção #
+## <a name="producao"></a> Produção ##
 
-- altere os dados do arquivo .env.production com as configurações de produção (banco, smtp, nível de log) e desative o debug.
+- altere os dados do arquivo .env.production com as configurações de produção (banco, smtp, nível de log, ftp e etc) e desative o debug.
 - rode o comando **npm run package** (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
-- suba o arquivo **deploy.tar.gz** que foi gerado na raiz do projeto para o ftp de produção
+- os sistema irá perguntar se deseja enviar para o ftp, caso queria o pacote será enviado
+- caso contrário o arquivo **{NomeProjeto}.tar.gz** constará na raiz do projeto para o devido uso
