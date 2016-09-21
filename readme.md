@@ -90,6 +90,7 @@ sh configure.sh
 > instale o docker 
 > realize o logoff para que as configurações do docker sejam aplicadas
 > configure o .env com os dados contidos no **docker-compose.yml**
+> * o nome do host do postgres deve ser o nome do container postgres
 
 ```sh
 git clone git@git.prodeb.ba.gov.br:php-docker.git
