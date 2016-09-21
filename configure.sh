@@ -1,3 +1,4 @@
+npm install -g git+ssh://git@git.prodeb.ba.gov.br:generator-ngprodeb.git
 npm install
 bower install
 chmod 777 -R storage
