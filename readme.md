@@ -2,11 +2,13 @@
 # Sistema Base Laravel #
 
 > Iniciando
+
 - [Sobre](#sobre)
 - [Pré requisitos](#pre-requisitos)
 - [Componentes](#componentes)
 
 > Features
+
 - [Instalação](#instalacao)
     - [Manual](#manual)
     - [Docker](#docker)
@@ -27,11 +29,11 @@
     - [Diretivas](#diretivas)
     - [Componentes NgProdeb](#componentes-ngprodeb)
     - [Ícones](#icons)
-- [Log](#log)
+- [Log](.#-log)
 - [Produção](#producao)
 
 ___
-## Sobre
+## Sobre ##
 
 - Este projeto tem como objetivo servir de base para futuros projetos da Prodeb.
 - O mesmo utiliza Laravel 5.1 com Angular 1.5.
@@ -79,7 +81,7 @@ cp .env.example .env
 
 ```sh
 composer global require "laravel/installer=~1.1"
-npm install -g yo gulp gulp-babel babel-preset-es2015 eslint eslint-plugin-angular bower git+ssh://git@git.prodeb.ba.gov.br:generator-ngprodeb.git
+npm install -g yo gulp gulp-babel babel-preset-es2015 eslint eslint-plugin-angular bower
 sh configure.sh
 ```
 
@@ -97,13 +99,17 @@ git clone git@git.prodeb.ba.gov.br:php-docker.git
 cd php-docker
 docker-compose build
 docker-compose up
-docker exec -it base-php-fpm chmod +x configure.sh
-docker exec -it base-php-fpm sh configure.sh
+docker exec -it base-php-fpm bash
+chmod +x configure.sh
+./configure.sh
 ```
 
-> caso queira acessar a linha de comando do container rode docker exec -it base-php-fpm bash
-> todos os comandos no restante da documentação tem que ser prefixado com o container docker, de dentro da pasta do php-docker ex:
-> docker exec -it base-php-fpm gulp , docker exec -it base-php-fpm bower installl ...
+- caso queira acessar a linha de comando do container rode **docker exec -it base-php-fpm bash**
+- é aconselhável que crie um alias no bash do host, para isso rode o comando abaixo:
+    - **echo "alias SEU_ALIAS_AQUI='docker exec -it base-php-fpm'" >> ~/.bashrc**
+- todos os comandos no restante da documentação tem que ser prefixado com o container docker, de dentro da pasta do php-docker ex:
+    - **docker exec -it base-php-fpm gulp**
+    - **docker exec -it base-php-fpm bower install**
 
 ## Colocar para Rodar ##
 
