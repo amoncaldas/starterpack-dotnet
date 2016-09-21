@@ -1,24 +1,6 @@
 
 # Sistema Base Laravel #
 
-<!-- TOC -->
-
-- [Sistema Base Laravel #](#sistema-base-laravel-)
-  - [Sobre ##](#sobre-)
-  - [Pré requisitos ##](#pr-requisitos-)
-  - [Componentes ##](#componentes-)
-  - [Instalação ##](#instalao-)
-    - [Manual ###](#manual-)
-    - [Docker ###](#docker-)
-  - [Colocar para Rodar ##](#colocar-para-rodar-)
-  - [Desenvolvimento ##](#desenvolvimento-)
-      - [No Client ####](#no-client-)
-      - [No Server ####](#no-server-)
-  - [Log ##](#log-)
-  - [Produção ##](#produo-)
-
-<!-- /TOC -->
-
 > Iniciando
 
 - [Sobre](#sobre)
@@ -51,7 +33,7 @@
 - [Produção](#producao)
 
 ___
-## Sobre ##
+## <a name="sobre"></a>Sobre ##
 
 - Este projeto tem como objetivo servir de base para futuros projetos da Prodeb.
 - O mesmo utiliza Laravel 5.1 com Angular 1.5.
