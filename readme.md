@@ -29,7 +29,7 @@
     - [Diretivas](#diretivas)
     - [Componentes NgProdeb](#componentes-ngprodeb)
     - [Ícones](#icons)
-- [Log](#log)
+- [Log](.#-log)
 - [Produção](#producao)
 
 ___

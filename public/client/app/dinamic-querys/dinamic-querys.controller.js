@@ -43,11 +43,6 @@
     function applyFilters(defaultQueryFilters) {
       var where = {};
 
-      if (angular.isUndefined(vm.queryFilters.value) || vm.queryFilters.value === '') {
-        PrToast.error($translate.instant('messages.validate.fieldRequired', { field: 'valor' }));
-        return;
-      }
-
       /**
        * o serviço espera um objeto com:
        *  o nome de um model
@@ -106,14 +101,21 @@
       ]
 
       if (vm.queryFilters.attribute.type.indexOf('varying') !== -1) {
-        operators.push({ value: 'has', label: $translate.instant('views.fields.queryDinamic.operators.conteins') });
-        operators.push({ value: 'startWith', label: $translate.instant('views.fields.queryDinamic.operators.startWith') });
-        operators.push({ value: 'endWith', label: $translate.instant('views.fields.queryDinamic.operators.finishWith') });
+        operators.push({ value: 'has', 
+          label: $translate.instant('views.fields.queryDinamic.operators.conteins') });
+        operators.push({ value: 'startWith', 
+          label: $translate.instant('views.fields.queryDinamic.operators.startWith') });
+        operators.push({ value: 'endWith', 
+          label: $translate.instant('views.fields.queryDinamic.operators.finishWith') });
       } else {
-        operators.push({ value: '>', label: $translate.instant('views.fields.queryDinamic.operators.biggerThan') });
-        operators.push({ value: '>=', label: $translate.instant('views.fields.queryDinamic.operators.equalsOrBiggerThan') });
-        operators.push({ value: '<', label: $translate.instant('views.fields.queryDinamic.operators.lessThan') });
-        operators.push({ value: '<=', label: $translate.instant('views.fields.queryDinamic.operators.equalsOrLessThan') });
+        operators.push({ value: '>', 
+          label: $translate.instant('views.fields.queryDinamic.operators.biggerThan') });
+        operators.push({ value: '>=', 
+          label: $translate.instant('views.fields.queryDinamic.operators.equalsOrBiggerThan') });
+        operators.push({ value: '<', 
+          label: $translate.instant('views.fields.queryDinamic.operators.lessThan') });
+        operators.push({ value: '<=', 
+          label: $translate.instant('views.fields.queryDinamic.operators.equalsOrLessThan') });
       }
 
       vm.operators = operators;
@@ -148,11 +150,6 @@
      * Realiza a pesquisa tendo os filtros como parâmetros
      */
     function runFilter() {
-      if (angular.isUndefined(vm.queryFilters.value) || vm.queryFilters.value === '') {
-        PrToast.error($translate.instant('messages.validate.fieldRequired', { field: 'valor' }));
-        return;
-      }
-
       vm.search(vm.paginator.currentPage);
     }
 

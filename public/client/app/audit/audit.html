@@ -66,10 +66,10 @@
               <td md-cell>{{ ::log.owner_type | auditModel}}</td>
               <td md-cell>{{ ::log.updated_at | prDatetime}}</td>
               <td md-cell>
-                <md-button class="md-icon-button" ng-click="auditCtrl.viewsDetail(log)">
+                <md-button class="md-icon-button" ng-click="auditCtrl.viewDetail(log)">
                   <md-icon md-font-set="material-icons"
                     class="md-dark">search</md-icon>
-                  <md-tooltip md-direction="bottom">{{::'views.tooltips.audit.viewsDetail' | translate}}</md-tooltip>
+                  <md-tooltip md-direction="bottom">{{::'views.tooltips.audit.viewDetail' | translate}}</md-tooltip>
                 </md-button>
               </td>
             </tr>
