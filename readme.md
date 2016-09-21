@@ -29,11 +29,11 @@
     - [Diretivas](#diretivas)
     - [Componentes NgProdeb](#componentes-ngprodeb)
     - [Ícones](#icons)
-- [Log](#log)
+- [Log](.#-log)
 - [Produção](#producao)
 
 ___
-## <a name="sobre"></a>Sobre ##
+## Sobre ##
 
 - Este projeto tem como objetivo servir de base para futuros projetos da Prodeb.
 - O mesmo utiliza Laravel 5.1 com Angular 1.5.
