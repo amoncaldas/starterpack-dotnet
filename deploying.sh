@@ -13,7 +13,7 @@ NO_COLOR='\033[0m'
 
 ## Funcoes que printam as mensagens no console
 write() { echo "${NO_COLOR}$1${NO_COLOR}"; }
-error() { echo "${RED}$1${NO_COLOR}"; }
+error() { echo "${RED}Error: ${1}${NO_COLOR}"; }
 success() { echo "${BCYAN}$1${NO_COLOR}"; }
 
 createDeployDir() {
@@ -63,6 +63,24 @@ exitError() {
   exit
 }
 
+verifyIfFileExists() {
+  for ORIGIN in $@ ; do
+    if [ ! -f "$ORIGIN" ] ;
+    then
+        exitError "O arquivo (${ORIGIN}) não foi encontrado, não é possível prosseguir sem ele."
+    fi
+  done
+}
+
+verifyIfDirExists() {
+  for ORIGIN in $@ ; do
+    if [ ! -d "$ORIGIN" ] ;
+    then
+        exitError "O diretório (${ORIGIN}) não foi encontrado, não é possível prosseguir sem ele."
+    fi
+  done
+}
+
 loadingEnvFile() {
   . ./.env
 }
@@ -99,13 +117,13 @@ success ':::: Iniciando Procedimento ::::'
 
 SEND_TO_FTP=true
 
-PS3="Deseja, no final, enviar o pacote gerado para o FTP?"
-select yn in sim nao ; do
-    case $yn in
-        "sim") SEND_TO_FTP=true; break;;
-        "nao") SEND_TO_FTP=false; break;;
-        *) error "Opção inválida. Digite 1 para sim ou 2 para não.";continue;;
-    esac
+while true ; do
+  read -p "Deseja, no final, enviar o pacote gerado para o FTP (s/n)? " sn
+  case $sn in
+    [Ss]* ) SEND_TO_FTP=true; break;;
+    [Nn]* ) SEND_TO_FTP=false; break;;
+    *) error "Opção inválida. Digite S para sim ou N para não.";;
+  esac
 done
 
 write '\nCopiando arquivos...'
@@ -113,8 +131,9 @@ write '\nCopiando arquivos...'
 ## Copiando o arquivo .env.production e renomeando para .env
 copyEnv
 
-## Copiando o arquivo artisan
-copy artisan
+## Verificando se as pastas e arquivos obrigratórios existem
+verifyIfFileExists artisan server.php gulpfile.js
+verifyIfDirExists app bootstrap config public resources storage vendor bower_components
 
 ## Copiando os diretórios e arquivos necessários para produção
 copy app bootstrap config public resources storage vendor artisan bower_components server.php gulpfile.js
@@ -140,7 +159,7 @@ executePHPArtisan optimize
 write '\nExecutando gulp para minificar js e css...'
 
 ## Gerando os arquivos minificados .js e .css
-#gulp --production
+gulp --production
 
 write '\nRemovendo fontes do js e css...'
 
