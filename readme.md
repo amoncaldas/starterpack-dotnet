@@ -1,13 +1,13 @@
 
 # Sistema Base Laravel #
 
-> Iniciando
+> ## Iniciando
 
 - [Sobre](#sobre)
 - [Pré requisitos](#pre-requisitos)
 - [Componentes](#componentes)
 
-> Features
+> ## Features
 
 - [Instalação](#instalacao)
     - [Manual](#manual)
@@ -29,7 +29,7 @@
     - [Diretivas](#diretivas)
     - [Componentes NgProdeb](#componentes-ngprodeb)
     - [Ícones](#icons)
-- [Log](.#-log)
+- [Log](#log)
 - [Produção](#producao)
 
 ___
