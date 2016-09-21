@@ -194,6 +194,9 @@
               profile: {
                 updateError: 'Não foi possível atualizar seu profile'
               }
+            },
+            queryDinamic: {
+              noFilter: 'Nenhum filtro adicionado'
             }
           },
           models: {
