@@ -2,13 +2,13 @@
   <box-toolbar-buttons>
     <md-button class="md-icon-button" ng-click="usersCtrl.goTo('form')">
       <md-icon md-font-set="material-icons" class="md-warn">add</md-icon>
-      <md-tooltip md-direction="bottom">{{::'add' | translate}}</md-tooltip>
+      <md-tooltip md-direction="bottom" hide-sm hide-xs>{{::'views.actions.add' | translate}}</md-tooltip>
     </md-button>
   </box-toolbar-buttons>
   <md-content layout-padding md-whiteframe="1" class="bottom-4">
     <form class="condensed" ng-submit="usersCtrl.search(vm.paginator.currentPage)">
       <div layout="row">
-        <md-input-container flex=40>
+        <md-input-container flex=40 class="top-20">
           <label>{{::'views.fields.user.nameOrEmail' | translate}}</label>
           <input type="text" ng-model="usersCtrl.queryFilters.nameOrEmail">
         </md-input-container>
@@ -16,10 +16,10 @@
         </md-input-container>
         <md-button class="md-raised md-primary md-mini" type="submit">
           {{::'views.actions.filter' | translate}}
-        </md-button>        
+        </md-button>
       </div>
     </form>
-  </md-content>  
+  </md-content>
   <md-table-container>
     <table md-table class="condensed">
       <thead md-head>
@@ -39,12 +39,12 @@
             <md-button class="md-icon-button" ng-click="usersCtrl.edit(user)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">create</md-icon>
-              <md-tooltip md-direction="bottom">{{::'views.actions.edit' | translate}}</md-tooltip>
+              <md-tooltip md-direction="bottom" hide-sm hide-xs>{{::'views.actions.edit' | translate}}</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="usersCtrl.remove(user)">
               <md-icon md-font-set="material-icons"
                 class="md-warn">delete</md-icon>
-              <md-tooltip md-direction="bottom">{{::'views.actions.remove' | translate}}</md-tooltip>
+              <md-tooltip md-direction="bottom" hide-sm hide-xs>{{::'views.actions.remove' | translate}}</md-tooltip>
             </md-button>
           </td>
         </tr>

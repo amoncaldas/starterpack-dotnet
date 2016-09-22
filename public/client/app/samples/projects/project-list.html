@@ -2,7 +2,7 @@
   <box-toolbar-buttons>
     <md-button class="md-icon-button" ng-click="projectsCtrl.goTo('form')">
       <md-icon md-font-set="material-icons" class="md-warn">add</md-icon>
-      <md-tooltip md-direction="bottom">{{ ::'add' | translate}}</md-tooltip>
+      <md-tooltip md-direction="bottom" hide-sm hide-xs>{{ ::'views.actions.add' | translate}}</md-tooltip>
     </md-button>
   </box-toolbar-buttons>
   <md-table-container>
@@ -26,17 +26,17 @@
             <md-button class="md-icon-button" ng-click="projectsCtrl.edit(project)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">create</md-icon>
-              <md-tooltip md-direction="top">{{::'views.actions.edit' | translate}}</md-tooltip>
+              <md-tooltip md-direction="top" hide-sm hide-xs>{{::'views.actions.edit' | translate}}</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="projectsCtrl.viewTasks(project.id)">
               <md-icon md-font-set="material-icons"
                 class="md-dark">assignment</md-icon>
-              <md-tooltip md-direction="top">{{::'views.tooltips.task.listTask' | translate}}</md-tooltip>
+              <md-tooltip md-direction="top" hide-sm hide-xs>{{::'views.tooltips.task.listTask' | translate}}</md-tooltip>
             </md-button>
             <md-button class="md-icon-button" ng-click="projectsCtrl.remove(project)">
               <md-icon md-font-set="material-icons"
                 class="md-warn">delete</md-icon>
-              <md-tooltip md-direction="top">{{::'views.actions.remove' | translate}}</md-tooltip>
+              <md-tooltip md-direction="top" hide-sm hide-xs>{{::'views.actions.remove' | translate}}</md-tooltip>
             </md-button>
           </td>
         </tr>

@@ -104,12 +104,14 @@ chmod +x configure.sh
 ./configure.sh
 ```
 
-- caso queira acessar a linha de comando do container rode **docker exec -it base-php-fpm bash**
-- é aconselhável que crie um alias no bash do host, para isso rode o comando abaixo:
+- é aconselhável que se crie um alias no bash do host para executar comandos no bash do docker, para isso rode o comando abaixo:
     - **echo "alias SEU_ALIAS_AQUI='docker exec -it base-php-fpm'" >> ~/.bashrc**
-- todos os comandos no restante da documentação tem que ser prefixado com o container docker, de dentro da pasta do php-docker ex:
-    - **docker exec -it base-php-fpm gulp**
-    - **docker exec -it base-php-fpm bower install**
+    - (feche o console e abra novamente para que as alterações surtam efeito)
+- caso queira acessar a linha de comando do container rode **SEU_ALIAS_CRIADO bash**
+- todos os comandos no restante da documentação tem que ser prefixado com o container docker ou seu alias criado, de dentro da pasta do php-docker ex:
+    - **docker exec -it base-php-fpm SEU_COMANDO_AQUI**
+    - **SEU_ALIAS_CRIADO bash**
+- para sair do bash digite **exit** e dê enter
 
 ## Colocar para Rodar ##
 
@@ -124,9 +126,10 @@ gulp
   - parametros opcionais
     - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
 
- - Caso dê erro sobre quantidade de arquivos observados no linux, execute o comandos no terminal
+  - No caso da instalação MANUAL pode ocorrer um erro sobre quantidade de arquivos observados no linux
+  - para corrigir isso execute os comandos abaixo no terminal
     - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-
+  - No caso da instalação com o DOCKER esse comando é executado automaticamente
 
 > Em outra aba do terminal.
 
@@ -137,7 +140,7 @@ npm run server (Este comando inicia o servidor php na porta 5000)
 > Abra o navegador
 
 - acesse **http://localhost:5000**
-- logue com os dados email: **admin-base@prodeb.com** senha: **Prodeb01**
+- logue com os dados, email: **admin-base@prodeb.com** e senha: **Prodeb01**
 
 > Outros comandos
 
@@ -154,13 +157,13 @@ gulp check
 
 - [vscode](https://code.visualstudio.com/)
   - plugins utilizados:
-    - php debug
-    - php code format
-    - eslint (para verificar erros de formatação e code smell)
-    - editor config (para configurar codificação, tabulação ...)
-    - beautify (para formatar o código)
-    - vscode-icons
-    - path intellisense (autocomplete para php)
+      - php debug
+      - php code format
+      - eslint (para verificar erros de formatação e code smell)
+      - editor config (para configurar codificação, tabulação ...)
+      - beautify (para formatar o código)
+      - vscode-icons
+      - path intellisense (autocomplete para php)
 
 > ### Gerador de Código ###
 
@@ -173,7 +176,7 @@ yo ngprodeb
 ```
 - escolha a estrutura na lista
 - digite o nome do recurso
-- para mais detalhes sobre o uso do gerador acesse o repositório do mesmo [Generator NgProdeb](http://git.prodeb.ba.gov.br/generator-ngprodeb/tree/master)
+- para mais detalhes sobre o uso do gerador acesse [Generator NgProdeb](http://git.prodeb.ba.gov.br/generator-ngprodeb/tree/master)
 
 > ### Adicionar novo módulo angular ###
 
@@ -248,21 +251,29 @@ bower install nome-da-biblioteca
     ]
   }
   ```
-  > os icones usados no sistema encontram-se em [Material Icons](https://design.google.com/icons/)
 
 > ### Internacionalização ###
 
   - todas as strings usadas no sistema devem ser armazenadas no objeto data localizado no arquivo **public/client/app/i18n/language-loader.service.js**
   - estrutura do arquivo:
-    - no primeiro momento estão as strings comuns ao sistema como um todo
-    - em seguida as strings comuns aos formulários
-    - strings dos dialogs
-    - strings das mensagens do toast
-    - strings dos breadcrumbs
-    - strings comuns a todos os models(recurso)
-    - strings comuns aos controllers
-    - por fim as strings comuns a cada recurso
-
+      - no primeiro momento estão as strings comuns ao sistema como um todo
+      - em seguida as strings das views subdivididas em blocos
+          - strings dos breadcrumbs
+          - strings dos titles
+          - strings das actions
+          - strings dos fields
+          - strings do layout
+          - string dos tooltips
+      - strings dos atributos dos recursos
+      - strings dos dialogs
+      - strings das mensagens
+      - por fim as strings com os nomes dos models(recurso)
+  - por convenção o padrão utilizado é o seguinte:
+      - bloco das strings comuns ao todo
+      - blocos das strings específicas
+          - blocos das strings comuns específicas
+          - blocos das strings por recurso
+  
 > ### Convenções ###
 > (convenções adotadas para padronização do projeto)
 
@@ -496,7 +507,7 @@ bower install nome-da-biblioteca
 
 - Para saber como usar os componentes acesse: [Git NgProdeb](http://git.prodeb.ba.gov.br/ngprodeb)
 
-> ### <a name="icons"></a> Ícones ###
+> ### Ícones ###
 
 - Os icones usados no sistema são encontrados em [Material Icons](https://design.google.com/icons/) e seguem o padrão abaixo:
 
@@ -515,6 +526,9 @@ bower install nome-da-biblioteca
 ## Produção ##
 
 - altere os dados do arquivo .env.production com as configurações de produção (banco, smtp, nível de log, ftp e etc) e desative o debug.
-- rode o comando **npm run package** (prepara a aplicação para produção, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados)
-- os sistema irá perguntar se deseja enviar para o ftp, caso queria o pacote será enviado
+- rode o comando **npm run package** 
+    - prepara a aplicação para produção
+    - minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados
+    - gerando o pacote zipado no padrão **{NomeProjeto}.tar.gz**
+- o sistema irá perguntar se deseja enviar para o ftp, caso queria o pacote será enviado e removido da raiz do projeto
 - caso contrário o arquivo **{NomeProjeto}.tar.gz** constará na raiz do projeto para o devido uso

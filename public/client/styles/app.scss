@@ -53,6 +53,10 @@ md-toolbar {
   .padding-top-#{$i} { padding-top: 1px * $i; }
 }
 
+@for $i from 1 through 100 {
+  .font-size-#{$i} { font-size: 1% * $i !important; }
+}
+
 form.condensed {
   margin: 2px 0 !important;
   padding: 4px 0 0 0 !important;

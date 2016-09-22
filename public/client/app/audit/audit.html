@@ -19,7 +19,7 @@
               placeholder-date="{{::'views.fields.audit.dateEnd' | translate}}"
               open-on-click="true"
               with-time="false">
-            </pr-date-time-picker>                        
+            </pr-date-time-picker>
           </div>
           <div layout="row">
             <md-input-container flex=50 flex-gt-md=20>
@@ -32,14 +32,14 @@
                   {{::model.label}}
                 </md-option>
               </md-select>
-            </md-input-container>            
+            </md-input-container>
           </div>
-          <div layout="row">      
+          <div layout="row">
             <md-input-container flex=80>
               <md-radio-group ng-model="auditCtrl.queryFilters.type" layout="row">
                 <md-radio-button value="{{::type.id}}" ng-repeat="type in auditCtrl.types">{{::type.label}}</md-radio-button>
               </md-radio-group>
-            </md-input-container>                  
+            </md-input-container>
             <md-input-container flex>
             </md-input-container>
             <md-button class="md-raised md-primary md-mini" ng-click="auditCtrl.search(auditCtrl.paginator.currentPage)">
@@ -71,7 +71,7 @@
                 <md-button class="md-icon-button" ng-click="auditCtrl.viewDetail(log)">
                   <md-icon md-font-set="material-icons"
                     class="md-dark">search</md-icon>
-                  <md-tooltip md-direction="bottom">{{::'views.tooltips.audit.viewDetail' | translate}}</md-tooltip>
+                  <md-tooltip md-direction="bottom" hide-sm hide-xs>{{::'views.tooltips.audit.viewDetail' | translate}}</md-tooltip>
                 </md-button>
               </td>
             </tr>
