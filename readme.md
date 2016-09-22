@@ -89,10 +89,11 @@ sh configure.sh
 
 ### Docker ###
 
-> instale o docker 
+> instale o docker [Docker Install Linux](https://docs.docker.com/engine/installation/linux/)
+> instale o docker-compose [Docker Compose](https://docs.docker.com/compose/install/)
 > realize o logoff para que as configurações do docker sejam aplicadas
-> configure o .env com os dados contidos no **docker-compose.yml**
-> * o nome do host do postgres deve ser o nome do container postgres
+> configure o .env com os dados contidos no **/php-docker/docker-compose.yml** 
+> o nome do host do postgres deve ser o nome do container postgres
 
 ```sh
 git clone git@git.prodeb.ba.gov.br:php-docker.git
@@ -304,163 +305,169 @@ bower install nome-da-biblioteca
 - Para herdar as funciolidades basta, no controller executar:
 
 ```javascript
-  $controller('CRUDController', { vm: vm, modelService: ProjectsService, options: { } });
+$controller('CRUDController', 
+  { 
+    vm: vm, 
+    modelService: ProjectsService, 
+    options: { } 
+  }
+);
 ```
 
-  - Opções
+- Opções
 
-    ```javascript
-    {
-      redirectAfterSave: true,
-      searchOnInit: true,
-      perPage: 8
-    }
-    ```
+```javascript
+{
+  redirectAfterSave: true,
+  searchOnInit: true,
+  perPage: 8
+}
+```
 
-  - Ações Implementadas
+- Ações Implementadas
 
-    ```javascript
-    activate()
-    search(page)
-    edit(resource)
-    save()
-    remove(resource)
-    goTo(viewName)
-    cleanForm()
-    ```
+```javascript
+activate()
+search(page)
+edit(resource)
+save()
+remove(resource)
+goTo(viewName)
+cleanForm()
+```
 
-  - Gatilhos
+- Gatilhos
 
-    ```javascript
-    onActivate()
-    applyFilters(defaultQueryFilters)
-      //recebe um objeto com os filtros de página aplicado e deve devolver este objeto com demais filtros
-    beforeSearch(page) //retornando false cancela o fluxo
-    afterSearch(response)
-    beforeClean //retornando false cancela o fluxo
-    afterClean()
-    beforeSave() //retornando false cancela o fluxo
-    afterSave(resource)
-    beforeRemove(resource) //retornando false cancela o fluxo
-    afterRemove(resource)
-    ```
+```javascript
+onActivate()
+applyFilters(defaultQueryFilters)
+  //recebe um objeto com os filtros de página aplicado e deve devolver este objeto com demais filtros
+beforeSearch(page) //retornando false cancela o fluxo
+afterSearch(response)
+beforeClean //retornando false cancela o fluxo
+afterClean()
+beforeSave() //retornando false cancela o fluxo
+afterSave(resource)
+beforeRemove(resource) //retornando false cancela o fluxo
+afterRemove(resource)
+```
 
-   - Exemplo
+- Exemplo
 
-    ```javascript
+```javascript
 
-    angular
-      .module('app')
-      .controller('AuditController', AuditController);
+angular
+  .module('app')
+  .controller('AuditController', AuditController);
 
-    function AuditController($controller, AuditService, PrDialog) {
-      var vm = this;
+function AuditController($controller, AuditService, PrDialog) {
+  var vm = this;
 
-      vm.onActivate = onActivate;
-      vm.applyFilters = applyFilters;
+  vm.onActivate = onActivate;
+  vm.applyFilters = applyFilters;
 
-      $controller('CRUDController', { vm: vm, modelService: AuditService, options: {} });
+  $controller('CRUDController', { vm: vm, modelService: AuditService, options: {} });
 
-      function onActivate() {
-        vm.models = AuditService.listModels();
-        vm.types = AuditService.listTypes();
+  function onActivate() {
+    vm.models = AuditService.listModels();
+    vm.types = AuditService.listTypes();
 
-        vm.queryFilters = { type: vm.types[0].id, model: vm.models[0].id };
-      }
+    vm.queryFilters = { type: vm.types[0].id, model: vm.models[0].id };
+  }
 
-      function applyFilters(defaultQueryFilters) {
-        return angular.extend(defaultQueryFilters, vm.queryFilters);
-      }
+  function applyFilters(defaultQueryFilters) {
+    return angular.extend(defaultQueryFilters, vm.queryFilters);
+  }
 
-    }
-    ```
+}
+```
 
 #### No Server ####
 
 **CrudController.php** (app/Http/controllers/CrudController.php)
 
-  - Para herdar as funciolidades basta, no controller executar:
+- Para herdar as funciolidades basta, no controller executar:
 
-    ```php
-    use App\Http\Controllers\CrudController;
+```php
+use App\Http\Controllers\CrudController;
 
-    class ProjectsController extends CrudController
-    ```
+class ProjectsController extends CrudController
+```
 
-  - Deve ser implementado os métodos
+- Deve ser implementado os métodos
 
-    ```php
-      getModel() //retornar a classe referente ao model
-      getValidationRules(Request $request, Model $obj) //retornar um array com as regras de validação
-    ```
+```php
+  getModel() //retornar a classe referente ao model
+  getValidationRules(Request $request, Model $obj) //retornar um array com as regras de validação
+```
 
-  - Ações Implementadas
+- Ações Implementadas
 
-    ```php
-    index(Request $request)
-    store(Request $request)
-    show(Request $request, $id)
-    update(Request $request, $id)
-    saveOrUpdate(Request $request, $obj, $action)
-    destroy(Request $request, $id)
-    ```
+```php
+index(Request $request)
+store(Request $request)
+show(Request $request, $id)
+update(Request $request, $id)
+saveOrUpdate(Request $request, $obj, $action)
+destroy(Request $request, $id)
+```
 
-  - Gatilhos
+- Gatilhos
 
-    ```php
-    applyFilters(page, $request, $baseQuery)
-    beforeAll($request)
-    beforeSearch($request, $dataQuery, $countQuery)
-    beforeSave($request, $obj)
-    beforeStore($request, $obj)
-    beforeUpdate($request, $obj)
-    beforeDestroy($request, $obj)
-    afterSave($request, $obj)
-    afterStore($request, $obj)
-    afterUpdate($request, $obj)
-    afterDestroy($request, $obj)
-    ```
+```php
+applyFilters(page, $request, $baseQuery)
+beforeAll($request)
+beforeSearch($request, $dataQuery, $countQuery)
+beforeSave($request, $obj)
+beforeStore($request, $obj)
+beforeUpdate($request, $obj)
+beforeDestroy($request, $obj)
+afterSave($request, $obj)
+afterStore($request, $obj)
+afterUpdate($request, $obj)
+afterDestroy($request, $obj)
+```
 
-   - Exemplo
+- Exemplo
 
-    ```php
-    class ProjectsController extends CrudController
+```php
+class ProjectsController extends CrudController
+{
+    public function __construct()
     {
-        public function __construct()
-        {
-        }
-
-        protected function getModel()
-        {
-            return Project::class;
-        }
-
-        protected function applyFilters(Request $request, $query) {
-            $query = $query->with('tasks');
-
-            if($request->has('name'))
-                $query = $query->where('name', 'like', '%'.$request->name.'%');
-        }
-
-        protected function beforeSearch(Request $request, $dataQuery, $countQuery) {
-            $dataQuery->orderBy('name', 'asc');
-        }
-
-        protected function getValidationRules(Request $request, Model $obj)
-        {
-            $rules = [
-                'name' => 'required|max:100|unique:projects',
-                'cost' => 'required|min:1'
-            ];
-
-            if ( strpos($request->route()->getName(), 'projects.update') !== false ) {
-                $rules['name'] = 'required|max:255|unique:projects,name,'.$obj->id;
-            }
-
-            return $rules;
-        }
     }
-    ```
+
+    protected function getModel()
+    {
+        return Project::class;
+    }
+
+    protected function applyFilters(Request $request, $query) {
+        $query = $query->with('tasks');
+
+        if($request->has('name'))
+            $query = $query->where('name', 'like', '%'.$request->name.'%');
+    }
+
+    protected function beforeSearch(Request $request, $dataQuery, $countQuery) {
+        $dataQuery->orderBy('name', 'asc');
+    }
+
+    protected function getValidationRules(Request $request, Model $obj)
+    {
+        $rules = [
+            'name' => 'required|max:100|unique:projects',
+            'cost' => 'required|min:1'
+        ];
+
+        if ( strpos($request->route()->getName(), 'projects.update') !== false ) {
+            $rules['name'] = 'required|max:255|unique:projects,name,'.$obj->id;
+        }
+
+        return $rules;
+    }
+}
+```
 
 > ### Diretivas ###
 
@@ -469,38 +476,38 @@ bower install nome-da-biblioteca
 - __ContentHeader__
 
 ```html
-  <content-header title="" description="">
-    Conteúdo do content header
-  </content-header>
+<content-header title="" description="">
+  Conteúdo do content header
+</content-header>
 ```
 
 - __ContentBody__
 
 ```html
-  <content-body layoutAlign="">
-    Conteúdo do content header.
-  </content-body>
+<content-body layoutAlign="">
+  Conteúdo do content header.
+</content-body>
 ```
 
 - __Box__
 (obs.: o box deve estar dentro de um ContentBody)
 
 ```html
-  <box box-title="Título do box">
-    Conteúdo do box
-  </box>
+<box box-title="Título do box">
+  Conteúdo do box
+</box>
 ```
 
 ```html
-  <box box-title="Título do box">
-    <box-toolbar-buttons>
-      Botões no toolbar do box (Opcional)
-    </box-toolbar-buttons>
-      Conteúdo do box
-    <box-footer-buttons>
-      Botões no rodapé do box (Opcional)
-    </box-footer-buttons>
-  </box>
+<box box-title="Título do box">
+  <box-toolbar-buttons>
+    Botões no toolbar do box (Opcional)
+  </box-toolbar-buttons>
+    Conteúdo do box
+  <box-footer-buttons>
+    Botões no rodapé do box (Opcional)
+  </box-footer-buttons>
+</box>
 ```
 
 - ( para mais exemplos consulte **public/client/app/samples** )
@@ -514,7 +521,9 @@ bower install nome-da-biblioteca
 - Os icones usados no sistema são encontrados em [Material Icons](https://design.google.com/icons/) e seguem o padrão abaixo:
 
 ```html
-<md-icon md-font-set="material-icons">3d_rotation</md-icon>
+<md-icon md-font-set="material-icons">
+  3d_rotation
+</md-icon>
 ```
 
 ## Log ##
