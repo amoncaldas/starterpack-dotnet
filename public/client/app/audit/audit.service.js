@@ -19,7 +19,7 @@
       },
       listTypes: function() {
         return [
-          { id: '', label: $translate.instant('all') },
+          { id: '', label: $translate.instant('views.fields.audit.allResources') },
           { id: 'created', label: $translate.instant('views.fields.audit.type.created') },
           { id: 'updated', label: $translate.instant('views.fields.audit.type.updated') },
           { id: 'deleted', label: $translate.instant('views.fields.audit.type.deleted') }

@@ -8,12 +8,13 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function UsersDialogController($controller, UsersService, userDialogInput) {
+  function UsersDialogController($controller, UsersService, PrDialog, userDialogInput) {
     var vm = this;
 
     vm.onActivate = onActivate;
     vm.beforeSearch = beforeSearch;
-    vm.transferUser = userDialogInput.transferUserFn;
+    vm.close = close;
+    vm.transferUser = userDialogInput.transferUserFn;    
 
     // instantiate base controller
     $controller('CRUDController', {
@@ -31,6 +32,10 @@
     function beforeSearch() {
       angular.extend(vm.defaultQueryFilters, vm.queryFilters);
     }
+
+    function close() {
+      PrDialog.close();
+    }        
 
   }
 

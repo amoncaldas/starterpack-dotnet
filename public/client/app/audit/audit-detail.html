@@ -6,7 +6,7 @@
           <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.old_value">{{ ::key | tAttr}}: {{ ::value | auditValue:key}}</li>
         </ul>
         <box-footer-buttons>
-          <md-button class="md-raised md-warn" ng-click="auditDetailCtrl.closeDialog()">{{::'views.actions.getOut' | translate}}</md-button>
+          <md-button class="md-warn" ng-click="auditDetailCtrl.close()">{{::'views.actions.getOut' | translate}}</md-button>
         </box-footer-buttons>
       </box>
     </div>
@@ -16,7 +16,7 @@
           <li ng-repeat="(key, value) in auditDetailCtrl.auditDetail.new_value">{{ ::key | tAttr}}: {{ ::value | auditValue:key}}</li>
         </ul>
         <box-footer-buttons>
-          <md-button class="md-raised md-warn" ng-click="auditDetailCtrl.closeDialog()">{{::'views.actions.getOut' | translate}}</md-button>
+          <md-button class="md-warn" ng-click="auditDetailCtrl.close()">{{::'views.actions.getOut' | translate}}</md-button>
         </box-footer-buttons>
       </box>
     </div>

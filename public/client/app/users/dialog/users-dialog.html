@@ -1,4 +1,4 @@
-<md-dialog flex=50 aria-label="{{::'views.titles.userList' | translate}}" class="md-dialog-transparent">
+<md-dialog flex=75 flex-gt-md=60 aria-label="{{::'views.titles.userList' | translate}}" class="md-dialog-transparent">
   <content-body flex>
     <box box-title="{{::'views.titles.userList' | translate}}" flex>
       <md-table-container>
@@ -26,7 +26,14 @@
       </md-table-container>
 
       <box-footer-buttons>
-        <pr-pagination paginator="ctrl.paginator"></pr-pagination>
+        <div layout="row">
+          <div flex layout="row" layout-align="center center">
+            <pr-pagination paginator="ctrl.paginator"></pr-pagination>
+          </div>
+          <div>
+            <md-button class="md-warn" ng-click="ctrl.close()">{{::'views.actions.getOut' | translate}}</md-button>
+          </div>
+        </div>
       </box-footer-buttons>
     </box>
   </content-body>

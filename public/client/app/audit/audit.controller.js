@@ -56,9 +56,9 @@
           var vm = this;
 
           vm.auditDetail = auditDetail;
-          vm.closeDialog = closeDialog;
+          vm.close = close;
 
-          function closeDialog() {
+          function close() {
             PrDialog.close();
           }
 

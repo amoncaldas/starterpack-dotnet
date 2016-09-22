@@ -13,7 +13,7 @@
 
     //Functions Block
     vm.onActivate   = onActivate;
-    vm.closeModal   = closeModal;
+    vm.close        = close;
     vm.applyFilters = applyFilters;
     vm.beforeSave   = beforeSave;
     vm.afterSave    = afterSave;
@@ -42,7 +42,7 @@
       vm.search(vm.paginator.currentPage);
     }
 
-    function closeModal() {
+    function close() {
       vm.cleanForm();
       PrDialog.close();
     }

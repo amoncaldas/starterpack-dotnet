@@ -67,6 +67,7 @@
                 dateStart: 'Data Inicial',
                 dateEnd: 'Data Final',
                 resource: 'Recurso',
+                allResources: 'Todos Recursos',
                 type: {
                   created: 'Cadastrado',
                   updated: 'Atualizado',
