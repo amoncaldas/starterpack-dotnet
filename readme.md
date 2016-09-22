@@ -110,8 +110,8 @@ chmod +x configure.sh
 - caso queira acessar a linha de comando do container rode **SEU_ALIAS_CRIADO bash**
 - todos os comandos no restante da documentação tem que ser prefixado com o container docker ou seu alias criado, de dentro da pasta do php-docker ex:
     - **docker exec -it base-php-fpm SEU_COMANDO_AQUI**
-    - **SEU_ALIAS_CRIADO bash**
-- para sair do bash digite **exit** e dê enter
+    - **SEU_ALIAS_CRIADO SEU_COMANDO_AQUI**
+- para sair do bash digite **exit** e aperte enter
 
 ## Colocar para Rodar ##
 
@@ -126,12 +126,11 @@ gulp
   - parametros opcionais
     - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
 
-  - No caso da instalação MANUAL pode ocorrer um erro sobre quantidade de arquivos observados no linux
-  - para corrigir isso execute os comandos abaixo no terminal
+  - No caso da instalação MANUAL pode ocorrer um erro sobre quantidade de arquivos observados no linux, para corrigir este erro execute os comandos abaixo no terminal
     - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
   - No caso da instalação com o DOCKER esse comando é executado automaticamente
 
-> Em outra aba do terminal.
+> Em outra aba do terminal rode o comando abaixo para levantar o servidor php:
 
 ```sh
 npm run server (Este comando inicia o servidor php na porta 5000)
@@ -164,11 +163,12 @@ gulp check
       - beautify (para formatar o código)
       - vscode-icons
       - path intellisense (autocomplete para php)
+      - angular material snippets
+      - auto close tag
 
 > ### Gerador de Código ###
 
 - Use o gerador de estrutura de arquivo para gerar os arquivos necessários para o recurso,
-- foi usado o [YEOMAN](http://yeoman.io) para criar o gerador.
 
 ```sh
 cd pasta_do_projeto
@@ -176,7 +176,8 @@ yo ngprodeb
 ```
 - escolha a estrutura na lista
 - digite o nome do recurso
-- para mais detalhes sobre o uso do gerador acesse [Generator NgProdeb](http://git.prodeb.ba.gov.br/generator-ngprodeb/tree/master)
+
+**para mais detalhes sobre o uso do gerador acesse [Generator NgProdeb](http://git.prodeb.ba.gov.br/generator-ngprodeb/tree/master)**
 
 > ### Adicionar novo módulo angular ###
 
@@ -218,39 +219,39 @@ bower install nome-da-biblioteca
 - adicione um novo atributo contendo o nome da constante e o seu valor
 
 > ### Menu ###
-
 (adicionando itens ao menu)
+
 - acesse o arquivo **public/client/app/layout/menu.controller.js**
 - adicione um objeto no array **vm.itensMenu**
-  > exemplo de um item no menu:
 
-  ```javascript
-  {
-    url: 'dashboard',
-    titulo: menuPrefix + 'dashboard',
-    icon: 'icon_material_design',
-    subItens: []
-  }
+> exemplo de um item no menu:
 
-  ```
+```javascript
+{
+  url: 'dashboard',
+  titulo: menuPrefix + 'dashboard',
+  icon: 'icon_material_design',
+  subItens: []
+}
+```
 
-  > exemplo de um item no menu com sub itens:<br>
+> exemplo de um item no menu com sub itens:<br>
 
-  ```javascript
-  {
-    url: '#',
-    titulo: menuPrefix + 'admin',
-    icon: 'icon_material_design',
-    profiles: ['admin'],
-    subItens: [
-      {
-        url: 'user',
-        titulo: menuPrefix + 'user',
-        icon: 'icon_material_design'
-      }
-    ]
-  }
-  ```
+```javascript
+{
+  url: '#',
+  titulo: menuPrefix + 'admin',
+  icon: 'icon_material_design',
+  profiles: ['admin'],
+  subItens: [
+    {
+      url: 'user',
+      titulo: menuPrefix + 'user',
+      icon: 'icon_material_design'
+    }
+  ]
+}
+```
 
 > ### Internacionalização ###
 
@@ -299,11 +300,12 @@ bower install nome-da-biblioteca
 #### No Client ####
 
 **crud.controller.js** (public/client/app/core/crud.controller.js)
-  - Para herdar as funciolidades basta, no controller executar:
 
-    ```javascript
-    $controller('CRUDController', { vm: vm, modelService: ProjectsService, options: { } });
-    ```
+- Para herdar as funciolidades basta, no controller executar:
+
+```javascript
+  $controller('CRUDController', { vm: vm, modelService: ProjectsService, options: { } });
+```
 
   - Opções
 
