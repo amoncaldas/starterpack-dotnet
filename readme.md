@@ -106,12 +106,12 @@ chmod +x configure.sh
 ```
 
 - é aconselhável que se crie um alias no bash do host para executar comandos no bash do docker, para isso rode o comando abaixo:
-    - **echo "alias SEU_ALIAS_AQUI='docker exec -it base-php-fpm'" >> ~/.bashrc**
+    - **echo "alias {SEU_ALIAS}='docker exec -it base-php-fpm'" >> ~/.bashrc**
     - (feche o console e abra novamente para que as alterações surtam efeito)
-- caso queira acessar a linha de comando do container rode **SEU_ALIAS_CRIADO bash**
+- caso queira acessar a linha de comando do container rode **{ALIAS_CRIADO} bash**
 - todos os comandos no restante da documentação tem que ser prefixado com o container docker ou seu alias criado, de dentro da pasta do php-docker ex:
-    - **docker exec -it base-php-fpm SEU_COMANDO_AQUI**
-    - **SEU_ALIAS_CRIADO SEU_COMANDO_AQUI**
+    - **docker exec -it base-php-fpm {COMANDO}**
+    - **{ALIAS_CRIADO} {COMANDO}**
 - para sair do bash digite **exit** e aperte enter
 
 ## Colocar para Rodar ##
@@ -126,7 +126,6 @@ gulp
 
   - parametros opcionais
     - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
-
   - No caso da instalação MANUAL pode ocorrer um erro sobre quantidade de arquivos observados no linux, para corrigir este erro execute os comandos abaixo no terminal
     - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
   - No caso da instalação com o DOCKER esse comando é executado automaticamente
@@ -147,6 +146,7 @@ npm run server (Este comando inicia o servidor php na porta 5000)
 ```sh
 gulp check
 ```
+
 - (verifica a formatação do código javascript)
   - parametros opcionais
     - **--fix** (para corrigir os erros que podem ser corrigidos automaticamente)
@@ -172,9 +172,10 @@ gulp check
 - Use o gerador de estrutura de arquivo para gerar os arquivos necessários para o recurso,
 
 ```sh
-cd pasta_do_projeto
+cd {pasta_do_projeto}
 yo ngprodeb
 ```
+
 - escolha a estrutura na lista
 - digite o nome do recurso
 
@@ -186,8 +187,9 @@ yo ngprodeb
 - rode o comando
 
 ```sh
-bower install nome-da-biblioteca
+bower install {nome-da-biblioteca}
 ```
+
 - adicione o caminho da dependência no arquivo gulpfile.js
   - para importação angular adicione no array **paths.angularScripts**
   - ao adicionar um novo módulo o gulp deve ser reiniciado
@@ -210,8 +212,7 @@ bower install nome-da-biblioteca
 - adicione a linha:
 
 ```javascript
-.constant('NOME_DA_CONSTANTE', NOME_BIBLIOTECA);
-
+.constant('{NOME_DA_CONSTANTE}', {NOME_BIBLIOTECA});
 ```
 
 > ### Constantes ###
@@ -229,9 +230,9 @@ bower install nome-da-biblioteca
 
 ```javascript
 {
-  url: 'dashboard',
-  titulo: menuPrefix + 'dashboard',
-  icon: 'icon_material_design',
+  url: '{STATE}',
+  titulo: menuPrefix + '{CHAVE_ARQUIVO_LANGUAGE}',
+  icon: '{MATERIAL_ICON}',
   subItens: []
 }
 ```
@@ -241,14 +242,14 @@ bower install nome-da-biblioteca
 ```javascript
 {
   url: '#',
-  titulo: menuPrefix + 'admin',
-  icon: 'icon_material_design',
-  profiles: ['admin'],
+  titulo: menuPrefix + '{CHAVE_ARQUIVO_LANGUAGE}',
+  icon: '{MATERIAL_ICON}',
+  profiles: ['{PERFIL}'],
   subItens: [
     {
-      url: 'user',
-      titulo: menuPrefix + 'user',
-      icon: 'icon_material_design'
+      url: '{STATE}',
+      titulo: menuPrefix + '{CHAVE_ARQUIVO_LANGUAGE}',
+      icon: '{MATERIAL_ICON}'
     }
   ]
 }
@@ -308,7 +309,7 @@ bower install nome-da-biblioteca
 $controller('CRUDController', 
   { 
     vm: vm, 
-    modelService: ProjectsService, 
+    modelService: {MODEL_SERVICE}, 
     options: { } 
   }
 );
@@ -318,9 +319,9 @@ $controller('CRUDController',
 
 ```javascript
 {
-  redirectAfterSave: true,
-  searchOnInit: true,
-  perPage: 8
+  redirectAfterSave: {BOOLEAN},
+  searchOnInit: {BOOLEAN},
+  perPage: {QUANTIDADE_POR_PAGINA}
 }
 ```
 
@@ -340,8 +341,7 @@ cleanForm()
 
 ```javascript
 onActivate()
-applyFilters(defaultQueryFilters)
-  //recebe um objeto com os filtros de página aplicado e deve devolver este objeto com demais filtros
+applyFilters(defaultQueryFilters)//recebe um objeto com os filtros de página aplicado e deve devolver este objeto com demais filtros
 beforeSearch(page) //retornando false cancela o fluxo
 afterSearch(response)
 beforeClean //retornando false cancela o fluxo
@@ -358,19 +358,19 @@ afterRemove(resource)
 
 angular
   .module('app')
-  .controller('AuditController', AuditController);
+  .controller('{NOME_DO_CONTROLLER}', {NOME_DO_CONTROLLER});
 
-function AuditController($controller, AuditService, PrDialog) {
+function {NOME_DO_CONTROLLER}($controller, {MODEL_SERVICE}) {
   var vm = this;
 
   vm.onActivate = onActivate;
   vm.applyFilters = applyFilters;
 
-  $controller('CRUDController', { vm: vm, modelService: AuditService, options: {} });
+  $controller('CRUDController', { vm: vm, modelService: {MODEL_SERVICE}, options: {} });
 
   function onActivate() {
-    vm.models = AuditService.listModels();
-    vm.types = AuditService.listTypes();
+    vm.models = {MODEL_SERVICE}.listModels();
+    vm.types = {MODEL_SERVICE}.listTypes();
 
     vm.queryFilters = { type: vm.types[0].id, model: vm.models[0].id };
   }
@@ -391,14 +391,14 @@ function AuditController($controller, AuditService, PrDialog) {
 ```php
 use App\Http\Controllers\CrudController;
 
-class ProjectsController extends CrudController
+class {NOME_DO_CONTROLLER} extends CrudController
 ```
 
 - Deve ser implementado os métodos
 
 ```php
-  getModel() //retornar a classe referente ao model
-  getValidationRules(Request $request, Model $obj) //retornar um array com as regras de validação
+getModel() //retornar a classe referente ao model
+getValidationRules(Request $request, Model $obj) //retornar um array com as regras de validação
 ```
 
 - Ações Implementadas
@@ -439,7 +439,7 @@ class ProjectsController extends CrudController
 
     protected function getModel()
     {
-        return Project::class;
+        return {MODEL}::class;
     }
 
     protected function applyFilters(Request $request, $query) {
@@ -471,7 +471,7 @@ class ProjectsController extends CrudController
 
 > ### Diretivas ###
 
-  O uso de todos os componentes são demonstrados através das funcionalidades de exemplo adiconadas na pasta **public/client/app/samples**
+O uso de todos os componentes são demonstrados através das funcionalidades de exemplo adiconadas na pasta **public/client/app/samples**
 
 - __ContentHeader__
 
@@ -493,13 +493,13 @@ class ProjectsController extends CrudController
 (obs.: o box deve estar dentro de um ContentBody)
 
 ```html
-<box box-title="Título do box">
+<box box-title="{Título do box}">
   Conteúdo do box
 </box>
 ```
 
 ```html
-<box box-title="Título do box">
+<box box-title="{Título do box}">
   <box-toolbar-buttons>
     Botões no toolbar do box (Opcional)
   </box-toolbar-buttons>
