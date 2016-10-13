@@ -1,5 +1,5 @@
 
-# Sistema Base Laravel #
+# Sistema Starter Pack PHP #
 
 > ## Iniciando
 
@@ -63,8 +63,8 @@ ___
 
 ## Instalação ##
 
-> Rode os comandos abaixo.
-> Todos os comandos devem ser executados no terminal do linux.
+> Você vai precisar de permissão para os repositórios Starter Pack PHP Angular, ngProdeb, php-docker e Generator NgProdeb
+> Rode os comandos abaixo no terminal do linux.
 
 ```sh
 git clone git@git.prodeb.ba.gov.br:thiagoantonius.souza/laravel_angular_base.git
@@ -76,8 +76,45 @@ cp .env.example .env
 
 ### Manual ###
 
-> Instale todos os pre requisitos (php, node ...) antes de seguir
-> Ajuste o .env com os dados do banco, email ...
+> Instale todos os pre requisitos (php, node, composer ...) antes de seguir
+> Em uma instalação limpa do Linux Mint ou Ubuntu os comandos a seguir instalam os pré requisitos
+
+```sh
+
+curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
+
+sudo apt-get update && sudo apt-get install -y build-essential libxml2-dev libfreetype6-dev libjpeg-turbo8-dev libmcrypt-dev libpng12-dev libssl-dev libpq-dev git vim unzip postgresql-9.5 postgresql-client nodejs php7.0 php7.0-pgsql php7.0-xml php7.0-zip php7.0-cli php7.0-common php7.0-gd php7.0-mbstring php7.0-mcrypt php7.0-readline php7.0-json pgadmin3
+
+sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+
+```
+
+> adicione a linha a seguir no final do arquivo **~/.bashrc**
+
+```
+export PATH=~/.npm-global/bin:$PATH
+```
+
+
+```sh
+
+source ~/.bashrc
+
+sudo -u postgres psql
+alter user postgres password 'root';
+\q
+
+sudo chown $(whoami):$(whoami) -R ~/.composer
+
+npm install -g npm
+
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+```
+> Ajuste o .env com as informações do banco de dados, email ...
 
 ```sh
 composer global require "laravel/installer=~1.1"

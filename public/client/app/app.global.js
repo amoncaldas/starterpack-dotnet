@@ -4,7 +4,7 @@
   angular
     .module('app')
     .constant('Global', {
-      appName: 'Base Laravel',
+      appName: 'Starter Pack',
       clientPath: 'client/app',
       homeState: 'dashboard',
       loginState: 'login',

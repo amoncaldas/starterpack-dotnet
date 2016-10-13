@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script de deploy - Projeto Base Laravel
+# Script de deploy - Starter Pack
 
 EXTENSION='.tar.gz'
 DEPLOY_DIR='deploy'
