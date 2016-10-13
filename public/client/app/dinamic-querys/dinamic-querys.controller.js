@@ -63,7 +63,7 @@
 
         where.filters = angular.toJson(addedFilters);
       } else {
-        where.model = vm.models[0].name;
+        where.model = vm.queryFilters.model.name;
       }
 
       return angular.extend(defaultQueryFilters, where);

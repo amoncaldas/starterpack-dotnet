@@ -10,18 +10,18 @@
       <thead md-head>
         <tr md-row>
           <th md-column>{{::'attributes.name' | translate}}</th>
-          <th md-column>{{::'attributes.cost' | translate}}</th>
-          <th md-column>{{::'views.fields.project.totalTask' | translate}}</th>
-          <th md-column>{{::'attributes.created_at' | translate}}</th>
+          <th md-column hide-xs>{{::'attributes.cost' | translate}}</th>
+          <th md-column hide-xs>{{::'views.fields.project.totalTask' | translate}}</th>
+          <th md-column hide-xs>{{::'attributes.created_at' | translate}}</th>
           <th md-column class="md-text-center">{{::'views.fields.actions' | translate}}</th>
         </tr>
       </thead>
       <tbody md-body>
         <tr md-row ng-repeat="project in projectsCtrl.resources" ng-if="projectsCtrl.resources.length > 0">
           <td md-cell>{{ ::project.name}}</td>
-          <td md-cell>{{ ::project.cost | real}}</td>
-          <td md-cell>{{ ::project.tasks.length}}</td>
-          <td md-cell>{{ ::project.created_at | prDate}}</td>
+          <td md-cell hide-xs>{{ ::project.cost | real}}</td>
+          <td md-cell hide-xs>{{ ::project.tasks.length}}</td>
+          <td md-cell hide-xs>{{ ::project.created_at | prDate}}</td>
           <td md-cell class="md-text-center">
             <md-button class="md-icon-button" ng-click="projectsCtrl.edit(project)">
               <md-icon md-font-set="material-icons"

@@ -71,7 +71,7 @@ class DinamicQueryController extends Controller
      */
     public function models(Request $request)
     {
-        $models = \Prodeb::modelNames(array("BaseModel.php", "Permission.php", "Role.php"));
+        $models = \Prodeb::modelNames(array("BaseModel.php", "Permission.php", "User.php", "Role.php"));
         $data = array();
 
         foreach($models as $model) {
