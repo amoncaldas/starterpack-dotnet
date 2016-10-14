@@ -1,0 +1,53 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyRootNamespace{{modelName}};
+
+use Hash;
+use Log;
+
+use Illuminate\Http\Request;
+
+use DummyRootNamespaceHttp\Requests;
+use DummyRootNamespaceHttp\Controllers\CrudController;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Input;
+
+
+class DummyClass extends CrudController
+{
+    public function __construct()
+    {
+    }
+
+    protected function getModel()
+    {
+        return {{modelName}}::class;
+    }
+
+    protected function applyFilters(Request $request, $query) {
+        $query = $query->with('{relationships}');
+
+        if($request->has('{attributes}')) {
+            $query = $query->where('{attributes}', 'like', '%'.$request->{attributes}.'%');
+        }
+    }
+
+    protected function beforeSearch(Request $request, $dataQuery, $countQuery) {
+        $dataQuery->orderBy('{attributes}', 'asc');
+    }
+
+    protected function getValidationRules(Request $request, Model $obj)
+    {
+        $rules = [
+            '{attributes}' => 'required|max:100|unique:{{modelName}}s',
+        ];
+
+        if ( strpos($request->route()->get{attributes}(), '{{modelName}}s.update') !== false ) {
+            $rules['{attributes}'] = 'required|max:255|unique:{{modelName}}s,name,'.$obj->id;
+        }
+
+        return $rules;
+    }
+}

@@ -160,7 +160,8 @@ return [
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
-        Arcanedev\LogViewer\LogViewerServiceProvider::class
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
+        Appzcoder\CrudGenerator\CrudGeneratorServiceProvider::class
     ],
 
     /*

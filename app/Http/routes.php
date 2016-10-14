@@ -46,3 +46,5 @@ Route::group(['prefix' => 'v1'], function () {
         });
     });
 });
+
+Route::resource('posts', 'PostsController');
