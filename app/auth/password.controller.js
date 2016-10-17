@@ -27,11 +27,11 @@
      */
     function sendReset() {
       $http.post(Global.apiPath + '/password/reset', vm.reset)
-        .then(function (response) {
-          PrToast.success(response.data.msg);
+        .then(function () {
+          PrToast.success($translate.instant('messages.operationSuccess'));
           $timeout(function () {
             $state.go(Global.loginState);
-          }, 3000);
+          }, 1500);
         }, function (error) {
           if (error.status === 400) {
             PrToast.error(error.data.msg);
@@ -61,8 +61,8 @@
         return;
       }
 
-      Auth.sendEmailResetPassword(vm.reset).then(function (response) {
-        PrToast.success(response.data.msg);
+      Auth.sendEmailResetPassword(vm.reset).then(function () {
+        PrToast.success($translate.instant('messages.operationSuccess'));
         vm.cleanForm();
         vm.closeDialog();
       }, function (error) {

@@ -138,7 +138,8 @@
         attributes: {
           email: 'Email',
           password: 'Senha',
-          //é carregado do servidor
+          name: 'Nome',
+          //é carregado do servidor caso esteja definido no mesmo
           auditModel: {
           }
         },
@@ -163,6 +164,7 @@
           notFound: 'Nenhum registro encontrado',
           searchError: 'Não foi possível realizar a busca.',
           saveSuccess: 'Operação realizada com sucesso',
+          operationSuccess: 'Operação realizada com sucesso',
           operationError: 'Erro ao realizar a operação',
           saveError: 'Não foi possível salvar.',
           removeSuccess: 'Remoção realizada com sucesso.',
