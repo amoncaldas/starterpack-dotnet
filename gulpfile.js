@@ -1,11 +1,7 @@
 /*eslint strict: 0, */
 /*global require*/
 
-var paths = {
-  client: '.',
-  bower: 'bower_components'
-};
-
+var paths = require('./paths.json');
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
@@ -170,7 +166,8 @@ gulp.task('build', function() {
       applicationStream
     ), {
       ignorePath: 'public',
-      addRootSlash: false
+      addRootSlash: false,
+      addPrefix: paths.serverClientPath
     }))
     .pipe(gulp.dest(paths.client));
 });
