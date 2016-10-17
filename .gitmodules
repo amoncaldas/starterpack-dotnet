@@ -1,0 +1,3 @@
+[submodule "public/client"]
+	path = public/client
+	url = git@git.prodeb.ba.gov.br:starter-pack-angular-client.git
