@@ -22,7 +22,7 @@ var shell = require('gulp-shell')
 var argv = require('yargs').argv;
 
 paths.client = '.';
-paths.bower_components = '.';
+paths.bower = 'bower_components';
 
 paths.app = paths.client + '/app';
 paths.destination = paths.client + '/build';
