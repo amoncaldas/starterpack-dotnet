@@ -2,7 +2,7 @@
 /*global require*/
 
 var paths = {
-  client: '',
+  client: '.',
   bower: 'bower_components'
 };
 

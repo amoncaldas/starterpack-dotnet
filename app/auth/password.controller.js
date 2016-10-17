@@ -26,7 +26,7 @@
      * Realiza a alteração da senha do usuário e o redireciona para a tela de login
      */
     function sendReset() {
-      $http.post(Global.apiVersion + '/password/reset', vm.reset)
+      $http.post(Global.apiPath + '/password/reset', vm.reset)
         .then(function (response) {
           PrToast.success(response.data.msg);
           $timeout(function () {

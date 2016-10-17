@@ -73,7 +73,7 @@
 
       $auth.login(credentials)
         .then(function() {
-          return $http.get(Global.apiVersion + '/authenticate/user');
+          return $http.get(Global.apiPath + '/authenticate/user');
         })
         .then(function(response) {
           auth.updateCurrentUser(response.data.user);
@@ -113,7 +113,7 @@
     function sendEmailResetPassword(resetData) {
       var deferred = $q.defer();
 
-      $http.post(Global.apiVersion + '/password/email', resetData)
+      $http.post(Global.apiPath + '/password/email', resetData)
         .then(function(response) {
           deferred.resolve(response);
         }, function(error) {

@@ -20,14 +20,14 @@
     moment.locale('pt-BR');
 
     //os serviços referente aos models vai utilizar como base nas urls 
-    $modelFactoryProvider.defaultOptions.prefix = Global.apiVersion;
+    $modelFactoryProvider.defaultOptions.prefix = Global.apiPath;
 
     $mdpDatePickerProvider.setCancelButtonLabel('Cancelar');
     $mdpTimePickerProvider.setCancelButtonLabel('Cancelar');
 
     // Satellizer configuration that specifies which API
     // route the JWT should be retrieved from
-    $authProvider.loginUrl = Global.apiVersion + '/authenticate';
+    $authProvider.loginUrl = Global.apiPath + '/authenticate';
 
     // Configuration theme
     $mdThemingProvider.theme('default')

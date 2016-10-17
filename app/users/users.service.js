@@ -24,7 +24,7 @@
          */
         updateProfile: {
           method: 'PUT',
-          url: Global.apiVersion + '/profile',
+          url: Global.apiPath + '/profile',
           override: true,
           wrap: false
         }
