@@ -1,6 +1,11 @@
 /*eslint strict: 0, */
 /*global require*/
 
+var paths = {
+  client: '',
+  bower: 'bower_components'
+};
+
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
@@ -19,11 +24,6 @@ var lazypipe = require('lazypipe');
 var browserSync = require('browser-sync');
 var shell = require('gulp-shell')
 var argv = require('yargs').argv;
-
-var paths = {
-  client: 'public/client',
-  bower: 'bower_components'
-};
 
 paths.app = paths.client + '/app';
 paths.destination = paths.client + '/build';
