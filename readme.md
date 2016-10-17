@@ -15,7 +15,7 @@
 - [Colocar para Rodar](#colocar-para-rodar)
 - [Desenvolvimento](#desenvolvimento)
     - [Editor](#editor)
-    - [Gerador de Código](#gerador-de-codigo)
+    - [Geradores automáticos de arquivos](#geradores-automaticos-de-arquivos)
     - [Adicionar novo módulo angular](#adicionar-novo-modulo-angular)
     - [Configuração](#configuracao)
     - [Bibliotecas Externas](#bibliotecas-externas)
@@ -52,6 +52,10 @@ ___
 - Extenções do PHP: xdebug, fileinfo, mbstring, pdo_pgsql, pgsql, openssl.
 - Composer ([tutorial para instalar](https://getcomposer.org/doc/00-intro.md#globally)).
 - Postgres e pgadmin3 ([tutorial para instalar] (https://www.vivaolinux.com.br/dica/Instalando-o-PostgreSQL-e-pgAdmin3-no-Ubuntu)).
+- Permissão de leitura para os projetos no git:
+    - [Starter Pack Laravel](git@git.prodeb.ba.gov.br:thiagoantonius.souza/laravel_angular_base.git).
+    - [NgProdeb](git@git.prodeb.ba.gov.br:ngprodeb.git).
+    - [Generator NgProdeb](http://git.prodeb.ba.gov.br/generator-ngprodeb/tree/master).
 
 ## Componentes e Frameworks ##
 
@@ -200,7 +204,7 @@ gulp check
       - angular material snippets
       - auto close tag
 
-> ### Geradores automático de arquivos ###
+> ### Geradores automáticos de arquivos ###
 
 - Use os geradores de estrutura de arquivo para gerar os arquivos necessários para o recurso,
 
@@ -620,7 +624,7 @@ O uso de todos os componentes são demonstrados através das funcionalidades de 
 
 ## Log ##
 
-> Para ver os logs
+> ### Para ver os logs ###
 
 - acesse [http://localhost:5000/developer/log-viewer](http://localhost:5000/developer/log-viewer)
 - digite o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
