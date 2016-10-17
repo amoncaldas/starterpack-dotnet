@@ -72,10 +72,16 @@ ___
 > Rode os comandos abaixo no terminal do linux:
 
 ```sh
-git clone git@git.prodeb.ba.gov.br:thiagoantonius.souza/laravel_angular_base.git
-cd {pasta_do_projeto}
+git clone --recursive git@git.prodeb.ba.gov.br:thiagoantonius.souza/laravel_angular_base.git {base} 
+cd {base}
 cp .env.example .env
+cp public/client/paths.json.example public/client/paths.json
+cp public/client/app/app.global.js.example public/client/app/app.global.js
 ```
+
+> Ajuste o .env com as informações do banco de dados, email e etc...
+> Ajuste o public/client/paths.json com o path relativo (disco) da pasta client clonada na área public do servidor: ex: **"serverClientPath": "client"**
+> Ajuste o public/client/app/app.global.js com as informações de paths (servidor) do client, images e api
 
 ### Manual ###
 
@@ -116,8 +122,6 @@ npm install -g npm
 
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 ```
-
-> Ajuste o .env com as informações do banco de dados, email e etc...
 
 #### Instalando o projeto ####
 
@@ -254,207 +258,15 @@ php artisan migrate
 ```
 
 **para mais detalhes sobre o uso do gerador acesse [CRUD Generator](https://github.com/appzcoder/crud-generator#commands)**
-
-> ### Adicionar novo módulo angular ###
-
-- adicione a dependência no arquivo bower.json
-- rode o comando
-
-```sh
-bower install {nome-da-biblioteca}
-```
-
-- adicione o caminho da dependência no arquivo gulpfile.js
-  - para importação angular adicione no array **paths.angularScripts**
-  - ao adicionar um novo módulo o gulp deve ser reiniciado
-- adicione o módulo no arquivo public/client/app/app.js
-
-> ### Configuração ###
-
-- acesse o arquivo /public/client/app/app.config.js
-- $translateProvider
-  - configura o módulo de tradução das strings
-- moment.locale('');
-  - configura o idioma das datas
-- $mdThemingProvider
-  - configura o tema do angular material
-
-> ### Bibliotecas Externas ###
-> (bibliotecas que não são módulos do angular)
-
-- acesse o arquivo **public/client/app/app.external.js**
-- adicione a linha:
-
-```javascript
-.constant('{NOME_DA_CONSTANTE}', {NOME_BIBLIOTECA});
-```
-
-> ### Constantes ###
-
-- acesse o arquivo **public/client/app/app.global.js**
-- adicione um novo atributo contendo o nome da constante e o seu valor
-
-> ### Menu ###
-(adicionando itens ao menu)
-
-- acesse o arquivo **public/client/app/layout/menu.controller.js**
-- adicione um objeto no array **vm.itensMenu**
-
-> exemplo de um item no menu:
-
-```javascript
-{
-  url: '{STATE}',
-  titulo: menuPrefix + '{CHAVE_ARQUIVO_LANGUAGE}',
-  icon: '{MATERIAL_ICON}',
-  subItens: []
-}
-```
-
-> exemplo de um item no menu com sub itens:<br>
-
-```javascript
-{
-  url: '#',
-  titulo: menuPrefix + '{CHAVE_ARQUIVO_LANGUAGE}',
-  icon: '{MATERIAL_ICON}',
-  profiles: ['{PERFIL}'],
-  subItens: [
-    {
-      url: '{STATE}',
-      titulo: menuPrefix + '{CHAVE_ARQUIVO_LANGUAGE}',
-      icon: '{MATERIAL_ICON}'
-    }
-  ]
-}
-```
-
-> ### Internacionalização ###
-
-  - todas as strings usadas no sistema devem ser armazenadas no objeto data localizado no arquivo **public/client/app/i18n/language-loader.service.js**
-  - estrutura do arquivo:
-      - no primeiro momento estão as strings comuns ao sistema como um todo
-      - em seguida as strings das views subdivididas em blocos
-          - strings dos breadcrumbs
-          - strings dos titles
-          - strings das actions
-          - strings dos fields
-          - strings do layout
-          - string dos tooltips
-      - strings dos atributos dos recursos
-      - strings dos dialogs
-      - strings das mensagens
-      - por fim as strings com os nomes dos models(recurso)
-  - por convenção o padrão utilizado é o seguinte:
-      - bloco das strings comuns ao todo
-      - blocos das strings específicas
-          - blocos das strings comuns específicas
-          - blocos das strings por recurso
   
 > ### Convenções ###
 > (convenções adotadas para padronização do projeto)
 
-  - o conjunto de arquivos são chamados de recurso(resource) localizados sempre no caminho **public/client/app**
-  - cada recurso pode pussuir os seguintes arquivos:
-    - recursos.html(index)
-    - recursos-list.html
-    - recursos-form.html
-    - recursos.controller.js
-    - recursos.route.js
-    - recursos.service.js
   - deve ser usado o gerador de estrutura de arquivos para gerar os arquivos no padrão informado acima
   - no lado servidor ao ser criado o controller deve-se mudar a herança de Controller para **CrudController**
   o mesmo acontece quando um model é criado deve-ser mudar a herança de Model para **BaseModel**
-  - as imagens devem ser armazenadas no caminho **public/client/images**
-  - para alterar as propriedades de css acesse o arquivo **public/client/styles/app.scss**
-  - os templates dos emails devem ser salvos no caminho **resources/views/mails**
 
 > ### CRUD ###
-
-- Existe 2 controllers base contendo todas as ações padrões de um CRUD, são eles:
-
-#### No Client ####
-
-**crud.controller.js** (public/client/app/core/crud.controller.js)
-
-- Para herdar as funciolidades basta, no controller executar:
-
-```javascript
-$controller('CRUDController', 
-  { 
-    vm: vm, 
-    modelService: {MODEL_SERVICE}, 
-    options: { } 
-  }
-);
-```
-
-- Opções
-
-```javascript
-{
-  redirectAfterSave: {BOOLEAN},
-  searchOnInit: {BOOLEAN},
-  perPage: {QUANTIDADE_POR_PAGINA}
-}
-```
-
-- Ações Implementadas
-
-```javascript
-activate()
-search(page)
-edit(resource)
-save()
-remove(resource)
-goTo(viewName)
-cleanForm()
-```
-
-- Gatilhos
-
-```javascript
-onActivate()
-applyFilters(defaultQueryFilters)//recebe um objeto com os filtros de página aplicado e deve devolver este objeto com demais filtros
-beforeSearch(page) //retornando false cancela o fluxo
-afterSearch(response)
-beforeClean //retornando false cancela o fluxo
-afterClean()
-beforeSave() //retornando false cancela o fluxo
-afterSave(resource)
-beforeRemove(resource) //retornando false cancela o fluxo
-afterRemove(resource)
-```
-
-- Exemplo
-
-```javascript
-
-angular
-  .module('app')
-  .controller('{NOME_DO_CONTROLLER}', {NOME_DO_CONTROLLER});
-
-function {NOME_DO_CONTROLLER}($controller, {MODEL_SERVICE}) {
-  var vm = this;
-
-  vm.onActivate = onActivate;
-  vm.applyFilters = applyFilters;
-
-  $controller('CRUDController', { vm: vm, modelService: {MODEL_SERVICE}, options: {} });
-
-  function onActivate() {
-    vm.models = {MODEL_SERVICE}.listModels();
-    vm.types = {MODEL_SERVICE}.listTypes();
-
-    vm.queryFilters = { type: vm.types[0].id, model: vm.models[0].id };
-  }
-
-  function applyFilters(defaultQueryFilters) {
-    return angular.extend(defaultQueryFilters, vm.queryFilters);
-  }
-
-}
-```
 
 #### No Server ####
 
@@ -557,70 +369,6 @@ public function __construct($attributes = array())
 ```
 
 Obs: Exceto para as datas que já são pré formatadas, podendo ocorrer erros caso o padrão seja modificado
-
-> ### Diretivas ###
-
-O uso de todos os componentes são demonstrados através das funcionalidades de exemplo adiconadas na pasta **public/client/app/samples**
-
-- __ContentHeader__
-
-```html
-<content-header title="" description="">
-  Conteúdo do content header
-</content-header>
-```
-
-- __ContentBody__
-
-```html
-<content-body layoutAlign="">
-  Conteúdo do content header.
-</content-body>
-```
-
-- __Box__
-(obs.: o box deve estar dentro de um ContentBody)
-
-```html
-<box box-title="{Título do box}">
-  Conteúdo do box
-</box>
-```
-
-```html
-<box box-title="{Título do box}">
-  <box-toolbar-buttons>
-    Botões no toolbar do box (Opcional)
-  </box-toolbar-buttons>
-    Conteúdo do box
-  <box-footer-buttons>
-    Botões no rodapé do box (Opcional)
-  </box-footer-buttons>
-</box>
-```
-
-- ( para mais exemplos consulte **public/client/app/samples** )
-
-> ### Componentes NgProdeb ###
-
-- PrPagination
-- PrSpinner
-- PrDataPicker
-- CKEditor
-- PrDialog
-- PrToast
-
-**Para saber como usar os componentes acesse: [Git NgProdeb](http://git.prodeb.ba.gov.br/ngprodeb)**
-
-> ### Ícones ###
-
-- Os icones usados no sistema são encontrados em [Material Icons](https://design.google.com/icons/) e seguem o padrão abaixo:
-
-```html
-<md-icon md-font-set="material-icons">
-  {3d_rotation}
-</md-icon>
-```
 
 ## Log ##
 

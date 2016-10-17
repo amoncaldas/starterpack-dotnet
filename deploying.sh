@@ -159,7 +159,7 @@ executePHPArtisan optimize
 write '\nExecutando gulp para minificar js e css...'
 
 ## Gerando os arquivos minificados .js e .css
-gulp --production
+gulp --gulpfile public/client/gulpfile.js --production
 
 write '\nRemovendo fontes do js e css...'
 
