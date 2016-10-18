@@ -43,7 +43,7 @@ class AuthenticateController extends Controller
         }
 
         //get simple string array with only a slug
-        $user->roles = array_pluck($user->roles()->get()->toArray(), 'slug');
+        $user->roles = $user->roles()->get()->toArray();
 
         // the token is valid and we have found the user via the sub claim
         return response()->json(compact('user'));
