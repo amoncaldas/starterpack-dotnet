@@ -32,7 +32,7 @@
 
     function applyFilters(defaultQueryFilters) {
       return angular.extend(defaultQueryFilters, vm.queryFilters);
-    }    
+    }
 
     function afterClean() {
       vm.roles.forEach(function(role) {
@@ -52,7 +52,7 @@
 
     function beforeSave() {
       //filtra o array de roles para extrair somente os ids
-      vm.resource.roles = lodash.map(lodash.filter(angular.copy(vm.roles), { selected: true }), 'id');
+      vm.resource.roles = lodash.filter(angular.copy(vm.roles), { selected: true });
     }
 
     function afterSave(resource) {
