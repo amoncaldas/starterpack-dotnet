@@ -85,7 +85,7 @@ class UsersController extends CrudController
     //After Store and Update
     protected function afterSave(Request $request, Model $obj)
     {
-        $obj->roles()->sync(Input::only('roles')["roles"]);
+        $obj->roles()->sync(array_pluck(Input::only('roles')["roles"], 'id'));
 
         $newRoles = $obj->roles()->get()->toArray();
         $this->auditRoles($obj, $request->oldRoles, array_pluck($newRoles, 'slug'));
