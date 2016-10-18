@@ -67,10 +67,10 @@ class UsersController extends CrudController
 
         return $rules;
     }
-    
+
     protected function beforeStore(Request $request, Model $obj)
     {
-        //coloca no container, sem criptografar, para poder emitir para o email do usuário 
+        //coloca no container, sem criptografar, para poder emitir para o email do usuário
         $obj->setPasswordConteiner(str_random(10));
         $obj->password = bcrypt($obj->getPasswordConteiner());
     }
@@ -78,7 +78,7 @@ class UsersController extends CrudController
     protected function beforeUpdate(Request $request, Model $obj)
     {
         //adiciona no request os papeis antigos para depois ser possível auditar
-        //pois por padrão a solução de auditar não audita relacionamentos 1 para muitos 
+        //pois por padrão a solução de auditar não audita relacionamentos 1 para muitos
         $request->merge(array('oldRoles' => array_pluck($obj->roles()->get()->toArray(), 'slug')));
     }
 
@@ -87,8 +87,8 @@ class UsersController extends CrudController
     {
         $obj->roles()->sync(Input::only('roles')["roles"]);
 
-        $newRoles = array_pluck($obj->roles()->get()->toArray(), 'slug');
-        $this->auditRoles($obj, $request->oldRoles, $newRoles);
+        $newRoles = $obj->roles()->get()->toArray();
+        $this->auditRoles($obj, $request->oldRoles, array_pluck($newRoles, 'slug'));
 
         $obj->roles = $newRoles;
 
@@ -151,7 +151,7 @@ class UsersController extends CrudController
         $user->save();
 
         //get the roles to return do view
-        $user->roles = array_pluck($user->roles()->get()->toArray(), 'slug');
+        $user->roles = $user->roles()->get()->toArray();
 
         return $user;
     }
