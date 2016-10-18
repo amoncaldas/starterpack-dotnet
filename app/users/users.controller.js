@@ -52,7 +52,9 @@
 
     function beforeSave() {
       //filtra o array de roles para extrair somente os ids
-      vm.resource.roles = lodash.filter(angular.copy(vm.roles), { selected: true });
+      vm.resource.roles = lodash.map(lodash.filter(angular.copy(vm.roles), { selected: true }), function(role) {
+        return { id: role.id };
+      });
     }
 
     function afterSave(resource) {
