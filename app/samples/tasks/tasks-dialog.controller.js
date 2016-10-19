@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function TasksDialogController($controller, TasksService, projectId, PrToast, PrDialog, $translate) {
+  function TasksDialogController($controller, TasksService, projectId, PrToast, PrDialog, $translate, Global) {
     var vm = this;
 
     //Functions Block
@@ -25,6 +25,7 @@
     } });
 
     function onActivate() {
+      vm.global = Global;
       vm.now  = new Date();
       vm.queryFilters = { projectId: projectId };
     }
