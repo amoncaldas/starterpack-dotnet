@@ -47,7 +47,7 @@
                   $injector.get('PrDialog').close();
 
                   $injector.get('PrToast')
-                    .warn($translate.instant('messages.logoutInactive'));
+                    .warn($translate.instant('messages.login.logoutInactive'));
 
                   event.preventDefault();
                 }
