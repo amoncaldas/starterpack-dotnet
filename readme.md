@@ -5,7 +5,7 @@
 
 - [Sobre](#sobre)
 - [Pré requisitos](#pre-requisitos)
-- [Componentes](#componentes)
+- [Componentes e Frameworks](#componentes-e-frameworks)
 
 > ## Features
 
@@ -16,19 +16,10 @@
 - [Desenvolvimento](#desenvolvimento)
     - [Editor](#editor)
     - [Geradores automáticos de arquivos](#geradores-automaticos-de-arquivos)
-    - [Adicionar novo módulo angular](#adicionar-novo-modulo-angular)
-    - [Configuração](#configuracao)
-    - [Bibliotecas Externas](#bibliotecas-externas)
-    - [Constantes](#constantes)
-    - [Menu](#menu)
-    - [Internacionalização](#internacionalizacao)
     - [Convenções](#convencoes)
     - [CRUD](#crud)
-      - [Cliente](#no-client)
       - [Servidor](#no-server)
-    - [Diretivas](#diretivas)
-    - [Componentes NgProdeb](#componentes-ngprodeb)
-    - [Ícones](#icons)
+    - [Formatação de atributos](#formatacao-de-atributos)
 - [Log](#log)
 - [Produção](#producao)
 
@@ -36,57 +27,53 @@ ___
 ## Sobre ##
 
 - Este projeto tem como objetivo servir de base para futuros projetos da Prodeb.
-- O mesmo utiliza Laravel 5.1 com Angular 1.5.
-- O sistema utiliza [JWT](http://jwt.io) para autenticação através da lib [tymon/jwt-auth](https://github.com/tymondesigns/jwt-auth)
+- Como framework backend o sistema utiliza o Laravel 5.1.
+- Como framework frontend o sistema utiliza o AngularJS 1.5.
+- Para autenticação o sistema utiliza [JWT](http://jwt.io) através da lib [tymon/jwt-auth](https://github.com/tymondesigns/jwt-auth)
 - O sistema não faz uso de sessão para identificação do usuário, toda a informação é através do token enviado/recebido
 - Todas as funcionalidades retornam um json contendo as informações requisitadas.
 
 ## Pré requisitos ##
 
 - Preferencialmente utilize o Linux com o gerenciador APT.
-- Um editor decente [vscode](https://code.visualstudio.com/) ou [atom.io](https://atom.io/).
+- Um editor decente [Visual Studio Code](https://code.visualstudio.com/) ou [ATOM](https://atom.io/).
 - NodeJS versão 4 ou superior ([tutorial para instalar](https://nodejs.org/en/download/package-manager/)).
     - Configure o npm para rodar sem sudo ([tutorial](https://docs.npmjs.com/getting-started/fixing-npm-permissions)).
     - Verifique a versão do npm **npm --version** (deve ser igual ou superior a 3.5.1).
+- GIT a versão mais recente [GIT](https://git-scm.com/book/pt-br/v1/Primeiros-passos-Instalando-Git).
 - PHP com a versão 5.6 ou superior ([tutorial para instalar](http://tecadmin.net/install-php5-on-ubuntu/)).
 - Extenções do PHP: xdebug, fileinfo, mbstring, pdo_pgsql, pgsql, openssl.
 - Composer ([tutorial para instalar](https://getcomposer.org/doc/00-intro.md#globally)).
 - Postgres e pgadmin3 ([tutorial para instalar] (https://www.vivaolinux.com.br/dica/Instalando-o-PostgreSQL-e-pgAdmin3-no-Ubuntu)).
-- Permissão de leitura para os projetos no git:
-    - [Starter Pack Laravel](git@git.prodeb.ba.gov.br:thiagoantonius.souza/laravel_angular_base.git).
-    - [NgProdeb](git@git.prodeb.ba.gov.br:ngprodeb.git).
-    - [Generator NgProdeb](http://git.prodeb.ba.gov.br/generator-ngprodeb/tree/master).
+- Permissão de leitura para todos os projetos do grupo Starter Pack no git:
+    - [Grupo Starter Pack Laravel](http://git.prodeb.ba.gov.br/groups/starter-pack).
 
 ## Componentes e Frameworks ##
 
-> Componentes e frameworks utilizados no lado cliente do projeto:
+> Componentes e frameworks utilizados no frontend do projeto:
 
 - [AngularJS](https://angularjs.org)
 - [Angular Material](https://material.angularjs.org)
-- [NgProdeb](git@git.prodeb.ba.gov.br:ngprodeb.git)
+- [NgProdeb](git@git.prodeb.ba.gov.br:starter-pack/ngprodeb.git)
 - [momentjs](http://momentjs.com/)
 
 ## Instalação ##
 
-> Você irá precisar de permissão para os repositórios Starter Pack PHP Angular, ngProdeb, php-docker e Generator NgProdeb.
 > Rode os comandos abaixo no terminal do linux:
 
 ```sh
-git clone --recursive git@git.prodeb.ba.gov.br:thiagoantonius.souza/laravel_angular_base.git {base} 
-cd {base}
+git clone git@git.prodeb.ba.gov.br:starter-pack/laravel_angular_base.git {nome_projeto} 
+cd {nome_projeto}
 cp .env.example .env
-cp public/client/paths.json.example public/client/paths.json
-cp public/client/app/app.global.js.example public/client/app/app.global.js
 ```
 
+### Manual Passo-a-Passo ###
+
+#### 1) Instalando os pré requisitos ####
+
+**Obs.: Caso os pré requisitos já estejam instalados passe para o passo 3**
+
 > Ajuste o .env com as informações do banco de dados, email e etc...
-> Ajuste o public/client/paths.json com o path relativo (disco) da pasta client clonada na área public do servidor: ex: **"serverClientPath": "client"**
-> Ajuste o public/client/app/app.global.js com as informações de paths (servidor) do client, images e api
-
-### Manual ###
-
-#### Instalando os pré requisitos ####
-
 > Instale todos os pré requisitos (php, nodejs, composer e etc...) antes de seguir
 > Em uma instalação limpa do Linux Mint ou Ubuntu os comandos a seguir instalam os pré requisitos:
 
@@ -119,28 +106,31 @@ alter user postgres password 'root';
 sudo chown $(whoami):$(whoami) -R ~/.composer
 
 npm install -g npm
+```
 
+### 2) Aplicando fix para alterar limite de watches do gulp ###
+
+```sh
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 ```
 
-#### Instalando o projeto ####
+#### 3) Instalando e configurando o projeto ####
 
 ```sh
-composer global require "laravel/installer=~1.1"
-npm install -g yo gulp gulp-babel babel-preset-es2015 eslint eslint-plugin-angular bower
+cd {nome_projeto}
 sh configure.sh
 ```
 
-### Docker ###
+### Docker Passo-a-Passo ###
 
 - instale o docker [Docker Install Linux](https://docs.docker.com/engine/installation/linux/)
 - instale o docker-compose [Docker Compose](https://docs.docker.com/compose/install/)
 - realize o logoff para que as configurações do docker sejam aplicadas
-- configure o .env com os dados contidos no **/php-docker/docker-compose.yml** 
 - o nome do host do postgres deve ser o nome do container postgres
+- configure o .env com os dados contidos no **/php-docker/docker-compose.yml**
 
 ```sh
-git clone git@git.prodeb.ba.gov.br:php-docker.git
+git clone git@git.prodeb.ba.gov.br:starter-pack/php-docker.git
 cd php-docker
 docker-compose build
 docker-compose up
@@ -148,7 +138,7 @@ docker exec -it base-php-fpm bash
 chmod +x configure.sh
 ./configure.sh
 ```
-
+ 
 - é aconselhável que se crie um alias no bash do host para executar comandos no bash do docker, para isso rode o comando abaixo:
     - **echo "alias {SEU_ALIAS}='docker exec -it base-php-fpm'" >> ~/.bashrc**
     - (feche o console e abra novamente para que as alterações surtam efeito)
@@ -158,7 +148,10 @@ chmod +x configure.sh
     - **{ALIAS_CRIADO} {COMANDO}**
 - para sair do bash digite **exit** e aperte enter
 
-## Colocar para Rodar ##
+## Colocando para Rodar ##
+
+> Ajuste o public/client/paths.json com o path relativo (disco) da pasta client clonada na área public do servidor: ex: **"serverClientPath": "client"**
+> Ajuste o public/client/app/app.global.js com as informações de paths (servidor) do client, images e api
 
 > Execute o comando abaixo para processar os arquivos .sass e concatenar os .js e .css injetando no index.html.
 > O comando fica observando futuras modificações e repetindo o processo automaticamente
@@ -207,10 +200,11 @@ gulp check
       - path intellisense (autocomplete para php)
       - angular material snippets
       - auto close tag
+      - html css class completion
 
 > ### Geradores automáticos de arquivos ###
 
-- Use os geradores de estrutura de arquivo para gerar os arquivos necessários para o recurso,
+- Use os geradores de estrutura de arquivo para gerar os arquivos necessários para o recurso.
 
 >  Para gerar arquivos de estrutura do lado do cliente, use o comando abaixo:
 
@@ -263,12 +257,8 @@ php artisan migrate
 > (convenções adotadas para padronização do projeto)
 
   - deve ser usado o gerador de estrutura de arquivos para gerar os arquivos no padrão informado acima
-  - no lado servidor ao ser criado o controller deve-se mudar a herança de Controller para **CrudController**
-  o mesmo acontece quando um model é criado deve-ser mudar a herança de Model para **BaseModel**
 
 > ### CRUD ###
-
-#### No Server ####
 
 **CrudController.php** (app/Http/controllers/CrudController.php)
 
@@ -368,7 +358,7 @@ public function __construct($attributes = array())
 }
 ```
 
-Obs: Exceto para as datas que já são pré formatadas, podendo ocorrer erros caso o padrão seja modificado
+Obs: Exceto para as datas que já são pré formatadas, podendo ocorrer erros caso o padrão seja modificado.
 
 ## Log ##
 
