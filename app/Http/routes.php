@@ -10,15 +10,10 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::post('password/email', 'PasswordController@postEmail');
     Route::post('password/reset', 'PasswordController@postReset');
-    
-    Route::group(['prefix' => 'support'], function () {
-        Route::get('langs', 'SupportController@langs');        
-    });
 
-    Route::group(['prefix' => 'dinamicQuery'], function () {
-        Route::get('/', 'DinamicQueryController@index');      
-        Route::get('models', 'DinamicQueryController@models');  
-    });    
+    Route::group(['prefix' => 'support'], function () {
+        Route::get('langs', 'SupportController@langs');
+    });
 
     //authenticated area
     Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function () {
@@ -43,6 +38,11 @@ Route::group(['prefix' => 'v1'], function () {
 
             Route::resource('users', 'UsersController', ['except' => ['updateProfile']]);
             Route::resource('roles', 'RolesController');
+
+            Route::group(['prefix' => 'dinamicQuery'], function () {
+                Route::get('/', 'DinamicQueryController@index');
+                Route::get('models', 'DinamicQueryController@models');
+            });
         });
     });
 });
