@@ -41,8 +41,8 @@ ___
 ## Pré requisitos ##
 
 - Preferencialmente utilize o Linux com o gerenciador APT
-- editor decente [vscode](https://code.visualstudio.com/) ou [atom.io](https://atom.io/)
-- node versão 4 ou superior [tutorial para instalar](https://nodejs.org/en/download/package-manager/)
+- Editor decente [vscode](https://code.visualstudio.com/) ou [atom.io](https://atom.io/)
+- NodeJS versão 4 ou superior [tutorial para instalar](https://nodejs.org/en/download/package-manager/)
     - Configure o npm para rodar sem sudo [tutorial](https://docs.npmjs.com/getting-started/fixing-npm-permissions)
 
 ## Componentes ##
@@ -51,7 +51,7 @@ ___
 
 - [AngularJS](https://angularjs.org)
 - [Angular Material](https://material.angularjs.org)
-- [NgProdeb](http://git.prodeb.ba.gov.br/starter-pack/ngprodeb.git)
+- [NgProdeb](http://git.prodeb.ba.gov.br/starter-pack/ngprodeb)
 - [momentjs](http://momentjs.com/)
 
 ## Instalação ##
@@ -60,12 +60,12 @@ ___
 > Rode os comandos abaixo no terminal do linux.
 
 ```sh
-git clone git@git.prodeb.ba.gov.br:starter-pack/starter-pack-angular-client.git client
+git clone git@git.prodeb.ba.gov.br:starter-pack/starter-pack-angular-client.git {client}
 cd {client}
 ```
 
-> Instale todos os pre requisitos (php, node, composer ...) antes de seguir
-> Em uma instalação limpa do Linux Mint ou Ubuntu os comandos a seguir instalam os pré requisitos
+> Instale todos os pré requisitos (php, node, composer ...) antes de seguir.
+> Em uma instalação limpa do Linux Mint ou Ubuntu os comandos a seguir instalam os pré requisitos.
 
 ```sh
 
@@ -110,9 +110,6 @@ gulp
 
   - parametros opcionais
     - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
-  - No caso da instalação MANUAL pode ocorrer um erro sobre quantidade de arquivos observados no linux, para corrigir este erro execute os comandos abaixo no terminal
-    - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-  - No caso da instalação com o DOCKER esse comando é executado automaticamente
 
 > Em outra aba do terminal rode o comando abaixo para levantar o servidor php:
 
@@ -151,7 +148,7 @@ gulp check
 > ### Gerador de Código ###
 
 - Use o gerador de estrutura de arquivo para gerar os arquivos necessários para o recurso,
-- na pasta raiz do projeto rode o comando abaix.
+- na pasta raiz do projeto rode o comando abaixo.
 
 ```sh
 cd {pasta_do_projeto}
@@ -161,7 +158,7 @@ yo ngprodeb
 - escolha a estrutura na lista
 - digite o nome do recurso
 
-**para mais detalhes sobre o uso do gerador acesse [Generator NgProdeb](http://git.prodeb.ba.gov.br/starter-pack/generator-ngprodeb.git)**
+**para mais detalhes sobre o uso do gerador acesse [Generator NgProdeb](http://git.prodeb.ba.gov.br/starter-pack/generator-ngprodeb)**
 
 > ### Adicionar novo módulo angular ###
 
@@ -406,7 +403,7 @@ O uso de todos os componentes são demonstrados através das funcionalidades de 
 
 > ### Componentes NgProdeb ###
 
-- Para saber como usar os componentes acesse: [Git NgProdeb](http://git.prodeb.ba.gov.br/starter-pack/ngprodeb.git)
+- Para saber como usar os componentes acesse: [Git NgProdeb](http://git.prodeb.ba.gov.br/starter-pack/ngprodeb)
 
 > ### Ícones ###
 
