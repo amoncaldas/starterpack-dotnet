@@ -10,15 +10,14 @@
 > ## Features
 
 - [Instalação](#instalacao)
-    - [Manual](#manual)
-    - [Docker](#docker)
-- [Colocar para Rodar](#colocar-para-rodar)
+    - [Manual](#manual-passo-a-passo)
+    - [Docker](#docker-passo-a-passo)
+- [Colocando para Rodar](#colocar-para-rodar)
 - [Desenvolvimento](#desenvolvimento)
     - [Editor](#editor)
     - [Geradores automáticos de arquivos](#geradores-automaticos-de-arquivos)
     - [Convenções](#convencoes)
     - [CRUD](#crud)
-      - [Servidor](#no-server)
     - [Formatação de atributos](#formatacao-de-atributos)
 - [Log](#log)
 - [Produção](#producao)
@@ -36,17 +35,18 @@ ___
 ## Pré requisitos ##
 
 - Preferencialmente utilize o Linux com o gerenciador APT.
+  - Caso o SO seja windows utilize a instalação do projeto via Docker.
 - Um editor decente [Visual Studio Code](https://code.visualstudio.com/) ou [ATOM](https://atom.io/).
 - NodeJS versão 4 ou superior ([tutorial para instalar](https://nodejs.org/en/download/package-manager/)).
     - Configure o npm para rodar sem sudo ([tutorial](https://docs.npmjs.com/getting-started/fixing-npm-permissions)).
     - Verifique a versão do npm **npm --version** (deve ser igual ou superior a 3.5.1).
 - GIT a versão mais recente [GIT](https://git-scm.com/book/pt-br/v1/Primeiros-passos-Instalando-Git).
-- PHP com a versão 5.6 ou superior ([tutorial para instalar](http://tecadmin.net/install-php5-on-ubuntu/)).
+- PHP com a versão 5.6.25 ou superior ([tutorial para instalar](http://tecadmin.net/install-php5-on-ubuntu/)).
 - Extenções do PHP: xdebug, fileinfo, mbstring, pdo_pgsql, pgsql, openssl.
 - Composer ([tutorial para instalar](https://getcomposer.org/doc/00-intro.md#globally)).
 - Postgres e pgadmin3 ([tutorial para instalar] (https://www.vivaolinux.com.br/dica/Instalando-o-PostgreSQL-e-pgAdmin3-no-Ubuntu)).
-- Permissão de leitura para todos os projetos do grupo Starter Pack no git:
-    - [Grupo Starter Pack Laravel](http://git.prodeb.ba.gov.br/groups/starter-pack).
+- Permissão de leitura para todos os projetos do grupo Arquitetura no git:
+    - [Grupo Arquitetura](http://git.prodeb.ba.gov.br/groups/starter-pack).
 
 ## Componentes e Frameworks ##
 
@@ -54,7 +54,7 @@ ___
 
 - [AngularJS](https://angularjs.org)
 - [Angular Material](https://material.angularjs.org)
-- [NgProdeb](git@git.prodeb.ba.gov.br:starter-pack/ngprodeb.git)
+- [NgProdeb](https://git.prodeb.ba.gov.br:starter-pack/ngprodeb)
 - [momentjs](http://momentjs.com/)
 
 ## Instalação ##
@@ -67,14 +67,14 @@ cd {nome_projeto}
 cp .env.example .env
 ```
 
+> Ajuste o .env com as informações do banco de dados, email e etc...
+
 ### Manual Passo-a-Passo ###
 
 #### 1) Instalando os pré requisitos ####
 
 **Obs.: Caso os pré requisitos já estejam instalados passe para o passo 3**
 
-> Ajuste o .env com as informações do banco de dados, email e etc...
-> Instale todos os pré requisitos (php, nodejs, composer e etc...) antes de seguir
 > Em uma instalação limpa do Linux Mint ou Ubuntu os comandos a seguir instalam os pré requisitos:
 
 ```sh
@@ -108,7 +108,7 @@ sudo chown $(whoami):$(whoami) -R ~/.composer
 npm install -g npm
 ```
 
-### 2) Aplicando fix para alterar limite de watches do gulp ###
+#### 2) Aplicando fix para alterar limite de watches do gulp ####
 
 ```sh
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
@@ -118,20 +118,34 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo s
 
 ```sh
 cd {nome_projeto}
+npm install -g yo gulp gulp-babel babel-preset-es2015 eslint eslint-plugin-angular bower
+```
+
+> Linux
+
+```sh
 sh configure.sh
 ```
 
+> windows
+
+- Execute o arquivo configure.bat que está na pasta raiz do projeto
+
 ### Docker Passo-a-Passo ###
 
-- instale o docker [Docker Install Linux](https://docs.docker.com/engine/installation/linux/)
-- instale o docker-compose [Docker Compose](https://docs.docker.com/compose/install/)
-- realize o logoff para que as configurações do docker sejam aplicadas
-- o nome do host do postgres deve ser o nome do container postgres
-- configure o .env com os dados contidos no **/php-docker/docker-compose.yml**
+- instale o docker [Docker Install Linux](https://docs.docker.com/engine/installation/linux/).
+- instale o docker-compose [Docker Compose](https://docs.docker.com/compose/install/).
+- realize o logoff para que as configurações do docker sejam aplicadas.
+
+> Caso os containers do postgres e do php já existam altere seus respectivos nomes no arquivo
+> **/php-docker/docker-compose.yml** em container_name.
+
+- o nome do host do postgres deve ser o nome do container postgres.
+- configure o .env com os dados contidos no **/php-docker/docker-compose.yml** ou com os dados especifícos do banco.
 
 ```sh
 git clone git@git.prodeb.ba.gov.br:starter-pack/php-docker.git
-cd php-docker
+cd {php-docker}
 docker-compose build
 docker-compose up
 docker exec -it base-php-fpm bash
@@ -148,16 +162,47 @@ chmod +x configure.sh
     - **{ALIAS_CRIADO} {COMANDO}**
 - para sair do bash digite **exit** e aperte enter
 
+> Comandos úteis:
+
+- Listar containers
+
+```sh
+docker ps
+```
+
+- Remover todos os containers
+
+```sh
+docker rm -f $(docker ps -a -q)
+```
+
+**para mais informações e documentação acesse [Docker](https://www.docker.com/)**
+
+> Caso esteja clonando para dar inicio a um novo projeto rode o comando abaixo. 
+> Se for contribuir com o Starter Pack pule o próximo comando
+
+```sh
+cd {pasta_do_projeto}
+rm -rf .git && rm -rf public/client/.git && .gitmodules
+```
+
 ## Colocando para Rodar ##
 
 > Ajuste o public/client/paths.json com o path relativo (disco) da pasta client clonada na área public do servidor: ex: **"serverClientPath": "client"**
-> Ajuste o public/client/app/app.global.js com as informações de paths (servidor) do client, images e api
+> Ajuste o public/client/app/app.global.js com as informações de paths (servidor) do client, images e api, ex:
+
+```javascript
+clientPath: 'client/app',
+apiPath: 'v1',
+imagePath: 'client/images'
+```
 
 > Execute o comando abaixo para processar os arquivos .sass e concatenar os .js e .css injetando no index.html.
 > O comando fica observando futuras modificações e repetindo o processo automaticamente
 
 ```sh
-cd pasta_do_projeto
+cd {pasta_do_projeto}
+cd public/client
 gulp
 ```
 
@@ -167,6 +212,7 @@ gulp
 > Em outra aba do terminal rode o comando abaixo para levantar o servidor php:
 
 ```sh
+cd {pasta_do_projeto}
 npm run server (Este comando inicia o servidor php na porta 5000)
 ```
 
@@ -223,40 +269,49 @@ yo ngprodeb
 - Estrutura completa
 
 ```sh
-php artisan crud:generate Posts --fields="{field_1}#string; {field_2}#text;" --controller-namespace={Recurso} --route={recurso}
+php artisan crud:generate {Recurso} --fields="{field_1}#string; {field_2}#text;" --controller-namespace={Recurso} --route-group={groupName}
 ```
 
 - Controller
 
 ```sh
-php artisan crud:controller {Recurso}Controller --crud-name={recurso} --model-name={Recurso} --route={recurso}
+php artisan crud:controller {Recurso}Controller --crud-name={recurso} --model-name={Recurso} --route-group={recurso}
 ```
 
 - Model
 
 ```sh
-php artisan crud:model {Recurso} --fillable="['field_1', 'field_2']"
+php artisan crud:model {Recurso} --fillable="['{field_1}', '{field_2}']"
 ```
 
 - Migration
 
 ```sh
-php artisan crud:migration {recurso} --schema="field_1#string; field_2#text"
+php artisan crud:migration {recurso} --schema="{field_1}#string; {field_2}#text"
 ```
 
-> Após criado todos os recursos, rode o comando abaixo para aplicar as migrations criadas
-> se necessário, inclua o caminho no arquivo **/app/Http/routes.php**
+> Obs.: Após a criação da Estrutura completa ou de uma Migration acesse o arquivo de migration
+> dentro da pasta database > migrations e Remova a linha **$table->timestamps()** e adicione as linhas abaixo:
+
+```php
+$table->timestampTz('created_at');
+$table->timestampTz('updated_at');
+```
+
+> Após o processo, rode o comando abaixo para aplicar as migrations criadas
 
 ```sh
 php artisan migrate
 ```
+
+> se necessário, inclua uma nova rota no arquivo **/app/Http/routes.php**
 
 **para mais detalhes sobre o uso do gerador acesse [CRUD Generator](https://github.com/appzcoder/crud-generator#commands)**
   
 > ### Convenções ###
 > (convenções adotadas para padronização do projeto)
 
-  - deve ser usado o gerador de estrutura de arquivos para gerar os arquivos no padrão informado acima
+  - deve ser usado o gerador de estrutura de arquivos para gerar os arquivos no padrão que o sistema comporta
 
 > ### CRUD ###
 
@@ -319,7 +374,7 @@ class ProjectsController extends CrudController
     }
 
     protected function applyFilters(Request $request, $query) {
-        $query = $query->with('{relationships}');
+        $query = $query->with('{relacionamento}');
 
         if($request->has('name'))
             $query = $query->where('name', 'like', '%'.$request->name.'%');
@@ -372,8 +427,9 @@ Obs: Exceto para as datas que já são pré formatadas, podendo ocorrer erros ca
 
 - altere os dados do arquivo .env.production com as configurações de produção (banco, smtp, nível de log, ftp e etc) e desative o debug.
 - rode o comando **npm run package** 
-    - prepara a aplicação para produção
-    - minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados
-    - gerando o pacote zipado no padrão **{NomeProjeto}.tar.gz**
-- o sistema irá perguntar se deseja enviar para o ftp, caso queria o pacote será enviado e removido da raiz do projeto
-- caso contrário o arquivo **{NomeProjeto}.tar.gz** constará na raiz do projeto para o devido uso
+
+> prepara a aplicação para produção minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados
+> gerando o pacote zipado no padrão **{NomeProjeto}.tar.gz**.
+
+- em seguida o sistema irá perguntar se deseja enviar para o ftp, caso queria, o pacote será enviado e removido da raiz do projeto,
+- caso contrário o arquivo **{NomeProjeto}.tar.gz** constará na raiz do projeto para o devido uso.

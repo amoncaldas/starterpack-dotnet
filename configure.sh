@@ -2,8 +2,6 @@ git submodule update --init --recursive
 
 composer global require "laravel/installer=~1.1"
 
-npm install -g yo gulp gulp-babel babel-preset-es2015 eslint eslint-plugin-angular bower
-
 # Instalando o gerador
 npm install -g git+ssh://git@git.prodeb.ba.gov.br:starter-pack/generator-ngprodeb.git
 

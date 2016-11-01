@@ -120,7 +120,8 @@ return [
         'users' => 'Para',
         'subject' => 'Assunto',
         'message' => 'Mensagem',
-        'date' => 'Data'
+        'date' => 'Data',
+        'image' => 'Imagem'
     ],
 
 ];

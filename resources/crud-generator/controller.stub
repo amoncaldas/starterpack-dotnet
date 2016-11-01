@@ -4,7 +4,6 @@ namespace DummyNamespace;
 
 use DummyRootNamespace{{modelName}};
 
-use Hash;
 use Log;
 
 use Illuminate\Http\Request;
@@ -27,27 +26,38 @@ class DummyClass extends CrudController
     }
 
     protected function applyFilters(Request $request, $query) {
-        $query = $query->with('{relationships}');
+        /*
+         * Se houver relacionamentos e caso queira incluir nos filtros
+         * descomente a linha abaixo e informe o relacionamento
+         * $query = $query->with('{modelRelacionado}');
+         */
 
-        if($request->has('{attributes}')) {
-            $query = $query->where('{attributes}', 'like', '%'.$request->{attributes}.'%');
-        }
+        /*
+         * O bloco de código abaixo serve para verificar se o campo para filtragem está sendo passando
+         * no request caso seja é inserido na query de de pesquisa.
+         *if($request->has('{attribute}')) {
+         *   $query = $query->where('{attribute}', 'like', '%'.$request->{attribute}.'%');
+         *}
+         */
     }
 
     protected function beforeSearch(Request $request, $dataQuery, $countQuery) {
-        $dataQuery->orderBy('{attributes}', 'asc');
+        /*
+         * A linha abaixo aplica o critério de ordenação antes da pesquisa
+         * $dataQuery->orderBy('{{attribute}}', 'asc');
+         */
     }
 
     protected function getValidationRules(Request $request, Model $obj)
     {
-        $rules = [
-            '{attributes}' => 'required|max:100|unique:{{modelName}}s',
-        ];
-
-        if ( strpos($request->route()->get{attributes}(), '{{modelName}}s.update') !== false ) {
-            $rules['{attributes}'] = 'required|max:255|unique:{{modelName}}s,name,'.$obj->id;
-        }
-
-        return $rules;
+        /*
+         * O bloco de código abaixo aplica as regras de validação dos campos
+         * na requisição
+         *$rules = [
+         *  '{attribute}' => 'required|max:100',
+         *];
+         *
+         *return $rules;
+         */
     }
 }
