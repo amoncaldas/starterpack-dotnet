@@ -51,7 +51,7 @@ ___
 
 - [AngularJS](https://angularjs.org)
 - [Angular Material](https://material.angularjs.org)
-- [NgProdeb](git@git.prodeb.ba.gov.br:starter-pack/ngprodeb.git)
+- [NgProdeb](http://git.prodeb.ba.gov.br/starter-pack/ngprodeb.git)
 - [momentjs](http://momentjs.com/)
 
 ## Instalação ##
@@ -161,7 +161,7 @@ yo ngprodeb
 - escolha a estrutura na lista
 - digite o nome do recurso
 
-**para mais detalhes sobre o uso do gerador acesse [Generator NgProdeb](http://git.prodeb.ba.gov.br/generator-ngprodeb/tree/master)**
+**para mais detalhes sobre o uso do gerador acesse [Generator NgProdeb](http://git.prodeb.ba.gov.br/starter-pack/generator-ngprodeb.git)**
 
 > ### Adicionar novo módulo angular ###
 
@@ -406,7 +406,7 @@ O uso de todos os componentes são demonstrados através das funcionalidades de 
 
 > ### Componentes NgProdeb ###
 
-- Para saber como usar os componentes acesse: [Git NgProdeb](git@git.prodeb.ba.gov.br:starter-pack/ngprodeb.git)
+- Para saber como usar os componentes acesse: [Git NgProdeb](http://git.prodeb.ba.gov.br/starter-pack/ngprodeb.git)
 
 > ### Ícones ###
 
