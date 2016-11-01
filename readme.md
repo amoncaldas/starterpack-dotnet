@@ -425,6 +425,8 @@ Obs: Exceto para as datas que já são pré formatadas, podendo ocorrer erros ca
 
 ## Produção ##
 
+> Siga os passos abaixo para gerar o pacote para produção:
+
 - altere os dados do arquivo .env.production com as configurações de produção (banco, smtp, nível de log, ftp e etc) e desative o debug.
 - rode o comando **npm run package**.
 
