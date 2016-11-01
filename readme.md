@@ -427,11 +427,11 @@ Obs: Exceto para as datas que já são pré formatadas, podendo ocorrer erros ca
 
 > Siga os passos abaixo para gerar o pacote para produção:
 
-- altere os dados do arquivo .env.production com as configurações de produção (banco, smtp, nível de log, ftp e etc) e desative o debug.
-- rode o comando **npm run package**.
+  - altere os dados do arquivo .env.production com as configurações de produção (banco, smtp, nível de log, ftp e etc) e desative o debug.
+  - rode o comando **npm run package**.
 
 > prepara a aplicação para produção minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados
 > gerando o pacote zipado no padrão **{NomeProjeto}.tar.gz**.
 
-- em seguida o sistema irá perguntar se deseja enviar para o ftp, caso queria, o pacote será enviado e removido da raiz do projeto,
+  - em seguida o sistema irá perguntar se deseja enviar para o ftp, caso queria, o pacote será enviado e removido da raiz do projeto,
 caso contrário o arquivo **{NomeProjeto}.tar.gz** constará na raiz do projeto para o devido uso.
