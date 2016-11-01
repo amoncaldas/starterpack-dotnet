@@ -53,7 +53,8 @@
             remove: 'Remover',
             getOut: 'Sair',
             add: 'Adicionar',
-            in: 'Entrar'
+            in: 'Entrar',
+            loadImage: 'Carregar Imagem'
           },
           fields: {
             date: 'Data',

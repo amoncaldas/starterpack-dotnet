@@ -12,6 +12,14 @@
     var vm = this;
 
     vm.filterSelected = false;
+    vm.options = {
+      skin: 'kama',
+      language: 'pt-br',
+      allowedContent: true,
+      entities: true,
+      height: 300,
+      extraPlugins: 'dialog,find,colordialog,preview,forms,iframe,flash'
+    };
 
     vm.loadUsers = loadUsers;
     vm.openUserDialog = openUserDialog;
@@ -57,6 +65,7 @@
     function openUserDialog() {
       var config = {
         locals: {
+          onInit: true,
           userDialogInput: {
             transferUserFn: vm.addUserMail
           }

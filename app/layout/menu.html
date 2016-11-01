@@ -7,8 +7,11 @@
 
   <header class="nav-header">
     <a class="logo" href="/">
-      <img ng-src="{{:: global.imagePath + '/logo-governo.png' }}" alt="logo"/>
-      <span>{{global.appName}}</span>
+      <div class="principal"
+        ng-style="{'background-image':'url({{auth.currentUser.image ? auth.currentUser.image : global.imagePath + '/no_avatar.gif'}})'}">
+      </div>
+      <span>{{auth.currentUser.name}}</span>
+      <span class="email"><small>{{auth.currentUser.email}}</small></span>
     </a>
   </header>
 

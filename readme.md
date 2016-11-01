@@ -10,8 +10,6 @@
 > ## Features
 
 - [Instalação](#instalacao)
-    - [Manual](#manual)
-    - [Docker](#docker)
 - [Colocar para Rodar](#colocar-para-rodar)
 - [Desenvolvimento](#desenvolvimento)
     - [Editor](#editor)
@@ -24,12 +22,9 @@
     - [Internacionalização](#internacionalizacao)
     - [Convenções](#convencoes)
     - [CRUD](#crud)
-      - [Cliente](#no-client)
-      - [Servidor](#no-server)
     - [Diretivas](#diretivas)
     - [Componentes NgProdeb](#componentes-ngprodeb)
-    - [Ícones](#icons)
-- [Log](#log)
+    - [Ícones](#icones)
 - [Produção](#producao)
 
 ___
@@ -41,7 +36,7 @@ ___
 - O sistema não faz uso de sessão para identificação do usuário, toda a informação é através do token enviado/recebido
 - Todas as funcionalidades retornam json contendo as informações da requisitadas.
 
-- Este repositório só tem o front-end. O mesmo deve ser conectado com um dos back-ends existentes.
+**PS.: Este repositório só tem o front-end. O mesmo deve ser conectado com um dos back-ends existentes.**
 
 ## Pré requisitos ##
 
@@ -56,16 +51,16 @@ ___
 
 - [AngularJS](https://angularjs.org)
 - [Angular Material](https://material.angularjs.org)
-- [NgProdeb](git@git.prodeb.ba.gov.br:ngprodeb.git)
+- [NgProdeb](git@git.prodeb.ba.gov.br:starter-pack/ngprodeb.git)
 - [momentjs](http://momentjs.com/)
 
 ## Instalação ##
 
-> Você vai precisar de permissão para os repositórios Starter Pack PHP Angular, ngProdeb, php-docker e Generator NgProdeb
+> Você vai precisar de permissão para o [Grupo Arquitetura](http://git.prodeb.ba.gov.br/groups/starter-pack) no git .
 > Rode os comandos abaixo no terminal do linux.
 
 ```sh
-git clone git@git.prodeb.ba.gov.br:starter-pack-angular-client.git client
+git clone git@git.prodeb.ba.gov.br:starter-pack/starter-pack-angular-client.git client
 cd {client}
 ```
 
@@ -109,7 +104,7 @@ npm install
 > O comando fica observando futuras modificações e repetindo o processo automaticamente
 
 ```sh
-cd pasta_do_projeto
+cd {client}
 gulp
 ```
 
@@ -156,6 +151,7 @@ gulp check
 > ### Gerador de Código ###
 
 - Use o gerador de estrutura de arquivo para gerar os arquivos necessários para o recurso,
+- na pasta raiz do projeto rode o comando abaix.
 
 ```sh
 cd {pasta_do_projeto}
@@ -179,14 +175,14 @@ bower install {nome-da-biblioteca}
 - adicione o caminho da dependência no arquivo gulpfile.js
   - para importação angular adicione no array **paths.angularScripts**
   - ao adicionar um novo módulo o gulp deve ser reiniciado
-- adicione o módulo no arquivo {pasta_do_projeto}/app/app.js
+- adicione o módulo no arquivo {client}/app/app.js
 
 > ### Configuração ###
 
-- acesse o arquivo {pasta_do_projeto}/app/app.config.js
+- acesse o arquivo {client}/app/app.config.js
 - $translateProvider
   - configura o módulo de tradução das strings
-- moment.locale('');
+- moment.locale('{pt-BR}');
   - configura o idioma das datas
 - $mdThemingProvider
   - configura o tema do angular material
@@ -194,7 +190,7 @@ bower install {nome-da-biblioteca}
 > ### Bibliotecas Externas ###
 > (bibliotecas que não são módulos do angular)
 
-- acesse o arquivo **{pasta_do_projeto}/app/app.external.js**
+- acesse o arquivo **{client}/app/app.external.js**
 - adicione a linha:
 
 ```javascript
@@ -203,13 +199,13 @@ bower install {nome-da-biblioteca}
 
 > ### Constantes ###
 
-- acesse o arquivo **{pasta_do_projeto}/app/app.global.js**
+- acesse o arquivo **{client}/app/app.global.js**
 - adicione um novo atributo contendo o nome da constante e o seu valor
 
 > ### Menu ###
 (adicionando itens ao menu)
 
-- acesse o arquivo **{pasta_do_projeto}/app/layout/menu.controller.js**
+- acesse o arquivo **{client}/app/layout/menu.controller.js**
 - adicione um objeto no array **vm.itensMenu**
 
 > exemplo de um item no menu:
@@ -243,7 +239,7 @@ bower install {nome-da-biblioteca}
 
 > ### Internacionalização ###
 
-  - todas as strings usadas no sistema devem ser armazenadas no objeto data localizado no arquivo **{pasta_do_projeto}/app/i18n/language-loader.service.js**
+  - todas as strings usadas no sistema devem ser armazenadas no objeto data localizado no arquivo **{client}/app/i18n/language-loader.service.js**
   - estrutura do arquivo:
       - no primeiro momento estão as strings comuns ao sistema como um todo
       - em seguida as strings das views subdivididas em blocos
@@ -266,7 +262,7 @@ bower install {nome-da-biblioteca}
 > ### Convenções ###
 > (convenções adotadas para padronização do projeto)
 
-  - o conjunto de arquivos são chamados de recurso(resource) localizados sempre no caminho **{pasta_do_projeto}/app**
+  - o conjunto de arquivos são chamados de recurso(resource) localizados sempre no caminho **{client}/app**
   - cada recurso pode pussuir os seguintes arquivos:
     - recursos.html(index)
     - recursos-list.html
@@ -275,12 +271,12 @@ bower install {nome-da-biblioteca}
     - recursos.route.js
     - recursos.service.js
   - deve ser usado o gerador de estrutura de arquivos para gerar os arquivos no padrão informado acima
-  - as imagens devem ser armazenadas no caminho **{pasta_do_projeto}/images**
-  - para alterar as propriedades de css acesse o arquivo **{pasta_do_projeto}/styles/app.scss**
+  - as imagens devem ser armazenadas no caminho **{client}/images**
+  - para alterar as propriedades de css acesse o arquivo **{client}/styles/app.scss**
 
 > ### CRUD ###
 
-**crud.controller.js** ({pasta_do_projeto}/app/core/crud.controller.js)
+**crud.controller.js** ({client}/app/core/crud.controller.js)
 
 - Para herdar as funciolidades basta, no controller executar:
 
@@ -308,11 +304,11 @@ $controller('CRUDController',
 
 ```javascript
 activate()
-search(page)
-edit(resource)
+search({page})
+edit({resource})
 save()
-remove(resource)
-goTo(viewName)
+remove({resource})
+goTo({state})
 cleanForm()
 ```
 
@@ -321,14 +317,14 @@ cleanForm()
 ```javascript
 onActivate()
 applyFilters(defaultQueryFilters)//recebe um objeto com os filtros de página aplicado e deve devolver este objeto com demais filtros
-beforeSearch(page) //retornando false cancela o fluxo
+beforeSearch({page}) //retornando false cancela o fluxo
 afterSearch(response)
 beforeClean //retornando false cancela o fluxo
 afterClean()
 beforeSave() //retornando false cancela o fluxo
-afterSave(resource)
-beforeRemove(resource) //retornando false cancela o fluxo
-afterRemove(resource)
+afterSave({resource})
+beforeRemove({resource}) //retornando false cancela o fluxo
+afterRemove({resource})
 ```
 
 - Exemplo
@@ -363,7 +359,7 @@ function {NOME_DO_CONTROLLER}($controller, {MODEL_SERVICE}) {
 
 > ### Diretivas ###
 
-O uso de todos os componentes são demonstrados através das funcionalidades de exemplo adiconadas na pasta **{pasta_do_projeto}/app/samples**
+O uso de todos os componentes são demonstrados através das funcionalidades de exemplo adiconadas na pasta **{client}/app/samples**
 
 - __ContentHeader__
 
@@ -376,7 +372,7 @@ O uso de todos os componentes são demonstrados através das funcionalidades de 
 - __ContentBody__
 
 ```html
-<content-body layoutAlign="">
+<content-body>
   Conteúdo do content header.
 </content-body>
 ```
@@ -384,11 +380,15 @@ O uso de todos os componentes são demonstrados através das funcionalidades de 
 - __Box__
 (obs.: o box deve estar dentro de um ContentBody)
 
+> Box simples
+
 ```html
 <box box-title="{Título do box}">
   Conteúdo do box
 </box>
 ```
+
+> Box com toolbar e botões no rodapé
 
 ```html
 <box box-title="{Título do box}">
@@ -402,11 +402,11 @@ O uso de todos os componentes são demonstrados através das funcionalidades de 
 </box>
 ```
 
-- ( para mais exemplos consulte **{pasta_do_projeto}/app/samples** )
+- ( para mais exemplos consulte **{client}/app/samples** )
 
 > ### Componentes NgProdeb ###
 
-- Para saber como usar os componentes acesse: [Git NgProdeb](http://git.prodeb.ba.gov.br/ngprodeb)
+- Para saber como usar os componentes acesse: [Git NgProdeb](git@git.prodeb.ba.gov.br:starter-pack/ngprodeb.git)
 
 > ### Ícones ###
 

@@ -8,7 +8,8 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function UsersController($controller, lodash, UsersService, RolesService, PrToast, Auth, $translate) {
+  function UsersController($controller, lodash, UsersService, RolesService, PrToast,
+                Auth, $translate) {
     var vm = this;
 
     vm.onActivate = onActivate;
@@ -59,7 +60,7 @@
 
     function afterSave(resource) {
       if (vm.resource.id === Auth.currentUser.id) {
-        Auth.updateCurrentUser(resource.plain());
+        Auth.updateCurrentUser(resource);
       }
     }
 

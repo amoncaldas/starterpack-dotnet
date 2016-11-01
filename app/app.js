@@ -13,5 +13,6 @@
     'md.data.table',
     'mdPickers',
     'satellizer',
-    'pascalprecht.translate']);
+    'pascalprecht.translate',
+    'angularFileUpload']);
 })();

@@ -200,13 +200,28 @@ ul.menu-sidenav li {
 }
 
 .logo span {
-  font-size: 100%;
-  padding: 10px;
+  width: 100%;
+  font-size: 80%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.logo span.email {
+  padding: 0px !important;
 }
 
 a.logo {
   text-decoration: none;
   color: #fff;
+}
+
+.logo div.principal {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: cover;
+  border-radius: 50%;
+  width: 40%;
+  height: 100px;
 }
 
 .full-height {

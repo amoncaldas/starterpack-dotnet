@@ -8,18 +8,22 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function UsersDialogController($controller, UsersService, PrDialog, userDialogInput) {
+  function UsersDialogController($controller, UsersService, PrDialog, userDialogInput, onInit) {
     var vm = this;
 
     vm.onActivate = onActivate;
     vm.beforeSearch = beforeSearch;
     vm.close = close;
-    vm.transferUser = userDialogInput.transferUserFn;    
+
+    if (angular.isDefined(userDialogInput)) {
+      vm.transferUser = userDialogInput.transferUserFn;
+    }
 
     // instantiate base controller
     $controller('CRUDController', {
       vm: vm,
       modelService: UsersService,
+      searchOnInit: onInit,
       options: {
         perPage: 5
       }
@@ -35,7 +39,7 @@
 
     function close() {
       PrDialog.close();
-    }        
+    }
 
   }
 

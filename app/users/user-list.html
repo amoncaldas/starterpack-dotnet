@@ -20,37 +20,16 @@
       </div>
     </form>
   </md-content>
-  <md-table-container>
-    <table md-table class="condensed">
-      <thead md-head>
-        <tr md-row>
-          <th md-column>{{'name' | tAttr}}</th>
-          <th md-column hide-xs>{{'email' | tAttr}}</th>
-          <th md-column hide-xs>{{'views.fields.user.perfils' | translate}}</th>
-          <th md-column class="md-text-center">{{'views.fields.actions' | translate}}</th>
-        </tr>
-      </thead>
-      <tbody md-body>
-        <tr md-row ng-repeat="user in usersCtrl.resources">
-          <td md-cell>{{ ::user.name}}</td>
-          <td md-cell hide-xs>{{ ::user.email}}</td>
-          <td md-cell hide-xs>{{ ::user.roles | rolesStr}}</td>
-          <td md-cell class="md-text-center">
-            <md-button class="md-icon-button" ng-click="usersCtrl.edit(user)">
-              <md-icon md-font-set="material-icons"
-                class="md-dark">create</md-icon>
-              <md-tooltip md-direction="bottom" hide-sm hide-xs>{{::'views.actions.edit' | translate}}</md-tooltip>
-            </md-button>
-            <md-button class="md-icon-button" ng-click="usersCtrl.remove(user)">
-              <md-icon md-font-set="material-icons"
-                class="md-warn">delete</md-icon>
-              <md-tooltip md-direction="bottom" hide-sm hide-xs>{{::'views.actions.remove' | translate}}</md-tooltip>
-            </md-button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </md-table-container>
+
+  <md-list>
+    <md-list-item ng-repeat="user in usersCtrl.resources" ng-click="usersCtrl.edit(user)" class="noright">
+      <img alt="{{ ::user.name }}" ng-src="{{ user.image ? user.image : global.imagePath + '/no_avatar.gif' }}"
+        class="md-avatar" />
+      <p>{{ ::user.name }} <small>({{::user.email}})</small></p>
+      <md-icon md-font-set="material-icons" class="md-secondary" ng-click="usersCtrl.remove(user)"
+        aria-label="remove">delete</md-icon>
+    </md-list-item>
+  </md-list>
 
   <box-footer-buttons>
     <pr-pagination paginator="usersCtrl.paginator"></pr-pagination>

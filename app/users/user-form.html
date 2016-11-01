@@ -14,11 +14,18 @@
       <label>{{::'attributes.email' | translate}}</label>
       <input type="email" ng-model="usersCtrl.resource.email">
     </md-input-container>
-    <div md-input-container class="md-block" >
+
+    <md-input-container class="md-block md-input-has-placeholder" flex>
+      <label>{{::'attributes.image' | translate}}</label>
+      <img alt="{{ ::usersCtrl.resource.name }}" ng-src="{{ usersCtrl.resource.image ? usersCtrl.resource.image : global.imagePath + '/no_avatar.gif' }}"/>
+      <input type="file" pr-uploader-base64 ng-model="usersCtrl.resource.image">
+    </md-input-container>
+    <md-input-container class="md-block md-input-has-placeholder" >
+      <label>{{::'attributes.roles' | translate}}</label>
       <div ng-repeat="role in usersCtrl.roles">
         <md-checkbox ng-model="role.selected">{{role.title}}</md-checkbox>
       </div>
-    </div>
+    </md-input-container>
     <box-footer-buttons layout-align="end center">
       <md-button type="submit" class="md-primary md-raised">{{::'views.actions.save' | translate}}</md-button>
       <md-button class="md-raised" ng-click="usersCtrl.cleanForm()">{{::'views.actions.clear' | translate}}</md-button>
