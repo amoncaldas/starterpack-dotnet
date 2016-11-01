@@ -25,6 +25,7 @@ chmod +x deploying.sh
 # Instalando as dependencias do frontend
 cd public/client
 npm install
+chown -R $(whoami):$(whoami) /home/$(whoami)/.config/configstore/
 bower install
 
 # Acessando o root

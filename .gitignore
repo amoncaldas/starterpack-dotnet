@@ -5,8 +5,8 @@ composer.phar
 vendor/
 
 ### Resources ###
-node_modules/
-bower_components/
+public/client/node_modules/
+public/client/bower_components/
 public/client/build/
 
 ### docker ###
