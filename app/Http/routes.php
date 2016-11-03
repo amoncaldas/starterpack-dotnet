@@ -4,7 +4,19 @@ Route::get('/', function () {
     return File::get(public_path().'/client/index.html');
 });
 
-Route::group(['prefix' => 'v1'], function () {
+//preflight to CORS
+Route::options('{all}', function () {
+    $response = Response::make('');
+
+    $response->header('Access-Control-Allow-Origin', '*');
+    $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization');
+    $response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+    $response->header('Access-Control-Allow-Credentials', 'true');
+
+    return $response;
+})->where('all', '.*');
+
+Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function () {
     //public area
     Route::post('authenticate', 'AuthenticateController@authenticate');
 
@@ -46,5 +58,3 @@ Route::group(['prefix' => 'v1'], function () {
         });
     });
 });
-
-Route::resource('posts', 'PostsController');
