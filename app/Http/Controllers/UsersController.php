@@ -91,7 +91,10 @@ class UsersController extends CrudController
         $this->auditRoles($obj, $request->oldRoles, array_pluck($newRoles, 'slug'));
 
         $obj->roles = $newRoles;
+    }
 
+    //after store (only new users)
+    protected function afterStore(Request $request, Model $obj) {
         //Envia o email de confirmação para o usuário com o login e senha
         Mail::send('emails.confirmRegister',
             ['user' => $obj, 'url' => config('app.url'), 'appName' => config('app.app_name')], function($message) use ($obj) {
@@ -100,7 +103,6 @@ class UsersController extends CrudController
                 $message->subject("Confirmação de cadastro");
         });
     }
-
 
     /**
      * Audit os perfis do usuário
