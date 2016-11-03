@@ -19,16 +19,19 @@ class Cors
         $headers = [
             'Access-Control-Allow-Origin' => '*',
             'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
-            'Access-Control-Allow-Headers' => '*'
+            'Access-Control-Allow-Headers' => 'Origin, Content-Type, Accept, Authorization',
+            'Access-Control-Allow-CredentialsHeaders' => 'true'
         ];
 
-        if ($request->isMethod('OPTIONS'))
-            return Response::json('{"method":"OPTIONS"}', 200, $headers);
+        if ($request->isMethod('OPTIONS')) {
+            return \Response::json('{"method":"OPTIONS"}', 200, $headers);
+        }
 
         $response = $next($request);
 
         foreach ($headers as $key => $value)
             $response->header($key, $value);
+
         return $response;
     }
 }
