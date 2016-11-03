@@ -43,11 +43,11 @@ trait Validation
         else
             $request = request();
 
-        $validator = $this->getValidationFactory()->make($data, $rules, $messages, $customAttributes);
+        $this->validator = $this->getValidationFactory()->make($data, $rules, $messages, $customAttributes);
 
-        if ($validator->fails())
+        if ($this->validator->fails())
         {
-            $this->throwValidationException($request, $validator);
+            $this->throwValidationException($request, $this->validator);
         }
     }
 }

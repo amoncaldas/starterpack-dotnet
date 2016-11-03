@@ -4,7 +4,10 @@ Route::get('/', function () {
     return File::get(public_path().'/client/index.html');
 });
 
-Route::group(['prefix' => 'v1'], function () {
+// preflight to CORS
+Route::options('{all}', ['middleware' => 'cors'], function () {})->where('all', '.*');
+
+Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function () {
     //public area
     Route::post('authenticate', 'AuthenticateController@authenticate');
 
@@ -46,5 +49,3 @@ Route::group(['prefix' => 'v1'], function () {
         });
     });
 });
-
-Route::resource('posts', 'PostsController');

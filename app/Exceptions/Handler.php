@@ -47,28 +47,34 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        $headers = [
+            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers' => '*'
+        ];
+
         if ($e instanceof ModelNotFoundException) {
-            return response()->json(['error' =>'model_not_found'], 404);
+            return response()->json(['error' =>'model_not_found'], 404, $headers);
         }
 
         if ($e instanceof TokenExpiredException) {
-            return response()->json(['error' =>'token_expired'], $e->getStatusCode());
+            return response()->json(['error' =>'token_expired'], $e->getStatusCode(), $headers);
         }
 
         if ($e instanceof UnauthorizedHttpException) {
-            return response()->json(['error' =>'token_expired'], $e->getStatusCode());
+            return response()->json(['error' =>'token_expired'], $e->getStatusCode(), $headers);
         }
 
         if ($e instanceof TokenInvalidException) {
-            return response()->json(['error' =>'token_invalid'], $e->getStatusCode());
+            return response()->json(['error' =>'token_invalid'], $e->getStatusCode(), $headers);
         }
 
         if ($e instanceof JWTException) {
-           return response()->json(['error' =>'token_absent'], $e->getStatusCode());
+           return response()->json(['error' =>'token_absent'], $e->getStatusCode(), $headers);
         }
 
         if ($e instanceof BadRequestHttpException && $e->getMessage() == "Token not provided") {
-            return response()->json(['error' => 'token_not_provided'], $e->getStatusCode());
+            return response()->json(['error' => 'token_not_provided'], $e->getStatusCode(), $headers);
         }
 
         if (config('app.debug')) {
@@ -78,16 +84,16 @@ class Handler extends ExceptionHandler
         }
 
         $token = null;
-        
+
         $response = response()
-            ->json($content,  method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500);
+            ->json($content,  method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500, $headers);
 
         //Dá um refresh no token caso o mesmo exista para anexar a resposta
         try {
             $token = \JWTAuth::parseToken()->refresh();
-            
+
             if( $token !== null )
-                $response= $response->header('Authorization', 'Bearer '. $token);
+                $response = $response->header('Authorization', 'Bearer '. $token);
         } catch (Exception $ex) {
             Log::debug('Request without token');
          }

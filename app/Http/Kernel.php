@@ -33,6 +33,7 @@ class Kernel extends HttpKernel
         'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
         'acl.role' => \App\Http\Middleware\HasRole::class,
         'acl.permission' => \App\Http\Middleware\HasPermission::class,
-        'develop.auth' => \App\Http\Middleware\DevelopAuth::class
+        'develop.auth' => \App\Http\Middleware\DevelopAuth::class,
+        'cors' => \App\Http\Middleware\Cors::class
     ];
 }
