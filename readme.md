@@ -133,18 +133,43 @@ sh configure.sh
 
 ### Docker Passo-a-Passo ###
 
+#### 1) Instalando e configurando o docker ####
+
+> Caso o passo 1 já tenha sido realizado em outro momento pulo para o passo 2.
+
 - instale o docker [Docker Install Linux](https://docs.docker.com/engine/installation/linux/).
 - instale o docker-compose [Docker Compose](https://docs.docker.com/compose/install/).
+- execute os comandos abaixo para criar o grupo do docker e adicionar o usuário.
+
+```sh
+sudo groupadd docker
+sudo usermod -aG docker $USER
+```
+
 - realize o logoff para que as configurações do docker sejam aplicadas.
 
-> Caso os containers do postgres e do php já existam altere seus respectivos nomes no arquivo
-> **/php-docker/docker-compose.yml** em container_name.
+#### 2) Configurando o projeto ####
 
 - o nome do host do postgres deve ser o nome do container postgres.
-- configure o .env com os dados contidos no **/php-docker/docker-compose.yml** ou com os dados especifícos do banco.
+- Faça o clone do projeto:
 
 ```sh
 git clone git@git.prodeb.ba.gov.br:starter-pack/php-docker.git
+```
+
+- Acesse o arquivo: **/php-docker/docker-compose.yml** e renomeie o container_name do DB e WEB
+adicionando como sufixo o nome do projeto, ex:
+
+```html
+db:
+  image: postgres:9.5
+  container_name: base-postgres-{nome_projeto}
+```
+
+- configure o .env com os dados contidos no **/php-docker/docker-compose.yml** ou com os dados especifícos do banco.
+- inicie o build e o container seguindo os passos abaixo.
+
+```sh
 cd {php-docker}
 docker-compose build
 docker-compose up
@@ -170,13 +195,9 @@ chmod +x configure.sh
 docker ps
 ```
 
-- Remover todos os containers
-
-```sh
-docker rm -f $(docker ps -a -q)
-```
-
 **para mais informações e documentação acesse [Docker](https://www.docker.com/)**
+
+## Colocando para Rodar ##
 
 > Caso esteja clonando para dar inicio a um novo projeto rode o comando abaixo. 
 > Se for contribuir com o Starter Pack pule o próximo comando
@@ -185,8 +206,6 @@ docker rm -f $(docker ps -a -q)
 cd {pasta_do_projeto}
 rm -rf .git public/client/.git .gitmodules 
 ```
-
-## Colocando para Rodar ##
 
 > Ajuste o public/client/paths.json com o path relativo (disco) da pasta client clonada na área public do servidor: ex: **"serverClientPath": "client"**
 > Ajuste o public/client/app/app.global.js com as informações de paths (servidor) do client, images e api, ex:
