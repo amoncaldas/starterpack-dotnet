@@ -183,7 +183,7 @@ docker rm -f $(docker ps -a -q)
 
 ```sh
 cd {pasta_do_projeto}
-rm -rf .git && rm -rf public/client/.git && .gitmodules
+rm -rf .git public/client/.git .gitmodules 
 ```
 
 ## Colocando para Rodar ##
