@@ -140,6 +140,8 @@
           email: 'Email',
           password: 'Senha',
           name: 'Nome',
+          image: 'Imagem',
+          roles: 'Perfis',
           //é carregado do servidor caso esteja definido no mesmo
           auditModel: {
           }
