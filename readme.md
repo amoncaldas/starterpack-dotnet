@@ -415,6 +415,19 @@ public function __construct($attributes = array())
 
 Obs: Exceto para as datas que já são pré formatadas, podendo ocorrer erros caso o padrão seja modificado.
 
+> ### Para fazer uma validação específica ###
+
+Em qualquer action de um CrudController é possível adicionar validações específicas com o mesmo padrão de resposta esperado. 
+
+```php
+  $this->validate($request, []);
+
+  if($objeto->owner_id !== Auth::id()) {
+      $this->validator->errors()->add('owner', 'Este recurso não é seu');
+      $this->throwValidationException($request, $this->validator);
+  }
+```
+
 ## Log ##
 
 > ### Para ver os logs ###
