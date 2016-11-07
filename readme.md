@@ -83,7 +83,7 @@ ___
 > Rode os comandos abaixo no terminal do linux:
 
 ```sh
-git clone git@git.prodeb.ba.gov.br:starter-pack/laravel_angular_base.git {nome_projeto} 
+git clone --recursive git@git.prodeb.ba.gov.br:starter-pack/laravel_angular_base.git {nome_projeto} 
 cd {nome_projeto}
 cp .env.example .env
 ```
@@ -194,17 +194,17 @@ db:
 cd {php-docker}
 docker-compose build
 docker-compose up
-docker exec -it base-php-fpm bash
+docker exec -it base-php-fpm-{nome_projeto} bash
 chmod +x configure.sh
 ./configure.sh
 ```
  
 - é aconselhável que se crie um alias no bash do host para executar comandos no bash do docker, para isso rode o comando abaixo:
-    - **echo "alias {SEU_ALIAS}='docker exec -it base-php-fpm'" >> ~/.bashrc**
+    - **echo "alias {SEU_ALIAS}='docker exec -it base-php-fpm-{nome_projeto}'" >> ~/.bashrc**
     - (feche o console e abra novamente para que as alterações surtam efeito)
 - caso queira acessar a linha de comando do container rode **{ALIAS_CRIADO} bash**
 - todos os comandos no restante da documentação tem que ser prefixado com o container docker ou seu alias criado, de dentro da pasta do php-docker ex:
-    - **docker exec -it base-php-fpm {COMANDO}**
+    - **docker exec -it base-php-fpm-{nome_projeto} {COMANDO}**
     - **{ALIAS_CRIADO} {COMANDO}**
 - para sair do bash digite **exit** e aperte enter
 
