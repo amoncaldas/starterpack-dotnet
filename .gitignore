@@ -5,9 +5,7 @@ composer.phar
 vendor/
 
 ### Resources ###
-public/client/node_modules/
-public/client/bower_components/
-public/client/build/
+node_modules/
 
 ### docker ###
 php-docker/

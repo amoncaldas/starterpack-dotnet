@@ -9,6 +9,7 @@
 
 > ## Features
 
+- [Funcionalidades](#funcionalidades)
 - [Instalação](#instalacao)
     - [Manual](#manual-passo-a-passo)
     - [Docker](#docker-passo-a-passo)
@@ -56,6 +57,26 @@ ___
 - [Angular Material](https://material.angularjs.org)
 - [NgProdeb](https://git.prodeb.ba.gov.br:starter-pack/ngprodeb)
 - [momentjs](http://momentjs.com/)
+
+## Funcionalidades ##
+
+> Funcionalidades atualmente disponíveis no projeto
+
+- Instalação via Docker - [PHP Docker](http://git.prodeb.ba.gov.br/starter-pack/php-docker.git);
+- Autenticação via token com o JWT (Dispensando o uso de sessão);
+- Gerador automático de estrutura de arquivo (Servidor);
+- Encapsulamento do CRUD no servidor com a classe **CrudController**;
+- Formatação dos atributos do Model no servidor;
+- LOG (Gerenciador de logs do sistema);
+- Auditoria;
+- Gerador de pacote para produção;
+- Envio do pacote via FTP;
+- Implementação do [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS);
+- Gerenciamento de usuário;
+- Consultas dinâmicas;
+- Envio de emails para usuário;
+- Integração com o [Angular Client](http://git.prodeb.ba.gov.br/starter-pack/starter-pack-angular-client.git);
+- Integração com o [Generator NgProdeb](http://git.prodeb.ba.gov.br/starter-pack/generator-ngprodeb.git);
 
 ## Instalação ##
 
@@ -216,6 +237,13 @@ apiPath: 'v1',
 imagePath: 'client/images'
 ```
 
+> Após a configuração, remova o paths.json e o app.global.js do arquivo **public/client/.gitignore** 
+> e execute o comando abaixo:
+
+```sh
+rm -rf public/client/app/app.global.js.exemple public/client/paths.json.exemple
+```
+
 > Execute o comando abaixo para processar os arquivos .sass e concatenar os .js e .css injetando no index.html.
 > O comando fica observando futuras modificações e repetindo o processo automaticamente
 
@@ -271,7 +299,7 @@ gulp check
 
 - Use os geradores de estrutura de arquivo para gerar os arquivos necessários para o recurso.
 
->  Para gerar arquivos de estrutura do lado do cliente, use o comando abaixo:
+>  Para gerar estrutura de arquivos do lado cliente, use o comando abaixo:
 
 ```sh
 cd {pasta_do_projeto}
@@ -283,7 +311,7 @@ yo ngprodeb
 
 **para mais detalhes sobre o uso do gerador acesse [Generator NgProdeb](http://git.prodeb.ba.gov.br/generator-ngprodeb/tree/master)**
 
-> Para gerar arquivos de estrutura do lado do servidor, use os comandos abaixo:
+> Para gerar estrutura de arquivos do lado servidor, use os comandos abaixo:
 
 - Estrutura completa
 
@@ -336,7 +364,7 @@ php artisan migrate
 
 **CrudController.php** (app/Http/controllers/CrudController.php)
 
-- Para herdar as funciolidades basta, no controller executar:
+- Para herdar as funcionalidades, basta, no controller executar:
 
 ```php
 use App\Http\Controllers\CrudController;
@@ -449,7 +477,7 @@ Em qualquer action de um CrudController é possível adicionar validações espe
 
 ## Log ##
 
-> ### Para ver os logs ###
+> Para ver os logs
 
 - acesse [http://localhost:5000/developer/log-viewer](http://localhost:5000/developer/log-viewer)
 - digite o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
