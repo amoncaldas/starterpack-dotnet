@@ -2,6 +2,12 @@ git submodule update --init --recursive
 
 composer global require "laravel/installer=~1.1"
 
+# Instalando o Yoman
+npm install -g yo
+
+# Instalando as dependencias locais gulp, eslint, bower e derivados
+npm install gulp gulp-babel babel-preset-es2015 eslint eslint-plugin-angular bower
+
 # Instalando o gerador
 npm install -g git+ssh://git@git.prodeb.ba.gov.br:starter-pack/generator-ngprodeb.git
 

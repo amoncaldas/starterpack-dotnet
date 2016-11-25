@@ -35,9 +35,11 @@ ___
 
 ## Pré requisitos ##
 
+- Acesso livre ao PROXY.
 - Preferencialmente utilize o Linux com o gerenciador APT.
   - Caso o SO seja windows utilize a instalação do projeto via Docker.
-- Um editor decente [Visual Studio Code](https://code.visualstudio.com/) ou [ATOM](https://atom.io/).
+- Um editor decent.
+    - Recomendado: [Visual Studio Code](https://code.visualstudio.com/) ou [ATOM](https://atom.io/).
 - NodeJS versão 4 ou superior ([tutorial para instalar](https://nodejs.org/en/download/package-manager/)).
     - Configure o npm para rodar sem sudo ([tutorial](https://docs.npmjs.com/getting-started/fixing-npm-permissions)).
     - Verifique a versão do npm **npm --version** (deve ser igual ou superior a 3.5.1).
@@ -56,7 +58,7 @@ ___
 - [AngularJS](https://angularjs.org)
 - [Angular Material](https://material.angularjs.org)
 - [NgProdeb](https://git.prodeb.ba.gov.br:starter-pack/ngprodeb)
-- [momentjs](http://momentjs.com/)
+- [MomentJS](http://momentjs.com/)
 
 ## Funcionalidades ##
 
@@ -137,14 +139,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo s
 
 #### 3) Instalando e configurando o projeto ####
 
-```sh
-cd {nome_projeto}
-npm install -g yo gulp gulp-babel babel-preset-es2015 eslint eslint-plugin-angular bower
-```
-
 > Linux
 
 ```sh
+cd {nome_projeto}
 sh configure.sh
 ```
 
@@ -158,12 +156,17 @@ sh configure.sh
 
 > Caso o passo 1 já tenha sido realizado em outro momento pulo para o passo 2.
 
-- instale o docker [Docker Install Linux](https://docs.docker.com/engine/installation/linux/).
+- instale o docker [Docker Install](https://www.docker.com/products/overview).
 - instale o docker-compose [Docker Compose](https://docs.docker.com/compose/install/).
-- execute os comandos abaixo para criar o grupo do docker e adicionar o usuário.
+- no linux execute os comandos abaixo para criar o grupo do docker e adicionar o usuário.
 
 ```sh
-sudo groupadd docker
+sudo groupadd docker 
+```
+
+- em seguinda adicione o usuário ao grupo criado.
+
+```sh
 sudo usermod -aG docker $USER
 ```
 
@@ -183,8 +186,9 @@ adicionando como sufixo o nome do projeto, ex:
 
 ```html
 db:
-  image: postgres:9.5
   container_name: base-postgres-{nome_projeto}
+web:
+  container_name: base-php-fpm-{nome_projeto}
 ```
 
 - configure o .env com os dados contidos no **/php-docker/docker-compose.yml** ou com os dados especifícos do banco.
@@ -241,7 +245,7 @@ imagePath: 'client/images'
 > e execute o comando abaixo:
 
 ```sh
-rm -rf public/client/app/app.global.js.exemple public/client/paths.json.exemple
+rm -rf public/client/app/app.global.js.example public/client/paths.json.example
 ```
 
 > Execute o comando abaixo para processar os arquivos .sass e concatenar os .js e .css injetando no index.html.
@@ -249,8 +253,7 @@ rm -rf public/client/app/app.global.js.exemple public/client/paths.json.exemple
 
 ```sh
 cd {pasta_do_projeto}
-cd public/client
-gulp
+npm run build
 ```
 
 - parametros opcionais:
@@ -487,11 +490,12 @@ Em qualquer action de um CrudController é possível adicionar validações espe
 
 > Siga os passos abaixo para gerar o pacote para produção:
 
-- altere os dados do arquivo .env.production com as configurações de produção (banco, smtp, nível de log, ftp e etc) e desative o debug.
+- altere os dados do arquivo .env.production com as configurações de produção (pkg_name, banco, smtp, nível de log, ftp e etc) e desative o debug.
 - rode o comando **npm run package**.
 
 > prepara a aplicação para produção minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados
-> gerando o pacote zipado no padrão **{NomeProjeto}.tar.gz**.
+> gerando o pacote zipado no padrão **{NomeProjeto}.zip**.
 
-- em seguida o sistema irá perguntar se deseja enviar para o ftp, caso queria, o pacote será enviado e removido da raiz do projeto,
-caso contrário o arquivo **{NomeProjeto}.tar.gz** constará na raiz do projeto para o devido uso.
+- em seguida o sistema irá perguntar se deseja enviar para o ftp, caso queira, o pacote será enviado 
+descompactado e removido da raiz local do projeto e do ftp logo após abrindo o navegador padrão no endereço informado no APP_URL no arquivo .env,
+caso contrário, o arquivo **{NomeProjeto}.zip** constará na raiz do projeto para o devido uso.

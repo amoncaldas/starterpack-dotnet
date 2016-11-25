@@ -2,7 +2,7 @@
 
 # Script de deploy - Starter Pack
 
-EXTENSION='.tar.gz'
+EXTENSION='.zip'
 DEPLOY_DIR='deploy'
 
 ## Color Block
@@ -47,6 +47,17 @@ copyEnv() {
   else
       copy .env.production
       mv "deploy/.env.production" "deploy/.env"
+  fi
+}
+
+copyHtaccess() {
+  if [ ! -f .htaccess.example ]
+  then
+      error "O arquivo .htaccess.example não foi encontrado."
+      exit
+  else
+      copy .htaccess.example
+      mv "deploy/.htaccess.example" "deploy/.htaccess"
   fi
 }
 
@@ -110,6 +121,16 @@ getDadosFTP() {
 
 }
 
+addInFileZip() {
+  for ORIGIN in $@
+  do
+    zip -u -r -q $PACKAGE_NAME $ORIGIN
+  done
+}
+
+# Permissão de manipulação da pasta
+sudo chown $(whoami):$(whoami) . -R
+
 # Cria o diretorio temporario(deploy)
 createDeployDir
 
@@ -131,12 +152,15 @@ write '\nCopiando arquivos...'
 ## Copiando o arquivo .env.production e renomeando para .env
 copyEnv
 
+## Copiando o arquivo .htaccess.exemple e renomeando para .htaccess
+copyHtaccess
+
 ## Verificando se as pastas e arquivos obrigratórios existem
-verifyIfFileExists artisan server.php gulpfile.js
-verifyIfDirExists app bootstrap config public resources storage vendor bower_components
+verifyIfFileExists artisan server.php public/client/gulpfile.js
+verifyIfDirExists app bootstrap config public resources storage vendor public/client/bower_components
 
 ## Copiando os diretórios e arquivos necessários para produção
-copy app bootstrap config public resources storage vendor artisan bower_components server.php gulpfile.js
+copy app bootstrap config public resources storage vendor artisan public/client/bower_components server.php public/client/gulpfile.js
 
 ## Acessando a pasta deploy
 cd $DEPLOY_DIR/
@@ -174,12 +198,21 @@ removeFileOrDir public/client/app/samples
 ## Carregando dados do arquivo .env
 loadingEnvFile
 
-PACKAGE_NAME=$APP_NAME$EXTENSION
+PACKAGE_NAME=$PKG_NAME$EXTENSION
 
 write '\nZipando...'
 
+# Permissão de manipulação da pasta
+sudo chown $(whoami):$(whoami) . -R
+
 ## Criando o pacote zipado do projeto
-tar -zcf $PACKAGE_NAME server.php artisan app/ bootstrap/ config/ public/ resources/ storage/ vendor/ .env
+zip -rq $PACKAGE_NAME .env .htaccess
+#addInFileZip artisan server.php
+addInFileZip resources/ app/ bootstrap/ config/ storage/ vendor/
+
+## Atualizando o pacote zipado
+addInFileZip public/index.php public/.htaccess public/robots.txt public/client/index.html
+addInFileZip public/client/app/ public/client/build/ public/client/images/ public/client/styles/
 
 write '\nCopiando pacote para a pasta raiz do projeto...'
 
@@ -202,17 +235,47 @@ write '\nEnviando para FTP...'
 
 ## Transfere para o FTP
 
-ftp -n $FTP_HOST <<END_SCRIPT
+ftp -p -n $FTP_HOST<<END_SCRIPT
 quote USER $FTP_USER
 quote PASS $FTP_PASSWD
 cd $FTP_DIR
+delete .htaccess
+type binary
 put $PACKAGE_NAME
+put install.php
 quit
 END_SCRIPT
 
 removeFileOrDir $PACKAGE_NAME
 
-success "\n:::: $PACKAGE_NAME enviado para o FTP com sucesso! ::::\n"
+success "\n:::: $PACKAGE_NAME enviado para o FTP com sucesso! ::::"
+
+write "\n Instalando...\n"
+
+curl $APP_URL"/install.php?pkgName="$PACKAGE_NAME"&url="$APP_URL"&dir="$FTP_DIR | php
+
+write "\n Removendo "$PACKAGE_NAME
+
+ftp -p -n $FTP_HOST <<END_SCRIPT
+quote USER $FTP_USER
+quote PASS $FTP_PASSWD
+cd $FTP_DIR
+delete $PACKAGE_NAME
+delete install.php
+quit
+END_SCRIPT
+
+success "\n:::: $APP_NAME instalado com sucesso! ::::"
+
+write "\n Abrindo navegador...\n"
+
+if which xdg-open > /dev/null
+then
+  xdg-open $APP_URL
+elif which gnome-open > /dev/null
+then
+  gnome-open $APP_URL
+fi
 
 else
 

@@ -12,12 +12,12 @@
             <div style="font-size: 20px;font-weight: bold;">
                 <h2 style="text-transform: uppercase;">Prezado {{$user['name']}}, </h2>
                 <p>Você foi cadastrado com êxito no sistema {{$appName}}.</p>
-                <p>Seguem seus dados de acesso abaixo:</p>
+                <p>Segue seus dados de acesso abaixo:</p>
             </div>
             <hr>
             <table style="border: none">
                 <tr>
-                    <td><b>Login:</b></td> 
+                    <td><b>Login:</b></td>
                     <td>{{$user['email']}}</td>
                 </tr>
                 <tr>
