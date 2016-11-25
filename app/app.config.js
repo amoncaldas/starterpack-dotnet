@@ -19,7 +19,7 @@
 
     moment.locale('pt-BR');
 
-    //os serviços referente aos models vai utilizar como base nas urls 
+    //os serviços referente aos models vai utilizar como base nas urls
     $modelFactoryProvider.defaultOptions.prefix = Global.apiPath;
 
     $mdpDatePickerProvider.setCancelButtonLabel('Cancelar');
@@ -36,6 +36,9 @@
       })
       .accentPalette('red')
       .warnPalette('deep-orange');
+
+    // Enable browser color
+    $mdThemingProvider.enableBrowserColor();
 
   }
 }());

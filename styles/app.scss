@@ -26,6 +26,14 @@ md-toolbar {
   box-shadow: 0 2px rgba(255, 255, 255, 0.1);
 }
 
+md-toolbar.no-radius {
+  border-radius: 0px !important;
+}
+
+.md-toolbar-tools {
+  padding-right: 0px !important;
+}
+
 @for $i from 1 through 5 {
   md-toolbar.md-toolbar-h#{$i * 10} {
     min-height: 10px * $i;
@@ -47,6 +55,10 @@ md-toolbar {
 
 @for $i from 1 through 30 {
   .padding-left-#{$i} { padding-left: 1px * $i; }
+}
+
+@for $i from 1 through 30 {
+  .padding-right-#{$i} { padding-right: 1px * $i !important; }
 }
 
 @for $i from 1 through 30 {
@@ -283,5 +295,10 @@ a.logo {
 .prContactChips md-content.autocomplete input {
   min-width: 400px;
 }
+
+.prContactChips md-content.autocomplete {
+  margin: 0px 8px;
+}
+
 
 

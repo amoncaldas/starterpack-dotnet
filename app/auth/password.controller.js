@@ -61,12 +61,21 @@
         return;
       }
 
-      Auth.sendEmailResetPassword(vm.reset).then(function () {
-        PrToast.success($translate.instant('messages.operationSuccess'));
+      Auth.sendEmailResetPassword(vm.reset).then(function (response) {
+        PrToast.success(response.msg);
         vm.cleanForm();
         vm.closeDialog();
       }, function (error) {
-        PrToast.error(error.data.msg);
+        var msg = '';
+
+        if (error.data.email && error.data.email.length > 0) {
+          for (var i = 0; i < error.data.email.length; i++) {
+            msg += error.data.email[i] + '<br>';
+          }
+        } else {
+          msg = error.data.msg;
+        }
+        PrToast.error(msg);
       });
     }
 

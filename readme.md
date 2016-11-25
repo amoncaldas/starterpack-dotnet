@@ -105,7 +105,7 @@ npm install
 
 ```sh
 cd {client}
-gulp
+npm run build
 ```
 
   - parametros opcionais

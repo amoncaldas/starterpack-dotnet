@@ -8,7 +8,7 @@
   <header class="nav-header">
     <a class="logo" href="/">
       <div class="principal"
-        ng-style="{'background-image':'url({{auth.currentUser.image ? auth.currentUser.image : global.imagePath + '/no_avatar.gif'}})'}">
+        ng-style="{'background-image':'url(' + appCtrl.getImagePerfil() + ')'}">
       </div>
       <span>{{auth.currentUser.name}}</span>
       <span class="email"><small>{{auth.currentUser.email}}</small></span>

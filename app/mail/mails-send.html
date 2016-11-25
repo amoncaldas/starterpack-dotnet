@@ -23,14 +23,16 @@
               <md-tooltip md-direction="buttom" hide-sm hide-xs>{{::'views.actions.search' | translate}}</md-tooltip>
             </md-button>
           </div>
-          <md-input-container md-no-float class="md-block top-20" flex>
-            <label>{{::'views.fields.mail.subject' | translate}}</label>
-            <input type="text" name="assunto" ng-model="mailsCtrl.mail.subject">
-          </md-input-container>
-          <md-input-container md-no-float class="md-block">
-            <label>{{::'views.fields.mail.message' | translate}}</label>
-            <textarea ckeditor="mailsCtrl.options" ng-model="mailsCtrl.mail.message" rows="5" md-select-on-focus></textarea>
-          </md-input-container>
+          <div layout="column">
+            <md-input-container md-no-float class="top-20" flex>
+              <label>{{::'views.fields.mail.subject' | translate}}</label>
+              <input type="text" name="assunto" ng-model="mailsCtrl.mail.subject">
+            </md-input-container>
+            <md-input-container md-no-float >
+              <label>{{::'views.fields.mail.message' | translate}}</label>
+              <textarea ckeditor="mailsCtrl.options" ng-model="mailsCtrl.mail.message" rows="5" md-select-on-focus></textarea>
+            </md-input-container>
+          </div>
         </form>
     </div>
     <box-footer-buttons>

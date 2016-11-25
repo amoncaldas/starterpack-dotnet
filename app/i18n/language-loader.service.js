@@ -166,12 +166,12 @@
           internalError: 'Ocorreu um erro interno, contate o administrador do sistema',
           notFound: 'Nenhum registro encontrado',
           searchError: 'Não foi possível realizar a busca.',
-          saveSuccess: 'Operação realizada com sucesso',
+          saveSuccess: 'Registro salvo com sucesso',
           operationSuccess: 'Operação realizada com sucesso',
           operationError: 'Erro ao realizar a operação',
-          saveError: 'Não foi possível salvar.',
+          saveError: 'Erro ao tentar salvar o registro.',
           removeSuccess: 'Remoção realizada com sucesso.',
-          removeError: 'Não foi possível remover.',
+          removeError: 'Erro ao tentar remover o registro.',
           validate: {
             fieldRequired: 'O campo {{field}} é obrigratório.'
           },
