@@ -1,7 +1,0 @@
-<IfModule mod_rewrite.c>
-
-	RewriteEngine On
-	RewriteCond %{HTTP_HOST} ^homologa.base-exemplo.ba.gov.br$
-	RewriteRule (.*) /public/$1 [L]
-</IfModule>
-

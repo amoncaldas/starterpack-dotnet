@@ -87,7 +87,7 @@ ___
 ```sh
 git clone --recursive git@git.prodeb.ba.gov.br:starter-pack/laravel_angular_base.git {nome_projeto} 
 cd {nome_projeto}
-cp .env.example .env
+cp .env.develoment .env
 ```
 
 > Ajuste o .env com as informações do banco de dados, email e etc...

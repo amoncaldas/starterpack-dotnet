@@ -13,7 +13,7 @@ try {
 
     for ($i=0; $i < $cont; $i++) {
         //echo $file[$i] . " ";
-        if ($file[$i] != $pkgName && $file[$i] != 'install.php'
+        if ($file[$i] != $pkgName && $file[$i] != 'unpack.php'
                 && $file[$i] != '.' && $file[$i] != '..') {
             $conteudo .= $file[$i] . " ";
         }

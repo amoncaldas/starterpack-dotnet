@@ -18,7 +18,8 @@ Homestead.yaml
 Homestead.json
 
 ### Production ###
-*.tar.gz
+*.zip
+ftp.log
 
 ### Editores ###
 
