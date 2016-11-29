@@ -6,9 +6,9 @@
     .module('app')
     .component('box', {
       replace: true,
-      templateUrl: function(Global) {
+      templateUrl: ['Global', function(Global) {
         return Global.clientPath + '/widgets/box.html'
-      },
+      }],
       transclude: {
         toolbarButtons: '?boxToolbarButtons',
         footerButtons: '?boxFooterButtons'
@@ -16,10 +16,10 @@
       bindings: {
         boxTitle: '@'
       },
-      controller: function($transclude) {
+      controller: ['$transclude', function($transclude) {
         var ctrl = this;
 
         ctrl.transclude = $transclude;
-      }
+      }]
     });
 }());
