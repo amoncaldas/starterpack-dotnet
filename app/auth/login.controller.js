@@ -29,11 +29,11 @@
       Auth.login(credentials).then(function() {
         $state.go(Global.homeState);
       }, function(error) {
-        var message = (error.data.error === 'invalid_credentials')
-          ? $translate.instant('messages.login.invalidCredentials')
-          : $translate.instant('messages.login.errorLogin');
-
-        PrToast.error(message);
+        if (error.data.error === 'invalid_credentials') {
+          PrToast.error($translate.instant('messages.login.invalidCredentials'));
+        } else {
+          PrToast.errorValidation(error.data, $translate.instant('messages.login.errorLogin'));
+        }
       });
     }
 
