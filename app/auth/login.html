@@ -9,14 +9,14 @@
           <div layout="row" flex layout-align="center center">
             <md-input-container flex class="bottom-5">
               <md-icon md-font-set="material-icons">email</md-icon>
-              <label>{{::'attributes.email' | translate}}</label>
+              <label>{{::'email' | tAttr}}</label>
               <input type="email" ng-model="loginCtrl.credentials.email">
             </md-input-container>
           </div>
           <div layout="row" flex layout-align="center center">
             <md-input-container flex class="top-1 bottom-1">
               <md-icon md-font-set="material-icons">lock</md-icon>
-              <label>{{::'attributes.password' | translate}}</label>
+              <label>{{::'password' | tAttr}}</label>
               <input type="password" flex=99 ng-model="loginCtrl.credentials.password">
             </md-input-container>
           </div>

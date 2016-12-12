@@ -14,7 +14,7 @@
   /** @ngInject */
   function routes($stateProvider, Global) {
     $stateProvider
-      .state('project', {
+      .state('app.project', {
         url: '/projetos',
         templateUrl: Global.clientPath + '/samples/projects/projects.html',
         controller: 'ProjectsController as projectsCtrl',

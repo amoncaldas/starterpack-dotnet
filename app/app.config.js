@@ -11,7 +11,6 @@
     $translateProvider, $mdpDatePickerProvider, $mdpTimePickerProvider, moment) {
 
     $translateProvider
-      .preferredLanguage('pt-BR')
       .useLoader('languageLoader')
       .useSanitizeValueStrategy('escape');
 

@@ -14,7 +14,7 @@
   /** @ngInject */
   function routes($stateProvider, Global) {
     $stateProvider
-      .state('dinamic-query', {
+      .state('app.dinamic-query', {
         url: '/consultas-dinamicas',
         templateUrl: Global.clientPath + '/dinamic-querys/dinamic-querys.html',
         controller: 'DinamicQuerysController as dinamicQueryCtrl',

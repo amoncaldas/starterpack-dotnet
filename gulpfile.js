@@ -18,7 +18,8 @@ var inject = require('gulp-inject');
 var series = require('stream-series');
 var lazypipe = require('lazypipe');
 var browserSync = require('browser-sync');
-var shell = require('gulp-shell')
+var gutil = require('gulp-util');
+var eslint = require('gulp-eslint');
 var argv = require('yargs').argv;
 
 paths.client = '.';
@@ -180,11 +181,15 @@ gulp.task('build', function() {
  * Check all .js files using eslint
  * --fix can be passed to fix possible problems
  */
-gulp.task('check', shell.task([
-  'eslint ' +  paths.app + '/*.js ' + paths.app + '/**/*.js' + ((argv.fix) ? ' --fix' : '')
-], {
-  ignoreErrors: true
-}));
+gulp.task('check', function() {
+  gutil.log(gutil.colors.blue('Executando a analise do eslint'));
+
+  return gulp.src([paths.app + '/*.js', paths.app + '/**/*.js'])
+    .pipe(eslint({
+      fix: ((argv.fix) ? true : false)
+    }))
+    .pipe(eslint.format());
+});
 
 gulp.task('default', ['browser-sync', 'watch', 'build'], function() {});
 gulp.task('minifier', ['build-production'], function() {});

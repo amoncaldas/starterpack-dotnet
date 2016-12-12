@@ -14,7 +14,7 @@
   /** @ngInject */
   function routes($stateProvider, Global) {
     $stateProvider
-      .state('mail', {
+      .state('app.mail', {
         url: '/email',
         templateUrl: Global.clientPath + '/mail/mails-send.html',
         controller: 'MailsController as mailsCtrl',

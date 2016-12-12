@@ -5,16 +5,34 @@
     .module('app')
     .config(routes);
 
-  routes.$inject = ['$stateProvider', '$urlRouterProvider', 'Global'];
-
+  /** @ngInject */
   function routes($stateProvider, $urlRouterProvider, Global) {
     $stateProvider
-      .state('not-authorized', {
+      .state('app', {
+        url: '/app',
+        template: '<ui-view/>',
+        abstract: true,
+        resolve: { //ensure langs is ready before render view
+          translateReady: ['$translate', '$q', 'PrToast', function($translate, $q, PrToast) {
+            var deferred = $q.defer();
+
+            PrToast.info('Preparando o sistema', { hideDelay: false });
+
+            $translate.use('pt-BR').then(function() {
+              PrToast.hide();
+              deferred.resolve();
+            });
+
+            return deferred.promise;
+          }]
+        }
+      })
+      .state(Global.notAuthorizedState, {
         url: '/acesso-negado',
         templateUrl: Global.clientPath + '/layout/404.html',
         data: { needAuthentication: false }
       });
 
-    $urlRouterProvider.otherwise(Global.loginState);
+    $urlRouterProvider.otherwise(Global.loginUrl);
   }
 }());

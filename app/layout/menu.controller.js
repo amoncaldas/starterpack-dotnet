@@ -21,21 +21,21 @@
 
       // Array contendo os itens que são mostrados no menu lateral
       vm.itensMenu = [
-        { state: 'dashboard', titulo: menuPrefix + 'dashboard', icon: 'dashboard', subItens: [] },
+        { state: 'app.dashboard', title: menuPrefix + 'dashboard', icon: 'dashboard', subItens: [] },
         {
-          state: '#', titulo: menuPrefix + 'examples', icon: 'view_carousel', profiles: ['admin'],
+          state: '#', title: menuPrefix + 'examples', icon: 'view_carousel', profiles: ['admin'],
           subItens: [
-            { state: 'project', titulo: menuPrefix + 'project', icon: 'star' }
+            { state: 'app.project', title: menuPrefix + 'project', icon: 'star' }
           ]
         },
         // Coloque seus itens de menu a partir deste ponto
         {
-          state: '#', titulo: menuPrefix + 'admin', icon: 'settings_applications', profiles: ['admin'],
+          state: '#', title: menuPrefix + 'admin', icon: 'settings_applications', profiles: ['admin'],
           subItens: [
-            { state: 'user', titulo: menuPrefix + 'user', icon: 'people' },
-            { state: 'mail', titulo: menuPrefix + 'mail', icon: 'mail' },
-            { state: 'audit', titulo: menuPrefix + 'audit', icon: 'storage' },
-            { state: 'dinamic-query', titulo: menuPrefix + 'dinamicQuery', icon: 'location_searching' }
+            { state: 'app.user', title: menuPrefix + 'user', icon: 'people' },
+            { state: 'app.mail', title: menuPrefix + 'mail', icon: 'mail' },
+            { state: 'app.audit', title: menuPrefix + 'audit', icon: 'storage' },
+            { state: 'app.dinamic-query', title: menuPrefix + 'dinamicQuery', icon: 'location_searching' }
           ]
         }
       ];

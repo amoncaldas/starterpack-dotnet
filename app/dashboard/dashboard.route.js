@@ -14,7 +14,7 @@
   /** @ngInject */
   function routes($stateProvider, Global) {
     $stateProvider
-      .state('dashboard', {
+      .state(Global.homeState, {
         url: '/',
         templateUrl: Global.clientPath + '/dashboard/dashboard.html',
         controller: 'DashboardController as dashboardCtrl',

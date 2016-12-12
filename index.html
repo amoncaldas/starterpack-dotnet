@@ -20,7 +20,7 @@
      -->
 
     <!-- inject:css -->
-    <link rel="stylesheet" href="{{ ::global.clientBuild + 'application.css' }}">
+    <link rel="stylesheet" href="client/build/application.css">
     <!-- endinject -->
 
     <!--
@@ -41,9 +41,9 @@
       <![endif]-->
   </head>
 
-  <body ng-controller="AppController as appCtrl" ng-cloak>
+  <body ng-controller="AppController as appCtrl">
     <pr-spinner></pr-spinner>
-    <div layout="row" class="full-height" ng-controller="MenuController as menuCtrl">
+    <div layout="row" class="full-height" ng-controller="MenuController as menuCtrl" ng-cloak>
 
       <ng-include src="global.clientPath + '/layout/menu.html'" ng-if="auth.authenticated()"></ng-include>
 
@@ -52,8 +52,6 @@
         <ng-include src="global.clientPath + '/layout/header.html'" ng-if="auth.authenticated()"></ng-include>
 
         <md-content layout="column" flex md-scroll-y>
-
-          <ng-include src="global.clientPath + '/layout/toolbar.html'" ng-if="!auth.authenticated()"></ng-include>
 
           <!-- É nesta div que o ui-router adiciona o conteudo das páginas através da diretiva ui-view -->
           <div flex="noshrink" ui-view></div>
@@ -67,9 +65,9 @@
     </div>
 
     <!-- inject:js -->
-    <script src="{{ ::global.clientBuild + 'vendors.js' }}"></script>
-    <script src="{{ ::global.clientBuild + 'client/build/angular-with-plugins.js' }}"></script>
-    <script src="{{ ::global.clientBuild + 'client/build/application.js' }}"></script>
+    <script src="client/build/vendors.js"></script>
+    <script src="client/build/angular-with-plugins.js"></script>
+    <script src="client/build/application.js"></script>
     <!-- endinject -->
   </body>
 

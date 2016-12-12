@@ -26,7 +26,7 @@
               class="pull-left menu-icon" style="color:#fff;">
               {{::item.icon}}
             </md-icon>
-            <span translate="{{::item.titulo}}"></span>
+            <span translate="{{::item.title}}" translate-cloak></span>
           </md-button>
           <md-menu-content width="4">
             <md-menu-item ng-repeat="subItem in item.subItens">
@@ -37,7 +37,7 @@
                   <md-icon md-font-set="material-icons" class="pull-left menu-icon">
                     {{::subItem.icon}}
                   </md-icon>
-                  <span translate="{{::subItem.titulo}}"></span>
+                  <span translate="{{::subItem.title}}"></span>
                 </span>
               </md-button>
             </md-menu-item>

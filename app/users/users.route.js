@@ -14,13 +14,13 @@
   /** @ngInject */
   function routes($stateProvider, Global) {
     $stateProvider
-      .state('user', {
+      .state('app.user', {
         url: '/usuario',
         templateUrl: Global.clientPath + '/users/users.html',
         controller: 'UsersController as usersCtrl',
         data: { needProfile: ['admin'] }
       })
-      .state('user-profile', {
+      .state('app.user-profile', {
         url: '/usuario/perfil',
         templateUrl: Global.clientPath + '/users/profile.html',
         controller: 'ProfileController as profileCtrl',

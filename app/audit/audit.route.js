@@ -14,7 +14,7 @@
   /** @ngInject */
   function routes($stateProvider, Global) {
     $stateProvider
-      .state('audit', {
+      .state('app.audit', {
         url: '/auditoria',
         templateUrl: Global.clientPath + '/audit/audit.html',
         controller: 'AuditController as auditCtrl',

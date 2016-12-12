@@ -5,10 +5,11 @@
     .module('app')
     .constant('Global', {
       appName: 'Starter Pack',
-      homeState: 'dashboard',
-      loginState: 'login',
-      resetPasswordState: 'password-reset',
-      notAuthorizedState: 'not-authorized',
+      homeState: 'app.dashboard',
+      loginUrl: 'app/login',
+      loginState: 'app.login',
+      resetPasswordState: 'app.password-reset',
+      notAuthorizedState: 'app.not-authorized',
       clientPath: 'app',
       apiPath: 'v1',
       imagePath: 'images'

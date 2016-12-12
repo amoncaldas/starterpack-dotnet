@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function LanguageLoader($q, SupportService) {
+  function LanguageLoader($q, SupportService, $log) {
 
     function translations(langs) {
       var data = {
@@ -217,7 +217,9 @@
     };
 
     // return loaderFn
-    return function() {
+    return function(options) {
+      $log.info('Carregando o conteudo da linguagem ' + options.key);
+
       var deferred = $q.defer();
 
       //Carrega as langs que precisam e estão no servidor para não precisar repetir aqui
