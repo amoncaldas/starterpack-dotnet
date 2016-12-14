@@ -10,7 +10,7 @@
     $stateProvider
       .state('app', {
         url: '/app',
-        template: '<ui-view/>',
+        templateUrl: Global.clientPath + '/layout/app.html',
         abstract: true,
         resolve: { //ensure langs is ready before render view
           translateReady: ['$translate', '$q', 'PrToast', function($translate, $q, PrToast) {
