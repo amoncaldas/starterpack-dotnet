@@ -191,5 +191,5 @@ gulp.task('check', function() {
     .pipe(eslint.format());
 });
 
-gulp.task('default', ['browser-sync', 'watch', 'build'], function() {});
+gulp.task('default', ['browser-sync', 'watch', 'build', 'scriptsApplication', 'styles'], function() {});
 gulp.task('minifier', ['build-production'], function() {});
