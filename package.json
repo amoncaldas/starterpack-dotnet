@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "scripts": {
     "server": "php artisan serve --port=5000 --host=0.0.0.0",
-    "package": "sh deploying.sh",
+    "package": "sh deploy.sh",
     "build": "gulp --gulpfile public/client/gulpfile.js",
     "check": "gulp --gulpfile public/client/gulpfile.js check"
   },

@@ -73,6 +73,9 @@ writeInHtaccess() {
 URL=$1
 URL_NOPRO=${URL#*//}
 echo "<IfModule mod_rewrite.c>
+  Header set Access-Control-Allow-Origin \"*\"
+	Header set Access-Control-Allow-Headers \"Origin, X-Requested-With, Content-Type, Accept\"
+	Header set Access-Control-Allow-Methods \"PUT, GET, POST, DELETE, OPTIONS\"
   RewriteEngine On
   RewriteCond %{HTTP_HOST} ^$URL_NOPRO$
   RewriteRule (.*) /public/\$1 [L]
@@ -206,29 +209,39 @@ fi
 # Permissão de manipulação da pasta
 sudo chown $(whoami):$(whoami) . -R
 
+sudo apt-get -qq -y install pv
+
 # Cria o diretorio temporário(deploy)
 createDir $DEPLOY_DIR
 
 write '\nCopiando arquivos...'
 
 ## Copiando o arquivo .env.TYPE_FTP e renomeando para .env
-if [ "$TYPE_FTP" = "d" ]
+copyFileEssential() {
+if [ "$SEND_TO_FTP" = true ]
+then
+  if [ "$TYPE_FTP" = "h" ]
+  then
+    copyEnv .env.homologation
+  elif [ "$TYPE_FTP" = "p" ]
+  then
+    copyEnv .env.production
+  fi
+fi
+
+if [ "$SEND_TO_FTP" = false ] || [ "$TYPE_FTP" = "d" ]
 then
   copyEnv .env.development
-elif [ "$TYPE_FTP" = "h" ]
-then
-  copyEnv .env.homologation
-elif [ "$TYPE_FTP" = "p" ]
-then
-  copyEnv .env.production
 fi
 
 ## Verificando se as pastas e arquivos obrigratórios existem
-verifyIfFileExists artisan server.php public/client/gulpfile.js
+verifyIfFileExists public/client/gulpfile.js
 verifyIfDirExists app bootstrap config public resources storage vendor public/client/bower_components
 
 ## Copiando os diretórios e arquivos necessários para produção
-copy app bootstrap config public resources storage vendor artisan public/client/bower_components server.php public/client/gulpfile.js
+copy app bootstrap config public resources storage vendor artisan public/client/bower_components public/client/gulpfile.js
+}
+copyFileEssential | pv -p -e -t -a -r > /dev/null
 
 ## Acessando a pasta deploy
 cd $DEPLOY_DIR/
@@ -239,17 +252,23 @@ createFile .htaccess
 write '\nExecutando comandos do php artisan para limpeza do cache e logs...\n'
 
 ## Limpando cache e logs do laravel
-executePHPArtisan cache:clear route:clear view:clear config:clear clear-compiled
+clarCacheAndClearLogs() {
+  executePHPArtisan cache:clear route:clear view:clear config:clear clear-compiled
+}
+clarCacheAndClearLogs | pv -p -e -t -a -r > /dev/null
 
 write '\nRemovendo os arquivos de log, sessions e cache...'
 
 ## Removendo os arquivos de log, sessions e cache
-removeFileOrDir storage/logs/* storage/framework/sessions/* storage/framework/cache/*
+removeLogAndSessionsAndCacheFiles() {
+  removeFileOrDir storage/logs/* storage/framework/sessions/* storage/framework/cache/*
+}
+removeLogAndSessionsAndCacheFiles | pv -p -e -t -a -r > /dev/null
 
 write '\nOtimizando o projeto...\n'
 
 ## Otimizando o projeto
-executePHPArtisan optimize
+executePHPArtisan optimize | pv -p -e -t -a -r > /dev/null
 
 write '\nExecutando gulp para minificar js e css...'
 
@@ -259,12 +278,18 @@ gulp --gulpfile public/client/gulpfile.js --production
 write '\nRemovendo fontes do js e css...'
 
 ## Removendo os arquivos .js e .css
-removeFileOrDir public/client/app/*.js public/client/app/**/*.js public/client/app/**/**/*.js public/client/styles/*.scss
+removeJsAndCssFiles() {
+  removeFileOrDir public/client/app/*.js public/client/app/**/*.js public/client/app/**/**/*.js public/client/styles/*.scss
+}
+removeJsAndCssFiles | pv -p -e -t -a -r > /dev/null
 
 write '\nRemovendo diretorio de exemplos...'
 
 ## Removendo o diretório de exemplos
-removeFileOrDir public/client/app/samples
+removeDirSamples() {
+  removeFileOrDir public/client/app/samples
+}
+removeDirSamples | pv -p -e -t -a -r > /dev/null
 
 ## Carregando dados do arquivo .env
 loadingEnvFile
@@ -273,7 +298,7 @@ loadingEnvFile
 PACKAGE_NAME=$PKG_NAME$EXTENSION
 
 # Permissão de manipulação da pasta
-sudo chown $(whoami):$(whoami) . -R
+chown $(whoami):$(whoami) . -R
 
 ## Escrevendo no arquivo .htaccess
 writeInHtaccess $APP_URL
@@ -281,18 +306,20 @@ writeInHtaccess $APP_URL
 write '\nZipando...'
 
 ## Criando o pacote zipado do projeto
-zip -rq $PACKAGE_NAME .env .htaccess
-#addInFileZip artisan server.php
-addInFileZip resources/ app/ bootstrap/ config/ storage/ vendor/
+zipProject() {
+  zip -rq $PACKAGE_NAME .env .htaccess
+  addInFileZip resources/ app/ bootstrap/ config/ storage/ vendor/
 
-## Atualizando o pacote zipado
-addInFileZip public/index.php public/.htaccess public/robots.txt public/client/index.html
-addInFileZip public/client/app/ public/client/build/ public/client/images/ public/client/styles/
+  ## Atualizando o pacote zipado
+  addInFileZip public/index.php public/.htaccess public/robots.txt public/client/index.html
+  addInFileZip public/client/app/ public/client/build/ public/client/images/ public/client/styles/
+}
+zipProject | pv -p -e -t -a -r > /dev/null
 
 write '\nCopiando pacote para a pasta raiz do projeto...'
 
 ## Copiando o pacote para a pasta raiz do projeto
-cp $PACKAGE_NAME ../
+cp $PACKAGE_NAME ../ | pv -p -e -t -a -r > /dev/null
 
 ## Volta para a pasta raiz do projeto
 cd ../
@@ -300,16 +327,17 @@ cd ../
 write '\nRemovendo pasta deploy(temporária)...'
 
 ## Removendo o diretório de deploy
-removeFileOrDir $DEPLOY_DIR
+removeFileOrDir $DEPLOY_DIR | pv -p -e -t -a -r > /dev/null
 
 if [ "$SEND_TO_FTP" = true ] ; then
 
 ## Lendo os dados de FTP do arquivo .env
-varifyParamsFTP
+varifyParamsFTP | pv -p -e -t -a -r > /dev/null
 
 write '\nEnviando para FTP: '$FTP_HOST
 
 ## Transferindo para o FTP
+sendPackageToFTP() {
 openFtp
 
 if [ "$TYPE_FTP" != "p" ]
@@ -324,10 +352,21 @@ runFtp
 if grep -Fxq "530 Login authentication failed" /tmp/log.$$
 then
   rm -f /tmp/log.$$
-  exitError "Ocorreu uma Falha na autenticação!"
+  exitError "Ocorreu uma falha na autenticação!"
+elif grep -Fxq "550" /tmp/log.$$
+then
+  rm -f /tmp/log.$$
+  exitError "Ocorreu uma falha na transferência dos arquivos: Arquivo não encontrado!"
+elif grep -Fxq "553" /tmp/log.$$
+then
+  rm -f /tmp/log.$$
+  exitError "Ocorreu uma falha na transferência dos arquivos: Permissão Negada!"
 fi
 
 rm -f /tmp/log.$$
+
+}
+sendPackageToFTP | pv -p -e -t -a -r > /dev/null
 
 removeFileOrDir $PACKAGE_NAME
 
@@ -338,6 +377,7 @@ then
 
 write "\n Instalando...\n"
 
+installPackageInServer() {
 curl $APP_URL"/unpack.php?pkgName="$PACKAGE_NAME"&url="$APP_URL"&dir="$FTP_DIR | php
 
 ## Removendo os arquivos de deploy do FTP
@@ -348,6 +388,8 @@ closeFtp
 runFtp
 
 rm -f /tmp/log.$$
+}
+installPackageInServer | pv -p -e -t -a -r > /dev/null
 
 success "\n:::: $APP_NAME instalado com sucesso! ::::"
 

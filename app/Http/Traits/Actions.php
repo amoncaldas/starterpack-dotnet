@@ -79,7 +79,7 @@ trait Actions
     {
         $this->callback('beforeAll', $request);
 
-        $klass = $this->getClass();
+        $klass = $this->getModel();
 
         return $klass::findOrFail($id);
     }

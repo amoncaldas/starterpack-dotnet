@@ -26,7 +26,7 @@ php artisan jwt:secret
 php artisan migrate --seed
 
 # Dando permissão de execussão no arquivo de deploy
-chmod +x deploying.sh
+chmod +x deploy.sh
 
 # Instalando as dependencias do frontend
 cd public/client
