@@ -19,9 +19,6 @@ php artisan jwt:secret
 # Gerando os dados de usuários padrão no banco
 php artisan migrate --seed
 
-# Dando permissão de execussão no arquivo de deploy
-chmod +x deploying.sh
-
 # Instalando as dependencias do frontend
 cd public/client
 npm install
