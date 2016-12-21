@@ -30,10 +30,10 @@
 
     // Configuration theme
     $mdThemingProvider.theme('default')
-      .primaryPalette('blue', {
+      .primaryPalette('brown', {
         default: '700'
       })
-      .accentPalette('red')
+      .accentPalette('amber')
       .warnPalette('deep-orange');
 
     // Enable browser color

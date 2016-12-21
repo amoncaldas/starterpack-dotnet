@@ -26,7 +26,7 @@
     "angular-moment": "~0.10.3",
     "satellizer": "~0.14.1",
     "angular-material-data-table": "~0.10.9",
-    "ng-prodeb": "git@git.prodeb.ba.gov.br:starter-pack/ngprodeb.git#0.1.11",
+    "ng-prodeb": "git@git.prodeb.ba.gov.br:starter-pack/ngprodeb.git#0.2.1",
     "moment": "~2.14.1",
     "mdPickers": "~0.7.5"
   },
