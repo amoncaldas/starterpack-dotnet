@@ -274,12 +274,18 @@ npm run server (Este comando inicia o servidor php na porta 5000)
 > Outros comandos
 
 ```sh
-gulp check
+npm run check
 ```
 
-- (verifica a formatação do código javascript)
+- verifica a formatação do código javascript
   - parametros opcionais
     - **--fix** (para corrigir os erros que podem ser corrigidos automaticamente)
+
+```sh
+npm run package
+```
+
+- prepara o projeto para o ambiente informado e envia para o FTP
 
 ## Desenvolvimento ##
 
@@ -289,10 +295,9 @@ gulp check
   - plugins utilizados:
       - php debug
       - php code format
-      - eslint (para verificar erros de formatação e code smell)
+      - eslint (para verificar erros de formatação e code smell no javascript)
       - editor config (para configurar codificação, tabulação ...)
       - beautify (para formatar o código)
-      - vscode-icons
       - path intellisense (autocomplete para php)
       - angular material snippets
       - auto close tag

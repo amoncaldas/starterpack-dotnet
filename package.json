@@ -6,7 +6,8 @@
   "scripts": {
     "server": "php artisan serve --port=5000 --host=0.0.0.0",
     "package": "sh deploying.sh",
-    "build": "gulp --gulpfile public/client/gulpfile.js"
+    "build": "gulp --gulpfile public/client/gulpfile.js",
+    "check": "gulp --gulpfile public/client/gulpfile.js check"
   },
   "devDependencies": {
     "bower": "^1.7.9",
