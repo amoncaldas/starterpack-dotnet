@@ -28,14 +28,18 @@
           }
           return response;
         },
-        responseError: function(response) {
+        responseError: function(rejection) {
           // Instead of checking for a status code of 400 which might be used
           // for other reasons in Laravel, we check for the specific rejection
           // reasons to tell us if we need to redirect to the login state
           var rejectionReasons = ['token_not_provided', 'token_expired', 'token_absent', 'token_invalid'];
 
+          var tokenError = false;
+
           angular.forEach(rejectionReasons, function(value) {
-            if (response.data && response.data.error === value) {
+            if (rejection.data && rejection.data.error === value) {
+              tokenError = true;
+
               $injector.get('Auth').logout().then(function() {
                 var $state = $injector.get('$state');
 
@@ -43,11 +47,10 @@
                 // only the first will redirect and notified
                 if (!$state.is(Global.loginState)) {
                   $state.go(Global.loginState);
+
+                  $injector.get('PrToast').warn($translate.instant('messages.login.logoutInactive'));
                   //close any dialog that is opened
                   $injector.get('PrDialog').close();
-
-                  $injector.get('PrToast')
-                    .warn($translate.instant('messages.login.logoutInactive'));
 
                   event.preventDefault();
                 }
@@ -55,15 +58,20 @@
             }
           });
 
+          //define data to empty because already show PrToast token message
+          if (tokenError) {
+            rejection.data = {};
+          }
+
           // many servers errors (business) are intercept here but generated a new refresh token
           // and need update current token
-          var token = response.headers('Authorization');
+          var token = rejection.headers('Authorization');
 
           if (token) {
             $injector.get('$auth').setToken(token.split(' ')[1]);
           }
 
-          return $q.reject(response);
+          return $q.reject(rejection);
         }
       };
     }
