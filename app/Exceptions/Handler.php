@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\Exceptions;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
@@ -53,9 +54,7 @@ class Handler extends ExceptionHandler
             'Access-Control-Allow-Headers' => '*'
         ];
 
-        if ($e instanceof ModelNotFoundException) {
-            return response()->json(['error' =>'model_not_found'], 404, $headers);
-        }
+        //Exceptions relativas ao token
 
         if ($e instanceof TokenExpiredException) {
             return response()->json(['error' =>'token_expired'], $e->getStatusCode(), $headers);
@@ -77,16 +76,34 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'token_not_provided'], $e->getStatusCode(), $headers);
         }
 
-        if (config('app.debug')) {
-            $content = ['error' => $e->getMessage()];
-        } else {
-            $content = ['error' => 'Aconteceu um erro inesperado, tente novamente dentro de alguns minutos.'];
+        //Exceptions especificas com tratamento especial
+
+        $response = null;
+
+        if ($e instanceof ModelNotFoundException) {
+            $response = response()->json(['error' =>'model_not_found'], 404, $headers);
         }
 
-        $token = null;
+        if ($e instanceof QueryException) {
+            Log::debug('Erro no acesso ao bando de dados: '.$e->getMessage());
 
-        $response = response()
-            ->json($content,  method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500, $headers);
+            if (strpos($e->getMessage(), 'not-null') !== false) {
+                return response()->json(['error' =>'Existem informações que precisam ser preenchidas'], 400, $headers);
+            }
+        }
+
+        // Demais exceptions sem tratamento especifico
+
+        if( $response === null ) {
+            if (config('app.debug')) {
+                $content = ['error' => $e->getMessage()];
+            } else {
+                $content = ['error' => 'Aconteceu um erro inesperado, tente novamente dentro de alguns minutos.'];
+            }
+
+            $response = response()
+                ->json($content,  method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500, $headers);
+        }
 
         //Dá um refresh no token caso o mesmo exista para anexar a resposta
         try {
@@ -96,7 +113,7 @@ class Handler extends ExceptionHandler
                 $response = $response->header('Authorization', 'Bearer '. $token);
         } catch (Exception $ex) {
             Log::debug('Request without token');
-         }
+        }
 
         return $response;
     }

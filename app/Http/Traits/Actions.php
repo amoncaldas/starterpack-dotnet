@@ -108,15 +108,16 @@ trait Actions
 
         $obj->fill( $input );
 
-        $this->callback('before'.$action, $request, $obj);
-        $this->callback('beforeSave', $request, $obj);
-
         try {
-            $obj->save();
+            \DB::transaction(function () use ($request, $action, $obj) {
+                $this->callback('before'.$action, $request, $obj);
+                $this->callback('beforeSave', $request, $obj);
 
-            $this->callback('after'.$action, $request, $obj);
-            $this->callback('afterSave', $request, $obj);
+                $obj->save();
 
+                $this->callback('after'.$action, $request, $obj);
+                $this->callback('afterSave', $request, $obj);
+            });
         } catch (Exception $e) {
             return Response::json(['error' => 'Resource already exists.'], HttpResponse::HTTP_CONFLICT);
         }
@@ -131,11 +132,13 @@ trait Actions
         $klass = $this->getModel();
         $obj = $klass::find($id);
 
-        $this->callback('beforeDestroy', $request, $obj);
+        \DB::transaction(function () use ($request, $obj) {
+            $this->callback('beforeDestroy', $request, $obj);
 
-        $obj->delete();
+            $obj->delete();
 
-        $this->callback('afterDestroy', $request, $obj);
+            $this->callback('afterDestroy', $request, $obj);
+        });
     }
 
 }
