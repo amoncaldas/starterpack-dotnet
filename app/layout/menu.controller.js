@@ -1,3 +1,5 @@
+/*eslint-env es6*/
+
 (function () {
 
   'use strict';
@@ -7,7 +9,7 @@
     .controller('MenuController', MenuController);
 
   /** @ngInject */
-  function MenuController($mdSidenav, $state) {
+  function MenuController($mdSidenav, $state, $mdColors) {
     var vm = this;
 
     //Bloco de declaracoes de funcoes
@@ -39,6 +41,25 @@
           ]
         }
       ];
+
+      /**
+       * Objeto que preenche o ng-style do menu lateral trocando as cores
+       */
+      vm.sidenavStyle = {
+        top: {
+          'border-bottom': '1px solid '+getColor('primary-500'),
+          'background-image': '-webkit-linear-gradient(top, '+getColor('primary')+', '+getColor('primary-400')+')'
+        },
+        content: {
+          'background-color': getColor('primary-400')
+        },
+        textColor: {
+          color: '#FFF'
+        },
+        lineBottom: {
+          'border-bottom': '1px solid ' + getColor('warn')
+        }
+      }
     }
 
     function open() {
@@ -56,6 +77,10 @@
         $state.go(item.state);
         $mdSidenav('left').close();
       }
+    }
+
+    function getColor(colorPalettes) {
+      return $mdColors.getThemeColor(colorPalettes);
     }
 
   }

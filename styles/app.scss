@@ -102,7 +102,6 @@ table.condensed .md-cell {
 .md-buttom-menu{
   margin: 0 !important;
   margin-bottom: 0px !important;
-  color: #fff;
   text-align: inherit;
   width: 100%;
 }
@@ -161,11 +160,10 @@ ul.menu-sidenav {
 ul.menu-sidenav li {
   padding: 0;
   margin-top: 3px;
-  border-bottom: 1px solid #267ED5;
 }
 
 .menu-sidenav> li {
-  border-bottom: 1px solid #267ED5;
+  border-bottom: 1px solid #FFFFFF;
 }
 
 .md-block {
@@ -191,13 +189,6 @@ ul.menu-sidenav li {
 }
 
 .nav-header {
-  background-color: #106CC8;
-  background: linear-gradient(#185694, #106cc8);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #185694), color-stop(1, #106cc8));
-  background: -webkit-linear-gradient(top, #185694 0%, #106cc8 100%);
-  background: -moz-linear-gradient(top, #185694 0%, #106cc8 100%);
-  background: linear-gradient(top, #185694 0%, #106cc8 100%);
-  border-bottom: 1px solid #267ED5;
   flex-shrink: 0;
   z-index: 2;
 }
@@ -239,11 +230,6 @@ a.logo {
 .full-height {
   height: 100% !important;
   min-height: 100% !important;
-}
-
-.site-sidenav {
-  background: #106CC8;
-  color: #fff;
 }
 
 .site-sidenav,
@@ -299,6 +285,3 @@ a.logo {
 .prContactChips md-content.autocomplete {
   margin: 0px 8px;
 }
-
-
-
