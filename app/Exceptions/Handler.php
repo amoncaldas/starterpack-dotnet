@@ -98,7 +98,7 @@ class Handler extends ExceptionHandler
             Log::debug('Erro no acesso ao bando de dados: '.$e->getMessage());
 
             if (strpos($e->getMessage(), 'not-null') !== false) {
-                return response()->json(['error' => 'Existem informações que precisam ser preenchidas'], 400, $headers);
+                return response()->json(['error' => 'messages.notNullError'], 400, $headers);
             }
         }
 
@@ -108,7 +108,7 @@ class Handler extends ExceptionHandler
             if (config('app.debug')) {
                 $content = ['error' => $e->getMessage()];
             } else {
-                $content = ['error' => 'Aconteceu um erro inesperado, tente novamente dentro de alguns minutos.'];
+                $content = ['error' => 'messages.internalError'];
             }
 
             $response = response()
