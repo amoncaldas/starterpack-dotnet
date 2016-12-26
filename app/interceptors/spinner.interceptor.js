@@ -6,7 +6,6 @@
     .config(spinnerInterceptor);
 
   function spinnerInterceptor($httpProvider, $provide) {
-
     /**
      * Este interceptor é responsável por mostrar e esconder o
      * componente PrSpinner sempre que uma requisição ajax
@@ -17,15 +16,10 @@
      * @returns
      */
     function showHideSpinner($q, $injector) {
-      var $translate = $injector.get('$translate');
-
       return {
         request: function (config) {
-          if (config.method === 'GET') {
-            $injector.get('PrSpinner').show($translate.instant('loading'));
-          } else {
-            $injector.get('PrSpinner').show($translate.instant('processing'));
-          }
+          $injector.get('PrSpinner').show();
+
           return config;
         },
 

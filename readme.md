@@ -204,6 +204,7 @@ bower install {nome-da-biblioteca}
 
 - acesse o arquivo **{client}/app/layout/menu.controller.js**
 - adicione um objeto no array **vm.itensMenu**
+- altere as cores do menu no objeto **sidenavStyle**
 
 > exemplo de um item no menu:
 
