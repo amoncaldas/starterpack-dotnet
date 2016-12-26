@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\Exceptions;
+use App\Exception\BusinessException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -76,6 +77,11 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'token_not_provided'], $e->getStatusCode(), $headers);
         }
 
+       if ($e instanceof BadRequestHttpException && $e->getMessage() == "Token not provided") {
+            return response()->json(['error' => 'token_not_provided'], $e->getStatusCode(), $headers);
+        }
+
+
         //Exceptions especificas com tratamento especial
 
         $response = null;
@@ -84,11 +90,15 @@ class Handler extends ExceptionHandler
             $response = response()->json(['error' =>'model_not_found'], 404, $headers);
         }
 
+       if ($e instanceof BusinessException) {
+            $response = response()->json(['error' => $e->getMessage()], 400, $headers);
+        }
+
         if ($e instanceof QueryException) {
             Log::debug('Erro no acesso ao bando de dados: '.$e->getMessage());
 
             if (strpos($e->getMessage(), 'not-null') !== false) {
-                return response()->json(['error' =>'Existem informações que precisam ser preenchidas'], 400, $headers);
+                return response()->json(['error' => 'Existem informações que precisam ser preenchidas'], 400, $headers);
             }
         }
 
