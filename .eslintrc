@@ -6,7 +6,12 @@
     "angular": true
   },
   "plugins": [
-    "angular"
+    "angular",
+    "html"
+  ],
+  "validate": [
+    "javascript",
+    "html"
   ],
   "rules": {
     //best practies
