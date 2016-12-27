@@ -25,15 +25,17 @@ class ProjectsController extends CrudController
         return Project::class;
     }
 
-    protected function applyFilters(Request $request, $query) {
+    protected function applyFilters(Request $request, $query)
+    {
         $query = $query->with('tasks');
 
-        if($request->has('name')) {
+        if ($request->has('name')) {
             $query = $query->where('name', 'like', '%'.$request->name.'%');
         }
     }
 
-    protected function beforeSearch(Request $request, $dataQuery, $countQuery) {
+    protected function beforeSearch(Request $request, $dataQuery, $countQuery)
+    {
         $dataQuery->orderBy('name', 'asc');
     }
 
@@ -44,7 +46,7 @@ class ProjectsController extends CrudController
             'cost' => 'required|min:1'
         ];
 
-        if ( strpos($request->route()->getName(), 'projects.update') !== false ) {
+        if (strpos($request->route()->getName(), 'projects.update') !== false) {
             $rules['name'] = 'required|max:255|unique:projects,name,'.$obj->id;
         }
 
