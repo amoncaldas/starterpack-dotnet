@@ -158,6 +158,7 @@ return [
         /*
          * External
          */
+        Barryvdh\Debugbar\ServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
