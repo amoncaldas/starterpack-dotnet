@@ -32,7 +32,7 @@
         if (error.data.error === 'invalid_credentials') {
           PrToast.error($translate.instant('messages.login.invalidCredentials'));
         } else {
-          PrToast.errorValidation(error.data, $translate.instant('messages.login.errorLogin'));
+          PrToast.errorValidation(error.data, $translate.instant('messages.login.unknownError'));
         }
       });
     }

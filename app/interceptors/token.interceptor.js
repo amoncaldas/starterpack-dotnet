@@ -16,8 +16,6 @@
   function tokenInterceptor($httpProvider, $provide, Global) {
 
     function redirectWhenServerLoggedOut($q, $injector) {
-      var $translate = $injector.get('$translate');
-
       return {
         response: function(response) {
           // get a new refresh token to use in the next request
@@ -44,15 +42,12 @@
                 var $state = $injector.get('$state');
 
                 // in case multiple ajax request fail at same time because token problems,
-                // only the first will redirect and notified
+                // only the first will redirect
                 if (!$state.is(Global.loginState)) {
                   $state.go(Global.loginState);
 
-                  $injector.get('PrToast').warn($translate.instant('messages.login.logoutInactive'));
                   //close any dialog that is opened
                   $injector.get('PrDialog').close();
-
-                  event.preventDefault();
                 }
               });
             }

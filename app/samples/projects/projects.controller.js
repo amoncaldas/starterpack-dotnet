@@ -17,7 +17,7 @@
     vm.viewTasks = viewTasks;
 
     // instantiate base controller
-    $controller('CRUDController', { vm: vm, modelService: ProjectsService, options: { } });
+    $controller('CRUDController', { vm: vm, modelService: ProjectsService, options: {} });
 
     function viewTasks(projectId) {
       var config = {

@@ -173,6 +173,9 @@
           saveError: 'Erro ao tentar salvar o registro.',
           removeSuccess: 'Remoção realizada com sucesso.',
           removeError: 'Erro ao tentar remover o registro.',
+          resourceNotFoundError: 'Recurso não encontrado',
+          notNullError: 'Todos os campos obrigatórios devem ser preenchidos',
+          duplicatedResourceError: 'Já existe um recurso com essas informações',
           validate: {
             fieldRequired: 'O campo {{field}} é obrigratório.'
           },
@@ -182,7 +185,8 @@
           login: {
             logoutInactive: 'Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente.',
             invalidCredentials: 'Credenciais Inválidas',
-            errorLogin: 'Não foi possível realizar o login'
+            unknownError: 'Não foi possível realizar o login. Tente novamente. Caso não consiga favor encontrar em contato com o administrador do sistema.',
+            userNotFound: 'Não foi possível encontrar seus dados'
           },
           dashboard: {
             welcome: 'Seja bem Vindo {{userName}}',
@@ -194,7 +198,7 @@
             sendMailError: 'Não foi possível enviar o email.'
           },
           user: {
-            beforeRemoveError: 'Você não pode remover seu próprio usuário',
+            removeYourSelfError: 'Você não pode remover seu próprio usuário',
             userExists: 'Usuário já adicionado!',
             profile: {
               updateError: 'Não foi possível atualizar seu profile'

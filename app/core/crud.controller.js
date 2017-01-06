@@ -29,6 +29,7 @@
    * afterClean()
    * beforeSave() //retornando false cancela o fluxo
    * afterSave(resource)
+   * onSaveError(error)
    * beforeRemove(resource) //retornando false cancela o fluxo
    * afterRemove(resource)
    *
@@ -41,6 +42,7 @@
 
     //Functions Block
     vm.search = search;
+    vm.paginateSearch = paginateSearch;
     vm.edit = edit;
     vm.save = save;
     vm.remove = remove;
@@ -59,7 +61,8 @@
       vm.defaultOptions = {
         redirectAfterSave: true,
         searchOnInit: true,
-        perPage: 8
+        perPage: 8,
+        skipPagination: false
       }
 
       angular.merge(vm.defaultOptions, options);
@@ -69,9 +72,12 @@
 
       if (angular.isFunction(vm.onActivate)) vm.onActivate();
 
-      vm.paginator = PrPagination.getInstance(search, vm.defaultOptions.perPage);
 
-      if (vm.defaultOptions.searchOnInit) vm.search();
+      vm.defaultOptions.searchFn = (vm.defaultOptions.skipPagination) ? vm.search : vm.paginateSearch;
+
+      vm.paginator = PrPagination.getInstance(vm.defaultOptions.searchFn, vm.defaultOptions.perPage);
+
+      if (vm.defaultOptions.searchOnInit) vm.defaultOptions.searchFn();
     }
 
     /**
@@ -79,7 +85,7 @@
      *
      * @param {any} page página que deve ser carregada
      */
-    function search(page) {
+    function paginateSearch(page) {
       vm.paginator.currentPage = (angular.isDefined(page)) ? page : 1;
       vm.defaultQueryFilters = { page: vm.paginator.currentPage, perPage: vm.paginator.perPage };
 
@@ -91,8 +97,23 @@
         vm.resources = response.items;
 
         if (angular.isFunction(vm.afterSearch)) vm.afterSearch(response);
-      }, function () {
-        PrToast.error($translate.instant('messages.searchError'));
+      });
+    }
+
+    /**
+     * Realiza a pesquisa com base nos filtros definidos
+     *
+     */
+    function search() {
+      vm.defaultQueryFilters = { };
+
+      if (angular.isFunction(vm.applyFilters)) vm.defaultQueryFilters = vm.applyFilters(vm.defaultQueryFilters);
+      if (angular.isFunction(vm.beforeSearch) && vm.beforeSearch() === false) return false;
+
+      modelService.query(vm.defaultQueryFilters).then(function (response) {
+        vm.resources = response;
+
+        if (angular.isFunction(vm.afterSearch)) vm.afterSearch(response);
       });
     }
 
@@ -141,14 +162,14 @@
 
         if (vm.defaultOptions.redirectAfterSave) {
           vm.cleanForm(form);
-          vm.search(vm.paginator.currentPage);
+          vm.defaultOptions.searchFn(vm.paginator.currentPage);
           vm.goTo('list');
         }
 
         PrToast.success($translate.instant('messages.saveSuccess'));
 
-      }, function (error) {
-        PrToast.errorValidation(error.data, $translate.instant('messages.saveError'));
+      }, function (responseData) {
+        if (angular.isFunction(vm.onSaveError)) vm.onSaveError(responseData);
       });
     }
 
@@ -170,10 +191,8 @@
         resource.$destroy().then(function () {
           if (angular.isFunction(vm.afterRemove)) vm.afterRemove(resource);
 
-          vm.search();
+          vm.defaultOptions.searchFn();
           PrToast.info($translate.instant('messages.removeSuccess'));
-        }, function (error) {
-          PrToast.errorValidation(error.data, $translate.instant('messages.removeError'));
         });
       });
     }
