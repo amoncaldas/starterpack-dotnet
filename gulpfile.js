@@ -144,7 +144,8 @@ function injectFiles() {
       addSuffix: '?version=' + globalRandom
     }))
     .pipe(inject(gulp.src([
-      paths.destination + '/*.js',
+      paths.destination + '/' + filesNames.vendors,
+      paths.destination + '/' + filesNames.angular,
       '!' + paths.destination + '/' + filesNames.application
     ], { read: false }), {
       starttag: '<!-- inject:vendors:script -->',
