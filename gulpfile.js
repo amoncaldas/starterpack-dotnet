@@ -5,7 +5,6 @@ var paths = require('./paths.json');
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var babel = require('gulp-babel');
 var changed = require('gulp-changed');
@@ -15,11 +14,11 @@ var ngAnnotate = require('gulp-ng-annotate');
 var gulpif = require('gulp-if');
 var cleanCSS = require('gulp-clean-css');
 var inject = require('gulp-inject');
-var series = require('stream-series');
 var lazypipe = require('lazypipe');
 var browserSync = require('browser-sync');
 var gutil = require('gulp-util');
 var eslint = require('gulp-eslint');
+var runSequence = require('run-sequence');
 var argv = require('yargs').argv;
 
 paths.client = '.';
@@ -64,23 +63,25 @@ paths.styles = [
   paths.client  + '/styles/app.scss'
 ];
 
+var filesNames = {
+  vendors: (argv.production) ? 'vendors.min.js' : 'vendors.js',
+  angular: (argv.production) ? 'angular-with-plugins.min.js' : 'angular-with-plugins.js',
+  application: (argv.production) ? 'application.min.js' : 'application.js'
+}
+
+var globalRandom = Math.random().toString(36).substr(2, 15);
+
 var minifierJSChannel = lazypipe()
-  .pipe(uglify)
-  .pipe(rename, {
-    suffix: '.min'
-  });
+  .pipe(uglify);
 
 var minifierCSSChannel = lazypipe()
-  .pipe(cleanCSS)
-  .pipe(rename, {
-    suffix: '.min'
-  });
+  .pipe(cleanCSS);
 
 function scriptsVendors() {
   return gulp.src(paths.vendorsScripts)
     .pipe(plumber())
     .pipe(sourcemaps.init())
-    .pipe(concat('vendors.js'))
+    .pipe(concat(filesNames.vendors))
     .pipe(gulp.dest(paths.destination))
     .pipe(gulpif(argv.production, minifierJSChannel()))
     .pipe(sourcemaps.write())
@@ -91,7 +92,7 @@ function scriptsAngular() {
   return gulp.src(paths.angularScripts)
     .pipe(plumber())
     .pipe(sourcemaps.init())
-    .pipe(concat('angular-with-plugins.js'))
+    .pipe(concat(filesNames.angular))
     .pipe(gulp.dest(paths.destination))
     .pipe(gulpif(argv.production, minifierJSChannel()))
     .pipe(sourcemaps.write())
@@ -99,14 +100,14 @@ function scriptsAngular() {
 };
 
 function scriptsApplication() {
-  return gulp.src(paths.scripts)
+  var stream = gulp.src(paths.scripts)
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(changed(paths.destination))
     .pipe(babel({
       presets: ['es2015']
     }))
-    .pipe(concat('application.js'))
+    .pipe(concat(filesNames.application))
     .pipe(ngAnnotate({
       add: true
     }))
@@ -114,7 +115,47 @@ function scriptsApplication() {
     .pipe(gulpif(argv.production, minifierJSChannel()))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.destination));
+
+  return stream;
 };
+
+function injectFiles() {
+  var random = Math.random().toString(36).substr(2, 15);
+
+  gulp.src(paths.client + '/index.html')
+    .pipe(inject(gulp.src([
+      paths.destination + '/' + filesNames.application
+    ], { read: false }), {
+      starttag: '<!-- inject:application:script -->',
+      endtag: '<!-- end:inject:application:script -->',
+      ignorePath: 'public',
+      addRootSlash: false,
+      addPrefix: paths.serverClientPath,
+      addSuffix: '?version=' + random
+    }))
+    .pipe(inject(gulp.src([
+      paths.destination + '/*.css'
+    ], { read: false }), {
+      starttag: '<!-- inject:all:css -->',
+      endtag: '<!-- end:inject:all:css -->',
+      ignorePath: 'public',
+      addRootSlash: false,
+      addPrefix: paths.serverClientPath,
+      addSuffix: '?version=' + globalRandom
+    }))
+    .pipe(inject(gulp.src([
+      paths.destination + '/*.js',
+      '!' + paths.destination + '/' + filesNames.application
+    ], { read: false }), {
+      starttag: '<!-- inject:vendors:script -->',
+      endtag: '<!-- end:inject:vendors:script -->',
+      ignorePath: 'public',
+      addRootSlash: false,
+      addPrefix: paths.serverClientPath,
+      addSuffix: '?version=' + globalRandom
+    }))
+    .pipe(gulp.dest(paths.client));
+}
 
 function styles() {
   return gulp.src(paths.styles)
@@ -132,6 +173,7 @@ gulp.task('scriptsVendors', scriptsVendors);
 gulp.task('scriptsAngular', scriptsAngular);
 gulp.task('scriptsApplication', scriptsApplication);
 gulp.task('styles', styles);
+gulp.task('injectFiles', injectFiles);
 
 /**
  * Task to sync the browser with changes in the
@@ -148,7 +190,7 @@ gulp.task('browser-sync', function() {
 // Rerun the task when a file changes
 gulp.task('watch', function() {
   if (!argv.production) {
-    gulp.watch(paths.scripts, ['scriptsApplication']).on('change', browserSync.reload);
+    gulp.watch(paths.scripts, ['scriptsApplication', 'injectFiles']).on('change', browserSync.reload);
     gulp.watch(paths.app + '/**/*.html').on('change', browserSync.reload);
     gulp.watch(paths.styles, ['styles']).on('change', browserSync.reload);
   }
@@ -158,23 +200,7 @@ gulp.task('watch', function() {
  * Build js files and inject into index.html
  */
 gulp.task('build', function() {
-  var cssStream = styles();
-  var vendorStream = scriptsVendors();
-  var angularStream = scriptsAngular();
-  var applicationStream = scriptsApplication();
-
-  return gulp.src(paths.client + '/index.html')
-    .pipe(inject(series(
-      cssStream,
-      vendorStream,
-      angularStream,
-      applicationStream
-    ), {
-      ignorePath: 'public',
-      addRootSlash: false,
-      addPrefix: paths.serverClientPath
-    }))
-    .pipe(gulp.dest(paths.client));
+  runSequence(['styles', 'scriptsVendors', 'scriptsAngular', 'scriptsApplication'], 'injectFiles');
 });
 
 /**
@@ -191,5 +217,5 @@ gulp.task('check', function() {
     .pipe(eslint.format());
 });
 
-gulp.task('default', ['browser-sync', 'watch', 'build', 'scriptsApplication', 'styles'], function() {});
+gulp.task('default', ['browser-sync', 'watch', 'build'], function() {});
 gulp.task('minifier', ['build-production'], function() {});

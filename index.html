@@ -19,9 +19,9 @@
        as referências para os arquivos minificados.
      -->
 
-    <!-- inject:css -->
-    <link rel="stylesheet" href="client/build/application.css">
-    <!-- endinject -->
+    <!-- inject:all:css -->
+    <link rel="stylesheet" href="client/build/application.css?version=rclej0hvnc1eb3x">
+    <!-- end:inject:all:css -->
 
     <!--
       Family Font usada no projeto
@@ -45,11 +45,15 @@
     <pr-spinner></pr-spinner>
     <ui-view/>
 
-    <!-- inject:js -->
-    <script src="client/build/vendors.js"></script>
-    <script src="client/build/angular-with-plugins.js"></script>
-    <script src="client/build/application.js"></script>
-    <!-- endinject -->
+    <!-- inject:vendors:script  -->
+    <script src="client/build/angular-with-plugins.js?version=rclej0hvnc1eb3x"></script>
+    <script src="client/build/vendors.js?version=rclej0hvnc1eb3x"></script>
+    <!-- end:inject:vendors:script  -->
+
+    <!-- inject:application:script -->
+    <script src="client/build/application.js?version=v6bobltljj4te29"></script>
+    <!-- end:inject:application:script  -->
+
   </body>
 
 </html>
