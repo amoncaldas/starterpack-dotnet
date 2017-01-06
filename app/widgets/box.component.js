@@ -14,12 +14,18 @@
         footerButtons: '?boxFooterButtons'
       },
       bindings: {
-        boxTitle: '@'
+        boxTitle: '@',
+        toolbarClass: '@',
+        toolbarBgColor: '@'
       },
       controller: ['$transclude', function($transclude) {
         var ctrl = this;
 
         ctrl.transclude = $transclude;
+
+        ctrl.$onInit = function() {
+          if (angular.isUndefined(ctrl.toolbarBgColor)) ctrl.toolbarBgColor = 'primary';
+        };
       }]
     });
 }());
