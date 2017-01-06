@@ -47,17 +47,17 @@
        */
       vm.sidenavStyle = {
         top: {
-          'border-bottom': '1px solid '+getColor('primary-500'),
-          'background-image': '-webkit-linear-gradient(top, '+getColor('primary')+', '+getColor('primary-400')+')'
+          'border-bottom': '1px solid ' + getColor('primary'),
+          'background-image': '-webkit-linear-gradient(top, '+getColor('primary-500')+', '+getColor('primary-800')+')'
         },
         content: {
-          'background-color': getColor('primary-400')
+          'background-color': getColor('primary-800')
         },
         textColor: {
           color: '#FFF'
         },
         lineBottom: {
-          'border-bottom': '1px solid ' + getColor('warn')
+          'border-bottom': '1px solid ' + getColor('primary-400')
         }
       }
     }
