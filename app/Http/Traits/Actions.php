@@ -119,7 +119,7 @@ trait Actions
                 $this->callback('afterSave', $request, $obj);
             });
         } catch (Exception $e) {
-            return Response::json(['error' => 'Resource already exists.'], HttpResponse::HTTP_CONFLICT);
+            return Response::json(['error' => 'messages.duplicatedResourceError'], HttpResponse::HTTP_CONFLICT);
         }
 
         return $obj;

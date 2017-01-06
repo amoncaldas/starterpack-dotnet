@@ -29,7 +29,7 @@ class HasRole
         $all = str_contains($roles, "-all");
 
         if ($this->auth->guest() || !$request->user()->hasRole(explode('|', str_replace("-all", "", $roles)), $all)) {
-            return response()->json(['error' =>'not-authorized'], 403);
+            return response()->json(['error' =>'messages.notAuthorized'], 403);
         }
 
         return $next($request);

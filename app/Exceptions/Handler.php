@@ -87,7 +87,7 @@ class Handler extends ExceptionHandler
         $response = null;
 
         if ($e instanceof ModelNotFoundException) {
-            $response = response()->json(['error' =>'model_not_found'], 404, $headers);
+            $response = response()->json(['error' =>'messages.resourceNotFoundError'], 404, $headers);
         }
 
        if ($e instanceof BusinessException) {

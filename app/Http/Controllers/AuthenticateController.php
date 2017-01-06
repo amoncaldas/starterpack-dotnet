@@ -25,11 +25,11 @@ class AuthenticateController extends Controller
       try {
           // verify the credentials and create a token for the user
           if (! $token = JWTAuth::attempt($credentials)) {
-              return response()->json(['error' => 'invalid_credentials'], 401);
+              return response()->json(['error' => 'messages.login.invalidCredentials'], 401);
           }
       } catch (JWTException $e) {
           // something went wrong
-          return response()->json(['error' => 'could_not_create_token'], 500);
+          return response()->json(['error' => 'messages.login.unknownError'], 500);
       }
 
       // if no errors are encountered we can return a JWT
@@ -39,7 +39,7 @@ class AuthenticateController extends Controller
     public function getAuthenticatedUser()
     {
         if (! $user = JWTAuth::parseToken()->authenticate()) {
-            return response()->json(['user_not_found'], 404);
+            return response()->json(['messages.login.userNotFound'], 404);
         }
 
         //get simple string array with only a slug
