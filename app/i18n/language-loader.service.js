@@ -165,6 +165,7 @@
         messages: {
           internalError: 'Ocorreu um erro interno, contate o administrador do sistema',
           notFound: 'Nenhum registro encontrado',
+          notAuthorized: 'Você não tem acesso a esta funcionalidade.',
           searchError: 'Não foi possível realizar a busca.',
           saveSuccess: 'Registro salvo com sucesso',
           operationSuccess: 'Operação realizada com sucesso',
@@ -176,7 +177,7 @@
             fieldRequired: 'O campo {{field}} é obrigratório.'
           },
           layout: {
-            error404: 'Você não tem acesso a esta página.'
+            error404: 'Página não encontrada'
           },
           login: {
             logoutInactive: 'Você foi deslogado do sistema por inatividade. Favor entrar no sistema novamente.',

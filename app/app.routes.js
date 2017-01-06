@@ -29,7 +29,7 @@
       })
       .state(Global.notAuthorizedState, {
         url: '/acesso-negado',
-        templateUrl: Global.clientPath + '/layout/404.html',
+        templateUrl: Global.clientPath + '/layout/not-authorized.html',
         data: { needAuthentication: false }
       });
 
