@@ -46,7 +46,7 @@ abstract class CrudController extends Controller
      */
     public function __construct(Request $request)
     {
-        self::bootIfNotBooted();
+        static::bootIfNotBooted();
 
         parent::__construct();
 

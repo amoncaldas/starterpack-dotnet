@@ -26,7 +26,7 @@ class HasPermission
     public function handle($request, Closure $next, $permissions)
     {
         if ($this->auth->guest()  || !$request->user()->hasPermission(explode('|', $permissions))) {
-            return response()->json(['error' =>'not-authorized'], 403);
+            return response()->json(['error' =>'messages.notAuthorized'], 403);
         }
 
         return $next($request);

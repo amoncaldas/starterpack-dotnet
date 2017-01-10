@@ -34,8 +34,7 @@ trait Actions
 
         $this->callback('beforeSearch', $request, $dataQuery, $countQuery);
 
-        if( $request->has('perPage') && $request->has('page') )
-        {
+        if( $request->has('perPage') && $request->has('page') ) {
             $data['items'] = $dataQuery
                 ->skip(($request->page - 1) * $request->perPage)
                 ->take($request->perPage)
@@ -44,10 +43,11 @@ trait Actions
             $data['total'] = $countQuery
                 ->count();
         } else {
-            if($request->has('limit'))
+            if($request->has('limit')) {
                 $data = $dataQuery->take($request->limit)->get();
-            else
+            } else {
                 $data = $dataQuery->get();
+            }
         }
 
         return $data;
@@ -119,7 +119,7 @@ trait Actions
                 $this->callback('afterSave', $request, $obj);
             });
         } catch (Exception $e) {
-            return Response::json(['error' => 'Resource already exists.'], HttpResponse::HTTP_CONFLICT);
+            return Response::json(['error' => 'messages.duplicatedResourceError'], HttpResponse::HTTP_CONFLICT);
         }
 
         return $obj;

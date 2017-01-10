@@ -35,18 +35,16 @@ trait Validation
      **/
     public function validate($data, array $rules, array $messages = [], array $customAttributes = [])
     {
-        if ( $data instanceof Request )
-        {
+        if ( $data instanceof Request ) {
             $request = $data;
             $data = $data->all();
-        }
-        else
+        } else {
             $request = request();
+        }
 
         $this->validator = $this->getValidationFactory()->make($data, $rules, $messages, $customAttributes);
 
-        if ($this->validator->fails())
-        {
+        if ($this->validator->fails()) {
             $this->throwValidationException($request, $this->validator);
         }
     }

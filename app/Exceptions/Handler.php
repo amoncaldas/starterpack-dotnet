@@ -27,18 +27,14 @@ class Handler extends ExceptionHandler
         ModelNotFoundException::class,
     ];
 
-    /**
-     * Report or log an exception.
-     *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param  \Exception  $e
-     * @return void
-     */
-    public function report(Exception $e)
-    {
-        return parent::report($e);
-    }
+    protected $headers = [
+        'Access-Control-Allow-Origin' => '*',
+        'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
+        'Access-Control-Allow-Headers' => '*'
+    ];
+
+    protected $errorKey = 'error';
+
 
     /**
      * Render an exception into an HTTP response.
@@ -49,78 +45,92 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        $headers = [
-            'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
-            'Access-Control-Allow-Headers' => '*'
-        ];
+        //Exceptions relacionadas ao token
+        $tokenResponse = $this->handlerTokenExceptions($e);
 
-        //Exceptions relativas ao token
+        if( $tokenResponse !== null ) {
+            return $tokenResponse;
+        }
+
+        //Exceptions especificas com tratamento especial
+        $response = $this->handlerSpecialExceptions($e);
+
+        // Para as demais exceptions sem tratamento especifico
+        // é criado uma response de erro genérica
+        if( $response === null ) {
+            $response = $this->buildGenericErrorResponse($e);
+        }
+
+        return $this->refreshTokenInResponse($response);
+    }
+
+    protected function handlerTokenExceptions(Exception $e) {
+        $response = null;
 
         if ($e instanceof TokenExpiredException) {
-            return response()->json(['error' =>'token_expired'], $e->getStatusCode(), $headers);
+            $response = response()->json([$this->errorKey =>'token_expired'], $e->getStatusCode(), $this->headers);
         }
 
         if ($e instanceof UnauthorizedHttpException) {
-            return response()->json(['error' =>'token_expired'], $e->getStatusCode(), $headers);
+            $response = response()->json([$this->errorKey =>'token_expired'], $e->getStatusCode(), $this->headers);
         }
 
         if ($e instanceof TokenInvalidException) {
-            return response()->json(['error' =>'token_invalid'], $e->getStatusCode(), $headers);
+            $response = response()->json([$this->errorKey =>'token_invalid'], $e->getStatusCode(), $this->headers);
         }
 
         if ($e instanceof JWTException) {
-           return response()->json(['error' =>'token_absent'], $e->getStatusCode(), $headers);
+           $response = response()->json([$this->errorKey =>'token_absent'], $e->getStatusCode(), $this->headers);
         }
 
         if ($e instanceof BadRequestHttpException && $e->getMessage() == "Token not provided") {
-            return response()->json(['error' => 'token_not_provided'], $e->getStatusCode(), $headers);
+            $response = response()->json([$this->errorKey => 'token_not_provided'], $e->getStatusCode(), $this->headers);
         }
 
-       if ($e instanceof BadRequestHttpException && $e->getMessage() == "Token not provided") {
-            return response()->json(['error' => 'token_not_provided'], $e->getStatusCode(), $headers);
-        }
+        return $response;
+    }
 
-
-        //Exceptions especificas com tratamento especial
-
+    protected function handlerSpecialExceptions(Exception $e) {
         $response = null;
 
         if ($e instanceof ModelNotFoundException) {
-            $response = response()->json(['error' =>'model_not_found'], 404, $headers);
-        }
-
-       if ($e instanceof BusinessException) {
-            $response = response()->json(['error' => $e->getMessage()], 400, $headers);
+            $response = response()->json([$this->errorKey =>'messages.resourceNotFoundError'], 404, $this->headers);
         }
 
         if ($e instanceof QueryException) {
             Log::debug('Erro no acesso ao bando de dados: '.$e->getMessage());
 
             if (strpos($e->getMessage(), 'not-null') !== false) {
-                return response()->json(['error' => 'messages.notNullError'], 400, $headers);
+                $response = response()->json([$this->errorKey => 'messages.notNullError'], 400, $this->headers);
             }
         }
 
-        // Demais exceptions sem tratamento especifico
-
-        if( $response === null ) {
-            if (config('app.debug')) {
-                $content = ['error' => $e->getMessage()];
-            } else {
-                $content = ['error' => 'messages.internalError'];
-            }
-
-            $response = response()
-                ->json($content,  method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500, $headers);
+        if ($e instanceof BusinessException) {
+            $response = response()->json([$this->errorKey => $e->getMessage()], 400, $this->headers);
         }
 
+        return $response;
+    }
+
+    protected function buildGenericErrorResponse(Exception $e) {
+        $content = [$this->errorKey => 'messages.internalError'];
+
+        if (config('app.debug')) {
+            $content = [$this->errorKey => $e->getMessage()];
+        }
+
+        return response()
+            ->json($content,  method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500, $this->headers);
+    }
+
+    protected function refreshTokenInResponse($response) {
         //Dá um refresh no token caso o mesmo exista para anexar a resposta
         try {
             $token = \JWTAuth::parseToken()->refresh();
 
-            if( $token !== null )
+            if( $token !== null ) {
                 $response = $response->header('Authorization', 'Bearer '. $token);
+            }
         } catch (Exception $ex) {
             Log::debug('Request without token');
         }

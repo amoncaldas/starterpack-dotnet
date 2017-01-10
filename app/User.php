@@ -120,10 +120,11 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
         $roles = is_array($roles) ? $roles : [$roles];
 
-        if($all)
+        if($all) {
             return count(array_intersect($userRoles, $roles)) == count($roles);
-        else
+        } else {
             return count(array_intersect($userRoles, $roles));
+        }
     }
 
     /**
@@ -148,8 +149,6 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      */
     protected function getAllPernissionsFromAllRoles()
     {
-        $permissionsArray = [];
-
         $permissions = $this->roles->load('permissions')->fetch('permissions')->toArray();
 
         return array_map('strtolower', array_unique(array_flatten(array_map(function ($permission) {
