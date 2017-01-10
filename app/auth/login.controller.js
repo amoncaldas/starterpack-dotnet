@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function LoginController($state, Auth, Global, PrToast, PrDialog, $translate) {
+  function LoginController($state, Auth, Global, PrDialog) {
     var vm = this;
 
     vm.login = login;
@@ -28,12 +28,6 @@
 
       Auth.login(credentials).then(function() {
         $state.go(Global.homeState);
-      }, function(error) {
-        if (error.data.error === 'invalid_credentials') {
-          PrToast.error($translate.instant('messages.login.invalidCredentials'));
-        } else {
-          PrToast.errorValidation(error.data, $translate.instant('messages.login.unknownError'));
-        }
       });
     }
 
