@@ -43,6 +43,7 @@
     //Functions Block
     vm.search = search;
     vm.paginateSearch = paginateSearch;
+    vm.normalSearch = normalSearch;
     vm.edit = edit;
     vm.save = save;
     vm.remove = remove;
@@ -72,12 +73,19 @@
 
       if (angular.isFunction(vm.onActivate)) vm.onActivate();
 
+      vm.paginator = PrPagination.getInstance(vm.search, vm.defaultOptions.perPage);
 
-      vm.defaultOptions.searchFn = (vm.defaultOptions.skipPagination) ? vm.search : vm.paginateSearch;
+      if (vm.defaultOptions.searchOnInit) vm.search();
+    }
 
-      vm.paginator = PrPagination.getInstance(vm.defaultOptions.searchFn, vm.defaultOptions.perPage);
-
-      if (vm.defaultOptions.searchOnInit) vm.defaultOptions.searchFn();
+    /**
+     * Realiza a pesquisa
+     * Verifica qual das funções de pesquisa deve ser realizada.
+     *
+     * @param {any} page página que deve ser carregada
+     */
+    function search(page) {
+      (vm.defaultOptions.skipPagination) ? normalSearch() : paginateSearch(page);
     }
 
     /**
@@ -104,7 +112,7 @@
      * Realiza a pesquisa com base nos filtros definidos
      *
      */
-    function search() {
+    function normalSearch() {
       vm.defaultQueryFilters = { };
 
       if (angular.isFunction(vm.applyFilters)) vm.defaultQueryFilters = vm.applyFilters(vm.defaultQueryFilters);
@@ -162,7 +170,7 @@
 
         if (vm.defaultOptions.redirectAfterSave) {
           vm.cleanForm(form);
-          vm.defaultOptions.searchFn(vm.paginator.currentPage);
+          vm.search(vm.paginator.currentPage);
           vm.goTo('list');
         }
 
@@ -191,7 +199,7 @@
         resource.$destroy().then(function () {
           if (angular.isFunction(vm.afterRemove)) vm.afterRemove(resource);
 
-          vm.defaultOptions.searchFn();
+          vm.search();
           PrToast.info($translate.instant('messages.removeSuccess'));
         });
       });
