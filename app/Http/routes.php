@@ -5,7 +5,7 @@ Route::get('/', function () {
 });
 
 // preflight to CORS
-Route::options('{all}', ['middleware' => 'cors'], function () {})->where('all', '.*');
+Route::options('{all}', ['middleware' => 'cors'])->where('all', '.*');
 
 Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function () {
     //public area

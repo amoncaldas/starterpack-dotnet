@@ -44,11 +44,10 @@ class PasswordController extends Controller
             $message->subject('Redefinição de senha');
         });
 
-        switch ($response) {
-            case Password::RESET_LINK_SENT:
-                return response()->json(['msg' => trans($response)], 200);
-            case Password::INVALID_USER:
-                return response()->json(['msg' => trans($response)], 400);
+        if ($response === Password::RESET_LINK_SENT ) {
+            return response()->json(['msg' => trans($response)], 200);
+        } else {
+            return response()->json(['msg' => trans($response)], 400);
         }
     }
 
@@ -69,7 +68,7 @@ class PasswordController extends Controller
         $credentials = $request->only(
             'email', 'password', 'password_confirmation', 'token'
         );
-        
+
         $response = Password::reset($credentials, function ($user, $password) {
             $this->resetPassword($user, $password);
         });

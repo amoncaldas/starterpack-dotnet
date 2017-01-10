@@ -24,9 +24,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
-
-        return $roles;
+        return Role::all();
     }
 
     /**
