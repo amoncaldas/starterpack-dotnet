@@ -24,7 +24,7 @@
      * @returns {boolean}
      */
     function authenticated() {
-      return (auth.currentUser);
+      return $auth.isAuthenticated();
     }
 
     /**

@@ -20,7 +20,8 @@
    * @param Auth
    */
   /** @ngInject */
-  function authenticationListener($rootScope, $state, Global, Auth) {
+  // eslint-disable-next-line max-params
+  function authenticationListener($rootScope, $state, Global, Auth, PrToast, $translate) {
 
     // $stateChangeStart is fired whenever the state changes. We can use some parameters
     // such as toState to hook into details about the state as it is changing
@@ -28,20 +29,11 @@
       var authenticated = Auth.authenticated();
 
       //can have a token in localstorage and the flag is not defined in memory because they reopen the browser
-      if (!authenticated) {
+      if (authenticated) {
         var user = angular.fromJson(localStorage.getItem('user'));
 
-        if (user) {
-          Auth.updateCurrentUser(user);
-          authenticated = true;
-        }
-      }
+        Auth.updateCurrentUser(user);
 
-      // If there is any user data in local storage then the user is quite
-      // likely authenticated. If their token is expired, or if they are
-      // otherwise not actually authenticated, they will be redirected to
-      // the auth state because of the rejected request anyway
-      if (authenticated) {
         // If the user is logged in and we hit the auth route we don't need
         // to stay there and can send the user to the main state
         if (toState.name === Global.loginState) {
@@ -49,7 +41,12 @@
           event.preventDefault();
         }
       } else {
-        if (toState.data.needAuthentication !== false) {  
+        //remove old info
+        Auth.logout();
+
+        //if undefined the needAutentication flag should be true
+        if (toState.data.needAuthentication !== false || toState.name === Global.notAuthorizedState) {
+          PrToast.warn($translate.instant('messages.login.logoutInactive'));
           $state.go(Global.loginState);
           event.preventDefault();
         }
