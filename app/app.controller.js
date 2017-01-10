@@ -35,7 +35,9 @@
     }
 
     function getImagePerfil() {
-      return Auth.currentUser.image ? Auth.currentUser.image : Global.imagePath + '/no_avatar.gif';
+      return (Auth.currentUser && Auth.currentUser.image)
+        ? Auth.currentUser.image
+        : Global.imagePath + '/no_avatar.gif';
     }
 
   }
