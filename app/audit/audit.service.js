@@ -18,11 +18,13 @@
       instance: {
       },
       listTypes: function() {
+        var auditPath = 'views.fields.audit.';
+
         return [
-          { id: '', label: $translate.instant('views.fields.audit.allResources') },
-          { id: 'created', label: $translate.instant('views.fields.audit.type.created') },
-          { id: 'updated', label: $translate.instant('views.fields.audit.type.updated') },
-          { id: 'deleted', label: $translate.instant('views.fields.audit.type.deleted') }
+          { id: '', label: $translate.instant(auditPath + 'allResources') },
+          { id: 'created', label: $translate.instant(auditPath + 'type.created') },
+          { id: 'updated', label: $translate.instant(auditPath + 'type.updated') },
+          { id: 'deleted', label: $translate.instant(auditPath + 'type.deleted') }
         ];
       }
     });

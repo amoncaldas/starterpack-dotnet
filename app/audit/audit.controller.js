@@ -23,7 +23,7 @@
 
       //Pega todos os models do server e monta uma lista pro ComboBox
       AuditService.getAuditedModels().then(function(data) {
-        var models = [{ id: '', label: $translate.instant('all') }];
+        var models = [{ id: '', label: $translate.instant('global.all') }];
 
         data.models.sort();
 

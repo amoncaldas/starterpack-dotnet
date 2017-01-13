@@ -15,7 +15,7 @@
       }
 
       if (typeof value === 'boolean') {
-        return $filter('translate')((value) ? 'yes' : 'no');
+        return $filter('translate')((value) ? 'global.yes' : 'global.no');
       }
 
       //check is float
