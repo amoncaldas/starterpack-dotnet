@@ -47,17 +47,17 @@ trait Callbacks
      * @return null
      */
 
-    protected function beforeAll(Request $request) { }
-    protected function beforeSearch(Request $request, $dataQuery, $countQuery) { }
-    protected function beforeStore(Request $request, Model $model) { }
-    protected function beforeUpdate(Request $request, Model $model) { }
-    protected function beforeSave(Request $request, Model $model) { }
-    protected function beforeDestroy(Request $request, Model $model) { }
-    protected function afterStore(Request $request, Model $model) { }
-    protected function afterUpdate(Request $request, Model $model) { }
-    protected function afterSave(Request $request, Model $model) { }
-    protected function afterDestroy(Request $request, Model $model) { }
-    protected function applyFilters(Request $request, $query) { }
+    protected function beforeAll(Request $request) { } // NOSONAR
+    protected function beforeSearch(Request $request, $dataQuery, $countQuery) { } // NOSONAR
+    protected function beforeStore(Request $request, Model $model) { } // NOSONAR
+    protected function beforeUpdate(Request $request, Model $model) { } // NOSONAR
+    protected function beforeSave(Request $request, Model $model) { } // NOSONAR
+    protected function beforeDestroy(Request $request, Model $model) { } // NOSONAR
+    protected function afterStore(Request $request, Model $model) { } // NOSONAR
+    protected function afterUpdate(Request $request, Model $model) { } // NOSONAR
+    protected function afterSave(Request $request, Model $model) { } // NOSONAR
+    protected function afterDestroy(Request $request, Model $model) { } // NOSONAR
+    protected function applyFilters(Request $request, $query) { } // NOSONAR
 
     /**
      * Process callbacks for $eventName
