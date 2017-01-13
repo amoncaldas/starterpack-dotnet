@@ -24,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $locale = config('app.locale');
+
+        setlocale(LC_ALL, $locale, $locale . '.utf-8', $locale . '.utf-8', 'portuguese');
+        \Carbon::setLocale(config('app.locale'));
+
         App::bind('prodeb', function()
         {
             return new \App\Util\Prodeb;
