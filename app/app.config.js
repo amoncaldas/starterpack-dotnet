@@ -7,7 +7,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function config($authProvider, Global, $mdThemingProvider, $modelFactoryProvider,
+  function config($authProvider, Global, $mdThemingProvider, $modelFactoryProvider,  // NOSONAR
     $translateProvider, $mdpDatePickerProvider, $mdpTimePickerProvider, moment) {
 
     $translateProvider

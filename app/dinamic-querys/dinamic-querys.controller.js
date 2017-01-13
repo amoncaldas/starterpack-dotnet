@@ -8,7 +8,9 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function DinamicQuerysController($controller, DinamicQueryService, lodash, PrToast, $translate) {
+  function DinamicQuerysController($controller, DinamicQueryService, lodash, PrToast, // NOSONAR
+    $translate) {
+
     var vm = this;
 
     //actions

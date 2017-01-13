@@ -8,7 +8,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function AuditController($controller, AuditService, PrDialog, Global, $translate) {
+  function AuditController($controller, AuditService, PrDialog, Global, $translate) { // NOSONAR
     var vm = this;
 
     vm.onActivate = onActivate;

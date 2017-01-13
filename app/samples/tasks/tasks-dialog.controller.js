@@ -8,7 +8,9 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function TasksDialogController($controller, TasksService, projectId, PrToast, PrDialog, $translate, Global) {
+  function TasksDialogController($controller, TasksService, projectId, PrToast, // NOSONAR
+    PrDialog, $translate, Global) {
+
     var vm = this;
 
     //Functions Block

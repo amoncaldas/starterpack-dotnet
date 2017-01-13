@@ -7,7 +7,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function Auth($http, $auth, $q, Global, UsersService) {
+  function Auth($http, $auth, $q, Global, UsersService) { // NOSONAR
     var auth = {
       login: login,
       logout: logout,

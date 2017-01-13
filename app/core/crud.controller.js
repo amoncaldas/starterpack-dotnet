@@ -38,7 +38,8 @@
    * @param {any} options opções para sobreescrever comportamentos padrões
    */
   // eslint-disable-next-line max-params
-  function CRUDController(vm, modelService, options, PrToast, PrPagination, PrDialog, $translate) {
+  function CRUDController(vm, modelService, options, PrToast, PrPagination, // NOSONAR
+    PrDialog, $translate) {
 
     //Functions Block
     vm.search = search;

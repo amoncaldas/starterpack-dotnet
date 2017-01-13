@@ -7,7 +7,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function run($rootScope, $state, $stateParams, Auth, Global) {
+  function run($rootScope, $state, $stateParams, Auth, Global) { // NOSONAR
     //setado no rootScope para poder ser acessado nas views sem prefixo de controller
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;

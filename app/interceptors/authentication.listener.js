@@ -21,7 +21,8 @@
    */
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function authenticationListener($rootScope, $state, Global, Auth, PrToast, $translate) {
+  function authenticationListener($rootScope, $state, Global, Auth, PrToast, // NOSONAR
+    $translate) {
 
     // $stateChangeStart is fired whenever the state changes. We can use some parameters
     // such as toState to hook into details about the state as it is changing

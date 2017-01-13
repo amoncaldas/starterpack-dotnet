@@ -8,7 +8,9 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function PasswordController(Global, $stateParams, $http, $timeout, $state, PrToast, PrDialog, Auth, $translate) {
+  function PasswordController(Global, $stateParams, $http, $timeout, $state, // NOSONAR
+    PrToast, PrDialog, Auth, $translate) {
+
     var vm = this;
 
     vm.sendReset = sendReset;

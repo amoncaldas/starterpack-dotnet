@@ -8,7 +8,9 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function MailsController(MailsService, UsersService, PrDialog, PrToast, $q, lodash, $translate, Global) {
+  function MailsController(MailsService, UsersService, PrDialog, PrToast, // NOSONAR
+    $q, lodash, $translate, Global) {
+
     var vm = this;
 
     vm.filterSelected = false;
