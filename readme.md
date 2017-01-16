@@ -26,7 +26,7 @@
 ___
 ## Sobre ##
 
-- Este projeto tem como objetivo servir de base para futuros projetos da Prodeb.
+- Este projeto tem como objetivo servir de base para futuros projetos da PRODEB.
 - Como framework backend o sistema utiliza o Laravel 5.1.
 - Como framework frontend o sistema utiliza o AngularJS 1.5.
 - Para autenticação o sistema utiliza [JWT](http://jwt.io) através da lib [tymon/jwt-auth](https://github.com/tymondesigns/jwt-auth)
@@ -38,17 +38,17 @@ ___
 - Acesso livre ao PROXY.
 - Preferencialmente utilize o Linux com o gerenciador APT.
   - Caso o SO seja windows utilize a instalação do projeto via Docker.
-- Um editor decent.
+- Um editor decente.
     - Recomendado: [Visual Studio Code](https://code.visualstudio.com/) ou [ATOM](https://atom.io/).
 - NodeJS versão 4 ou superior ([tutorial para instalar](https://nodejs.org/en/download/package-manager/)).
     - Configure o npm para rodar sem sudo ([tutorial](https://docs.npmjs.com/getting-started/fixing-npm-permissions)).
     - Verifique a versão do npm **npm --version** (deve ser igual ou superior a 3.5.1).
-- GIT a versão mais recente [GIT](https://git-scm.com/book/pt-br/v1/Primeiros-passos-Instalando-Git).
+- Git a versão mais recente [GIT](https://git-scm.com/book/pt-br/v1/Primeiros-passos-Instalando-Git).
 - PHP com a versão 5.6.25 ou superior ([tutorial para instalar](http://tecadmin.net/install-php5-on-ubuntu/)).
-- Extenções do PHP: xdebug, fileinfo, mbstring, pdo_pgsql, pgsql, openssl.
+- Extensões do PHP: xdebug, fileinfo, mbstring, pdo_pgsql, pgsql, openssl.
 - Composer ([tutorial para instalar](https://getcomposer.org/doc/00-intro.md#globally)).
-- Postgres e pgadmin3 ([tutorial para instalar] (https://www.vivaolinux.com.br/dica/Instalando-o-PostgreSQL-e-pgAdmin3-no-Ubuntu)).
-- Permissão de leitura para todos os projetos do grupo Arquitetura no git:
+- PostgreSQL e pgAdmin ([tutorial para instalar] (https://www.vivaolinux.com.br/dica/Instalando-o-PostgreSQL-e-pgAdmin3-no-Ubuntu)).
+- Permissão de leitura para todos os projetos do grupo Arquitetura no Git:
     - [Grupo Arquitetura](http://git.prodeb.ba.gov.br/groups/starter-pack).
 
 ## Componentes e Frameworks ##
@@ -64,7 +64,7 @@ ___
 
 > Funcionalidades atualmente disponíveis no projeto
 
-- Instalação via Docker - [PHP Docker](http://git.prodeb.ba.gov.br/starter-pack/php-docker.git);
+- Instalação via Docker - [PHP Docker](http://git.prodeb.ba.gov.br/starter-pack/php-docker);
 - Autenticação via token com o JWT (Dispensando o uso de sessão);
 - Gerador automático de estrutura de arquivo (Servidor);
 - Encapsulamento do CRUD no servidor com a classe **CrudController**;
@@ -117,7 +117,7 @@ npm config set prefix '~/.npm-global'
 export PATH=~/.npm-global/bin:$PATH
 ```
 
-> rode os comandos abaixo para complentar a instalação:
+> rode os comandos abaixo para completar a instalação:
 
 ```sh
 source ~/.bashrc
@@ -146,7 +146,7 @@ cd {nome_projeto}
 sh configure.sh
 ```
 
-> windows
+> Windows
 
 - Execute o arquivo configure.bat que está na pasta raiz do projeto
 
@@ -156,9 +156,9 @@ sh configure.sh
 
 > Caso o passo 1 já tenha sido realizado em outro momento pulo para o passo 2.
 
-- instale o docker [Docker Install](https://www.docker.com/products/overview).
-- instale o docker-compose [Docker Compose](https://docs.docker.com/compose/install/).
-- no linux execute os comandos abaixo para criar o grupo do docker e adicionar o usuário.
+- Instale o docker [Docker Install](https://www.docker.com/products/overview).
+- Instale o docker-compose [Docker Compose](https://docs.docker.com/compose/install/).
+- No linux execute os comandos abaixo para criar o grupo do docker e adicionar o usuário.
 
 ```sh
 sudo groupadd docker 
@@ -170,11 +170,11 @@ sudo groupadd docker
 sudo usermod -aG docker $USER
 ```
 
-- realize o logoff para que as configurações do docker sejam aplicadas.
+- Realize o logoff para que as configurações do docker sejam aplicadas.
 
 #### 2) Configurando o projeto ####
 
-- o nome do host do postgres deve ser o nome do container postgres.
+- O nome do host do postgres deve ser o nome do container postgres.
 - Faça o clone do projeto:
 
 ```sh
@@ -191,8 +191,8 @@ web:
   container_name: base-php-fpm-{nome_projeto}
 ```
 
-- configure o .env com os dados contidos no **/php-docker/docker-compose.yml** ou com os dados especifícos do banco.
-- inicie o build e o container seguindo os passos abaixo.
+- Configure o .env com os dados contidos no **/php-docker/docker-compose.yml** ou com os dados especifícos do banco.
+- Inicie o build e o container seguindo os passos abaixo.
 
 ```sh
 cd {php-docker}
@@ -203,14 +203,14 @@ chmod +x configure.sh
 ./configure.sh
 ```
  
-- é aconselhável que se crie um alias no bash do host para executar comandos no bash do docker, para isso rode o comando abaixo:
+-É aconselhável que se crie um alias no bash do host para executar comandos no bash do docker, para isso rode o comando abaixo:
     - **echo "alias {SEU_ALIAS}='docker exec -it base-php-fpm-{nome_projeto}'" >> ~/.bashrc**
     - (feche o console e abra novamente para que as alterações surtam efeito)
-- caso queira acessar a linha de comando do container rode **{ALIAS_CRIADO} bash**
-- todos os comandos no restante da documentação tem que ser prefixado com o container docker ou seu alias criado, de dentro da pasta do php-docker ex:
+- Caso queira acessar a linha de comando do container rode **{ALIAS_CRIADO} bash**
+- Todos os comandos no restante da documentação tem que ser prefixado com o container docker ou seu alias criado, de dentro da pasta do php-docker ex:
     - **docker exec -it base-php-fpm-{nome_projeto} {COMANDO}**
     - **{ALIAS_CRIADO} {COMANDO}**
-- para sair do bash digite **exit** e aperte enter
+- Para sair do bash digite **exit** e aperte enter
 
 > Comandos úteis:
 
@@ -256,7 +256,7 @@ cd {pasta_do_projeto}
 npm run build
 ```
 
-- parametros opcionais:
+- Parametros opcionais:
   - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
 
 > Em outra aba do terminal rode o comando abaixo para levantar o servidor php:
@@ -268,8 +268,8 @@ npm run server (Este comando inicia o servidor php na porta 5000)
 
 > Abra o navegador
 
-- acesse **http://localhost:5000**
-- logue com os dados, email: **admin-base@prodeb.com** e senha: **Prodeb01**
+- Acesse **http://localhost:5000**
+- Logue com os dados, email: **admin-base@prodeb.com** e senha: **Prodeb01**
 
 > Outros comandos
 
@@ -277,7 +277,7 @@ npm run server (Este comando inicia o servidor php na porta 5000)
 npm run check
 ```
 
-- verifica a formatação do código javascript
+- Verifica a formatação do código javascript
   - parametros opcionais
     - **--fix** (para corrigir os erros que podem ser corrigidos automaticamente)
 
@@ -285,7 +285,7 @@ npm run check
 npm run package
 ```
 
-- prepara o projeto para o ambiente informado e envia para o FTP
+- Prepara o projeto para o ambiente informado e envia para o FTP
 
 ## Desenvolvimento ##
 
@@ -314,10 +314,10 @@ cd {pasta_do_projeto}
 yo ngprodeb
 ```
 
-- escolha a estrutura na lista
-- digite o nome do recurso
+- Escolha a estrutura na lista
+- Digite o nome do recurso
 
-**para mais detalhes sobre o uso do gerador acesse [Generator NgProdeb](http://git.prodeb.ba.gov.br/generator-ngprodeb/tree/master)**
+**Para mais detalhes sobre o uso do gerador acesse [Generator NgProdeb](http://git.prodeb.ba.gov.br/generator-ngprodeb/tree/master)**
 
 > Para gerar estrutura de arquivos do lado servidor, use os comandos abaixo:
 
@@ -359,14 +359,14 @@ $table->timestampTz('updated_at');
 php artisan migrate
 ```
 
-> se necessário, inclua uma nova rota no arquivo **/app/Http/routes.php**
+> Se necessário, inclua uma nova rota no arquivo **/app/Http/routes.php**
 
-**para mais detalhes sobre o uso do gerador acesse [CRUD Generator](https://github.com/appzcoder/crud-generator#commands)**
+**Para mais detalhes sobre o uso do gerador acesse [CRUD Generator](https://github.com/appzcoder/crud-generator#commands)**
   
 > ### Convenções ###
 > (convenções adotadas para padronização do projeto)
 
-  - deve ser usado o gerador de estrutura de arquivos para gerar os arquivos no padrão que o sistema comporta
+  - Deve ser usado o gerador de estrutura de arquivos para gerar os arquivos no padrão que o sistema comporta
 
 > ### CRUD ###
 
@@ -487,20 +487,20 @@ Em qualquer action de um CrudController é possível adicionar validações espe
 
 > Para ver os logs
 
-- acesse [http://localhost:5000/developer/log-viewer](http://localhost:5000/developer/log-viewer)
-- digite o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
-- digite a senha conforme a variável de ambiente no arquivo .env DEVELOP_PASSWORD
+- Acesse [http://localhost:5000/developer/log-viewer](http://localhost:5000/developer/log-viewer)
+- Digite o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
+- Digite a senha conforme a variável de ambiente no arquivo .env DEVELOP_PASSWORD
 
 ## Produção ##
 
 > Siga os passos abaixo para gerar o pacote para produção:
 
-- altere os dados do arquivo .env.production com as configurações de produção (pkg_name, banco, smtp, nível de log, ftp e etc) e desative o debug.
-- rode o comando **npm run package**.
+- Altere os dados do arquivo .env.production com as configurações de produção (pkg_name, banco, smtp, nível de log, ftp e etc) e desative o debug.
+- Rode o comando **npm run package**.
 
-> prepara a aplicação para produção minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados
+> Prepara a aplicação para produção minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados
 > gerando o pacote zipado no padrão **{NomeProjeto}.zip**.
 
-- em seguida o sistema irá perguntar se deseja enviar para o ftp, caso queira, o pacote será enviado 
+- Em seguida o sistema irá perguntar se deseja enviar para o ftp, caso queira, o pacote será enviado 
 descompactado e removido da raiz local do projeto e do ftp logo após abrindo o navegador padrão no endereço informado no APP_URL no arquivo .env,
 caso contrário, o arquivo **{NomeProjeto}.zip** constará na raiz do projeto para o devido uso.
