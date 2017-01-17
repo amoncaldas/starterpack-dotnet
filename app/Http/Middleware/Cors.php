@@ -7,7 +7,7 @@ use Closure;
 class Cors
 {
     /**
-     * Handle an incoming request.
+     * Middleware que trata o CORS.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
@@ -15,24 +15,22 @@ class Cors
      */
     public function handle($request, Closure $next)
     {
-        // ALLOW OPTIONS METHOD
-        $headers = [
-            'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
-            'Access-Control-Allow-Headers' => 'Origin, Content-Type, Accept, Authorization',
-            'Access-Control-Allow-CredentialsHeaders' => 'true'
-        ];
+        // Pega todos os cabeçalhos necessários para o CORS
+        $headers = \Prodeb::getCORSHeaders();
 
+        //Trata as requisições OPTIONS preflight
         if ($request->isMethod('OPTIONS')) {
             return \Response::json('{"method":"OPTIONS"}', 200, $headers);
         }
 
         $response = $next($request);
 
+        //Adiciona os cabeçalhos na resposta
         foreach ($headers as $key => $value) {
             $response->header($key, $value);
         }
 
         return $response;
     }
+
 }

@@ -16,7 +16,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
-        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class
     ];
 
     /**
@@ -25,11 +25,11 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'cors' => \App\Http\Middleware\Cors::class,
         'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
         'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
         'acl.role' => \App\Http\Middleware\HasRole::class,
         'acl.permission' => \App\Http\Middleware\HasPermission::class,
-        'develop.auth' => \App\Http\Middleware\DevelopAuth::class,
-        'cors' => \App\Http\Middleware\Cors::class
+        'develop.auth' => \App\Http\Middleware\DevelopAuth::class
     ];
 }

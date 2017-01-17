@@ -27,11 +27,7 @@ class Handler extends ExceptionHandler
         ModelNotFoundException::class,
     ];
 
-    protected $headers = [
-        'Access-Control-Allow-Origin' => '*',
-        'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
-        'Access-Control-Allow-Headers' => '*'
-    ];
+    protected $headers = [];
 
     protected $errorKey = 'error';
 
@@ -45,6 +41,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        $this->headers = \Prodeb::getCORSHeaders();
+
         //Exceptions relacionadas ao token
         $tokenResponse = $this->handlerTokenExceptions($e);
 

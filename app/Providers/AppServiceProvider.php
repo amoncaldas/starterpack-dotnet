@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $locale = config('app.locale');
 
+        //define the locale to carbon and php directly
         setlocale(LC_ALL, $locale, $locale . '.utf-8', $locale . '.utf-8', 'portuguese');
         \Carbon::setLocale(config('app.locale'));
 

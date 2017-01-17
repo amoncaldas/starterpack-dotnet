@@ -3,6 +3,21 @@
 namespace App\Util;
 
 class Prodeb {
+
+     /**
+     * Função que retorna os cabeçalhos referente ao CORS
+     *
+     * @return Array com todos os cabeçalhos necessários referente ao CORS
+     */
+    public static function getCORSHeaders() {
+        return [
+            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers' => 'Origin, Content-Type, Accept, Authorization, X-Requested-With',
+            'Access-Control-Allow-CredentialsHeaders' => 'true'
+        ];
+    }
+
     /**
      * Transforma uma data string em um objeto Carbon
      *
