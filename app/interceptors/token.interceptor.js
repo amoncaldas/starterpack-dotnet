@@ -58,12 +58,14 @@
             rejection.data = {};
           }
 
-          // many servers errors (business) are intercept here but generated a new refresh token
-          // and need update current token
-          var token = rejection.headers('Authorization');
+          if (angular.isFunction(rejection.headers)) {
+            // many servers errors (business) are intercept here but generated a new refresh token
+            // and need update current token
+            var token = rejection.headers('Authorization');
 
-          if (token) {
-            $injector.get('$auth').setToken(token.split(' ')[1]);
+            if (token) {
+              $injector.get('$auth').setToken(token.split(' ')[1]);
+            }
           }
 
           return $q.reject(rejection);

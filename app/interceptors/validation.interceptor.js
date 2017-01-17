@@ -20,8 +20,8 @@
           var PrToast = $injector.get('PrToast');
           var $translate = $injector.get('$translate');
 
-          if (!rejection.config.data.skipValidation) {
-            if (angular.isDefined(rejection.data.error)) {
+          if (rejection.config.data && !rejection.config.data.skipValidation) {
+            if (rejection.data && rejection.data.error) {
 
               //verifica se ocorreu algum erro referente ao token
               if (rejection.data.error.startsWith('token_')) {
