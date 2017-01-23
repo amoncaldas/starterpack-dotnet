@@ -10,33 +10,35 @@ use App\User;
 class UserTest extends TestCase
 {
 
-    public function testLoginInvalidCredentials()
+    public function testList()
     {
-        $this->post('/v1/authenticate', [
-            'email' => 'invalidacredentials@prodeb.com',
-            'password' => 'Prodeb01'
-        ])
-        ->assertResponseStatus(401);
+        $params = $this->createAuthHeaderToAdminUser();
+
+        $response = $this->get('/v1/users', $params);
+
+        $response->assertResponseStatus(200);
+
+        $response->seeJsonStructure(['*' => [
+            'email', 'name', 'roles'
+        ]]);
     }
 
-    public function testLoginValidCredentials()
+    public function testListWithPaginate()
     {
-        $response = $this->post('/v1/authenticate', [
-            'email' => 'admin-base@prodeb.com',
-            'password' => 'Prodeb01'
+        $params = $this->createAuthHeaderToAdminUser();
+
+        $query = [
+            'perPage' => 1,
+            'page' => 1
+        ];
+
+        $response = $this->get('/v1/users?' . http_build_query($query), $params);
+
+        $response->seeJsonStructure([
+            'total', 'items' => [
+                '*' => ['email', 'name', 'roles']
+            ]
         ]);
-
-        $response->assertResponseOk();
-        $response->seeJson();
     }
 
-    public function testGetAuthenticatedUserData() {
-        $admin = User::where('email', 'admin-base@prodeb.com')->first();
-
-        $token = JWTAuth::fromUser($admin);
-
-        Log::info($admin);
-
-        $this->get('/v1/users', $this->createAuthHeader($admin, true));
-    }
 }
