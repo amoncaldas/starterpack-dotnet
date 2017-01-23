@@ -3,7 +3,8 @@
     "browser": true
   },
   "globals": {
-    "angular": true
+    "angular": true,
+    "exports": true
   },
   "plugins": [
     "angular",

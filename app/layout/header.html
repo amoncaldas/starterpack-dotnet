@@ -10,7 +10,7 @@
     </md-button>
     <div layout="row" flex>
       <div layout="row" layout-align="start center">
-        <div class="md-breadcrumb">{{$state.current.name | tBreadcrumb}}</div>
+        <div id="page-breadcrumb" class="md-breadcrumb">{{$state.current.name | tBreadcrumb}}</div>
       </div>
       <span flex></span>
       <div layout="row" class="md-toolbar-item" ng-if="auth.authenticated()">

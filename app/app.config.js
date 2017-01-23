@@ -8,7 +8,7 @@
   /** @ngInject */
   // eslint-disable-next-line max-params
   function config($authProvider, Global, $mdThemingProvider, $modelFactoryProvider,  // NOSONAR
-    $translateProvider, $mdpDatePickerProvider, $mdpTimePickerProvider, moment) {
+    $translateProvider, $mdpDatePickerProvider, $mdpTimePickerProvider, moment, $mdAriaProvider) {
 
     $translateProvider
       .useLoader('languageLoader')
@@ -38,6 +38,8 @@
 
     // Enable browser color
     $mdThemingProvider.enableBrowserColor();
+
+    $mdAriaProvider.disableWarnings();
 
   }
 }());

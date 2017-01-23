@@ -1,6 +1,6 @@
 <box box-title="{{::'views.actions.search' | translate}}">
   <box-toolbar-buttons>
-    <md-button class="md-icon-button" ng-click="usersCtrl.goTo('form')">
+    <md-button id="btn-usersCtrl-goToForm" class="md-icon-button" ng-click="usersCtrl.goTo('form')">
       <md-icon md-font-set="material-icons" class="md-warn">add</md-icon>
       <md-tooltip md-direction="bottom" hide-sm hide-xs>{{::'views.actions.add' | translate}}</md-tooltip>
     </md-button>
@@ -14,7 +14,7 @@
         </md-input-container>
         <md-input-container flex>
         </md-input-container>
-        <md-button class="md-raised md-primary md-mini" type="submit">
+        <md-button id="btn-usersCtrl-filter" class="md-raised md-primary md-mini" type="submit">
           {{::'views.actions.filter' | translate}}
         </md-button>
       </div>
@@ -22,11 +22,11 @@
   </md-content>
 
   <md-list>
-    <md-list-item ng-repeat="user in usersCtrl.resources" ng-click="usersCtrl.edit(user)" class="noright">
+    <md-list-item ng-repeat="user in usersCtrl.resources" id="btn-usersCtrl-edit-{{::$index}}" ng-click="usersCtrl.edit(user)" class="noright">
       <img alt="{{ ::user.name }}" ng-src="{{ user.image ? user.image : global.imagePath + '/no_avatar.gif' }}"
         class="md-avatar" />
-      <p>{{ ::user.name }} <small>({{::user.email}})</small></p>
-      <md-icon md-font-set="material-icons" class="md-secondary" ng-click="usersCtrl.remove(user)"
+      <p class="user-list-info">{{ ::user.name }} <small class="user-list-info-email">({{::user.email}})</small></p>
+      <md-icon id="btn-usersCtrl-remove-{{::$index}}" md-font-set="material-icons" class="md-secondary" ng-click="usersCtrl.remove(user)"
         aria-label="remove">delete</md-icon>
     </md-list-item>
   </md-list>

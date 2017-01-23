@@ -11,7 +11,7 @@
         ng-style="{'background-image':'url(' + appCtrl.getImagePerfil() + ')'}">
       </div>
       <span ng-style="menuCtrl.sidenavStyle.textColor">{{auth.currentUser.name}}</span>
-      <span class="email" ng-style="::menuCtrl.sidenavStyle.textColor"><small>{{auth.currentUser.email}}</small></span>
+      <span class="email" id="logged-user-mail" ng-style="::menuCtrl.sidenavStyle.textColor">{{auth.currentUser.email}}</span>
     </a>
   </header>
 
