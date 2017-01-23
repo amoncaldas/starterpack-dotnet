@@ -26,8 +26,6 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'cors' => \App\Http\Middleware\Cors::class,
-        'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
-        'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
         'acl.role' => \App\Http\Middleware\HasRole::class,
         'acl.permission' => \App\Http\Middleware\HasPermission::class,
         'develop.auth' => \App\Http\Middleware\DevelopAuth::class

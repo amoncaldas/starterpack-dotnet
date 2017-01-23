@@ -10,7 +10,7 @@
   "require": {
     "php": ">=5.5.9",
     "laravel/framework": "5.1.*",
-    "tymon/jwt-auth": "1.0.0-alpha.2",
+    "tymon/jwt-auth": "1.0.0-beta.1",
     "owen-it/laravel-auditing": "^2.3",
     "arcanedev/log-viewer": "~4.0",
     "appzcoder/crud-generator": "^1.2",
@@ -19,7 +19,7 @@
   "require-dev": {
     "fzaninotto/faker": "~1.4",
     "mockery/mockery": "0.9.*",
-    "phpunit/phpunit": "~4.0",
+    "phpunit/phpunit": "~5.0",
     "phpspec/phpspec": "~2.1",
     "barryvdh/laravel-ide-helper": "^2.2",
     "doctrine/dbal": "~2.3"

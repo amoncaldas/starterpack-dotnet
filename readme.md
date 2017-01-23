@@ -191,7 +191,7 @@ web:
   container_name: base-php-fpm-{nome_projeto}
 ```
 
-- Configure o .env com os dados contidos no **/php-docker/docker-compose.yml** ou com os dados especifícos do banco.
+- Configure o .env com os dados de banco contidos no **/php-docker/docker-compose.yml**.
 - Inicie o build e o container seguindo os passos abaixo.
 
 ```sh
@@ -286,6 +286,41 @@ npm run package
 ```
 
 - Prepara o projeto para o ambiente informado e envia para o FTP
+
+## Testes Automatizados ##
+
+### Configuração ###
+
+- Crie uma database para ser utilizada nos testes.
+- Ajuste o .env.testing com as informações do banco de dados criado;
+- Nos testes são utilizados as informações do seeds. 
+
+### Colocando para Rodar ###
+
+> Testes e2e (end to end)
+
+- Em um terminal execute os comandos abaixo:
+
+```sh
+cd {pasta_do_projeto}
+webdriver-manager start
+```
+
+- Em outro terminal execute os comandos abaixo:
+
+```sh
+cd {pasta_do_projeto}
+npm run e2e-test
+```
+
+> Testes unitários
+
+- Em um terminal execute os comandos abaixo:
+
+```sh
+cd {pasta_do_projeto}
+npm run unit-test
+```
 
 ## Desenvolvimento ##
 

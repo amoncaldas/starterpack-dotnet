@@ -15,6 +15,10 @@ $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );
 
+if (getenv('APP_ENV') === 'testing') {
+    $app->loadEnvironmentFrom('.env.testing');
+}
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces
