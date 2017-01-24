@@ -77,7 +77,7 @@ describe('Users Page', function() {
 
     it('should update a user', function() {
       usersPage.update({
-        name: 'Nome Atualizado',
+        name: 'Updated Name',
         email: updateEmail
       });
 

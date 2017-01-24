@@ -4,6 +4,9 @@ module.exports = {
   getModalNoButton: getModalNoButton
 };
 
+/**
+ * Do a expect that verify toast name
+ */
 function expectToastToEqual( toastMessage ){
   var locator = by.css('.md-toast-text');
   var timeout = 3000;
@@ -16,10 +19,16 @@ function expectToastToEqual( toastMessage ){
  });
 };
 
+/**
+ * Find and get the Yes Button from Modal
+ */
 function getModalYesButton() {
   return element(by.css('button[ng-click="ctrl.yesAction()"]'));
 }
 
+/**
+ * Find and get the No Button from Modal
+ */
 function getModalNoButton() {
   return element(by.css('button[ng-click="ctrl.noAction()"]'));
 }
