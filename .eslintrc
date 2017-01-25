@@ -3,10 +3,16 @@
     "browser": true
   },
   "globals": {
-    "angular": true
+    "angular": true,
+    "exports": true
   },
   "plugins": [
-    "angular"
+    "angular",
+    "html"
+  ],
+  "validate": [
+    "javascript",
+    "html"
   ],
   "rules": {
     //best practies
