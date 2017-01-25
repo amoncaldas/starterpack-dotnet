@@ -1,5 +1,5 @@
 
-# Sistema Starter Pack PHP #
+# Sistema Starter Pack Angular #
 
 > ## Iniciando
 
