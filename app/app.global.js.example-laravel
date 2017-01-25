@@ -10,8 +10,8 @@
       loginState: 'app.login',
       resetPasswordState: 'app.password-reset',
       notAuthorizedState: 'app.not-authorized',
-      clientPath: 'app',
+      clientPath: 'client/app',
       apiPath: 'v1',
-      imagePath: 'images'
+      imagePath: 'client/images'
     });
 }());

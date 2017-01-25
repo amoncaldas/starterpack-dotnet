@@ -46,6 +46,7 @@ paths.angularScripts = [
   paths.bower + '/mdPickers/dist/mdPickers.min.js',
   paths.bower + '/ng-prodeb/dist/ng-prodeb.min.js'
 ];
+//Add minifieds files.
 paths.vendorsScripts = [
   paths.bower + '/lodash/dist/lodash.min.js',
   paths.bower + '/moment/min/moment.min.js',
@@ -83,7 +84,6 @@ function scriptsVendors() {
     .pipe(sourcemaps.init())
     .pipe(concat(filesNames.vendors))
     .pipe(gulp.dest(paths.destination))
-    .pipe(gulpif(argv.production, minifierJSChannel()))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.destination));
 };
