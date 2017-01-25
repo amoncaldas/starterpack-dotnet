@@ -1,29 +1,6 @@
 
 # Sistema Starter Pack PHP #
 
-> ## Iniciando
-
-- [Sobre](#sobre)
-- [Pré requisitos](#pre-requisitos)
-- [Componentes e Frameworks](#componentes-e-frameworks)
-
-> ## Features
-
-- [Funcionalidades](#funcionalidades)
-- [Instalação](#instalacao)
-    - [Manual](#manual-passo-a-passo)
-    - [Docker](#docker-passo-a-passo)
-- [Colocando para Rodar](#colocar-para-rodar)
-- [Desenvolvimento](#desenvolvimento)
-    - [Editor](#editor)
-    - [Geradores automáticos de arquivos](#geradores-automaticos-de-arquivos)
-    - [Convenções](#convencoes)
-    - [CRUD](#crud)
-    - [Formatação de atributos](#formatacao-de-atributos)
-- [Log](#log)
-- [Produção](#producao)
-
-___
 ## Sobre ##
 
 - Este projeto tem como objetivo servir de base para futuros projetos da PRODEB.
@@ -37,19 +14,19 @@ ___
 
 - Acesso livre ao PROXY.
 - Preferencialmente utilize o Linux com o gerenciador APT.
-  - Caso o SO seja windows utilize a instalação do projeto via Docker.
+  - Caso o SO seja windows utilize a instalação do projeto via [Docker](readme-install-docker.md).
 - Um editor decente.
     - Recomendado: [Visual Studio Code](https://code.visualstudio.com/) ou [ATOM](https://atom.io/).
-- NodeJS versão 4 ou superior ([tutorial para instalar](https://nodejs.org/en/download/package-manager/)).
-    - Configure o npm para rodar sem sudo ([tutorial](https://docs.npmjs.com/getting-started/fixing-npm-permissions)).
-    - Verifique a versão do npm **npm --version** (deve ser igual ou superior a 3.5.1).
 - Git a versão mais recente [GIT](https://git-scm.com/book/pt-br/v1/Primeiros-passos-Instalando-Git).
-- PHP com a versão 5.6.25 ou superior ([tutorial para instalar](http://tecadmin.net/install-php5-on-ubuntu/)).
-- Extensões do PHP: xdebug, fileinfo, mbstring, pdo_pgsql, pgsql, openssl.
-- Composer ([tutorial para instalar](https://getcomposer.org/doc/00-intro.md#globally)).
-- PostgreSQL e pgAdmin ([tutorial para instalar] (https://www.vivaolinux.com.br/dica/Instalando-o-PostgreSQL-e-pgAdmin3-no-Ubuntu)).
 - Permissão de leitura para todos os projetos do grupo Arquitetura no Git:
     - [Grupo Arquitetura](http://git.prodeb.ba.gov.br/groups/starter-pack).
+- NodeJS versão 4.x.x ([tutorial para instalar](https://nodejs.org/en/download/package-manager/)).
+    - Configure o npm para rodar sem sudo ([tutorial](https://docs.npmjs.com/getting-started/fixing-npm-permissions)).
+    - Verifique a versão do npm **npm --version** (deve ser igual ou superior a 3.5.1).
+- PHP com a versão 7.0.x ([tutorial para instalar](http://tecadmin.net/install-php5-on-ubuntu/)).
+- Extensões do PHP: xdebug, fileinfo, mbstring, pdo_pgsql, pgsql, openssl.
+- Composer ([tutorial para instalar](https://getcomposer.org/doc/00-intro.md#globally)).
+- PostgreSQL ([tutorial para instalar] (https://www.vivaolinux.com.br/dica/Instalando-o-PostgreSQL-e-pgAdmin3-no-Ubuntu)).
 
 ## Componentes e Frameworks ##
 
@@ -80,25 +57,11 @@ ___
 - Integração com o [Angular Client](http://git.prodeb.ba.gov.br/starter-pack/starter-pack-angular-client.git);
 - Integração com o [Generator NgProdeb](http://git.prodeb.ba.gov.br/starter-pack/generator-ngprodeb.git);
 
-## Instalação ##
+## Instalando os pré requisitos ##
 
-> Rode os comandos abaixo no terminal do linux:
+> Obs.: Caso os pré requisitos já estejam instalados passe para o passo de Configuração
 
-```sh
-git clone --recursive git@git.prodeb.ba.gov.br:starter-pack/laravel_angular_base.git {nome_projeto} 
-cd {nome_projeto}
-cp .env.develoment .env
-```
-
-> Ajuste o .env com as informações do banco de dados, email e etc...
-
-### Manual Passo-a-Passo ###
-
-#### 1) Instalando os pré requisitos ####
-
-**Obs.: Caso os pré requisitos já estejam instalados passe para o passo 3**
-
-> Em uma instalação limpa do Linux Mint ou Ubuntu os comandos a seguir instalam os pré requisitos:
+- Em uma instalação limpa do Linux Mint ou Ubuntu os comandos a seguir instalam os pré requisitos:
 
 ```sh
 curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
@@ -111,13 +74,13 @@ mkdir ~/.npm-global
 npm config set prefix '~/.npm-global'
 ```
 
-> adicione a linha a seguir no final do arquivo **~/.bashrc**.
+- adicione a linha a seguir no final do arquivo **~/.bashrc**.
 
 ```sh
 export PATH=~/.npm-global/bin:$PATH
 ```
 
-> rode os comandos abaixo para completar a instalação:
+- rode os comandos abaixo para completar a instalação:
 
 ```sh
 source ~/.bashrc
@@ -131,161 +94,60 @@ sudo chown $(whoami):$(whoami) -R ~/.composer
 npm install -g npm
 ```
 
-#### 2) Aplicando fix para alterar limite de watches do gulp ####
+- Aplicaque o fix abaixo para alterar limite de watches do gulp
 
 ```sh
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 ```
 
-#### 3) Instalando e configurando o projeto ####
+## Configurando o projeto ##
 
-> Linux
+- Rode os comandos abaixo no terminal do linux:
 
 ```sh
+git clone git@git.prodeb.ba.gov.br:starter-pack/laravel_angular_base.git {nome_projeto} 
 cd {nome_projeto}
+cp .env.develoment .env
+```
+- Ajuste o **.env** com as informações do banco de dados, email e etc...
+
+```sh
+# lembre de ajustar o .env
 sh configure.sh
 ```
 
-> Windows
-
-- Execute o arquivo configure.bat que está na pasta raiz do projeto
-
-### Docker Passo-a-Passo ###
-
-#### 1) Instalando e configurando o docker ####
-
-> Caso o passo 1 já tenha sido realizado em outro momento pulo para o passo 2.
-
-- Instale o docker [Docker Install](https://www.docker.com/products/overview).
-- Instale o docker-compose [Docker Compose](https://docs.docker.com/compose/install/).
-- No linux execute os comandos abaixo para criar o grupo do docker e adicionar o usuário.
-
-```sh
-sudo groupadd docker 
-```
-
-- em seguinda adicione o usuário ao grupo criado.
-
-```sh
-sudo usermod -aG docker $USER
-```
-
-- Realize o logoff para que as configurações do docker sejam aplicadas.
-
-#### 2) Configurando o projeto ####
-
-- O nome do host do postgres deve ser o nome do container postgres.
-- Faça o clone do projeto:
-
-```sh
-git clone git@git.prodeb.ba.gov.br:starter-pack/php-docker.git
-```
-
-- Acesse o arquivo: **/php-docker/docker-compose.yml** e renomeie o container_name do DB e WEB
-adicionando como sufixo o nome do projeto, ex:
-
-```html
-db:
-  container_name: base-postgres-{nome_projeto}
-web:
-  container_name: base-php-fpm-{nome_projeto}
-```
-
-- Configure o .env com os dados de banco contidos no **/php-docker/docker-compose.yml**.
-- Inicie o build e o container seguindo os passos abaixo.
-
-```sh
-cd {php-docker}
-docker-compose build
-docker-compose up
-docker exec -it base-php-fpm-{nome_projeto} bash
-chmod +x configure.sh
-./configure.sh
-```
- 
--É aconselhável que se crie um alias no bash do host para executar comandos no bash do docker, para isso rode o comando abaixo:
-    - **echo "alias {SEU_ALIAS}='docker exec -it base-php-fpm-{nome_projeto}'" >> ~/.bashrc**
-    - (feche o console e abra novamente para que as alterações surtam efeito)
-- Caso queira acessar a linha de comando do container rode **{ALIAS_CRIADO} bash**
-- Todos os comandos no restante da documentação tem que ser prefixado com o container docker ou seu alias criado, de dentro da pasta do php-docker ex:
-    - **docker exec -it base-php-fpm-{nome_projeto} {COMANDO}**
-    - **{ALIAS_CRIADO} {COMANDO}**
-- Para sair do bash digite **exit** e aperte enter
-
-> Comandos úteis:
-
-- Listar containers
-
-```sh
-docker ps
-```
-
-**para mais informações e documentação acesse [Docker](https://www.docker.com/)**
-
 ## Colocando para Rodar ##
 
-> Caso esteja clonando para dar inicio a um novo projeto rode o comando abaixo. 
-> Se for contribuir com o Starter Pack pule o próximo comando
-
-```sh
-cd {pasta_do_projeto}
-rm -rf .git public/client/.git .gitmodules 
-```
-
-> Ajuste o public/client/paths.json com o path relativo (disco) da pasta client clonada na área public do servidor: ex: **"serverClientPath": "client"**
-> Ajuste o public/client/app/app.global.js com as informações de paths (servidor) do client, images e api, ex:
-
-```javascript
-clientPath: 'client/app',
-apiPath: 'v1',
-imagePath: 'client/images'
-```
-
-> Após a configuração, remova o paths.json e o app.global.js do arquivo **public/client/.gitignore** 
-> e execute o comando abaixo:
-
-```sh
-rm -rf public/client/app/app.global.js.example public/client/paths.json.example
-```
-
-> Execute o comando abaixo para processar os arquivos .sass e concatenar os .js e .css injetando no index.html.
-> O comando fica observando futuras modificações e repetindo o processo automaticamente
+- Execute o comando abaixo para processar os arquivos **.sass** e concatenar os **.js** e **.css** injetando no **index.html**.
+- O comando fica observando futuras modificações e repetindo o processo automaticamente
 
 ```sh
 cd {pasta_do_projeto}
 npm run build
 ```
 
-- Parametros opcionais:
-  - **--sync** (Mantém o navegador sincronizado com as mudanças. O mesmo vai dar refresh automaticamente a cada mudança nos .js e .html )
-
-> Em outra aba do terminal rode o comando abaixo para levantar o servidor php:
+- Em outra aba do terminal rode o comando abaixo para levantar o servidor php:
 
 ```sh
 cd {pasta_do_projeto}
 npm run server (Este comando inicia o servidor php na porta 5000)
 ```
 
-> Abra o navegador
+- Abra a url **http://localhost:5000** no navegador e logue com os dados:
 
-- Acesse **http://localhost:5000**
-- Logue com os dados, email: **admin-base@prodeb.com** e senha: **Prodeb01**
+  - email: **admin-base@prodeb.com** 
+  - senha: **Prodeb01**
 
-> Outros comandos
+## Verificação do código ##
 
 ```sh
+cd {pasta_do_projeto}
 npm run check
 ```
 
 - Verifica a formatação do código javascript
   - parametros opcionais
     - **--fix** (para corrigir os erros que podem ser corrigidos automaticamente)
-
-```sh
-npm run package
-```
-
-- Prepara o projeto para o ambiente informado e envia para o FTP
 
 ## Testes Automatizados ##
 
@@ -297,7 +159,7 @@ npm run package
 
 ### Colocando para Rodar ###
 
-> Testes e2e (end to end)
+#### Testes e2e (end to end) ####
 
 - Em um terminal execute os comandos abaixo:
 
@@ -306,14 +168,14 @@ cd {pasta_do_projeto}
 webdriver-manager start
 ```
 
-- Em outro terminal execute os comandos abaixo:
+  - Em outro terminal execute os comandos abaixo:
 
 ```sh
 cd {pasta_do_projeto}
 npm run e2e-test
 ```
 
-> Testes unitários
+#### Testes unitários ####
 
 - Em um terminal execute os comandos abaixo:
 
@@ -321,6 +183,50 @@ npm run e2e-test
 cd {pasta_do_projeto}
 npm run unit-test
 ```
+
+## Atualizando o projeto com base nos repositórios oficiais do Starter Pack ##
+
+- A forma do merge abaixo deixa os arquivos modificados na área de stage, onde é possível optar por commitar ou descartar as modificações.
+
+### Merge com Starter Pack ###
+
+```sh
+cd {pasta_do_projeto}
+git fetch starter-pack 
+git merge starter-pack/develop --squash --no-commit
+```
+
+## Log ##
+
+> Para ver os logs
+
+- Acesse [http://localhost:5000/developer/log-viewer](http://localhost:5000/developer/log-viewer)
+- Digite o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
+- Digite a senha conforme a variável de ambiente no arquivo .env DEVELOP_PASSWORD
+
+## Gerar Pacote para Produção/Homologação ##
+
+- Altere os dados do arquivo **.env.nome-do-ambiente** com as configurações de produção (pkg_name, banco, smtp, nível de log, ftp e etc) e desative o debug.
+- Rode o comando
+
+```sh
+# lembre de ajustar o arquivo .env.nome-do-ambiente
+cd {pasta_do_projeto}
+npm run package
+```
+
+- Este comando 
+  - prepara a aplicação para o ambiente informado, minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados
+  - gerando o pacote zipado no padrão **{NomeProjeto}.zip**.
+  - Perguntar se deseja enviar para o ftp
+    - caso queira:
+      - O pacote será enviado
+      - Descompactado
+      - O pacote será removido do FTP e da raiz do projeto no filesystem local
+      - O navegador padrão vai ser aberto no endereço informado no APP_URL no arquivo .env
+    - caso contrário 
+      - o pacote gerado com o nome **{NomeProjeto}.zip** constará na raiz do projeto
+
 
 ## Desenvolvimento ##
 
@@ -517,25 +423,3 @@ Em qualquer action de um CrudController é possível adicionar validações espe
       $this->throwValidationException($request, $this->validator);
   }
 ```
-
-## Log ##
-
-> Para ver os logs
-
-- Acesse [http://localhost:5000/developer/log-viewer](http://localhost:5000/developer/log-viewer)
-- Digite o usuário conforme a variável de ambiente no arquivo .env DEVELOP_ID
-- Digite a senha conforme a variável de ambiente no arquivo .env DEVELOP_PASSWORD
-
-## Produção ##
-
-> Siga os passos abaixo para gerar o pacote para produção:
-
-- Altere os dados do arquivo .env.production com as configurações de produção (pkg_name, banco, smtp, nível de log, ftp e etc) e desative o debug.
-- Rode o comando **npm run package**.
-
-> Prepara a aplicação para produção minificando os arquivos js, css e modificando o index.html para apontar para os arquivos minificados
-> gerando o pacote zipado no padrão **{NomeProjeto}.zip**.
-
-- Em seguida o sistema irá perguntar se deseja enviar para o ftp, caso queira, o pacote será enviado 
-descompactado e removido da raiz local do projeto e do ftp logo após abrindo o navegador padrão no endereço informado no APP_URL no arquivo .env,
-caso contrário, o arquivo **{NomeProjeto}.zip** constará na raiz do projeto para o devido uso.
