@@ -1,0 +1,17 @@
+(function() {
+  'use strict';
+
+  angular
+    .module('app')
+    .constant('Global', {
+      appName: 'Starter Pack',
+      homeState: 'app.dashboard',
+      loginUrl: 'app/login',
+      loginState: 'app.login',
+      resetPasswordState: 'app.password-reset',
+      notAuthorizedState: 'app.not-authorized',
+      clientPath: 'public/client/app',
+      apiPath: 'v1',
+      imagePath: 'public/client/images'
+    });
+}());

@@ -1,25 +1,13 @@
 .sonar/
 
-### Composer ###
-composer.phar
-vendor/
-
 ### Resources ###
 node_modules/
-
-### docker ###
-php-docker/
+bower_components/
+build/
+paths.json
+app/app.global.js
 
 npm-debug.log
-
-### Laravel ###
-.env
-Homestead.yaml
-Homestead.json
-
-### Production ###
-*.zip
-ftp.log
 
 ### Editores ###
 
