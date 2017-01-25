@@ -4,7 +4,6 @@
   "description": "StarterPack em PHP usando Laravel com Angular",
   "version": "1.0.0",
   "scripts": {
-    "postinstall": "bower install",
     "server": "http-server",
     "build": "gulp",
     "check": "gulp check"
