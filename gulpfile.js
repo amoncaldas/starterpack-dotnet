@@ -72,38 +72,38 @@ var filesNames = {
 
 var globalRandom = Math.random().toString(36).substr(2, 15);
 
-var minifierJSChannel = lazypipe()
-  .pipe(uglify);
-
 var minifierCSSChannel = lazypipe()
   .pipe(cleanCSS);
 
+function buildScripts(files, fileName) {
+  var stream = gulp.src(files).pipe(plumber());
+
+  if (argv.production) {
+    stream = stream.pipe(concat(fileName))
+      .pipe(uglify());
+  } else {
+    stream = stream.pipe(sourcemaps.init())
+      .pipe(changed(paths.destination))
+      .pipe(concat(fileName))
+      .pipe(sourcemaps.write())
+  }
+
+  return stream.pipe(gulp.dest(paths.destination));
+}
+
 function scriptsVendors() {
-  return gulp.src(paths.vendorsScripts)
-    .pipe(plumber())
-    .pipe(sourcemaps.init())
-    .pipe(concat(filesNames.vendors))
-    .pipe(gulp.dest(paths.destination))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(paths.destination));
+  return buildScripts(paths.vendorsScripts, filesNames.vendors);
 };
 
 function scriptsAngular() {
-  return gulp.src(paths.angularScripts)
-    .pipe(plumber())
-    .pipe(sourcemaps.init())
-    .pipe(concat(filesNames.angular))
-    .pipe(gulp.dest(paths.destination))
-    .pipe(gulpif(argv.production, minifierJSChannel()))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(paths.destination));
+  return buildScripts(paths.angularScripts, filesNames.angular);
 };
 
 function scriptsApplication() {
   var stream = gulp.src(paths.scripts)
     .pipe(plumber())
-    .pipe(sourcemaps.init())
-    .pipe(changed(paths.destination))
+    .pipe(gulpif(!argv.production, sourcemaps.init()))
+    .pipe(gulpif(!argv.production, changed(paths.destination)))
     .pipe(babel({
       presets: ['es2015']
     }))
@@ -112,11 +112,23 @@ function scriptsApplication() {
       add: true
     }))
     .pipe(gulp.dest(paths.destination))
-    .pipe(gulpif(argv.production, minifierJSChannel()))
-    .pipe(sourcemaps.write())
+    .pipe(gulpif(argv.production, uglify()))
+    .pipe(gulpif(!argv.production, sourcemaps.write()))
     .pipe(gulp.dest(paths.destination));
 
   return stream;
+};
+
+function styles() {
+  return gulp.src(paths.styles)
+    .pipe(plumber())
+    .pipe(gulpif(!argv.production, sourcemaps.init()))
+    .pipe(changed(paths.destination))
+    .pipe(sass())
+    .pipe(concat('application.css'))
+    .pipe(gulpif(argv.production, minifierCSSChannel()))
+    .pipe(gulpif(!argv.production, sourcemaps.write()))
+    .pipe(gulp.dest(paths.destination));
 };
 
 function injectFiles() {
@@ -157,18 +169,6 @@ function injectFiles() {
     }))
     .pipe(gulp.dest(paths.client));
 }
-
-function styles() {
-  return gulp.src(paths.styles)
-    .pipe(plumber())
-    .pipe(sourcemaps.init())
-    .pipe(changed(paths.destination))
-    .pipe(sass())
-    .pipe(concat('application.css'))
-    .pipe(gulpif(argv.production, minifierCSSChannel()))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(paths.destination));
-};
 
 gulp.task('scriptsVendors', scriptsVendors);
 gulp.task('scriptsAngular', scriptsAngular);
