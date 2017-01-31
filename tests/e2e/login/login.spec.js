@@ -23,7 +23,7 @@ describe('Login Page', function() {
     });
 
     it('should be redirected to login page if not logged in', function() {
-      browser.get(data.domain + '/app/usuario');
+      browser.get(data.domain + 'app/usuario');
 
       expect(browser.getCurrentUrl()).toMatch(page.loginUrl);
     });
