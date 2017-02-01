@@ -22,7 +22,7 @@ describe('Login Page', function() {
       helper.expectToastToEqual('Credenciais Inválidas');
     });
 
-    it('should be redirected to login page if not logged in', function() {
+    it('when try access authenticated page should be redirected to login page if not logged in', function() {
       browser.get(data.domain + 'app/usuario');
 
       expect(browser.getCurrentUrl()).toMatch(page.loginUrl);

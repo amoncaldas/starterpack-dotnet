@@ -112,8 +112,6 @@
           PrToast.success($translate.instant('messages.mail.sendMailSuccess'));
           vm.cleanForm();
         }
-      }, function(response) {
-        PrToast.errorValidation(response.data, $translate.instant('messages.mail.sendMailError'));
       });
     }
 
