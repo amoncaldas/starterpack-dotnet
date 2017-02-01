@@ -71,7 +71,7 @@
             <tr md-row ng-repeat="log in auditCtrl.resources">
               <td md-cell>{{ ::log.user.name}}</td>
               <td md-cell hide-xs>{{ ::log.type | auditType }}</td>
-              <td md-cell>{{::log.owner_id}}: {{ ::log.owner_type | auditModel}}</td>
+              <td md-cell>{{::log.auditable_id}}: {{ ::log.auditable_type | auditModel}}</td>
               <td md-cell hide-xs>{{ ::log.updated_at | prDatetime}}</td>
               <td md-cell>
                 <md-button class="md-icon-button" ng-click="auditCtrl.viewDetail(log)">

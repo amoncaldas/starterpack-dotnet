@@ -55,8 +55,16 @@
         controller: function(auditDetail, PrDialog) {
           var vm = this;
 
-          vm.auditDetail = auditDetail;
           vm.close = close;
+
+          activate();
+
+          function activate() {
+            if (angular.isArray(auditDetail.old) && auditDetail.old.length === 0) auditDetail.old = null;
+            if (angular.isArray(auditDetail.new) && auditDetail.new.length === 0) auditDetail.new = null;
+
+            vm.auditDetail = auditDetail;
+          }
 
           function close() {
             PrDialog.close();
