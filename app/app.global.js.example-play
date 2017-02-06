@@ -11,7 +11,7 @@
       resetPasswordState: 'app.password-reset',
       notAuthorizedState: 'app.not-authorized',
       clientPath: 'public/client/app',
-      apiPath: 'v1',
+      apiPath: 'api/v1',
       imagePath: 'public/client/images'
     });
 }());
