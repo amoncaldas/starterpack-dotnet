@@ -103,7 +103,7 @@ describe('Users Page', function() {
       expect(userFound).toBeDefined();
     });
 
-    fit('should remove a user', function() {
+    it('should remove a user', function() {
       usersPage.resourcesList.count().then(function(count) {
         var email = '83y1uon3y1t3971h3nyu1g@prodeb.ba.gov.br';
 
