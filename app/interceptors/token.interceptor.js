@@ -1,3 +1,5 @@
+/*eslint angular/module-getter: 0*/
+
 (function() {
   'use strict';
 
@@ -13,7 +15,7 @@
    * @param Global
    */
   /** @ngInject */
-  function tokenInterceptor($httpProvider, $provide, Global) {
+  function tokenInterceptor($httpProvider, jwtOptionsProvider, $provide, Global) {
 
     function redirectWhenServerLoggedOut($q, $injector) {
       return {
@@ -22,7 +24,7 @@
           var token = response.headers('Authorization');
 
           if (token) {
-            $injector.get('$auth').setToken(token.split(' ')[1]);
+            $injector.get('Auth').setToken(token.split(' ')[1]);
           }
           return response;
         },
@@ -64,7 +66,7 @@
             var token = rejection.headers('Authorization');
 
             if (token) {
-              $injector.get('$auth').setToken(token.split(' ')[1]);
+              $injector.get('Auth').setToken(token.split(' ')[1]);
             }
           }
 
@@ -73,10 +75,20 @@
       };
     }
 
+
+
+    jwtOptionsProvider.config({
+      whiteListedDomains: ['localhost'],
+      tokenGetter: ['Auth', function(Auth) {
+        return Auth.getToken();
+      }]
+    });
+
     // Setup for the $httpInterceptor
     $provide.factory('redirectWhenServerLoggedOut', redirectWhenServerLoggedOut);
 
     // Push the new factory onto the $http interceptor array
+    $httpProvider.interceptors.push('jwtInterceptor');
     $httpProvider.interceptors.push('redirectWhenServerLoggedOut');
   }
 

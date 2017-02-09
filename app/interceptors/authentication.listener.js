@@ -33,13 +33,15 @@
       if (authenticated) {
         var user = angular.fromJson(localStorage.getItem('user'));
 
-        Auth.updateCurrentUser(user);
-
-        // If the user is logged in and we hit the auth route we don't need
-        // to stay there and can send the user to the main state
-        if (toState.name === Global.loginState) {
-          $state.go(Global.homeState);
-          event.preventDefault();
+        if (user !== null) {
+          Auth.updateCurrentUser(user).then(function() {
+            // If the user is logged in and we hit the auth route we don't need
+            // to stay there and can send the user to the main state
+            if (toState.name === Global.loginState) {
+              $state.go(Global.homeState);
+              event.preventDefault();
+            }
+          });
         }
       } else {
         //remove old info

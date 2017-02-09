@@ -7,7 +7,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function Auth($http, $auth, $q, Global, UsersService) { // NOSONAR
+  function Auth($http, jwtHelper, $q, Global, UsersService) { // NOSONAR
     var auth = {
       login: login,
       logout: logout,
@@ -15,8 +15,35 @@
       retrieveUserFromLocalStorage: retrieveUserFromLocalStorage,
       authenticated: authenticated,
       sendEmailResetPassword: sendEmailResetPassword,
-      currentUser: null
+      currentUser: null,
+      getToken: getToken,
+      setToken: setToken,
+      clearToken: clearToken
     };
+
+    var data = {
+      token: null
+    }
+
+    function clearToken() {
+      localStorage.removeItem(Global.tokenKey);
+      data.token = null;
+    }
+
+    function setToken(token) {
+      localStorage.setItem(Global.tokenKey, token);
+      data.token = token;
+    }
+
+    function getToken() {
+      var token = data.token;
+
+      if (!token) {
+        token = localStorage.getItem(Global.tokenKey);
+      }
+
+      return token;
+    }
 
     /**
      * Verifica se o usuário está autenticado
@@ -24,7 +51,9 @@
      * @returns {boolean}
      */
     function authenticated() {
-      return $auth.isAuthenticated();
+      var token = auth.getToken();
+
+      return (token && !jwtHelper.isTokenExpired(token));
     }
 
     /**
@@ -45,10 +74,12 @@
      * Mantém a variável auth.currentUser para facilitar o acesso ao usuário logado em toda a aplicação
      *
      *
-     * @param {any} user Usuáario a ser atualizado. Caso seja passado null limpa
+     * @param {any} user Usuário a ser atualizado. Caso seja passado null limpa
      * todas as informações do usuário corrente.
      */
     function updateCurrentUser(user) {
+      var deferred = $q.defer();
+
       if (user) {
         user = angular.merge(new UsersService(), user);
 
@@ -56,10 +87,17 @@
 
         localStorage.setItem('user', jsonUser);
         auth.currentUser = user;
+
+        deferred.resolve(user);
       } else {
         localStorage.removeItem('user');
         auth.currentUser = null;
+        auth.clearToken();
+
+        deferred.reject();
       }
+
+      return deferred.promise;
     }
 
     /**
@@ -71,8 +109,10 @@
     function login(credentials) {
       var deferred = $q.defer();
 
-      $auth.login(credentials)
-        .then(function() {
+      $http.post(Global.apiPath + '/authenticate', credentials)
+        .then(function(response) {
+          auth.setToken(response.data.token);
+
           return $http.get(Global.apiPath + '/authenticate/user');
         })
         .then(function(response) {
@@ -80,6 +120,8 @@
 
           deferred.resolve();
         }, function(error) {
+
+          auth.clearToken();
           deferred.reject(error);
         });
 
@@ -96,11 +138,11 @@
     function logout() {
       var deferred = $q.defer();
 
-      $auth.logout().then(function() {
-        auth.updateCurrentUser(null);
+      auth.updateCurrentUser(null);
+      auth.clearToken();
 
-        deferred.resolve();
-      });
+      deferred.resolve();
+
 
       return deferred.promise;
     }

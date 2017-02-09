@@ -12,7 +12,7 @@
     'modelFactory',
     'md.data.table',
     'mdPickers',
-    'satellizer',
+    'angular-jwt',
     'pascalprecht.translate',
     'angularFileUpload']);
 })();
