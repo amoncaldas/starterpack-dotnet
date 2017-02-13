@@ -22,28 +22,16 @@
       currentUser: null
     };
 
-    var data = {
-      token: null
-    }
-
     function clearToken() {
       localStorage.removeItem(Global.tokenKey);
-      data.token = null;
     }
 
     function setToken(token) {
       localStorage.setItem(Global.tokenKey, token);
-      data.token = token;
     }
 
     function getToken() {
-      var token = data.token;
-
-      if (!token) {
-        token = localStorage.getItem(Global.tokenKey);
-      }
-
-      return token;
+      return localStorage.getItem(Global.tokenKey);
     }
 
     function remoteValidateToken() {
@@ -54,12 +42,12 @@
           .then(function() {
             deferred.resolve(true);
           }, function() {
-            auth.updateCurrentUser(null);
+            auth.logout();
 
             deferred.reject(false);
           });
       } else {
-        auth.updateCurrentUser(null);
+        auth.logout();
 
         deferred.reject(false);
       }
@@ -140,7 +128,7 @@
 
           deferred.resolve();
         }, function(error) {
-          auth.updateCurrentUser(null);
+          auth.logout();
 
           deferred.reject(error);
         });
@@ -159,9 +147,7 @@
       var deferred = $q.defer();
 
       auth.updateCurrentUser(null);
-
       deferred.resolve();
-
 
       return deferred.promise;
     }
@@ -176,13 +162,12 @@
 
       $http.post(Global.apiPath + '/password/email', resetData)
         .then(function(response) {
-          deferred.resolve(response);
+          deferred.resolve(response.data);
         }, function(error) {
           deferred.reject(error);
         });
 
       return deferred.promise;
-
     }
 
     return auth;

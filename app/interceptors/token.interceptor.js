@@ -59,6 +59,8 @@
 
                   //close any dialog that is opened
                   $injector.get('PrDialog').close();
+
+                  event.preventDefault();
                 }
               });
             }
