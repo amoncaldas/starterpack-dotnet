@@ -7,7 +7,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function Auth($http, jwtHelper, $q, Global, UsersService) { // NOSONAR
+  function Auth($http, $q, Global, UsersService) { // NOSONAR
     var auth = {
       login: login,
       logout: logout,
@@ -15,10 +15,11 @@
       retrieveUserFromLocalStorage: retrieveUserFromLocalStorage,
       authenticated: authenticated,
       sendEmailResetPassword: sendEmailResetPassword,
-      currentUser: null,
+      remoteValidateToken: remoteValidateToken,
       getToken: getToken,
       setToken: setToken,
-      clearToken: clearToken
+      clearToken: clearToken,
+      currentUser: null
     };
 
     var data = {
@@ -45,15 +46,34 @@
       return token;
     }
 
+    function remoteValidateToken() {
+      var deferred = $q.defer();
+
+      if (auth.authenticated()) {
+        $http.get(Global.apiPath + '/authenticate/check')
+          .then(function() {
+            deferred.resolve(true);
+          }, function() {
+            auth.updateCurrentUser(null);
+
+            deferred.reject(false);
+          });
+      } else {
+        auth.updateCurrentUser(null);
+
+        deferred.reject(false);
+      }
+
+      return deferred.promise;
+    }
+
     /**
      * Verifica se o usuário está autenticado
      *
      * @returns {boolean}
      */
     function authenticated() {
-      var token = auth.getToken();
-
-      return (token && !jwtHelper.isTokenExpired(token));
+      return auth.getToken() !== null
     }
 
     /**
@@ -120,8 +140,8 @@
 
           deferred.resolve();
         }, function(error) {
+          auth.updateCurrentUser(null);
 
-          auth.clearToken();
           deferred.reject(error);
         });
 
@@ -139,7 +159,6 @@
       var deferred = $q.defer();
 
       auth.updateCurrentUser(null);
-      auth.clearToken();
 
       deferred.resolve();
 

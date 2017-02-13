@@ -27,8 +27,7 @@
     "angular-material-data-table": "~0.10.9",
     "ng-prodeb": "git@git.prodeb.ba.gov.br:starter-pack/ngprodeb.git#0.2.2",
     "moment": "~2.14.1",
-    "mdPickers": "~0.7.5",
-    "angular-jwt": "^0.1.9"
+    "mdPickers": "~0.7.5"
   },
   "resolutions": {
     "angular": "~1.5.8",

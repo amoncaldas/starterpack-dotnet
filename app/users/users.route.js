@@ -18,13 +18,13 @@
         url: '/usuario',
         templateUrl: Global.clientPath + '/users/users.html',
         controller: 'UsersController as usersCtrl',
-        data: { needProfile: ['admin'] }
+        data: { needAuthentication: true, needProfile: ['admin'] }
       })
       .state('app.user-profile', {
         url: '/usuario/perfil',
         templateUrl: Global.clientPath + '/users/profile.html',
         controller: 'ProfileController as profileCtrl',
-        data: { }
+        data: { needAuthentication: true }
       });
 
   }

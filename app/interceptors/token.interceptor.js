@@ -15,10 +15,19 @@
    * @param Global
    */
   /** @ngInject */
-  function tokenInterceptor($httpProvider, jwtOptionsProvider, $provide, Global) {
+  function tokenInterceptor($httpProvider, $provide, Global) {
 
     function redirectWhenServerLoggedOut($q, $injector) {
       return {
+        request: function(config) {
+          var token = $injector.get('Auth').getToken();
+
+          if (token) {
+            config.headers['Authorization'] = 'Bearer ' + token;
+          }
+
+          return config;
+        },
         response: function(response) {
           // get a new refresh token to use in the next request
           var token = response.headers('Authorization');
@@ -75,20 +84,10 @@
       };
     }
 
-
-
-    jwtOptionsProvider.config({
-      whiteListedDomains: ['localhost'],
-      tokenGetter: ['Auth', function(Auth) {
-        return Auth.getToken();
-      }]
-    });
-
     // Setup for the $httpInterceptor
     $provide.factory('redirectWhenServerLoggedOut', redirectWhenServerLoggedOut);
 
     // Push the new factory onto the $http interceptor array
-    $httpProvider.interceptors.push('jwtInterceptor');
     $httpProvider.interceptors.push('redirectWhenServerLoggedOut');
   }
 

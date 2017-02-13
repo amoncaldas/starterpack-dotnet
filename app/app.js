@@ -12,7 +12,6 @@
     'modelFactory',
     'md.data.table',
     'mdPickers',
-    'angular-jwt',
     'pascalprecht.translate',
     'angularFileUpload']);
 })();
