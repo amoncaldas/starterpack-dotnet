@@ -35,7 +35,6 @@ paths.angularScripts = [
   paths.bower + '/angular-animate/angular-animate.js',
   paths.bower + '/angular-resource/angular-resource.min.js',
   paths.bower + '/angular-translate/angular-translate.min.js',
-  paths.bower + '/satellizer/satellizer.min.js',
   paths.bower + '/angular-i18n/angular-locale_pt-br.js',
   paths.bower + '/angular-input-masks/angular-input-masks-standalone.min.js',
   paths.bower + '/angular-ui-router/release/angular-ui-router.min.js',

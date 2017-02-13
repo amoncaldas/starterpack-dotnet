@@ -35,14 +35,7 @@
             $state.go(Global.loginState);
           }, 1500);
         }, function (error) {
-          if (error.status === 400) {
-            PrToast.error(error.data.msg);
-            $timeout(function () {
-              $state.go(Global.loginState);
-            }, 2000);
-          } else if (error.status === 500) {
-            PrToast.error($translate.instant('messages.internalError'));
-          } else {
+          if (error.status !== 400 && error.status !== 500) {
             var msg = '';
 
             for (var i = 0; i < error.data.password.length; i++) {
@@ -63,21 +56,21 @@
         return;
       }
 
-      Auth.sendEmailResetPassword(vm.reset).then(function (response) {
-        PrToast.success(response.msg);
+      Auth.sendEmailResetPassword(vm.reset).then(function (data) {
+        PrToast.success(data.message);
+
         vm.cleanForm();
         vm.closeDialog();
       }, function (error) {
-        var msg = '';
-
         if (error.data.email && error.data.email.length > 0) {
+          var msg = '';
+
           for (var i = 0; i < error.data.email.length; i++) {
             msg += error.data.email[i] + '<br>';
           }
-        } else {
-          msg = error.data.msg;
+
+          PrToast.error(msg);
         }
-        PrToast.error(msg);
       });
     }
 

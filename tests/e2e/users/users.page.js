@@ -33,7 +33,7 @@ var UserPage = function() {
   }
 
   this.update = function(user) {
-    var userListItem = this.findUserByEmailInList('updated-base@prodeb.com');
+    var userListItem = this.findUserByEmailInList(user.email);
 
     userListItem.click();
 

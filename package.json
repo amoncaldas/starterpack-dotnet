@@ -8,6 +8,7 @@
     "build": "gulp",
     "check": "gulp check"
   },
+  "node": "^6.9.0",
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",
     "bower": "^1.7.9",
@@ -36,7 +37,7 @@
     "jshint": "^2.9.2",
     "lazypipe": "^1.0.1",
     "path": "^0.12.7",
-    "protractor": "^4.0.14",
+    "protractor": "^5.1.0",
     "protractor-console": "^2.0.1",
     "run-sequence": "^1.2.2",
     "stream-series": "^0.1.1",

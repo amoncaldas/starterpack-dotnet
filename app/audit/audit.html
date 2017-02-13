@@ -6,7 +6,7 @@
           <div layout="row">
             <md-input-container flex=20 flex-xs=40>
               <label>{{::'id' | tAttr}}</label>
-              <input type="text" ng-model="auditCtrl.queryFilters.owner_id">
+              <input type="text" ng-model="auditCtrl.queryFilters.auditable_id">
             </md-input-container>
             <pr-date-time-picker flex-gt-md=20 hide-xs
               ng-model="auditCtrl.queryFilters.dateStart"
@@ -72,7 +72,7 @@
               <td md-cell>{{ ::log.user.name}}</td>
               <td md-cell hide-xs>{{ ::log.type | auditType }}</td>
               <td md-cell>{{::log.auditable_id}}: {{ ::log.auditable_type | auditModel}}</td>
-              <td md-cell hide-xs>{{ ::log.updated_at | prDatetime}}</td>
+              <td md-cell hide-xs>{{ ::log.created_at | prDatetime}}</td>
               <td md-cell>
                 <md-button class="md-icon-button" ng-click="auditCtrl.viewDetail(log)">
                   <md-icon md-font-set="material-icons"

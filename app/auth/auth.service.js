@@ -7,7 +7,7 @@
 
   /** @ngInject */
   // eslint-disable-next-line max-params
-  function Auth($http, $auth, $q, Global, UsersService) { // NOSONAR
+  function Auth($http, $q, Global, UsersService) { // NOSONAR
     var auth = {
       login: login,
       logout: logout,
@@ -15,8 +15,45 @@
       retrieveUserFromLocalStorage: retrieveUserFromLocalStorage,
       authenticated: authenticated,
       sendEmailResetPassword: sendEmailResetPassword,
+      remoteValidateToken: remoteValidateToken,
+      getToken: getToken,
+      setToken: setToken,
+      clearToken: clearToken,
       currentUser: null
     };
+
+    function clearToken() {
+      localStorage.removeItem(Global.tokenKey);
+    }
+
+    function setToken(token) {
+      localStorage.setItem(Global.tokenKey, token);
+    }
+
+    function getToken() {
+      return localStorage.getItem(Global.tokenKey);
+    }
+
+    function remoteValidateToken() {
+      var deferred = $q.defer();
+
+      if (auth.authenticated()) {
+        $http.get(Global.apiPath + '/authenticate/check')
+          .then(function() {
+            deferred.resolve(true);
+          }, function() {
+            auth.logout();
+
+            deferred.reject(false);
+          });
+      } else {
+        auth.logout();
+
+        deferred.reject(false);
+      }
+
+      return deferred.promise;
+    }
 
     /**
      * Verifica se o usuário está autenticado
@@ -24,7 +61,7 @@
      * @returns {boolean}
      */
     function authenticated() {
-      return $auth.isAuthenticated();
+      return auth.getToken() !== null
     }
 
     /**
@@ -45,10 +82,12 @@
      * Mantém a variável auth.currentUser para facilitar o acesso ao usuário logado em toda a aplicação
      *
      *
-     * @param {any} user Usuáario a ser atualizado. Caso seja passado null limpa
+     * @param {any} user Usuário a ser atualizado. Caso seja passado null limpa
      * todas as informações do usuário corrente.
      */
     function updateCurrentUser(user) {
+      var deferred = $q.defer();
+
       if (user) {
         user = angular.merge(new UsersService(), user);
 
@@ -56,10 +95,17 @@
 
         localStorage.setItem('user', jsonUser);
         auth.currentUser = user;
+
+        deferred.resolve(user);
       } else {
         localStorage.removeItem('user');
         auth.currentUser = null;
+        auth.clearToken();
+
+        deferred.reject();
       }
+
+      return deferred.promise;
     }
 
     /**
@@ -71,8 +117,10 @@
     function login(credentials) {
       var deferred = $q.defer();
 
-      $auth.login(credentials)
-        .then(function() {
+      $http.post(Global.apiPath + '/authenticate', credentials)
+        .then(function(response) {
+          auth.setToken(response.data.token);
+
           return $http.get(Global.apiPath + '/authenticate/user');
         })
         .then(function(response) {
@@ -80,6 +128,8 @@
 
           deferred.resolve();
         }, function(error) {
+          auth.logout();
+
           deferred.reject(error);
         });
 
@@ -96,11 +146,8 @@
     function logout() {
       var deferred = $q.defer();
 
-      $auth.logout().then(function() {
-        auth.updateCurrentUser(null);
-
-        deferred.resolve();
-      });
+      auth.updateCurrentUser(null);
+      deferred.resolve();
 
       return deferred.promise;
     }
@@ -115,13 +162,12 @@
 
       $http.post(Global.apiPath + '/password/email', resetData)
         .then(function(response) {
-          deferred.resolve(response);
+          deferred.resolve(response.data);
         }, function(error) {
           deferred.reject(error);
         });
 
       return deferred.promise;
-
     }
 
     return auth;

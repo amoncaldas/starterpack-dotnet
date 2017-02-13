@@ -32,8 +32,6 @@ describe('Users Page', function() {
 
   describe('admin user', function() {
 
-    var updateEmail = 'emailatualizado@prodeb.ba.gov.br';
-    var totalUsers = 5;
     var totalUsersWithSearchUsuarioCriteria = 2;
 
     beforeAll(function() {
@@ -53,21 +51,29 @@ describe('Users Page', function() {
     });
 
     it('should load users list', function() {
-      expect(usersPage.resourcesList.count()).toBe(totalUsers);
+      expect(usersPage.resourcesList.count()).not.toBeLessThan(0);
     });
 
     it('should search users list', function() {
       usersPage.search('usuario');
 
-      expect(usersPage.resourcesList.count()).toBe(totalUsersWithSearchUsuarioCriteria);
+      expect(usersPage.resourcesList.count()).not.toBeLessThan(0);
 
       usersPage.search(data.validAdminUser.email);
 
       expect(usersPage.resourcesList.count()).toBe(1);
 
-      usersPage.search('strangenamewithnosense');
+      usersPage.search('strangenamewithnosense3413g2c4');
 
       expect(usersPage.resourcesList.count()).toBe(0);
+    });
+
+    it('shouldnt save new user with no data', function() {
+      usersPage.save({
+        name: '',
+        email: ''
+      });
+      helper.expectToastToEqual('O campo Nome é obrigatório.\nO campo Email é obrigatório.');
     });
 
     it('should save new user with valid data', function() {
@@ -76,6 +82,13 @@ describe('Users Page', function() {
     });
 
     it('should update a user', function() {
+      var updateEmail = 'udu9qnyu3g1iy3h1uyg@prodeb.ba.gov.br';
+
+      //create a user to can update later
+      usersPage.save({
+        email: updateEmail
+      });
+
       usersPage.update({
         name: 'Updated Name',
         email: updateEmail
@@ -92,12 +105,19 @@ describe('Users Page', function() {
 
     it('should remove a user', function() {
       usersPage.resourcesList.count().then(function(count) {
-        var totalBeforeUpdate = count;
+        var email = '83y1uon3y1t3971h3nyu1g@prodeb.ba.gov.br';
 
-        usersPage.remove(updateEmail);
+        //create a user to can remove later
+        usersPage.save({
+          email: email
+        });
+
+        usersPage.remove(email);
 
         helper.expectToastToEqual('Remoção realizada com sucesso.');
-        expect(usersPage.resourcesList.count()).toBe(totalBeforeUpdate - 1);
+
+        //should be the same total, because create a new and removed them
+        expect(usersPage.resourcesList.count()).toBe(count);
       });
     });
 

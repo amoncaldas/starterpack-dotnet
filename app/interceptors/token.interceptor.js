@@ -1,3 +1,5 @@
+/*eslint angular/module-getter: 0*/
+
 (function() {
   'use strict';
 
@@ -17,12 +19,21 @@
 
     function redirectWhenServerLoggedOut($q, $injector) {
       return {
+        request: function(config) {
+          var token = $injector.get('Auth').getToken();
+
+          if (token) {
+            config.headers['Authorization'] = 'Bearer ' + token;
+          }
+
+          return config;
+        },
         response: function(response) {
           // get a new refresh token to use in the next request
           var token = response.headers('Authorization');
 
           if (token) {
-            $injector.get('$auth').setToken(token.split(' ')[1]);
+            $injector.get('Auth').setToken(token.split(' ')[1]);
           }
           return response;
         },
@@ -48,6 +59,8 @@
 
                   //close any dialog that is opened
                   $injector.get('PrDialog').close();
+
+                  event.preventDefault();
                 }
               });
             }
@@ -64,7 +77,7 @@
             var token = rejection.headers('Authorization');
 
             if (token) {
-              $injector.get('$auth').setToken(token.split(' ')[1]);
+              $injector.get('Auth').setToken(token.split(' ')[1]);
             }
           }
 

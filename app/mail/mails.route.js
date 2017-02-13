@@ -18,7 +18,7 @@
         url: '/email',
         templateUrl: Global.clientPath + '/mail/mails-send.html',
         controller: 'MailsController as mailsCtrl',
-        data: { needProfile: ['admin'] }
+        data: { needAuthentication: true, needProfile: ['admin'] }
       });
 
   }

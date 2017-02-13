@@ -18,7 +18,7 @@
         url: '/',
         templateUrl: Global.clientPath + '/dashboard/dashboard.html',
         controller: 'DashboardController as dashboardCtrl',
-        data: { }
+        data: { needAuthentication: true }
       })
   }
 }());

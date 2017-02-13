@@ -18,7 +18,7 @@
         url: '/consultas-dinamicas',
         templateUrl: Global.clientPath + '/dinamic-querys/dinamic-querys.html',
         controller: 'DinamicQuerysController as dinamicQueryCtrl',
-        data: { needProfile: ['admin'] }
+        data: { needAuthentication: true, needProfile: ['admin'] }
       });
 
   }

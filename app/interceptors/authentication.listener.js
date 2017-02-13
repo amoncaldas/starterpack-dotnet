@@ -24,31 +24,28 @@
   function authenticationListener($rootScope, $state, Global, Auth, PrToast, // NOSONAR
     $translate) {
 
-    // $stateChangeStart is fired whenever the state changes. We can use some parameters
-    // such as toState to hook into details about the state as it is changing
+    //only when application start check if the existent token still valid
+    Auth.remoteValidateToken().then(function() {
+      //if the token is valid check if exists the user because the browser could be closed
+      //and the user data isn't in memory
+      if (Auth.currentUser === null) {
+        Auth.updateCurrentUser(angular.fromJson(localStorage.getItem('user')));
+      }
+    });
+
+    //Check if the token still valid.
     $rootScope.$on('$stateChangeStart', function(event, toState) {
-      var authenticated = Auth.authenticated();
-
-      //can have a token in localstorage and the flag is not defined in memory because they reopen the browser
-      if (authenticated) {
-        var user = angular.fromJson(localStorage.getItem('user'));
-
-        Auth.updateCurrentUser(user);
-
-        // If the user is logged in and we hit the auth route we don't need
-        // to stay there and can send the user to the main state
-        if (toState.name === Global.loginState) {
-          $state.go(Global.homeState);
-          event.preventDefault();
-        }
-      } else {
-        //remove old info
-        Auth.logout();
-
-        //if undefined the needAutentication flag should be true
-        if (toState.data.needAuthentication !== false || toState.name === Global.notAuthorizedState) {
+      if (toState.data.needAuthentication || toState.data.needProfile) {
+        //dont trait the success block because already did by token interceptor
+        Auth.remoteValidateToken().catch(function() {
           PrToast.warn($translate.instant('messages.login.logoutInactive'));
-          $state.go(Global.loginState);
+          event.preventDefault();
+        });
+      } else {
+        //if the use is authenticated and need to enter in login page
+        //him will be redirected to home page
+        if (toState.name === Global.loginState && Auth.authenticated()) {
+          $state.go(Global.homeState);
           event.preventDefault();
         }
       }
