@@ -7,9 +7,7 @@
 
   /** @ngInject */
   function RolesService(serviceFactory) {
-    var model = serviceFactory('roles');
-
-    return model;
+    return serviceFactory('roles');
   }
 
 }());

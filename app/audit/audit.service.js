@@ -8,7 +8,7 @@
   /** @ngInject */
   // eslint-disable-next-line max-params
   function AuditService(serviceFactory, $translate) {
-    var model = serviceFactory('audit', {
+    return serviceFactory('audit', {
       actions: {
         getAuditedModels: {
           method: 'GET',
@@ -28,8 +28,6 @@
         ];
       }
     });
-
-    return model;
   }
 
 }());

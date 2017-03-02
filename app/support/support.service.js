@@ -7,7 +7,7 @@
 
   /** @ngInject */
   function SupportService(serviceFactory) {
-    var model = serviceFactory('support', {
+    return serviceFactory('support', {
       actions: {
       /**
        * Pega as traduções que estão no servidor
@@ -22,8 +22,6 @@
         }
       }
     });
-
-    return model;
   }
 
 }());

@@ -12,16 +12,14 @@
     var service = this;
 
     service.translate = function(locale) {
-      var data = {
+      return {
         global: $injector.get(locale + '.i18n.global'),
         views: $injector.get(locale + '.i18n.views'),
         attributes: $injector.get(locale + '.i18n.attributes'),
         dialog: $injector.get(locale + '.i18n.dialog'),
         messages: $injector.get(locale + '.i18n.messages'),
         models: $injector.get(locale + '.i18n.models')
-      }
-
-      return data;
+      };
     }
 
     // return loaderFn

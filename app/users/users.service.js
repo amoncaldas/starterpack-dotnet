@@ -8,7 +8,7 @@
   /** @ngInject */
   // eslint-disable-next-line max-params
   function UsersService(lodash, Global, serviceFactory) {
-    var model = serviceFactory('users', {
+    return serviceFactory('users', {
       //quando instancia um usuário sem passar parametro,
       //o mesmo vai ter os valores defaults abaixo
       defaults: {
@@ -60,8 +60,6 @@
         }
       }
     });
-
-    return model;
   }
 
 }());

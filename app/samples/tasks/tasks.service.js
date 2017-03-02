@@ -7,13 +7,13 @@
 
   /** @ngInject */
   function TasksService(serviceFactory, moment) {
-    var model = serviceFactory('tasks', {
-      //quando instancia um usuário sem passar parametro, 
+    return serviceFactory('tasks', {
+      //quando instancia um usuário sem passar parametro,
       //o mesmo vai ter os valores defaults abaixo
       defaults: {
         scheduled_to: new Date()
       },
-      
+
       map: {
         //convert para objeto javascript date uma string formatada como data
         scheduled_to: function(value) {
@@ -34,8 +34,6 @@
       },
       instance: { }
     });
-
-    return model;
   }
 
 }());

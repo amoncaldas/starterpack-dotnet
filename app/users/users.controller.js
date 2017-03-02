@@ -69,9 +69,7 @@
       if (resource.id === Auth.currentUser.id) {
         PrToast.error($translate.instant('messages.user.removeYourSelfError'));
         return false;
-      };
+      }
     }
-
   }
-
 })();

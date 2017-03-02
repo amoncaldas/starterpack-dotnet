@@ -8,7 +8,7 @@
   /** @ngInject */
   // eslint-disable-next-line max-params
   function DinamicQueryService(serviceFactory) {
-    var model = serviceFactory('dinamicQuery', {
+    return serviceFactory('dinamicQuery', {
       /**
        * ação adicionada para pegar uma lista de models existentes no servidor
        */
@@ -21,8 +21,6 @@
       instance: {
       }
     });
-
-    return model;
   }
 
 }());

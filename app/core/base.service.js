@@ -12,7 +12,7 @@
    * https://github.com/swimlane/angular-model-factory/wiki/API
    */
   function serviceFactory($modelFactory) {
-    var service = function(url, options) {
+    return function(url, options) {
       var model;
       var defaultOptions = {
         actions: {
@@ -39,7 +39,5 @@
 
       return model;
     }
-
-    return service;
-  };
+  }
 })();

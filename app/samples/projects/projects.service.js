@@ -7,12 +7,10 @@
 
   /** @ngInject */
   function ProjectsService(serviceFactory) {
-    var model = serviceFactory('projects', {
+    return serviceFactory('projects', {
       actions: { },
       instance: { }
     });
-
-    return model;
   }
 
 }());
