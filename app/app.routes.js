@@ -13,11 +13,10 @@
         templateUrl: Global.clientPath + '/layout/app.html',
         abstract: true,
         resolve: { //ensure langs is ready before render view
-          translateReady: ['$translate', '$q', 'PrToast', function($translate, $q, PrToast) {
+          translateReady: ['$translate', '$q', function($translate, $q) {
             var deferred = $q.defer();
 
             $translate.use('pt-BR').then(function() {
-              PrToast.hide();
               deferred.resolve();
             });
 
