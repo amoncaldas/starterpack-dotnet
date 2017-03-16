@@ -16,8 +16,6 @@
           translateReady: ['$translate', '$q', 'PrToast', function($translate, $q, PrToast) {
             var deferred = $q.defer();
 
-            PrToast.info('Preparando o sistema', { hideDelay: false });
-
             $translate.use('pt-BR').then(function() {
               PrToast.hide();
               deferred.resolve();
