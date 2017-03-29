@@ -17,8 +17,8 @@
 
   <md-content layout-padding flex style="text-transform:uppercase;" ng-style="::menuCtrl.sidenavStyle.content">
     <ul class="menu-sidenav">
-      <li ng-repeat="item in menuCtrl.itensMenu" ng-style="::menuCtrl.sidenavStyle.lineBottom">
-        <md-menu md-offset="0 55" ng-if="!item.profiles || (item.profiles && auth.currentUser.hasProfile(item.profiles, item.allProfiles))">
+      <li ng-repeat="item in menuCtrl.itensMenu" ng-style="::menuCtrl.sidenavStyle.lineBottom" ng-if="!item.profiles || (item.profiles && auth.currentUser.hasProfile(item.profiles, item.allProfiles))">
+        <md-menu md-offset="0 55">
           <md-button
             class="md-button md-buttom-menu"
             ng-click="menuCtrl.openMenuOrRedirectToState($mdOpenMenu, $event, item)">
