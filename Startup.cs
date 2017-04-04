@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
-namespace apiexample
+namespace starterpack
 {
     public class Startup
     {
@@ -29,6 +30,11 @@ namespace apiexample
         {
             // Add framework services.
             services.AddMvc();
+
+            var connectionString = Configuration["DbContextSettings:ConnectionString"];
+            services.AddDbContext<Models.DatabaseContext>(
+                opts => opts.UseNpgsql(connectionString)
+            );            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

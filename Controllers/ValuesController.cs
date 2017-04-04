@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace apiexample.Controllers
+namespace starterpack.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private String[] values = new string[] { "value1", "value2" };
+        private String[] values = new string[] { "value1", "value2", "value3", "value4" };
 
         // GET api/values
         [HttpGet]
