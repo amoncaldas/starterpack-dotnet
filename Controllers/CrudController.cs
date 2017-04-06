@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using starterpack.Models;
+using Starterpack.Models;
 using Microsoft.AspNetCore.Mvc;
-using starterpack.Repository;
+using Starterpack.Repository;
 
-namespace starterpack.Controllers
+namespace Starterpack.Controllers
 {
     [Route("api/[controller]")]
     public abstract class CrudController<Model> : Controller where Model : BaseModel

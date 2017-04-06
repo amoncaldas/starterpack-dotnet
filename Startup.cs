@@ -4,10 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using starterpack.Repository;
+using Starterpack.Repository;
 using Newtonsoft.Json.Serialization;
 
-namespace starterpack
+namespace Starterpack
 {
     public class Startup
     {
@@ -51,7 +51,6 @@ namespace starterpack
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
             app.UseMvc();
         }
     }

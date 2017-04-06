@@ -1,4 +1,4 @@
-namespace starterpack.Models
+namespace Starterpack.Models
 {
     public class User : BaseModel
     {

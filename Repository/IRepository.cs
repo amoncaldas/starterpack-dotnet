@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using starterpack.Models;
+using Starterpack.Models;
 
-namespace starterpack.Repository
+namespace Starterpack.Repository
 {
     public interface IRepository<T> where T : BaseModel {
     

@@ -1,7 +1,7 @@
-using starterpack.Models;
-using starterpack.Repository;
+using Starterpack.Models;
+using Starterpack.Repository;
 
-namespace starterpack.Controllers
+namespace Starterpack.Controllers
 {
     
     public class UsersController : CrudController<User>

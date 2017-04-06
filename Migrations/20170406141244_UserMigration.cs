@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace starterpack.Migrations
+namespace Starterpack.Migrations
 {
     public partial class UserMigration : Migration
     {

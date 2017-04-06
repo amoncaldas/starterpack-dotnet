@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace starterpack.Models
+namespace Starterpack.Models
 {
     public class DatabaseContext : DbContext
     {
