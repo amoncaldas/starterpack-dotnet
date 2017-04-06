@@ -18,8 +18,12 @@ namespace starterpack.Migrations
 
             modelBuilder.Entity("starterpack.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("email");
 

@@ -13,8 +13,10 @@ namespace starterpack.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
                     email = table.Column<string>(nullable: true),
                     name = table.Column<string>(nullable: true),
                     password = table.Column<string>(nullable: true)

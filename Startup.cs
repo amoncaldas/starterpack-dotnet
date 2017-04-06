@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using starterpack.Repository;
 
 namespace starterpack
 {
@@ -30,11 +31,15 @@ namespace starterpack
         {
             // Add framework services.
             services.AddMvc();
+            services.AddSingleton<IConfiguration>(sp => { return Configuration; });
 
             var connectionString = Configuration["DbContextSettings:ConnectionString"];
+
             services.AddDbContext<Models.DatabaseContext>(
-                opts => opts.UseNpgsql(connectionString)
-            );            
+                options => options.UseNpgsql(connectionString)
+            );           
+
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

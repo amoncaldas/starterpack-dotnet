@@ -8,7 +8,7 @@ using starterpack.Models;
 namespace starterpack.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20170404202436_UserMigration")]
+    [Migration("20170406141244_UserMigration")]
     partial class UserMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,8 +19,12 @@ namespace starterpack.Migrations
 
             modelBuilder.Entity("starterpack.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("email");
 
