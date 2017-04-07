@@ -10,7 +10,7 @@ namespace Starterpack.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private String[] values = new string[] { "value1", "value2", "value3", "value4" };
+        private String[] values = new string[] { };
 
         [Route("throw/")]
         public object Throw()

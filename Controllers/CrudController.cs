@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Starterpack.Models;
 using Microsoft.AspNetCore.Mvc;
 using Starterpack.Repository;
@@ -19,7 +18,7 @@ namespace Starterpack.Controllers
         [HttpGet]
         public IEnumerable<Model> Get()
         {
-            return this.repository.GetAll();
+            return this.repository.GetAll();            
         }
 
         // GET api/users/5
@@ -42,7 +41,7 @@ namespace Starterpack.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Model value)
         {
-            var selected = this.repository.Get(id);
+            var selected = this.repository.Get(id);            
             if (selected != null)
             {
                 this.repository.Merge(selected, value);
