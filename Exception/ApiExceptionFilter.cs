@@ -39,9 +39,9 @@ namespace Starterpack.Exception
 
                 if(this.env.IsDevelopment())
                 {
-                    msg = "messages.internalError";  
-                } else {
                     msg = context.Exception.GetBaseException().Message;
+                } else {
+                    msg = "messages.internalError";                      
                 }
 
                 apiError = new ApiError(msg);
