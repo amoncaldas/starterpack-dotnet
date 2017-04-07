@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Starterpack.Exception;
 
 namespace Starterpack.Controllers
 {
@@ -10,6 +11,18 @@ namespace Starterpack.Controllers
     public class ValuesController : Controller
     {
         private String[] values = new string[] { "value1", "value2", "value3", "value4" };
+
+        [Route("throw/")]
+        public object Throw()
+        {
+            throw new InvalidOperationException("This is an unhandled exception");
+        }
+
+        [Route("throw-api-error/")]
+        public object ApiThrow()
+        {
+            throw new ApiException("api-error-key", 400);
+        }        
 
         // GET api/values
         [HttpGet]

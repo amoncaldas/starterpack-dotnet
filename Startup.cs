@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Starterpack.Repository;
 using Newtonsoft.Json.Serialization;
+using Starterpack.Exception;
 
 namespace Starterpack
 {
@@ -19,16 +20,22 @@ namespace Starterpack
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            this.env = env;
         }
 
         public IConfigurationRoot Configuration { get; }
+        public IHostingEnvironment env { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc().AddJsonOptions(options =>
-                {
+            services
+                .AddMvc(options => {
+                        options.Filters.Add(new ApiExceptionFilter(env));
+                })
+                .AddJsonOptions(options =>  {
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver()
                     {
                         NamingStrategy = new SnakeCaseNamingStrategy()
