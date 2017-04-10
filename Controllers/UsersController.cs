@@ -11,10 +11,6 @@ namespace StarterPack.Controllers
         public override User Get(long id)
         {
             User user = Models.User.Get(id);
-
-            user.name="Thiago1";
-            user.Update(user);
-
             return user;
         }        
               

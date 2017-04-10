@@ -11,59 +11,85 @@ namespace StarterPack.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        private readonly DatabaseContext context;
-        private DbSet<T> entities;
+        protected readonly DbContext _context;
+        protected DbSet<T> _entities;
         
         public Model()
         {
-            context = getContext();
-            entities = context.Set<T>();
-        }        
+            _context = getContext();
+            _entities = _context.Set<T>();
+        }
+
+        public Model(DbContext context)
+        {
+            _context = context;
+            _entities = context.Set<T>();
+        }
 
         public static Model<T> createInstance() {
             return (T) Activator.CreateInstance(typeof(T));
         }
 
-        private static DatabaseContext getContext() {
-            return (DatabaseContext) Startup.GetMeSomeServiceLocator.Instance.GetService(typeof(DatabaseContext));
+        protected static DbContext getContext() {
+            return (DbContext) Startup.GetServiceLocator.Instance.GetService(GetContextType());
         }
 
-        private static DbSet<T> getEntity() {
-            return getContext().Set<T>();
+        protected static Type GetContextType() {
+            return typeof(DatabaseContext);
+        }
+
+        protected static DbSet<T> getEntities(DbContext context = null) {
+            var _context = context == null? getContext() : context;
+            return _context.Set<T>();
         }        
 
-        public static T Get(long id)
-        {
-            return getEntity().SingleOrDefault(s => s.Id == id);
-        } 
 
-        public virtual IEnumerable<T> GetAll() {
-            return entities.AsEnumerable();
+        public static IEnumerable<T> GetAll() {
+            return getEntities().AsEnumerable();
         }
 
-        public IQueryable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate) {
-
-            IQueryable<T> query = entities.Where(predicate);
+        public static IQueryable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate) {
+            IQueryable<T> query = getEntities().Where(predicate);
             return query;
         } 
 
-        public virtual void Insert(T entity) {
-            entities.Add(entity);
+        public static T Get(long id)
+        {            
+            return getEntities().SingleOrDefault(s => s.Id == id);
+        }   
+
+        public void Save() {
+            Save((T)this);            
+        }
+
+        public static void Save(T entity) {
+            var context = getContext();            
+            getEntities(context).Add(entity);
             context.SaveChanges();
         }
 
-        public virtual void Delete(T entity) {
-            entities.Remove(entity);
+        public static void Delete(long id) {    
+            var context = getContext();           
+            getEntities(context).Remove(Model<T>.Get(id));
             context.SaveChanges();
         }
 
-        public virtual void Update(T entity) {
-            context.SaveChanges();
+        public void Delete() {
+            _entities.Remove((T)this);
+            _context.SaveChanges();
         }
 
-        public virtual void Merge(T currentEntity, T newEntity) {
-            context.Entry(currentEntity).Context.Update(newEntity);
-            context.SaveChanges();
+        public static T UpdateAttributes(long id, T modelWithAttr) {
+            //var context = getContext();           
+            //T model = getEntities(context).AsNoTracking().SingleOrDefault(s => s.Id == id);
+            //context.Entry(modelWithAttr).Context.Update(model);
+            //context.SaveChanges();
+            return modelWithAttr;
+            
+        } 
+
+        public virtual void Update() {
+            _context.SaveChanges();
         }     
     }
 }

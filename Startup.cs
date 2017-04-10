@@ -55,14 +55,14 @@ namespace StarterPack
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            GetMeSomeServiceLocator.Instance = app.ApplicationServices;
+            GetServiceLocator.Instance = app.ApplicationServices;
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             app.UseMvc();
         }
 
-        public static class GetMeSomeServiceLocator
+        public static class GetServiceLocator
         {
             public static IServiceProvider Instance { get; set; }
         }        
