@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Starterpack.Models;
+using StarterPack.Models;
 
-namespace Starterpack.Controllers
+namespace StarterPack.Controllers
 {
     [Route("api/[controller]")]
-    public abstract class CrudController<T> : Controller where T : BaseModel<T>
+    public abstract class CrudController<T> : Controller where T : Model<T>
     {
-        protected readonly BaseModel<T> model;
+        protected readonly Model<T> model;
         public CrudController()
         {
-            this.model = BaseModel<T>.createInstance();
+            this.model = Model<T>.createInstance();
         }
 
         // GET api/users
@@ -24,7 +24,7 @@ namespace Starterpack.Controllers
         [HttpGet("{id}")]
         public virtual T Get(long id)
         {
-            return BaseModel<T>.Get(id);
+            return Model<T>.Get(id);
         }
 
         // POST api/users
@@ -40,7 +40,7 @@ namespace Starterpack.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]T value)
         {
-            var selected = BaseModel<T>.Get(id);            
+            var selected = Model<T>.Get(id);            
             if (selected != null)
             {
                 this.model.Merge(selected, value);
@@ -51,7 +51,7 @@ namespace Starterpack.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var selected = BaseModel<T>.Get(id);
+            var selected = Model<T>.Get(id);
             if (selected != null)
             {
                 this.model.Delete(selected);

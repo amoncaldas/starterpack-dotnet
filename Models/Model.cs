@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace Starterpack.Models
+namespace StarterPack.Models
 {
-    public class BaseModel<T> where T :  BaseModel<T>
+    public abstract class Model<T> where T :  Model<T>
     {
         public Int64 Id { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -14,14 +14,14 @@ namespace Starterpack.Models
         private readonly DatabaseContext context;
         private DbSet<T> entities;
         
-        public BaseModel()
+        public Model()
         {
             context = getContext();
             entities = context.Set<T>();
         }        
 
-        public static BaseModel<T> createInstance() {
-            return new BaseModel<T>();
+        public static Model<T> createInstance() {
+            return (T) Activator.CreateInstance(typeof(T));
         }
 
         private static DatabaseContext getContext() {
@@ -35,11 +35,6 @@ namespace Starterpack.Models
         public static T Get(long id)
         {
             return getEntity().SingleOrDefault(s => s.Id == id);
-        } 
-
-        public static long Get1(long id)
-        {
-            return id;
         } 
 
         public virtual IEnumerable<T> GetAll() {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Starterpack.Models;
+using StarterPack.Models;
 
-namespace Starterpack.Controllers
+namespace StarterPack.Controllers
 {
     
     public class UsersController : CrudController<User>

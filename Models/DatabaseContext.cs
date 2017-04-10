@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Starterpack.Models
+namespace StarterPack.Models
 {
     //public class GenericRepository<T> : IRepository<T> where T : BaseModel
     public class DatabaseContext : DbContext

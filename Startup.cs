@@ -5,11 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
-using Starterpack.Exception;
-using Starterpack.Models;
+using StarterPack.Exception;
+using StarterPack.Models;
 using System;
 
-namespace Starterpack
+namespace StarterPack
 {
     public class Startup
     {
