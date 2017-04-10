@@ -2,35 +2,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace StarterPack.Models
 {
     public abstract class Model<T> where T :  Model<T>
     {
-        public Int64 Id { get; set; }
+        public long Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        protected readonly DbContext _context;
-        protected DbSet<T> _entities;
+        protected readonly DbContext context;
+        protected DbSet<T> entities;
         
         public Model()
         {
-            _context = getContext();
-            _entities = _context.Set<T>();
+            context = getContext();
+            entities = context.Set<T>();
         }
 
         public Model(DbContext context)
         {
-            _context = context;
-            _entities = context.Set<T>();
-        }
-
-        public static Model<T> createInstance() {
-            return (T) Activator.CreateInstance(typeof(T));
+            this.context = context;
+            entities = context.Set<T>();
         }
 
         protected static DbContext getContext() {
+            // TODO: encapsulate the Startup.GetServiceLocator in another class
             return (DbContext) Startup.GetServiceLocator.Instance.GetService(GetContextType());
         }
 
@@ -44,13 +42,18 @@ namespace StarterPack.Models
         }        
 
 
-        public static IEnumerable<T> GetAll() {
-            return getEntities().AsEnumerable();
+        public static IEnumerable<T> GetAll(bool tracked = false) {
+            if(tracked) {
+                return getEntities().AsEnumerable();
+            }
+            return getEntities().AsNoTracking().AsEnumerable();
         }
 
-        public static IQueryable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate) {
-            IQueryable<T> query = getEntities().Where(predicate);
-            return query;
+        public static IQueryable<T> FindBy(Expression<Func<T, bool>> predicate, bool tracked) {           
+            if(tracked) {
+                return getEntities().AsNoTracking().Where(predicate);
+            } 
+            return getEntities().AsNoTracking().Where(predicate);
         } 
 
         public static T Get(long id)
@@ -58,25 +61,40 @@ namespace StarterPack.Models
             return getEntities().SingleOrDefault(s => s.Id == id);
         }   
 
-        public void Save() {
-            Save((T)this);            
+        public void Save(bool saveChanges = true) {
+            Save((T)this, saveChanges);            
         }
 
-        public static void Save(T entity) {
+        public static void Save(T entity, bool saveChanges = true) {
             var context = getContext();            
             getEntities(context).Add(entity);
-            context.SaveChanges();
+
+            if(saveChanges) {
+                context.SaveChanges();
+            }
+            
+        }
+        
+        public static void Add(T entity) {
+            var context = getContext();            
+            getEntities(context).Add(entity);
         }
 
-        public static void Delete(long id) {    
+        public static void Delete(long id, bool saveChanges = true) {    
             var context = getContext();           
             getEntities(context).Remove(Model<T>.Get(id));
-            context.SaveChanges();
+
+            if(saveChanges) {
+                context.SaveChanges();
+            }
         }
 
-        public void Delete() {
-            _entities.Remove((T)this);
-            _context.SaveChanges();
+        public void Delete(bool saveChanges = true) {
+            entities.Remove((T)this);
+            
+            if(saveChanges) {
+                context.SaveChanges();
+            }
         }
 
         public static T UpdateAttributes(long id, T modelWithAttr) {
@@ -84,12 +102,16 @@ namespace StarterPack.Models
             //T model = getEntities(context).AsNoTracking().SingleOrDefault(s => s.Id == id);
             //context.Entry(modelWithAttr).Context.Update(model);
             //context.SaveChanges();
-            return modelWithAttr;
-            
+            return modelWithAttr;            
         } 
 
-        public virtual void Update() {
-            _context.SaveChanges();
+        public virtual void Update(bool saveChanges = true) {
+            var context = getContext();            
+            getEntities(context).Update((T)this);
+
+            if(saveChanges) {
+                context.SaveChanges();
+            }
         }     
     }
 }

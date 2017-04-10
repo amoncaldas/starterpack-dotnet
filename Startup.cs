@@ -49,7 +49,8 @@ namespace StarterPack
 
             services.AddDbContext<Models.DatabaseContext>(
                 options => options.UseNpgsql(connectionString)
-            );           
+            );  
+                     
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

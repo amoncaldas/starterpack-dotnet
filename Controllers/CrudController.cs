@@ -1,52 +1,87 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 using StarterPack.Models;
+using System.Linq.Expressions;
+
 
 namespace StarterPack.Controllers
 {
     [Route("api/[controller]")]
-    public abstract class CrudController<T> : Controller where T : Model<T>
-    {
-       
-        public CrudController()
-        {
-            
+    public abstract partial class CrudController<T> : Controller where T : Model<T>
+    {  
+        private IHttpContextAccessor _httpContextAccessor;
+        public CrudController(IHttpContextAccessor httpContextAccessor) {
+            _httpContextAccessor = httpContextAccessor;            
         }
 
         // GET api/users
         [HttpGet]
-        public IEnumerable<T> Get()
+        public IEnumerable<T> Index()
         {
-            return Model<T>.GetAll();            
+            BeforeAll();
+            IEnumerable<T> models = Model<T>.GetAll();  
+            AfterAll();
+            return models;
         }
+
+        [HttpGet]
+        public IQueryable<T> Search(Expression<Func<T, bool>> predicate, bool tracked) {       
+            BeforeAll(); 
+            BeforeSearch(ref predicate);
+            IQueryable<T> models = Model<T>.FindBy(predicate, tracked);
+            AfterSearch(predicate, ref models);
+            AfterAll();
+            return models;
+        } 
 
         // GET api/users/5
         [HttpGet("{id}")]
         public virtual T Get(long id)
         {
-            return Model<T>.Get(id);
+            BeforeAll();
+            BeforeGet(id);
+            T model = Model<T>.Get(id);
+            AfterGet(ref model);           
+            AfterAll();
+            return model;
         }
 
         // POST api/users
         [HttpPost]
-        public IActionResult Post([FromBody]T model)
+        public IActionResult Store([FromBody]T model)
         {
+            BeforeAll();
+            BeforeSave(ref model);
             model.Save();
+            AfterSave(ref model);
+            AfterAll();
             return StatusCode(201, model);
         } 
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public T Put(int id, [FromBody]T modelWithAttr)
+        public void update(int id, [FromBody]T model)
         {  
-            return Model<T>.UpdateAttributes(id, modelWithAttr);            
+            BeforeAll();
+            BeforeUpdate(ref model);
+            model.Update();  
+            AfterUpdate(ref model);
+            AfterAll();          
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void destroy(int id)
         {
-            Model<T>.Delete(id);           
+            BeforeAll();
+            BeforeDelete(id);
+            Model<T>.Delete(id);  
+            AfterDelete(id);
+            AfterAll();         
         }               
     }
 }
