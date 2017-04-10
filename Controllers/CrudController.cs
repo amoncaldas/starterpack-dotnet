@@ -1,50 +1,49 @@
 using System.Collections.Generic;
-using Starterpack.Models;
 using Microsoft.AspNetCore.Mvc;
-using Starterpack.Repository;
+using Starterpack.Models;
 
 namespace Starterpack.Controllers
 {
     [Route("api/[controller]")]
-    public abstract class CrudController<Model> : Controller where Model : BaseModel
+    public abstract class CrudController<T> : Controller where T : BaseModel<T>
     {
-        private readonly IRepository<Model> repository;
-        public CrudController(IRepository<Model> repository)
+        protected readonly BaseModel<T> model;
+        public CrudController()
         {
-            this.repository = repository;
+            this.model = BaseModel<T>.createInstance();
         }
 
         // GET api/users
         [HttpGet]
-        public IEnumerable<Model> Get()
+        public IEnumerable<T> Get()
         {
-            return this.repository.GetAll();            
+            return this.model.GetAll();            
         }
 
         // GET api/users/5
         [HttpGet("{id}")]
-        public Model Get(long id)
+        public virtual T Get(long id)
         {
-            return this.repository.Get(id);
+            return BaseModel<T>.Get(id);
         }
 
         // POST api/users
         [HttpPost]
-        public IActionResult Post([FromBody]Model value)
+        public IActionResult Post([FromBody]T value)
         {
-            this.repository.Insert(value);
+            this.model.Insert(value);
 
             return StatusCode(201, value);
         } 
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Model value)
+        public void Put(int id, [FromBody]T value)
         {
-            var selected = this.repository.Get(id);            
+            var selected = BaseModel<T>.Get(id);            
             if (selected != null)
             {
-                this.repository.Merge(selected, value);
+                this.model.Merge(selected, value);
             }
         }
 
@@ -52,10 +51,10 @@ namespace Starterpack.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var selected = this.repository.Get(id);
+            var selected = BaseModel<T>.Get(id);
             if (selected != null)
             {
-                this.repository.Delete(selected);
+                this.model.Delete(selected);
             }
         }               
     }
