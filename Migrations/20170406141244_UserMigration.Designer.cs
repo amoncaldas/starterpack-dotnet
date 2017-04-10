@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Starterpack.Models;
+using StarterPack.Models;
 
-namespace Starterpack.Migrations
+namespace StarterPack.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20170406141244_UserMigration")]

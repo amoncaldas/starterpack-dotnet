@@ -2,21 +2,40 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Starterpack.Models;
 
-namespace Starterpack.Repository
+namespace StarterPack.Models
 {
-    public class GenericRepository<T> : IRepository<T> where T : BaseModel
+    public abstract class Model<T> where T :  Model<T>
     {
+        public Int64 Id { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         private readonly DatabaseContext context;
         private DbSet<T> entities;
-
-        public GenericRepository(DatabaseContext context)
+        
+        public Model()
         {
-            this.context = context;
+            context = getContext();
             entities = context.Set<T>();
+        }        
+
+        public static Model<T> createInstance() {
+            return (T) Activator.CreateInstance(typeof(T));
         }
+
+        private static DatabaseContext getContext() {
+            return (DatabaseContext) Startup.GetMeSomeServiceLocator.Instance.GetService(typeof(DatabaseContext));
+        }
+
+        private static DbSet<T> getEntity() {
+            return getContext().Set<T>();
+        }        
+
+        public static T Get(long id)
+        {
+            return getEntity().SingleOrDefault(s => s.Id == id);
+        } 
 
         public virtual IEnumerable<T> GetAll() {
             return entities.AsEnumerable();
@@ -26,12 +45,7 @@ namespace Starterpack.Repository
 
             IQueryable<T> query = entities.Where(predicate);
             return query;
-        }
-
-        public virtual T Get(long id)
-        {
-            return entities.SingleOrDefault(s => s.Id == id);
-        }    
+        } 
 
         public virtual void Insert(T entity) {
             entities.Add(entity);
@@ -50,7 +64,6 @@ namespace Starterpack.Repository
         public virtual void Merge(T currentEntity, T newEntity) {
             context.Entry(currentEntity).Context.Update(newEntity);
             context.SaveChanges();
-        }        
-
+        }     
     }
 }

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Starterpack.Migrations
+namespace StarterPack.Migrations
 {
     public partial class UserMigration : Migration
     {

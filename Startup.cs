@@ -4,11 +4,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using Starterpack.Repository;
 using Newtonsoft.Json.Serialization;
-using Starterpack.Exception;
+using StarterPack.Exception;
+using StarterPack.Models;
+using System;
 
-namespace Starterpack
+namespace StarterPack
 {
     public class Startup
     {
@@ -49,16 +50,21 @@ namespace Starterpack
             services.AddDbContext<Models.DatabaseContext>(
                 options => options.UseNpgsql(connectionString)
             );           
-
-            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            GetMeSomeServiceLocator.Instance = app.ApplicationServices;
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             app.UseMvc();
         }
+
+        public static class GetMeSomeServiceLocator
+        {
+            public static IServiceProvider Instance { get; set; }
+        }        
     }
 }

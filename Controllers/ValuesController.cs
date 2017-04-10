@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Starterpack.Exception;
+using StarterPack.Exception;
 
-namespace Starterpack.Controllers
+namespace StarterPack.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller

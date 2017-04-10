@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Starterpack.Exception
+namespace StarterPack.Exception
 {
     public class ApiExceptionFilter : ExceptionFilterAttribute
     {

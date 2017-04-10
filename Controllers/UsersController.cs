@@ -1,15 +1,22 @@
-using Starterpack.Models;
-using Starterpack.Repository;
+using Microsoft.AspNetCore.Mvc;
+using StarterPack.Models;
 
-namespace Starterpack.Controllers
+namespace StarterPack.Controllers
 {
     
     public class UsersController : CrudController<User>
     {
-        public UsersController(IRepository<User> repository) : base(repository)
+        // GET api/users/5
+        [HttpGet("{id}")]
+        public override User Get(long id)
         {
-            
-        }
+            User user = Models.User.Get(id);
+
+            user.name="Thiago1";
+            user.Update(user);
+
+            return user;
+        }        
               
     }
 }
