@@ -49,18 +49,20 @@ namespace StarterPack.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public virtual void update(int id, [FromBody]ExpandoObject model)
+        public virtual void update(long id, [FromBody]ExpandoObject attributes)
         {  
+            T model = Model<T>.Get(id);
+
             BeforeAll();
-            // BeforeUpdate(ref model); 
-            Model<T>.UpdateAttributes(id, model);  
-            // AfterUpdate(ref model);
+            BeforeUpdate(ref model); 
+            model.UpdateAttributes(attributes);
+            AfterUpdate(ref model);
             AfterAll();          
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void destroy(int id)
+        public void destroy(long id)
         {
             BeforeAll();
             BeforeDelete(id);

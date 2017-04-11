@@ -18,20 +18,11 @@ namespace StarterPack.Controllers
             User user = Models.User.Get(id);
             return user;
         }  
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public override void update(int id, [FromBody]ExpandoObject model)
-        {  
-            BeforeAll();
-            // BeforeUpdate(ref model);
-            // model.Update();  
-            Models.User.UpdateAttributes(id, model);  
-            // AfterUpdate(ref model);
-            AfterAll();          
-        }        
-
-           
-              
+        
+        protected override void AfterUpdate(ref User model) {
+            dynamic data = new ExpandoObject();
+            data.Name = "teste";
+            model.UpdateAttributes(data);
+        }                  
     }
 }

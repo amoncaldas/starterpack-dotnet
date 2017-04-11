@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
 using StarterPack.Core;
+using System.Dynamic;
 
 namespace StarterPack.Models
 {
@@ -108,11 +109,22 @@ namespace StarterPack.Models
             }
         } 
 
-        public static void UpdateAttributes(long id, dynamic updatedProperties)
+        public virtual void UpdateAttributes(ExpandoObject updatedProperties) {
+            T model = (T)this;
+
+            SetAttributes(ref model, updatedProperties);
+            getContext().SaveChanges();
+        }
+
+        public static void UpdateAttributes(long id, ExpandoObject updatedProperties)
         {
-            var context = getContext();
             T model = Get(id);
 
+            SetAttributes(ref model, updatedProperties);
+            getContext().SaveChanges();
+        } 
+
+        private static void SetAttributes(ref T model, ExpandoObject updatedProperties) {
             foreach (KeyValuePair<string, object> property in updatedProperties)
             {
                 String propertyName = StringHelper.SnakeCaseToTitleCase(property.Key);
@@ -120,9 +132,7 @@ namespace StarterPack.Models
 
                 if(p != null)
                     p.SetValue(model, property.Value);              
-            }                    
-
-            context.SaveChanges();
-        }            
+            }            
+        }
     }
 }
