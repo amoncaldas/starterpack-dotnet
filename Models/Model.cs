@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Reflection;
+using StarterPack.Core;
 
 namespace StarterPack.Models
 {
@@ -97,14 +99,6 @@ namespace StarterPack.Models
             }
         }
 
-        public static T UpdateAttributes(long id, T modelWithAttr) {
-            //var context = getContext();           
-            //T model = getEntities(context).AsNoTracking().SingleOrDefault(s => s.Id == id);
-            //context.Entry(modelWithAttr).Context.Update(model);
-            //context.SaveChanges();
-            return modelWithAttr;            
-        } 
-
         public virtual void Update(bool saveChanges = true) {
             var context = getContext();            
             getEntities(context).Update((T)this);
@@ -112,6 +106,23 @@ namespace StarterPack.Models
             if(saveChanges) {
                 context.SaveChanges();
             }
-        }     
+        } 
+
+        public static void UpdateAttributes(long id, dynamic updatedProperties)
+        {
+            var context = getContext();
+            T model = Get(id);
+
+            foreach (KeyValuePair<string, object> property in updatedProperties)
+            {
+                String propertyName = StringHelper.SnakeCaseToTitleCase(property.Key);
+                PropertyInfo p = model.GetType().GetProperty(propertyName);
+
+                if(p != null)
+                    p.SetValue(model, property.Value);              
+            }                    
+
+            context.SaveChanges();
+        }            
     }
 }

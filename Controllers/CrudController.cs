@@ -1,21 +1,16 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using StarterPack.Models;
-using System.Linq.Expressions;
-
+using System.Dynamic;
 
 namespace StarterPack.Controllers
 {
     [Route("api/[controller]")]
     public abstract partial class CrudController<T> : Controller where T : Model<T>
     {  
-        private IHttpContextAccessor _httpContextAccessor;
-        public CrudController(IHttpContextAccessor httpContextAccessor) {
-            _httpContextAccessor = httpContextAccessor;            
+        public CrudController() {
+                      
         }
 
         // GET api/users
@@ -27,16 +22,6 @@ namespace StarterPack.Controllers
             AfterAll();
             return models;
         }
-
-        [HttpGet]
-        public IQueryable<T> Search(Expression<Func<T, bool>> predicate, bool tracked) {       
-            BeforeAll(); 
-            BeforeSearch(ref predicate);
-            IQueryable<T> models = Model<T>.FindBy(predicate, tracked);
-            AfterSearch(predicate, ref models);
-            AfterAll();
-            return models;
-        } 
 
         // GET api/users/5
         [HttpGet("{id}")]
@@ -64,12 +49,12 @@ namespace StarterPack.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void update(int id, [FromBody]T model)
+        public virtual void update(int id, [FromBody]ExpandoObject model)
         {  
             BeforeAll();
-            BeforeUpdate(ref model);
-            model.Update();  
-            AfterUpdate(ref model);
+            // BeforeUpdate(ref model); 
+            Model<T>.UpdateAttributes(id, model);  
+            // AfterUpdate(ref model);
             AfterAll();          
         }
 
