@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StarterPack.Models;
+using System.Dynamic;
 using System.Linq.Expressions;
-
+using System;
 
 namespace StarterPack.Controllers
 {
@@ -14,7 +12,6 @@ namespace StarterPack.Controllers
     {  
                 
         public CrudController() {
-            
         }
 
         // GET api/users
@@ -24,12 +21,12 @@ namespace StarterPack.Controllers
             bool trackModels = false;
             BeforeAll(ref trackModels); 
             BeforeSearch(ref predicate, ref trackModels);
-            IQueryable<T> models = Model<T>.FindBy(predicate, trackModels);
+            IEnumerable<T> models = Model<T>.FindBy(predicate, trackModels);
             AfterSearch(predicate, ref models);
             AfterAll();
-            return models;
+            return models;            
         }
-       
+
 
         // GET api/users/5
         [HttpGet("{id}")]
@@ -57,21 +54,21 @@ namespace StarterPack.Controllers
             return StatusCode(201, model);
         } 
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void update(int id, [FromBody] dynamic model)
+       
+        public virtual void update(long id, [FromBody]ExpandoObject attributes)
         {  
+            T model = Model<T>.Get(id);
             bool trackModel = false;
             BeforeAll(ref trackModel);
-            BeforeUpdate(ref model, ref trackModel);
-            model.Update();  
+            BeforeUpdate(ref model, ref trackModel); 
+            model.UpdateAttributes(attributes);
             AfterUpdate(ref model);
             AfterAll();          
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void destroy(int id)
+        public void destroy(long id)
         {
             bool trackModel = false;
             BeforeAll(ref trackModel);

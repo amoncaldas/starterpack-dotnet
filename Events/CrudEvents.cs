@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc;
 using StarterPack.Models;
@@ -75,7 +74,7 @@ namespace StarterPack.Controllers
 
         }
 
-        protected virtual void AfterSearch(Expression<Func<T, bool>> predicate, ref IQueryable<T> models) {
+        protected virtual void AfterSearch(Expression<Func<T, bool>> predicate, ref IEnumerable<T> models) {
 
         }
 

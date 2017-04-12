@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Http;
+using System.Dynamic;
+using Microsoft.AspNetCore.Mvc;
 using StarterPack.Models;
 
 namespace StarterPack.Controllers
@@ -6,6 +8,7 @@ namespace StarterPack.Controllers
     
     public class UsersController : CrudController<User>
     {
+
        
         public UsersController()  {
             // Http Request data can be accessed using the folowing code
@@ -14,7 +17,13 @@ namespace StarterPack.Controllers
 
         protected override void BeforeGet(long id, ref bool trackModel) {
             long teste = id;
-        }     
-              
+        } 
+        
+        protected override void AfterUpdate(ref User model) {
+            dynamic data = new ExpandoObject();
+            data.Name = "teste";
+            model.UpdateAttributes(data);
+        }                  
+
     }
 }

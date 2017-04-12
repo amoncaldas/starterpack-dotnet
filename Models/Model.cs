@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Reflection;
+using System.Dynamic;
 
 namespace StarterPack.Models
 {
@@ -49,11 +51,15 @@ namespace StarterPack.Models
             return getEntities().AsNoTracking().AsEnumerable();
         }
 
-        public static IQueryable<T> FindBy(Expression<Func<T, bool>> predicate, bool tracked) {           
+        public static IQueryable<T> BuildQueryWith(Expression<Func<T, bool>> predicate, bool tracked) {           
             if(tracked) {
                 return getEntities().AsNoTracking().Where(predicate);
             } 
             return getEntities().AsNoTracking().Where(predicate);
+        } 
+
+        public static IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate, bool tracked) {           
+            return BuildQueryWith(predicate, tracked).AsEnumerable();
         } 
 
         public static T Get(long id)
@@ -111,13 +117,39 @@ namespace StarterPack.Models
             return model;            
         } 
 
-        public virtual void Update(bool applyChanges = true) {
+        public virtual void Update(bool applyChanges = true) { 
             var context = getContext();            
             getEntities(context).Update((T)this);
 
             if(applyChanges) {
                 context.SaveChanges();
             }
-        }     
+        } 
+
+        public virtual void UpdateAttributes(ExpandoObject updatedProperties) {
+            T model = (T)this;
+
+            SetAttributes(ref model, updatedProperties);
+            getContext().SaveChanges();
+        }
+
+        public static void UpdateAttributes(long id, ExpandoObject updatedProperties)
+        {
+            T model = Get(id);
+
+            SetAttributes(ref model, updatedProperties);
+            getContext().SaveChanges();
+        } 
+
+        private static void SetAttributes(ref T model, ExpandoObject updatedProperties) {
+            foreach (KeyValuePair<string, object> property in updatedProperties)
+            {
+                String propertyName = StringHelper.SnakeCaseToTitleCase(property.Key);
+                PropertyInfo p = model.GetType().GetProperty(propertyName);
+
+                if(p != null)
+                    p.SetValue(model, property.Value);              
+            }            
+        }
     }
 }
