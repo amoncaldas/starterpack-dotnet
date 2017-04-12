@@ -16,14 +16,30 @@ namespace StarterPack.Controllers
 
         }
 
+        protected virtual void BeforeAll(ref bool trackModel) {
+
+        }
+
         protected virtual void BeforeGet(long id) {
+
+        }
+
+        protected virtual void BeforeGet(long id, ref bool trackModel) {
 
         }
         protected virtual void BeforeSave(ref T model) {
 
         }
 
+        protected virtual void BeforeSave(ref T model,  ref bool trackModel) {
+
+        }
+
         protected virtual void BeforeSearch(ref Expression<Func<T, bool>> predicate) {
+
+        }
+
+        protected virtual void BeforeSearch(ref Expression<Func<T, bool>> predicate, ref bool trackModels) {
 
         }
 
@@ -35,13 +51,17 @@ namespace StarterPack.Controllers
 
         }
 
+        protected virtual void BeforeUpdate(ref T model, ref bool trackModel) {
+
+        }
+
         protected virtual void BeforeValidate(ref Model<T> model) {
 
         }
        
         #endregion
 
-        #region Before Events       
+        #region After Events       
 
         protected virtual void AfterGet(ref T model) {
 

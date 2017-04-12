@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
 using StarterPack.Models;
 using System.Linq.Expressions;
 
@@ -13,37 +12,32 @@ namespace StarterPack.Controllers
     [Route("api/[controller]")]
     public abstract partial class CrudController<T> : Controller where T : Model<T>
     {  
-        private IHttpContextAccessor _httpContextAccessor;
-        public CrudController(IHttpContextAccessor httpContextAccessor) {
-            _httpContextAccessor = httpContextAccessor;            
+                
+        public CrudController() {
+            
         }
 
         // GET api/users
         [HttpGet]
-        public IEnumerable<T> Index()
+        public IEnumerable<T> Index(Expression<Func<T, bool>> predicate)
         {
-            BeforeAll();
-            IEnumerable<T> models = Model<T>.GetAll();  
-            AfterAll();
-            return models;
-        }
-
-        [HttpGet]
-        public IQueryable<T> Search(Expression<Func<T, bool>> predicate, bool tracked) {       
-            BeforeAll(); 
-            BeforeSearch(ref predicate);
-            IQueryable<T> models = Model<T>.FindBy(predicate, tracked);
+            bool trackModels = false;
+            BeforeAll(ref trackModels); 
+            BeforeSearch(ref predicate, ref trackModels);
+            IQueryable<T> models = Model<T>.FindBy(predicate, trackModels);
             AfterSearch(predicate, ref models);
             AfterAll();
             return models;
-        } 
+        }
+       
 
         // GET api/users/5
         [HttpGet("{id}")]
         public virtual T Get(long id)
         {
-            BeforeAll();
-            BeforeGet(id);
+            bool trackModel = false;
+            BeforeAll(ref trackModel);            
+            BeforeGet(id, ref trackModel);
             T model = Model<T>.Get(id);
             AfterGet(ref model);           
             AfterAll();
@@ -54,8 +48,9 @@ namespace StarterPack.Controllers
         [HttpPost]
         public IActionResult Store([FromBody]T model)
         {
-            BeforeAll();
-            BeforeSave(ref model);
+            bool trackModel = false;
+            BeforeAll(ref trackModel);
+            BeforeSave(ref model, ref trackModel);
             model.Save();
             AfterSave(ref model);
             AfterAll();
@@ -64,10 +59,11 @@ namespace StarterPack.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void update(int id, [FromBody]T model)
+        public void update(int id, [FromBody] dynamic model)
         {  
-            BeforeAll();
-            BeforeUpdate(ref model);
+            bool trackModel = false;
+            BeforeAll(ref trackModel);
+            BeforeUpdate(ref model, ref trackModel);
             model.Update();  
             AfterUpdate(ref model);
             AfterAll();          
@@ -77,7 +73,8 @@ namespace StarterPack.Controllers
         [HttpDelete("{id}")]
         public void destroy(int id)
         {
-            BeforeAll();
+            bool trackModel = false;
+            BeforeAll(ref trackModel);
             BeforeDelete(id);
             Model<T>.Delete(id);  
             AfterDelete(id);

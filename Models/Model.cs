@@ -61,15 +61,15 @@ namespace StarterPack.Models
             return getEntities().SingleOrDefault(s => s.Id == id);
         }   
 
-        public void Save(bool saveChanges = true) {
-            Save((T)this, saveChanges);            
+        public void Save(bool applyChanges = true) {
+            Save((T)this, applyChanges);            
         }
 
-        public static void Save(T entity, bool saveChanges = true) {
+        public static void Save(T entity, bool applyChanges = true) {
             var context = getContext();            
             getEntities(context).Add(entity);
 
-            if(saveChanges) {
+            if(applyChanges) {
                 context.SaveChanges();
             }
             
@@ -80,36 +80,42 @@ namespace StarterPack.Models
             getEntities(context).Add(entity);
         }
 
-        public static void Delete(long id, bool saveChanges = true) {    
+        public static void Delete(long id, bool applyChanges = true) {    
             var context = getContext();           
             getEntities(context).Remove(Model<T>.Get(id));
 
-            if(saveChanges) {
+            if(applyChanges) {
                 context.SaveChanges();
             }
         }
 
-        public void Delete(bool saveChanges = true) {
+        public void Delete(bool applyChanges = true) {
             entities.Remove((T)this);
             
-            if(saveChanges) {
+            if(applyChanges) {
                 context.SaveChanges();
             }
         }
 
-        public static T UpdateAttributes(long id, T modelWithAttr) {
+        public static T UpdateAttributes(long id, dynamic attrbutesToUpdate) {
+            T model = Model<T>.Get(id);
+            // enumerating over it exposes the Properties and Values as a KeyValuePair
+            foreach (KeyValuePair<string, object> kvp in attrbutesToUpdate){
+                Console.WriteLine("{0} = {1}", kvp.Key, kvp.Value);
+            }
+    
             //var context = getContext();           
             //T model = getEntities(context).AsNoTracking().SingleOrDefault(s => s.Id == id);
             //context.Entry(modelWithAttr).Context.Update(model);
             //context.SaveChanges();
-            return modelWithAttr;            
+            return model;            
         } 
 
-        public virtual void Update(bool saveChanges = true) {
+        public virtual void Update(bool applyChanges = true) {
             var context = getContext();            
             getEntities(context).Update((T)this);
 
-            if(saveChanges) {
+            if(applyChanges) {
                 context.SaveChanges();
             }
         }     
