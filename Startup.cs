@@ -8,6 +8,7 @@ using Newtonsoft.Json.Serialization;
 using StarterPack.Exception;
 using StarterPack.Models;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace StarterPack
 {
@@ -36,7 +37,7 @@ namespace StarterPack
                 .AddMvc(options => {
                         options.Filters.Add(new ApiExceptionFilter(env));
                 })
-                .AddJsonOptions(options =>  {
+                .AddJsonOptions(options =>  {                    
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver()
                     {
                         NamingStrategy = new SnakeCaseNamingStrategy()
@@ -44,6 +45,10 @@ namespace StarterPack
                 });
 
             services.AddSingleton<IConfiguration>(sp => { return Configuration; });
+
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
+            
 
             var connectionString = Configuration["DbContextSettings:ConnectionString"];
 

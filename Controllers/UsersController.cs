@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Http;
 using System.Dynamic;
-using Microsoft.AspNetCore.Mvc;
 using StarterPack.Models;
 
 namespace StarterPack.Controllers
@@ -19,7 +18,7 @@ namespace StarterPack.Controllers
             long teste = id;
         } 
         
-        protected override void AfterUpdate(ref User model) {
+        protected override void AfterUpdate(User model) {
             dynamic data = new ExpandoObject();
             data.Name = "teste";
             model.UpdateAttributes(data);

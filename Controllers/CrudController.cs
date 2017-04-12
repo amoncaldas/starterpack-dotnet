@@ -4,6 +4,8 @@ using StarterPack.Models;
 using System.Dynamic;
 using System.Linq.Expressions;
 using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace StarterPack.Controllers
 {
@@ -16,15 +18,26 @@ namespace StarterPack.Controllers
 
         // GET api/users
         [HttpGet]
-        public IEnumerable<T> Index(Expression<Func<T, bool>> predicate)
+        public IEnumerable<T> Index([FromQuery]T model)
         {
+            var predicate = this.WhereFilter;  
+            predicate =  (o => o.Id == model.Id);
             bool trackModels = false;
-            BeforeAll(ref trackModels); 
-            BeforeSearch(ref predicate, ref trackModels);
-            IEnumerable<T> models = Model<T>.FindBy(predicate, trackModels);
-            AfterSearch(predicate, ref models);
+            BeforeAll(ref trackModels);
+            IQueryable<T> query = Model<T>.Query();    
+            query.Include(m => m.CreatedAt);      
+            BeforeSearch(query, ref trackModels);
+
+            // TODO: put here applyFilters           
+            List<T> models = query.ToList();
+            AfterSearch(query, models);
             AfterAll();
             return models;            
+        }
+
+        public Expression<Func<T, bool>> WhereFilter
+        {
+            get { return x=>true; }
         }
 
 
@@ -36,7 +49,7 @@ namespace StarterPack.Controllers
             BeforeAll(ref trackModel);            
             BeforeGet(id, ref trackModel);
             T model = Model<T>.Get(id);
-            AfterGet(ref model);           
+            AfterGet(model);           
             AfterAll();
             return model;
         }
@@ -47,9 +60,9 @@ namespace StarterPack.Controllers
         {
             bool trackModel = false;
             BeforeAll(ref trackModel);
-            BeforeSave(ref model, ref trackModel);
+            BeforeSave(model, ref trackModel);
             model.Save();
-            AfterSave(ref model);
+            AfterSave(model);
             AfterAll();
             return StatusCode(201, model);
         } 
@@ -60,9 +73,9 @@ namespace StarterPack.Controllers
             T model = Model<T>.Get(id);
             bool trackModel = false;
             BeforeAll(ref trackModel);
-            BeforeUpdate(ref model, ref trackModel); 
+            BeforeUpdate(model, ref trackModel); 
             model.UpdateAttributes(attributes);
-            AfterUpdate(ref model);
+            AfterUpdate(model);
             AfterAll();          
         }
 
@@ -76,6 +89,7 @@ namespace StarterPack.Controllers
             Model<T>.Delete(id);  
             AfterDelete(id);
             AfterAll();         
-        }               
+        }   
+         
     }
 }
