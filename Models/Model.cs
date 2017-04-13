@@ -35,7 +35,7 @@ namespace StarterPack.Models
             entities = context.Set<T>();
         }
 
-        protected static DbContext getContext() {
+        private static DbContext getContext() {
             // TODO: encapsulate the Startup.GetServiceLocator in another class
             return (DbContext) Startup.GetServiceLocator.Instance.GetService(GetContextType());
         }
@@ -62,7 +62,7 @@ namespace StarterPack.Models
         } 
 
         public static IQueryable<T> Query() { 
-            return getEntities();            
+           return getEntities();
         } 
 
         public static IQueryable<T> PaginatedQuery(int page, int perPage) {           
@@ -92,8 +92,7 @@ namespace StarterPack.Models
 
             if(applyChanges) {
                 context.SaveChanges();
-            }
-            
+            }            
         }
         
         public static void Add(T entity) {

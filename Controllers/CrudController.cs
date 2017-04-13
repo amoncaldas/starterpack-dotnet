@@ -2,10 +2,9 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using StarterPack.Models;
 using System.Dynamic;
-using System.Linq.Expressions;
-using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace StarterPack.Controllers
 {
@@ -19,26 +18,19 @@ namespace StarterPack.Controllers
         // GET api/users
         [HttpGet]
         public IEnumerable<T> Index([FromQuery]T model)
-        {
-            var predicate = this.WhereFilter;  
-            predicate =  (o => o.Id == model.Id);
+        {           
             bool trackModels = false;
             BeforeAll(ref trackModels);
-            IQueryable<T> query = Model<T>.Query();    
-            query.Include(m => m.CreatedAt);      
-            BeforeSearch(query, ref trackModels);
-
-            // TODO: put here applyFilters           
+            IQueryable<T> query = Model<T>.Query();
+           
+            BeforeSearch(ref query, ref trackModels);
+            ApplyFilters(ref query);            
+            
             List<T> models = query.ToList();
-            AfterSearch(query, models);
+            AfterSearch(ref query, models);
             AfterAll();
             return models;            
-        }
-
-        public Expression<Func<T, bool>> WhereFilter
-        {
-            get { return x=>true; }
-        }
+        }       
 
 
         // GET api/users/5
