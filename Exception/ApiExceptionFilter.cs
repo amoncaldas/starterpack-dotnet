@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -16,7 +18,8 @@ namespace StarterPack.Exception
 
         public override void OnException(ExceptionContext context)
         {
-            ApiError apiError = null;
+           
+            List<ApiError> apiErrors = new List<ApiError>();
 
             if (context.Exception is ApiException)
             {
@@ -24,13 +27,18 @@ namespace StarterPack.Exception
                 var ex = context.Exception as ApiException;
 
                 context.Exception = null;
-                apiError = new ApiError(ex.Message);
+                apiErrors.Add(new ApiError(ex.Message));
 
                 context.HttpContext.Response.StatusCode = ex.StatusCode;
             }
             else if (context.Exception is UnauthorizedAccessException)
             {
-                apiError = new ApiError("messages.notAuthorized");
+                apiErrors.Add(new ApiError("messages.notAuthorized"));
+                context.HttpContext.Response.StatusCode = 403;
+            }
+            else if (context.Exception is ApiValidationException)
+            {
+                apiErrors = ((ApiValidationException)context.Exception).ApiErrors;
                 context.HttpContext.Response.StatusCode = 403;
             }
             else
@@ -44,12 +52,18 @@ namespace StarterPack.Exception
                     msg = "messages.internalError";                      
                 }
 
-                apiError = new ApiError(msg);
+                apiErrors.Add(new ApiError(msg));
                 context.HttpContext.Response.StatusCode = 500;
             }
 
             // always return a JSON result
-            context.Result = new JsonResult(apiError);
+            if(apiErrors.Count == 1) {
+                context.Result = new JsonResult(apiErrors.First());
+            }
+            else {
+                context.Result = new JsonResult(apiErrors);
+            }
+           
 
             base.OnException(context);
         }

@@ -4,7 +4,9 @@ using StarterPack.Models;
 using System.Dynamic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-
+using StarterPack.Core.Validation;
+using StarterPack.Exception;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace StarterPack.Controllers
 {
@@ -52,6 +54,7 @@ namespace StarterPack.Controllers
         {
             bool trackModel = false;
             BeforeAll(ref trackModel);
+            Validate(model);
             BeforeSave(model, ref trackModel);
             model.Save();
             AfterSave(model);
@@ -59,12 +62,14 @@ namespace StarterPack.Controllers
             return StatusCode(201, model);
         } 
 
-       
+       // POST api/users
+        [HttpPut]
         public virtual void update(long id, [FromBody]ExpandoObject attributes)
         {  
             T model = Model<T>.Get(id);
             bool trackModel = false;
             BeforeAll(ref trackModel);
+            Validate(model);
             BeforeUpdate(model, ref trackModel); 
             model.UpdateAttributes(attributes);
             AfterUpdate(model);
@@ -81,7 +86,23 @@ namespace StarterPack.Controllers
             Model<T>.Delete(id);  
             AfterDelete(id);
             AfterAll();         
-        }   
+        }  
+
+        protected void Validate(T model) {
+            BeforeValidate(model);
+            ValidationState state = new ValidationState(ModelState);  
+            ApiValidationException validationEx = ApiValidationException.Instance;   
+            validationEx.ApiErrors.AddRange(state.getErrors());
+
+            List<object> validationRules = getValidationRules(model);
+            //run custom validation rules here and add errors to
+           
+            AfterValidate(model, validationEx); 
+
+            if(state.HasError()) {
+                throw validationEx;
+            }
+        }  
          
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc;
+using StarterPack.Exception;
 using StarterPack.Models;
 
 namespace StarterPack.Controllers
@@ -59,9 +60,7 @@ namespace StarterPack.Controllers
 
         }
 
-        protected virtual void BeforeValidate(Model<T> model) {
-
-        }
+       
        
         #endregion
 
@@ -93,12 +92,25 @@ namespace StarterPack.Controllers
 
         protected virtual void AfterUpdate(T model) {
 
-        }
-
-        protected virtual void AfterValidate(Model<T> model) {
-
-        }
+        }        
        
+        #endregion
+
+
+
+        #region validation events
+
+        protected virtual void BeforeValidate(Model<T> model) {
+
+        }
+        protected virtual void AfterValidate(Model<T> model, ApiValidationException validationErrors) {
+
+        }
+
+        protected virtual List<Object> getValidationRules(Model<T> model) {
+            return new List<Object>();
+        }
+
         #endregion
     }
 }
