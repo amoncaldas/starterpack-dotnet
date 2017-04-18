@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using StarterPack.Core.Validation;
 using StarterPack.Exception;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using FluentValidation.Results;
 
 namespace StarterPack.Controllers
 {
@@ -88,19 +88,21 @@ namespace StarterPack.Controllers
             AfterAll();         
         }  
 
-        protected void Validate(T model) {
-            BeforeValidate(model);
-            ValidationState state = new ValidationState(ModelState);  
-            ApiValidationException validationEx = ApiValidationException.Instance;   
-            validationEx.ApiErrors.AddRange(state.getErrors());
-
-            List<object> validationRules = getValidationRules(model);
-            //run custom validation rules here and add errors to
+        protected void Validate(T model) {           
+            ModelValidator<T> modelValidator = new ModelValidator<T>();            
+            SetValidationRules(model, modelValidator);
            
-            AfterValidate(model, validationEx); 
+			ValidationResult results = modelValidator.Validate(model);
 
-            if(state.HasError()) {
-                throw validationEx;
+            BeforeValidate(model, modelValidator);
+            
+            ValidationException validationException = new ValidationException();   
+            validationException.Errors.AddRange(results.Errors);            
+           
+            bool mustContinue = AfterValidate(model, validationException); 
+
+            if(!results.IsValid && mustContinue) {
+                throw validationException;
             }
         }  
          

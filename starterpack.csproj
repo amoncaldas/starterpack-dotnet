@@ -12,9 +12,13 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1"/>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="1.1.0"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.1" PrivateAssets="All"/>
+<<<<<<< HEAD
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="1.1.1"/>
     <PackageReference Include="NodaTime" Version="2.0.0"/>
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1"/>
+=======
+    <PackageReference Include="FluentValidation.AspNetCore" Version="6.4.0"/>
+>>>>>>> 49c3916f4bbb3345044c7d7ebb73436628df6504
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0"/>

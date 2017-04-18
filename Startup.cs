@@ -77,6 +77,9 @@ namespace StarterPack
                     .WithHeaders("Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With"));
 
             app.UseMvc();
+			
+            // Uncommenting the live above will enable defining the routes in a central file
+            //app.UseMvc(routes => {ApiRoutes.get(routes);});
         }
 
         public static class GetServiceLocator

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -36,9 +37,12 @@ namespace StarterPack.Exception
                 apiErrors.Add(new ApiError("messages.notAuthorized"));
                 context.HttpContext.Response.StatusCode = 403;
             }
-            else if (context.Exception is ApiValidationException)
+            else if (context.Exception is ValidationException)
             {
-                apiErrors = ((ApiValidationException)context.Exception).ApiErrors;
+                foreach (ValidationFailure failure in ((ValidationException)context.Exception).Errors)
+                {
+                    apiErrors.Add(new ApiError(failure.ErrorMessage, failure.PropertyName));                
+                }                
                 context.HttpContext.Response.StatusCode = 403;
             }
             else
