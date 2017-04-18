@@ -1,6 +1,8 @@
 
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace StarterPack.Models
 {
@@ -12,8 +14,15 @@ namespace StarterPack.Models
         [Required]
         public string Email { get; set; }
 
-        [Required, StringLength(10, ErrorMessage="A senha deve ter no mínimo 10 caracteres")]
+        [JsonIgnore]
+        [Required, MinLength(10, ErrorMessage="A senha deve ter no mínimo 10 caracteres")]
         public string Password { get; set; }   
+
+        [JsonIgnore]
+        [Required]
+        public string Salt { get; set; }  
+
+        public List<UserRole> UserRoles { get; set; }  
            
     }
 }

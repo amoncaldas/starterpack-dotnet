@@ -1,13 +1,13 @@
-using Microsoft.AspNetCore.Http;
 using System.Dynamic;
 using StarterPack.Models;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StarterPack.Controllers
 {
-    
+    [Authorize]
     public class UsersController : CrudController<User>
     {       
         public UsersController()  {
@@ -32,16 +32,6 @@ namespace StarterPack.Controllers
 
         protected override void BeforeAll(ref bool trackModel) {
             trackModel = true;
-        }     
-
-        protected override List<Object> getValidationRules(Model<User> model) {
-            TryValidateModel(model);
-            //HttpContext c = ModelState.GetValidationState.HttpContext;
-            return new List<Object>();
-            
-        } 
-
-            
-
+        }               
     }
 }

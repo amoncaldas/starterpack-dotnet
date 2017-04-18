@@ -8,7 +8,7 @@ namespace StarterPack.Exception
 
         public List<ApiError> ApiErrors {get; set;}        
 
-        public ApiValidationException() 
+        public ApiValidationException()  
         {            
             StatusCode = 422;
             ApiErrors = new List<ApiError>();

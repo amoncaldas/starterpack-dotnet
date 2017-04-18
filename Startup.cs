@@ -6,13 +6,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using StarterPack.Exception;
-using StarterPack.Models;
 using System;
 using Microsoft.AspNetCore.Http;
 
 namespace StarterPack
 {
-    public class Startup
+    public partial class Startup
     {
         public Startup(IHostingEnvironment env)
         {
@@ -33,29 +32,30 @@ namespace StarterPack
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services
-                .AddMvc(options => {
-                        options.Filters.Add(new ApiExceptionFilter(env));
-                })
-                .AddJsonOptions(options =>  {                    
-                    options.SerializerSettings.ContractResolver = new DefaultContractResolver()
-                    {
-                        NamingStrategy = new SnakeCaseNamingStrategy()
-                    };
-                });
+            var builder = services.AddMvc();            
 
-            services.AddSingleton<IConfiguration>(sp => { return Configuration; });
+            builder.AddMvcOptions(options => {
+                options.Filters.Add(new ApiExceptionFilter(env));
+            });
 
-            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            builder.AddJsonOptions(options =>  {                    
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver()
+                {
+                    NamingStrategy = new SnakeCaseNamingStrategy()
+                };
+            });
 
-            
+            ConfigureAuthOptions(services);
+
+            services.AddSingleton<IConfiguration>(Configuration);
+
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();        
 
             var connectionString = Configuration["DbContextSettings:ConnectionString"];
 
             services.AddDbContext<Models.DatabaseContext>(
                 options => options.UseNpgsql(connectionString)
-            );  
-                     
+            );                       
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,8 +63,19 @@ namespace StarterPack
         {
             GetServiceLocator.Instance = app.ApplicationServices;
 
+            app.UseStaticFiles(); 
+
+            ConfigureAuth(app);
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            loggerFactory.AddDebug();            
+
+            app.UseCors(builder =>
+                builder
+                    .WithOrigins("*")
+                    .WithMethods("POST", "GET", "OPTIONS", "PUT", "DELETE")
+                    .WithHeaders("Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With"));
+
             app.UseMvc();
         }
 

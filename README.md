@@ -15,3 +15,5 @@ Gera um arquivo .sql referente ao conteudo das migrations
 
 - dotnet ef database update
 Roda as migrations
+
+http://www.jerriepelser.com/blog/validation-response-aspnet-core-webapi/
