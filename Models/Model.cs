@@ -8,6 +8,7 @@ using System.Dynamic;
 using StarterPack.Core;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace StarterPack.Models
 {
     public abstract class Model<T> where T :  Model<T>
@@ -152,4 +153,5 @@ namespace StarterPack.Models
             }            
         }
     }
+   
 }

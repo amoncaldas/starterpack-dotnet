@@ -1,10 +1,8 @@
-using Microsoft.AspNetCore.Http;
 using System.Dynamic;
 using StarterPack.Models;
 using System.Linq;
-using System.Collections.Generic;
-using System;
-
+using StarterPack.Core.Validation;
+using FluentValidation;
 namespace StarterPack.Controllers
 {
     
@@ -32,16 +30,15 @@ namespace StarterPack.Controllers
 
         protected override void BeforeAll(ref bool trackModel) {
             trackModel = true;
-        }     
+        }  
+           
+        protected override void SetValidationRules(Model<User> model, ModelValidator<User> validator) {
+            validator.RuleFor(user => user.Name).NotNull();
+            validator.RuleFor(user => user.Password).Length(10,30);            
+        }
 
-        protected override List<Object> getValidationRules(Model<User> model) {
-            TryValidateModel(model);
-            //HttpContext c = ModelState.GetValidationState.HttpContext;
-            return new List<Object>();
-            
-        } 
+        protected override void BeforeValidate(Model<User> model, ModelValidator<User> validator) {
 
-            
-
+        }
     }
 }

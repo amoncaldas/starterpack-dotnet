@@ -9,6 +9,11 @@ using StarterPack.Exception;
 using StarterPack.Models;
 using System;
 using Microsoft.AspNetCore.Http;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Routing;
+using StarterPack.Routes;
+using Microsoft.Extensions.Localization;
 
 namespace StarterPack
 {
@@ -31,31 +36,28 @@ namespace StarterPack
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            // Add framework services.
-            services
-                .AddMvc(options => {
-                        options.Filters.Add(new ApiExceptionFilter(env));
-                })
+        {           
+            services.AddMvc(options => {
+                    options.Filters.Add(new ApiExceptionFilter(env));                  
+                    
+                })               
                 .AddJsonOptions(options =>  {                    
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver()
                     {
                         NamingStrategy = new SnakeCaseNamingStrategy()
                     };
-                });
+                })
+                .AddDataAnnotationsLocalization();
 
             services.AddSingleton<IConfiguration>(sp => { return Configuration; });
 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
-            
-
             var connectionString = Configuration["DbContextSettings:ConnectionString"];
 
             services.AddDbContext<Models.DatabaseContext>(
                 options => options.UseNpgsql(connectionString)
-            );  
-                     
+            );         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +68,9 @@ namespace StarterPack
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             app.UseMvc();
+			
+            // Uncommenting the live above will enable defining the routes in a central file
+            //app.UseMvc(routes => {ApiRoutes.get(routes);});
         }
 
         public static class GetServiceLocator

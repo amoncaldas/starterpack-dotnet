@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc;
+using StarterPack.Core.Validation;
 using StarterPack.Exception;
 using StarterPack.Models;
 
@@ -100,17 +101,15 @@ namespace StarterPack.Controllers
 
         #region validation events
 
-        protected virtual void BeforeValidate(Model<T> model) {
+        protected virtual void BeforeValidate(Model<T> model, ModelValidator<T> validator) {
 
         }
-        protected virtual void AfterValidate(Model<T> model, ApiValidationException validationErrors) {
-
-        }
-
-        protected virtual List<Object> getValidationRules(Model<T> model) {
-            return new List<Object>();
-        }
+        protected virtual bool AfterValidate(Model<T> model, ValidationException validationErrors) {
+            return true;
+        }       
 
         #endregion
+
+        protected abstract void SetValidationRules(Model<T> model, ModelValidator<T> validator);
     }
 }
