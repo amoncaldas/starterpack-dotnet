@@ -2,11 +2,10 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using StarterPack.Auth;
@@ -20,8 +19,10 @@ namespace StarterPack
         public SymmetricSecurityKey signingKey;
 
         private void ConfigureAuthOptions(IServiceCollection services) {
+            //get and config jwt key
             signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("TokenAuthentication:SecretKey").Value));
 
+            //configure jwt token options
             var tokenProviderOptions = new TokenProviderOptions
             {
                 Audience = Configuration.GetSection("TokenAuthentication:Audience").Value,
@@ -30,13 +31,16 @@ namespace StarterPack
                 IdentityResolver = GetIdentity
             };  
 
-            ThrowIfInvalidOptions(tokenProviderOptions);
+            //check if options is valid
+            ThrowIfTokenInvalidOptions(tokenProviderOptions);
 
+            //add options to service injector to use in other places
             services.AddSingleton<TokenProviderOptions>(tokenProviderOptions);           
         }
 
         private void ConfigureAuth(IApplicationBuilder app)
         {  
+            //define jwt middleware validation parameters
             var tokenValidationParameters = new TokenValidationParameters
             {
                 // The signing key must match!
@@ -50,57 +54,61 @@ namespace StarterPack
                 ValidAudience = Configuration.GetSection("TokenAuthentication:Audience").Value,
                 // Validate the token expiry
                 ValidateLifetime = true,
-                // If you want to allow a certain amount of clock drift, set that here:
+                // Set to Zero the difference balance
                 ClockSkew = TimeSpan.Zero
             };
 
-            app.UseExceptionHandler(appBuilder => 
-            { 
-                appBuilder.Use(async (context, next) => 
-                { 
-                    var error = context.Features[typeof(IExceptionHandlerFeature)] as IExceptionHandlerFeature; 
-        
-                    if (error != null && error.Error is SecurityTokenValidationException) 
-                    { 
-                        context.Response.StatusCode = 401; 
-                        context.Response.ContentType = "application/json"; 
-        
-                        await context.Response.WriteAsync(JsonConvert.SerializeObject(new  
-                        { 
-                            Msg = "token invalid" 
-                        })); 
-                    } 
-                    else if (error != null && error.Error is SecurityTokenExpiredException) 
-                    { 
-                        context.Response.StatusCode = 401; 
-                        context.Response.ContentType = "application/json"; 
-        
-                        await context.Response.WriteAsync(JsonConvert.SerializeObject(new  
-                        { 
-                            Msg = "token expired" 
-                        })); 
-                    }                     
-                    else if (error != null && error.Error != null) 
-                    { 
-                        context.Response.StatusCode = 500; 
-                        context.Response.ContentType = "application/json"; 
-                        await context.Response.WriteAsync(JsonConvert.SerializeObject(new 
-                        { 
-                            Msg = error.Error.Message 
-                        })); 
-                    } 
-                    else await next(); 
-                }); 
-            }); 
-
+            //Add jwt middleware
             app.UseJwtBearerAuthentication(new JwtBearerOptions
             {
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,                
                 TokenValidationParameters = tokenValidationParameters
             });
-        }
 
+            ///middleware to change default jwt middleware response
+            app.Use(async (context, next) =>
+            {
+                await next.Invoke();
+                
+                StringValues values;
+                
+                var hasAuthenticateError = context.Response.Headers.TryGetValue("WWW-Authenticate", out values);
+                
+                string error = null;
+
+                if( hasAuthenticateError && context.Response.StatusCode == 401 ) {
+                    string message = values.First();
+
+                    if(message.Contains("invalid_token")) {
+                        error = "token_invalid";
+                        
+                        if(message.Contains("expired")) {
+                            error = "token_expired";
+                        }                         
+                    } else if( message.Equals("Bearer") ) {
+                        error = "token_not_provided";
+                    }
+                } else if(context.Response.StatusCode == 403) {
+                    error = "messages.notAuthorized";
+                }
+
+                if(error != null) {
+                    context.Response.ContentType = "application/json";
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(new 
+                    { 
+                        error = error
+                    }));                
+                }
+            });            
+        }
+        
+        /// <summary>
+        /// Check user credentials and return the identity
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         private Task<User> GetIdentity(string email, string password)
         {
             User user = User.BuildQuery(u => u.Email == email).FirstOrDefault();            
@@ -114,7 +122,11 @@ namespace StarterPack
             return Task.FromResult<User>(null);
         }  
 
-        private static void ThrowIfInvalidOptions(TokenProviderOptions options)
+        /// <summary>
+        /// Check if token options is Valid
+        /// </summary>
+        /// <param name="options"></param>
+        private static void ThrowIfTokenInvalidOptions(TokenProviderOptions options)
         {
             if (string.IsNullOrEmpty(options.Issuer))
             {

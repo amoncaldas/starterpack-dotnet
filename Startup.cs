@@ -45,6 +45,7 @@ namespace StarterPack
                 };
             });
 
+            //Configure Authentication Options
             ConfigureAuthOptions(services);
 
             services.AddSingleton<IConfiguration>(Configuration);
@@ -63,23 +64,23 @@ namespace StarterPack
         {
             GetServiceLocator.Instance = app.ApplicationServices;
 
+            //Add support to Static Files.
             app.UseStaticFiles(); 
 
+            //Configure Authentication
             ConfigureAuth(app);
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();            
 
+            //Configure CORS
             app.UseCors(builder =>
                 builder
                     .WithOrigins("*")
                     .WithMethods("POST", "GET", "OPTIONS", "PUT", "DELETE")
                     .WithHeaders("Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With"));
-
+                            
             app.UseMvc();
-			
-            // Uncommenting the live above will enable defining the routes in a central file
-            //app.UseMvc(routes => {ApiRoutes.get(routes);});
         }
 
         public static class GetServiceLocator

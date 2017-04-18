@@ -34,6 +34,7 @@ namespace StarterPack.Controllers
                 throw new ApiException("messages.login.invalidCredentials", 401);
             }            
 
+            //Get logged user roles to add in token
             List<string> roles = UserRole.BuildQuery(u => u.UserId == user.Id)
                 .Include(ur => ur.Role)
                 .AsNoTracking()
@@ -50,12 +51,15 @@ namespace StarterPack.Controllers
         public object authenticatedUser()
         {   
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            //get current logged user with roles
             User user = StarterPack.Models.User.BuildQuery(u => u.Id == long.Parse(userId))
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
                 .AsNoTracking()
                 .First();
-
+            
+            //format render to avoid circular reference
             return new {
                 Name = user.Name,
                 Email = user.Email,

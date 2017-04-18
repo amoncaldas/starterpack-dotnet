@@ -1,15 +1,11 @@
 using System.Dynamic;
 using StarterPack.Models;
 using System.Linq;
-using System.Collections.Generic;
-using System;
-using Microsoft.AspNetCore.Authorization;
 
 using StarterPack.Core.Validation;
 using FluentValidation;
 namespace StarterPack.Controllers
-{
-    [Authorize]
+{    
     public class UsersController : CrudController<User>
     {       
         public UsersController()  {
