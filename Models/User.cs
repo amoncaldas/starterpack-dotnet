@@ -1,7 +1,4 @@
-
-
 using System.ComponentModel.DataAnnotations;
-using FluentValidation;
 
 namespace StarterPack.Models
 {
@@ -15,12 +12,5 @@ namespace StarterPack.Models
         [Required]
         public string Password { get; set; }   
            
-    }
-
-    public class UserValidator : AbstractValidator<User> {
-        public UserValidator() {
-            RuleFor(user => user.Name).NotNull().WithMessage("minha mensagem de erro");
-            
-        }
-    }
+    }   
 }
