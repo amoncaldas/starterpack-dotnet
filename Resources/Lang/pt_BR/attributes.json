@@ -1,0 +1,10 @@
+{
+	"attributes":{
+		"User":{
+			"Name":"Nome",
+			"Password":"Senha",
+			"Email":"Email"
+		}
+	}
+	
+}

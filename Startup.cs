@@ -7,25 +7,45 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using StarterPack.Exception;
 using System;
+
 using Microsoft.AspNetCore.Http;
+
+using StarterPack.Core;
+using FluentValidation;
+using StarterPack.Core.Validation;
+
 
 namespace StarterPack
 {
     public partial class Startup
     {
+
         public Startup(IHostingEnvironment env)
         {
+           
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)                
                 .AddEnvironmentVariables();
-            Configuration = builder.Build();
+
+            Configuration = builder.Build();           
 
             this.env = env;
+
+            string culture = "pt_BR";
+            
+            var localizationBuilder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile($"Resources/Lang/{culture}/messages.json", optional: false)
+                .AddJsonFile($"Resources/Lang/{culture}/attributes.json", optional: false);
+
+            Lang.Strings = localizationBuilder.Build();
         }
 
         public IConfigurationRoot Configuration { get; }
+
+       
         public IHostingEnvironment env { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -52,11 +72,14 @@ namespace StarterPack
 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();        
 
+
             var connectionString = Configuration["DbContextSettings:ConnectionString"];
 
             services.AddDbContext<Models.DatabaseContext>(
-                options => options.UseNpgsql(connectionString)
-            );                       
+                options => options.UseNpgsql(connectionString));
+
+            ValidatorOptions.ResourceProviderType = typeof(ValidationResourceProvider);
+            ValidatorOptions.DisplayNameResolver = ValidationResourceProvider.DisplayNameResolver;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,12 +103,15 @@ namespace StarterPack
                     .WithMethods("POST", "GET", "OPTIONS", "PUT", "DELETE")
                     .WithHeaders("Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With"));
                             
-            app.UseMvc();
+            app.UseMvc();            
+			
+            // Uncommenting the line above will enable defining the routes in a central file
+            //app.UseMvc(routes => {ApiRoutes.get(routes);});
         }
 
         public static class GetServiceLocator
         {
             public static IServiceProvider Instance { get; set; }
-        }        
+        }            
     }
 }
