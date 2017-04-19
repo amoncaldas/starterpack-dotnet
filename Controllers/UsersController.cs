@@ -3,6 +3,9 @@ using StarterPack.Models;
 using System.Linq;
 using StarterPack.Core.Validation;
 using FluentValidation;
+using Microsoft.Extensions.Configuration;
+using StarterPack.Core;
+
 namespace StarterPack.Controllers
 {
     
@@ -32,9 +35,10 @@ namespace StarterPack.Controllers
             trackModel = true;
         }  
            
-        protected override void SetValidationRules(Model<User> model, ModelValidator<User> validator) {
-            validator.RuleFor(user => user.Name).NotNull();
-            validator.RuleFor(user => user.Password).Length(10,30);            
+        protected override void SetValidationRules(Model<User> model, ModelValidator<User> validator) {            
+            validator.RuleFor(user => user.Email).NotEmpty().EmailAddress();
+            validator.RuleFor(user => user.Name).NotEmpty().Length(3,30); 
+            validator.RuleFor(user => user.Password).NotEmpty().Length(10,30);                    
         }
 
         protected override void BeforeValidate(Model<User> model, ModelValidator<User> validator) {

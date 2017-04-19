@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using StarterPack.Core.Validation;
 using StarterPack.Exception;
 using FluentValidation.Results;
+using FluentValidation;
+using FluentValidation.Validators;
+
 
 namespace StarterPack.Controllers
 {
@@ -91,15 +94,11 @@ namespace StarterPack.Controllers
         protected void Validate(T model) {           
             ModelValidator<T> modelValidator = new ModelValidator<T>();            
             SetValidationRules(model, modelValidator);
-           
 			ValidationResult results = modelValidator.Validate(model);
-
             BeforeValidate(model, modelValidator);
-            
-            ValidationException validationException = new ValidationException();   
-            validationException.Errors.AddRange(results.Errors);            
-           
-            bool mustContinue = AfterValidate(model, validationException); 
+			Exception.ValidationException validationException = new Exception.ValidationException();           
+            validationException.Errors.AddRange(results.Errors);
+            bool mustContinue = AfterValidate(model, validationException);
 
             if(!results.IsValid && mustContinue) {
                 throw validationException;
