@@ -3,13 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using StarterPack.Models;
 using System.Dynamic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using StarterPack.Core.Validation;
-using StarterPack.Exception;
 using FluentValidation.Results;
-using FluentValidation;
-using FluentValidation.Validators;
-
+using StarterPack.Core;
 
 namespace StarterPack.Controllers
 {
@@ -34,6 +30,8 @@ namespace StarterPack.Controllers
             List<T> models = query.ToList();
             AfterSearch(ref query, models);
             AfterAll();
+
+            MailSender.SendEmailAsync("amoncaldas@yahoo.com.br","teste","body teste");
             return models;            
         }       
 

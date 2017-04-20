@@ -43,7 +43,7 @@ namespace StarterPack.Exception
                 {
                     apiErrors.Add(new ApiError(failure.ErrorMessage, failure.PropertyName));                
                 }                
-                context.HttpContext.Response.StatusCode = 403;
+                context.HttpContext.Response.StatusCode = 422;
             }
             else
             {   

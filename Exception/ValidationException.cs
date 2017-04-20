@@ -24,6 +24,11 @@ namespace StarterPack.Exception
             Errors = new List<ValidationFailure>();
             Errors.Add(new ValidationFailure(property, error));
         }
+
+        public ValidationException(IList<ValidationFailure> errors) 
+        {   
+            Errors = (List<ValidationFailure>)errors;            
+        }
     }
     
 }

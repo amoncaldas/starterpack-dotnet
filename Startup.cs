@@ -29,7 +29,8 @@ namespace StarterPack
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)                
                 .AddEnvironmentVariables();
 
-            Configuration = builder.Build();           
+            Configuration = builder.Build();   
+            Config.Data = Configuration;        
 
             this.env = env;
 
