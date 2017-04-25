@@ -1,19 +1,17 @@
-using System.Dynamic;
 using StarterPack.Models;
 using System.Linq;
-
 using StarterPack.Core.Validation;
 using FluentValidation;
 using StarterPack.Core;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
+
 
 namespace StarterPack.Controllers
 {    
     public class UsersController : CrudController<User>
     {       
-        public UsersController(IMapper mapper) : base(mapper) {
+        public UsersController() {
             // Http Request data can be accessed using the folowing code
             // HttpContext.Request;
         }     
