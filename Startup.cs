@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Http;
 using StarterPack.Core;
 using FluentValidation;
 using StarterPack.Core.Validation;
-
+using StarterPack.Core.Renders;
 
 namespace StarterPack
 {
@@ -30,7 +30,8 @@ namespace StarterPack
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();   
-            Config.Data = Configuration;        
+            Env.Data = Configuration;  
+            Env.Host = env;       
 
             this.env = env;
 
@@ -53,7 +54,8 @@ namespace StarterPack
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            var builder = services.AddMvc();            
+            var builder = services.AddMvc();//.AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander())); 
+              
 
             builder.AddMvcOptions(options => {
                 options.Filters.Add(new ApiExceptionFilter(env));
@@ -81,6 +83,9 @@ namespace StarterPack
 
             ValidatorOptions.ResourceProviderType = typeof(ValidationResourceProvider);
             ValidatorOptions.DisplayNameResolver = ValidationResourceProvider.DisplayNameResolver;
+
+            services.AddScoped<IViewRenderService, RazorRender>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

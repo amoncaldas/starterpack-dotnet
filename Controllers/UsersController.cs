@@ -1,10 +1,7 @@
-using System.Dynamic;
 using StarterPack.Models;
 using System.Linq;
-
 using StarterPack.Core.Validation;
 using FluentValidation;
-using Microsoft.Extensions.Configuration;
 using StarterPack.Core;
 
 namespace StarterPack.Controllers
@@ -13,7 +10,10 @@ namespace StarterPack.Controllers
     {       
         public UsersController()  {
             // Http Request data can be accessed using the folowing code
-            // HttpContext.Request;
+            // HttpContext.Request;  
+            // Exemplo de envio de email          
+            ViewData["url"] = "aaaaaaaaa.com";
+            MailSender.SendEmailAsync("amoncaldas@yahoo.com.br","teste","Password", ViewData);
         }     
 
         protected override void BeforeGet(long id, ref bool trackModel) {
@@ -21,9 +21,6 @@ namespace StarterPack.Controllers
         } 
         
         protected override void AfterUpdate(User model) {
-            dynamic data = new ExpandoObject();
-            data.Name = "teste";
-            model.UpdateAttributes(data);
         } 
 
         protected override void ApplyFilters(ref IQueryable<User> query) {           

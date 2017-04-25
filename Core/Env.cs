@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
 namespace StarterPack.Core
 {
-    public class Config
+    public class Env
     {
-        public static string Get(string key){
+        public static string Config(string key){
             var value = Data[key];
             if(value != null) {
                 return value;
@@ -13,5 +14,7 @@ namespace StarterPack.Core
         }
 
         public static IConfiguration Data { get; set; }
+
+        public static IHostingEnvironment Host { get; set;}
     }
 }

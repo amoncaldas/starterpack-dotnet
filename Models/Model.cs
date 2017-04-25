@@ -147,6 +147,7 @@ namespace StarterPack.Models
             {
                 String propertyName = StringHelper.SnakeCaseToTitleCase(property.Key);
                 PropertyInfo p = model.GetType().GetProperty(propertyName);
+                p.GetType();
 
                 if(p != null)
                     p.SetValue(model, property.Value);              

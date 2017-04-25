@@ -5,15 +5,15 @@ using System.Dynamic;
 using System.Linq;
 using StarterPack.Core.Validation;
 using FluentValidation.Results;
-using StarterPack.Core;
 
 namespace StarterPack.Controllers
 {
     [Route("api/[controller]")]
     public abstract partial class CrudController<T> : Controller where T : Model<T>
-    {  
-                
+    { 
+  
         public CrudController() {
+           
         }
 
         // GET api/users
@@ -29,9 +29,8 @@ namespace StarterPack.Controllers
             
             List<T> models = query.ToList();
             AfterSearch(ref query, models);
-            AfterAll();
-
-            MailSender.SendEmailAsync("amoncaldas@yahoo.com.br","teste","body teste");
+            AfterAll();            
+           
             return models;            
         }       
 

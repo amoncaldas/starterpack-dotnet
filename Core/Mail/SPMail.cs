@@ -12,11 +12,15 @@ namespace StarterPack.Core.Mail
 
         public string Subject;
 
-        public string message;
+        public bool Plain;
 
-        public object Body;
+        public string Encoding;
+
+        public string Body;
 
         public SPMail() {
+            Encoding = "uft-8";
+            Plain = false;
             To = new List<MailAddress>();
             From = new List<MailAddress>();
             Attachments = new List<KeyValuePair<string, Stream>>();
