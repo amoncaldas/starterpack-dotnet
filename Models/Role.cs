@@ -16,12 +16,13 @@ namespace StarterPack.Models
         [Required]
         public string Slug { get; set; }    
 
+        [JsonIgnore]
         public List<UserRole> UserRoles { get; set; }
 
-        [NotMapped]
-        public new DateTime CreatedAt { get; set; }
+        [NotMapped, JsonIgnore]
+        public override DateTime CreatedAt { get; set; }
 
-        [NotMapped]
-        public new DateTime UpdatedAt { get; set; }        
+        [NotMapped, JsonIgnore]
+        public override DateTime UpdatedAt { get; set; }        
     }
 }

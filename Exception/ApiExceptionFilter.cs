@@ -43,20 +43,20 @@ namespace StarterPack.Exception
                 {
                     apiErrors.Add(new ApiError(failure.ErrorMessage, failure.PropertyName));                
                 }                
-                context.HttpContext.Response.StatusCode = 403;
+                context.HttpContext.Response.StatusCode = 422;
             }
             else
             {   
                 var msg = String.Empty;
 
-                if(this.env.IsDevelopment())
+                if(this.env.IsDevelopment() || this.env.IsEnvironment("Local"))
                 {
-                    msg = context.Exception.GetBaseException().Message;
+                    apiErrors.Add(new ApiError(context.Exception.GetBaseException().Message));
+                    apiErrors.Add(new ApiError(context.Exception.GetBaseException().StackTrace));
                 } else {
-                    msg = "messages.internalError";                      
+                    apiErrors.Add(new ApiError("messages.internalError"));
                 }
-
-                apiErrors.Add(new ApiError(msg));
+                
                 context.HttpContext.Response.StatusCode = 500;
             }
 

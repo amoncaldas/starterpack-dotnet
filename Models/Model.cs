@@ -7,19 +7,19 @@ using System.Reflection;
 using System.Dynamic;
 using StarterPack.Core;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace StarterPack.Models
 {
     public abstract class Model<T> where T :  Model<T>
     {
-        public long Id { get; set; }
+        public virtual long ?Id { get; set; }
         
         [FromQuery(Name = "created_at")]
-        public DateTime CreatedAt { get; set; }
+        public virtual DateTime CreatedAt { get; set; }
 
         [FromQuery(Name = "updated_at")]
-        public DateTime UpdatedAt { get; set; }
+        public virtual DateTime UpdatedAt { get; set; }
 
         protected readonly DbContext context;
         protected DbSet<T> entities;
@@ -28,12 +28,14 @@ namespace StarterPack.Models
         {
             context = getContext();
             entities = context.Set<T>();
+
+            this.CreatedAt = this.UpdatedAt = DateTime.Now;
         }
 
-        public Model(DbContext context)
-        {
+        public Model(DbContext context) : this()
+        {           
             this.context = context;
-            entities = context.Set<T>();
+            entities = context.Set<T>();            
         }
 
         private static DbContext getContext() {
@@ -50,6 +52,9 @@ namespace StarterPack.Models
             return _context.Set<T>();
         }        
 
+        public static EntityEntry<T> Entry(T model) {
+            return getContext().Entry<T>(model);
+        }
 
         public static IEnumerable<T> GetAll(bool tracked = false) {
             if(tracked) {
@@ -77,7 +82,7 @@ namespace StarterPack.Models
             
             return BuildQuery(predicate).AsNoTracking().AsEnumerable();
         } 
-
+        
         public static T Get(long id)
         {            
             return getEntities().SingleOrDefault(s => s.Id == id);
@@ -148,8 +153,9 @@ namespace StarterPack.Models
                 String propertyName = StringHelper.SnakeCaseToTitleCase(property.Key);
                 PropertyInfo p = model.GetType().GetProperty(propertyName);
 
-                if(p != null)
+                if(p != null) {
                     p.SetValue(model, property.Value);              
+                }
             }            
         }
     }

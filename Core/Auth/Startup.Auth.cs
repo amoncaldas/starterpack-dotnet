@@ -3,11 +3,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using StarterPack.Auth;
 using StarterPack.Core;
 using StarterPack.Models;
@@ -66,41 +63,7 @@ namespace StarterPack
                 TokenValidationParameters = tokenValidationParameters
             });
 
-            ///middleware to change default jwt middleware response
-            app.Use(async (context, next) =>
-            {
-                await next.Invoke();
-                
-                StringValues values;
-                
-                var hasAuthenticateError = context.Response.Headers.TryGetValue("WWW-Authenticate", out values);
-                
-                string error = null;
-
-                if( hasAuthenticateError && context.Response.StatusCode == 401 ) {
-                    string message = values.First();
-
-                    if(message.Contains("invalid_token")) {
-                        error = "token_invalid";
-                        
-                        if(message.Contains("expired")) {
-                            error = "token_expired";
-                        }                         
-                    } else if( message.Equals("Bearer") ) {
-                        error = "token_not_provided";
-                    }
-                } else if(context.Response.StatusCode == 403) {
-                    error = "messages.notAuthorized";
-                }
-
-                if(error != null) {
-                    context.Response.ContentType = "application/json";
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(new 
-                    { 
-                        error = error
-                    }));                
-                }
-            });            
+            app.UseAuthException();       
         }
         
         /// <summary>

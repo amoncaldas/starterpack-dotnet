@@ -3,13 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using StarterPack.Models;
 using System.Dynamic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using StarterPack.Core.Validation;
-using StarterPack.Exception;
 using FluentValidation.Results;
-using FluentValidation;
-using FluentValidation.Validators;
-
 
 namespace StarterPack.Controllers
 {
@@ -58,24 +53,29 @@ namespace StarterPack.Controllers
             bool trackModel = false;
             BeforeAll(ref trackModel);
             Validate(model);
+            BeforeStore(model, ref trackModel);
             BeforeSave(model, ref trackModel);
             model.Save();
+            AfterStore(model);
             AfterSave(model);
             AfterAll();
             return StatusCode(201, model);
         } 
 
        // POST api/users
-        [HttpPut]
+        [HttpPut("{id}")]
         public virtual void update(long id, [FromBody]ExpandoObject attributes)
         {  
             T model = Model<T>.Get(id);
+
             bool trackModel = false;
             BeforeAll(ref trackModel);
             Validate(model);
             BeforeUpdate(model, ref trackModel); 
+            BeforeSave(model, ref trackModel);
             model.UpdateAttributes(attributes);
             AfterUpdate(model);
+            AfterSave(model);
             AfterAll();          
         }
 

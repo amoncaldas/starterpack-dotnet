@@ -37,6 +37,14 @@ namespace StarterPack.Controllers
 
         }
 
+        protected virtual void BeforeStore(T model) {
+
+        }
+
+        protected virtual void BeforeStore(T model,  ref bool trackModel) {
+
+        }        
+
         protected virtual void BeforeSearch(ref IQueryable<T> query) {
 
         }
@@ -79,11 +87,11 @@ namespace StarterPack.Controllers
 
         }
 
-        protected virtual void AfterSearch(ref IQueryable<T> query, IEnumerable<T> models) {
+        protected virtual void AfterStore(T model) {
 
-        }
+        }        
 
-        protected virtual void AfterSearch(IEnumerable<T> models) {
+        protected virtual void AfterSearch(ref IQueryable<T> query, List<T> models) {
 
         }
 

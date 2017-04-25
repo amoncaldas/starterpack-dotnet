@@ -41,7 +41,7 @@ namespace StarterPack.Controllers
                 .Select(ur => ur.Role.Slug.ToLower())
                 .ToList();
 
-            var token = JwtHelper.Generate(user.Id, roles, _tokenProviderOptions);                
+            var token = JwtHelper.Generate(user.Id.Value, roles, _tokenProviderOptions);                
 
             return StatusCode(201, new { token = token });
         }              

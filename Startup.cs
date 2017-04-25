@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Http;
 using StarterPack.Core;
 using FluentValidation;
 using StarterPack.Core.Validation;
-
+using Newtonsoft.Json;
 
 namespace StarterPack
 {
@@ -63,6 +63,7 @@ namespace StarterPack
                 {
                     NamingStrategy = new SnakeCaseNamingStrategy()
                 };
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
             //Configure Authentication Options
