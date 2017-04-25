@@ -73,7 +73,6 @@ namespace StarterPack
 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();        
 
-
             var connectionString = Configuration["DbContextSettings:ConnectionString"];
 
             services.AddDbContext<Models.DatabaseContext>(

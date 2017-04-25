@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace StarterPack.Models
 {
-    public class Role : Model<Role>
+    public class Role : Model<Role>, IEquatable<Role>
     {
         [Required]
         public string Title { get; set; }
@@ -20,9 +20,20 @@ namespace StarterPack.Models
         public List<UserRole> UserRoles { get; set; }
 
         [NotMapped, JsonIgnore]
-        public override DateTime CreatedAt { get; set; }
+        public override DateTime? CreatedAt { get; set; }
 
         [NotMapped, JsonIgnore]
-        public override DateTime UpdatedAt { get; set; }        
+        public override DateTime? UpdatedAt { get; set; }
+
+        public Role() {}
+
+        public Role(long? id) {
+            this.Id = id;
+        } 
+
+        bool IEquatable<Role>.Equals(Role other)
+        {
+            return null != other && Id == other.Id;
+        }   
     }
 }
