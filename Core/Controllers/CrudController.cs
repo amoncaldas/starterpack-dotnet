@@ -5,13 +5,14 @@ using System.Linq;
 using StarterPack.Core.Validation;
 using FluentValidation.Results;
 
-namespace StarterPack.Controllers
+namespace StarterPack.Core.Controllers
 {
     [Route("api/[controller]")]
     public abstract partial class CrudController<T> : Controller where T : Model<T>
-    {  
-                
+    { 
+  
         public CrudController() {
+           
         }
 
         // GET api/users
@@ -27,7 +28,8 @@ namespace StarterPack.Controllers
             
             List<T> models = query.ToList();
             AfterSearch(ref query, models);
-            AfterAll();
+            AfterAll();            
+           
             return models;            
         }       
 
@@ -53,6 +55,7 @@ namespace StarterPack.Controllers
             BeforeAll(ref trackModel);
             Validate(model);
             BeforeStore(model, ref trackModel);
+            BeforeStore(model);
             BeforeSave(model, ref trackModel);
             model.Save();
             AfterStore(model);

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using StarterPack.Auth;
 using StarterPack.Core;
+using StarterPack.Core.Extensions;
 using StarterPack.Models;
 
 namespace StarterPack

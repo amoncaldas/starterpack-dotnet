@@ -2,6 +2,8 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
+// using https://github.com/JeremySkinner/FluentValidation
+
 namespace StarterPack.Core.Validation
 {
     public class ValidationResourceProvider
@@ -22,7 +24,7 @@ namespace StarterPack.Core.Validation
                     value = Lang.Get("attributes:"+memberInfo.Name);
                 }
             }
-            return value;
+            return value.Replace("attributes:","");
         };
 
         

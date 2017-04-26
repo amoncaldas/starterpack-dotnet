@@ -8,9 +8,10 @@ using StarterPack.Models;
 namespace StarterPack.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20170426150537_RemoveRequiredPasswordFromUser")]
+    partial class RemoveRequiredPasswordFromUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -44,8 +45,7 @@ namespace StarterPack.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("Password")
-                        .IsRequired();
+                    b.Property<string>("Password");
 
                     b.Property<string>("ResetToken");
 

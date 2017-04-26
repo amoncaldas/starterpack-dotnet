@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using StarterPack.Core.Validation;
 using StarterPack.Exception;
 using StarterPack.Models;
 
-namespace StarterPack.Controllers
+namespace StarterPack.Core.Controllers
 {
     public abstract partial class CrudController<T> : Controller where T : Model<T>
     {
