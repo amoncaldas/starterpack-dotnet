@@ -9,6 +9,9 @@ using StarterPack.Core;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Collections.Generic;
+using StarterPack.Core.Validation;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace StarterPack.Controllers
 {   
@@ -27,7 +30,18 @@ namespace StarterPack.Controllers
         [Route("authenticate")]    
         public async Task<object> login([FromBody]Login login)
         {
+            ModelValidator<Login> loginValidator = new ModelValidator<Login>();
+            loginValidator.RuleFor(l => l.Email).NotEmpty().EmailAddress();           
+            loginValidator.RuleFor(l => l.Password).NotEmpty().Length(10,30);
+
+            ValidationResult results = loginValidator.Validate(login);
+         
+            if(!results.IsValid) {
+                throw new Exception.ValidationException(results.Errors);  
+            }
+
             User user = await _tokenProviderOptions.IdentityResolver(login.Email, login.Password);
+            
 
             if (user == null)
             {     

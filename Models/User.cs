@@ -26,7 +26,18 @@ namespace StarterPack.Models
         [NotMapped]
         public List<Role> Roles { get; set; }
 
+        [JsonIgnore, NotMapped]       
+        public string PlainPassword { get; set; }   
+
+        [JsonIgnore]      
+        public string ResetToken { get; set; }  
+
         protected override List<string> Fill { get; set; }
+
+        public User() {
+             this.Fill = new List<string>() { "*" };
+             this.DontFill = new List<string>() {"Password", "Salt", "UserRoles", "CreatedAt", "UpdatedAt"};
+        }
 
         /// <summary>
         /// Método ShouldSerialize* utilizado Json.NET para informar se um atributo deve ser serializado ou não.
@@ -35,13 +46,6 @@ namespace StarterPack.Models
         /// 
         /// </summary>
         /// <returns>true ou false</returns>
-
-
-        public User() {
-             this.Fill = new List<string>() { "*" };
-             this.DontFill = new List<string>() {"Password", "Salt", "UserRoles", "CreatedAt", "UpdatedAt"};
-        }
-
         public bool ShouldSerializeSalt()
         {
             return false;
@@ -82,6 +86,6 @@ namespace StarterPack.Models
                     }
                 });                
             }
-        }        
+        }
     }   
 }

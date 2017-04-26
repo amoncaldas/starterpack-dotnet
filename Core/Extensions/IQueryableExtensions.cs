@@ -12,7 +12,7 @@ using Remotion.Linq.Parsing.Structure;
 // Extension created based in this article
 // http://rion.io/2016/10/19/accessing-entity-framework-core-queries-behind-the-scenes-in-asp-net-core/
 
-namespace StarterPack.Model.Extensions
+namespace StarterPack.Core.Extensions
 {
     public static class IQueryableExtensions
     {

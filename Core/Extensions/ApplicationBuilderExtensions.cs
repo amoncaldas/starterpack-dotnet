@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Builder;
+using StarterPack.Auth;
 
-namespace StarterPack.Auth
+namespace StarterPack.Core.Extensions
 {
-    public static class AuthMiddlewareExtensions
+    public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder UseAuthException(this IApplicationBuilder builder)
         {
