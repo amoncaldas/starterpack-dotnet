@@ -8,18 +8,25 @@ using System.Dynamic;
 using StarterPack.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StarterPack.Models
 {
     public abstract class Model<T> where T :  Model<T>
     {
-        public virtual long ?Id { get; set; }
+        public virtual long? Id { get; set; }
         
         [FromQuery(Name = "created_at")]
-        public virtual DateTime CreatedAt { get; set; }
+        public virtual DateTime? CreatedAt { get; set; }
 
         [FromQuery(Name = "updated_at")]
-        public virtual DateTime UpdatedAt { get; set; }
+        public virtual DateTime? UpdatedAt { get; set; }
+
+        [NotMapped]
+        protected virtual List<string> Fill { get; set; }
+
+        [NotMapped]
+        protected virtual List<string> DontFill { get; set; }
 
         protected readonly DbContext context;
         protected DbSet<T> entities;
@@ -29,6 +36,8 @@ namespace StarterPack.Models
             context = getContext();
             entities = context.Set<T>();
 
+            this.Fill = new List<string> {};
+            this.DontFill = new List<string>() { "Password" };
             this.CreatedAt = this.UpdatedAt = DateTime.Now;
         }
 
@@ -62,6 +71,10 @@ namespace StarterPack.Models
             }
             return getEntities().AsNoTracking().AsEnumerable();
         }
+
+        public static IQueryable<T> BuildQueryById(long? id) {
+            return BuildQuery(s => s.Id == id);          
+        } 
 
         public static IQueryable<T> BuildQuery(Expression<Func<T, bool>> predicate) {
             return Query().Where(predicate);          
@@ -147,17 +160,34 @@ namespace StarterPack.Models
             getContext().SaveChanges();
         } 
 
-        private static void SetAttributes(ref T model, ExpandoObject updatedProperties) {
-            foreach (KeyValuePair<string, object> property in updatedProperties)
+        private static void SetAttributes(ref T model, ExpandoObject attributes) {
+            foreach (KeyValuePair<string, object> attribute in attributes)
             {
-                String propertyName = StringHelper.SnakeCaseToTitleCase(property.Key);
-                PropertyInfo p = model.GetType().GetProperty(propertyName);
+                String propertyName = StringHelper.SnakeCaseToTitleCase(attribute.Key);
+                PropertyInfo property = model.GetType().GetProperty(propertyName);                
 
-                if(p != null) {
-                    p.SetValue(model, property.Value);              
+                if(property != null) {
+                    MergetProperty(model, property, attribute.Value);
                 }
             }            
         }
+
+        public void MergeAttributes(T updatedProperties) {
+            foreach (PropertyInfo property in updatedProperties.GetType().GetProperties())
+            {   
+                MergetProperty(this, property, property.GetValue(updatedProperties));
+            }            
+        }
+
+        private static void MergetProperty(Model<T> model, PropertyInfo property, dynamic value) {
+            if(property.Name != "Id" 
+            && !model.DontFill.Contains(property.Name) 
+            && (model.Fill.Contains(property.Name) || model.Fill.Contains("*"))) {
+                if(value != null) {
+                    property.SetValue(model, value);              
+                }
+            }
+        }                
     }
    
 }

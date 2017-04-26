@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
-using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc;
 using StarterPack.Core.Validation;
 using StarterPack.Exception;
@@ -14,6 +13,10 @@ namespace StarterPack.Controllers
        
         #region Before Events       
         
+        protected virtual T GetSingle(long id) {
+            return Model<T>.Get(id);
+        }
+
         protected virtual void BeforeAll() {
 
         }
@@ -61,11 +64,7 @@ namespace StarterPack.Controllers
 
         }
 
-        protected virtual void BeforeUpdate(T model) {
-
-        }
-
-        protected virtual void BeforeUpdate(T model, ref bool trackModel) {
+        protected virtual void BeforeUpdate(T model, T modelAttributes, ref bool trackModel) {
 
         }
 

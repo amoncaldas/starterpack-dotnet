@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using StarterPack.Models;
-using System.Dynamic;
 using System.Linq;
 using StarterPack.Core.Validation;
 using FluentValidation.Results;
@@ -40,7 +39,7 @@ namespace StarterPack.Controllers
             bool trackModel = false;
             BeforeAll(ref trackModel);            
             BeforeGet(id, ref trackModel);
-            T model = Model<T>.Get(id);
+            T model = GetSingle(id);
             AfterGet(model);           
             AfterAll();
             return model;
@@ -64,19 +63,23 @@ namespace StarterPack.Controllers
 
        // POST api/users
         [HttpPut("{id}")]
-        public virtual void update(long id, [FromBody]ExpandoObject attributes)
+        public virtual IActionResult update(long id, [FromBody]T attributes)
         {  
-            T model = Model<T>.Get(id);
-
+            T model = GetSingle(id);
+            model.MergeAttributes(attributes);
+            
             bool trackModel = false;
-            BeforeAll(ref trackModel);
+
+            BeforeAll(ref trackModel);            
             Validate(model);
-            BeforeUpdate(model, ref trackModel); 
+            BeforeUpdate(model, attributes, ref trackModel); 
             BeforeSave(model, ref trackModel);
-            model.UpdateAttributes(attributes);
+            model.Update();
             AfterUpdate(model);
             AfterSave(model);
-            AfterAll();          
+            AfterAll();   
+
+            return StatusCode(201, model);       
         }
 
         // DELETE api/values/5

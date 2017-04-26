@@ -16,10 +16,10 @@ namespace StarterPack.Models
         public override long? Id { get; set; }
 
         [NotMapped, JsonIgnore]
-        public override DateTime CreatedAt { get; set; }
+        public override DateTime? CreatedAt { get; set; }
 
         [NotMapped, JsonIgnore]
-        public override DateTime UpdatedAt { get; set; }
+        public override DateTime? UpdatedAt { get; set; }
 
         public UserRole() {}
 

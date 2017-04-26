@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace StarterPack.Models
@@ -16,7 +17,7 @@ namespace StarterPack.Models
         [Required]
         public string Password { get; set; }   
 
-        [Required]
+        [Required, JsonIgnore]
         public string Salt { get; set; }  
 
         [JsonIgnore]
@@ -25,6 +26,8 @@ namespace StarterPack.Models
         [NotMapped]
         public List<Role> Roles { get; set; }
 
+        protected override List<string> Fill { get; set; }
+
         /// <summary>
         /// Método ShouldSerialize* utilizado Json.NET para informar se um atributo deve ser serializado ou não.
         /// O comportamento da deserialização não é modificado.
@@ -32,9 +35,11 @@ namespace StarterPack.Models
         /// 
         /// </summary>
         /// <returns>true ou false</returns>
-        public bool ShouldSerializePassword()
-        {
-            return false;
+
+
+        public User() {
+             this.Fill = new List<string>() { "*" };
+             this.DontFill = new List<string>() {"Password", "Salt", "UserRoles", "CreatedAt", "UpdatedAt"};
         }
 
         public bool ShouldSerializeSalt()
@@ -51,11 +56,32 @@ namespace StarterPack.Models
         }
 
         public void mapFromRoles() {
-            this.UserRoles = new List<UserRole>();
+            if(this.UserRoles == null) {
+                this.UserRoles = new List<UserRole>();
 
-            this.Roles?.ForEach(role => {
-                this.UserRoles.Add(new UserRole(role.Id));
-            });
+                this.Roles?.ForEach(role => {
+                    Role roleLoaded = Role.Get(role.Id.Value);
+                    if(roleLoaded != null)
+                        this.UserRoles.Add(new UserRole(roleLoaded));
+                });
+            } else {
+                //remove todo que não tem na lista de roles
+                this.UserRoles.RemoveAll(ur => {
+                    if(ur.Role == null && ur.RoleId != null) {
+                        ur.Role = new Role(ur.RoleId);
+                    }
+                    return !this.Roles.Contains(ur.Role);
+                });
+
+                //adiciona os que não ainda não existem
+                this.Roles?.ForEach(role => {
+                    if(!this.UserRoles.Select(ur => ur.Role).Contains(role)) {
+                        Role roleLoaded = Role.Get(role.Id.Value);
+                        if(roleLoaded != null)
+                            this.UserRoles.Add(new UserRole(roleLoaded));
+                    }
+                });                
+            }
         }        
     }   
 }
