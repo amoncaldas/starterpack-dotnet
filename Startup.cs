@@ -54,7 +54,7 @@ namespace StarterPack
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            var builder = services.AddMvc();//.AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander())); 
+            var builder = services.AddMvc().AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander())); 
               
 
             builder.AddMvcOptions(options => {

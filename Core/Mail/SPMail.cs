@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace StarterPack.Core.Mail
 {
@@ -17,6 +18,10 @@ namespace StarterPack.Core.Mail
         public string Encoding;
 
         public string Body;
+
+        public string Template;
+
+        public ViewDataDictionary TemplateData;
 
         public SPMail() {
             Encoding = "uft-8";

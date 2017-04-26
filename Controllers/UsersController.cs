@@ -2,7 +2,6 @@ using StarterPack.Models;
 using System.Linq;
 using StarterPack.Core.Validation;
 using FluentValidation;
-using StarterPack.Core;
 
 namespace StarterPack.Controllers
 {    
@@ -12,8 +11,7 @@ namespace StarterPack.Controllers
             // Http Request data can be accessed using the folowing code
             // HttpContext.Request;  
             // Exemplo de envio de email          
-            ViewData["url"] = "aaaaaaaaa.com";
-            MailSender.SendEmailAsync("amoncaldas@yahoo.com.br","teste","Password", ViewData);
+           
         }     
 
         protected override void BeforeGet(long id, ref bool trackModel) {
