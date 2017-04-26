@@ -10,6 +10,7 @@ namespace StarterPack
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
+                .UseWebRoot("public")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()

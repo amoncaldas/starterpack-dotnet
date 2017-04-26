@@ -88,6 +88,11 @@ namespace StarterPack
             GetServiceLocator.Instance = app.ApplicationServices;
 
             //Add support to Static Files.
+            DefaultFilesOptions options = new DefaultFilesOptions();
+            options.DefaultFileNames.Clear();
+            options.DefaultFileNames.Add("client/index.html");
+
+            app.UseDefaultFiles(options);
             app.UseStaticFiles(); 
 
             //Configure Authentication

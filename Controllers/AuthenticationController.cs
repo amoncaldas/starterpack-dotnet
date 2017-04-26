@@ -44,7 +44,12 @@ namespace StarterPack.Controllers
             var token = JwtHelper.Generate(user.Id.Value, roles, _tokenProviderOptions);                
 
             return StatusCode(201, new { token = token });
-        }              
+        }    
+
+        [HttpGet]
+        public void check() {
+
+        }          
 
         [HttpGet]
         [Route("authenticate/user")]
