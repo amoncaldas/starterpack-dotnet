@@ -20,7 +20,7 @@ namespace StarterPack.Exception
         public override void OnException(ExceptionContext context)
         {
            
-            List<ApiError> apiErrors = new List<ApiError>();
+            List<ApiError> apiErrors = new List<ApiError>();  
 
             if (context.Exception is ApiException)
             {

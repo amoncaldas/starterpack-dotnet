@@ -14,6 +14,7 @@ Apaga a última migration gerada
 Gera um arquivo .sql referente ao conteudo das migrations
 
 - dotnet ef database update
+- dotnet ef database update -e Local
 Roda as migrations
 
 http://www.jerriepelser.com/blog/validation-response-aspnet-core-webapi/

@@ -49,7 +49,12 @@ namespace StarterPack.Models
         public bool ShouldSerializeSalt()
         {
             return false;
-        }        
+        }   
+
+        public bool ShouldSerializePassword()
+        {
+            return false;
+        }             
 
         public void mapToRoles() {
             this.Roles = new List<Role>(); 

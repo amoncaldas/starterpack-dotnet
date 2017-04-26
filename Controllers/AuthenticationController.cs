@@ -15,7 +15,7 @@ using FluentValidation.Results;
 
 namespace StarterPack.Controllers
 {   
-    [Route("api/")]
+    [Route("api/v1/")]
     [Authorize]
     public class AuthenticationController : Controller
     {       
@@ -32,7 +32,7 @@ namespace StarterPack.Controllers
         {
             ModelValidator<Login> loginValidator = new ModelValidator<Login>();
             loginValidator.RuleFor(l => l.Email).NotEmpty().EmailAddress();           
-            loginValidator.RuleFor(l => l.Password).NotEmpty().Length(10,30);
+            loginValidator.RuleFor(l => l.Password).NotEmpty();
 
             ValidationResult results = loginValidator.Validate(login);
          
@@ -61,6 +61,7 @@ namespace StarterPack.Controllers
         }    
 
         [HttpGet]
+        [Route("authenticate/check")]
         public void check() {
 
         }          
@@ -78,16 +79,11 @@ namespace StarterPack.Controllers
                 .AsNoTracking()
                 .First();
             
+            user.mapToRoles();
+
             //format render to avoid circular reference
             return new {
-                Name = user.Name,
-                Email = user.Email,
-                CreatedAt = user.CreatedAt,
-                UpdatedAt = user.UpdatedAt,
-                Roles = user.UserRoles.Select(ur => new {
-                    Slug = ur.Role.Slug,
-                    Title = ur.Role.Title
-                })
+                User = user
             };
         }        
     }    

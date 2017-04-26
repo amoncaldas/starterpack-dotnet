@@ -14,7 +14,7 @@ namespace StarterPack.Mail
             _user = user;
         }
 		public override SPMail Build()
-		{
+		{ 
 			SPMail mail = new SPMail(); 
             MailAddress to = new MailAddress(_user.Email, _user.Name);            
             mail.To = new List<MailAddress>(){to} ; 

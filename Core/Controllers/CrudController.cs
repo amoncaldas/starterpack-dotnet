@@ -7,7 +7,7 @@ using FluentValidation.Results;
 
 namespace StarterPack.Core.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public abstract partial class CrudController<T> : Controller where T : Model<T>
     { 
   
@@ -17,7 +17,7 @@ namespace StarterPack.Core.Controllers
 
         // GET api/users
         [HttpGet]
-        public IEnumerable<T> Index([FromQuery]T model)
+        public object Index([FromQuery]T model)
         {           
             bool trackModels = false;
             BeforeAll(ref trackModels);
@@ -30,7 +30,10 @@ namespace StarterPack.Core.Controllers
             AfterSearch(ref query, models);
             AfterAll();            
            
-            return models;            
+            return new {
+                Items = models,
+                Total = models.Count()
+            };            
         }       
 
 

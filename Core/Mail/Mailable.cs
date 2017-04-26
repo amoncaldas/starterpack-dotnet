@@ -6,20 +6,20 @@ namespace StarterPack.Core.Mail
     {       
         public abstract SPMail Build();
 
-        public void Send(MailAddress to = null){            
-            if(to != null) {
-                List<MailAddress> tos = new List<MailAddress>(){to};
-                Send(to);
-            }
-            else {
-                Send();
-            }           
+        public void Send(MailAddress to = null){       
+            List<MailAddress> tos = null;
+
+            if(to != null)
+                tos = new List<MailAddress>() { to };
+
+            SendAsync(tos);           
         }
         
 		public async void SendAsync(List<MailAddress> to)
 		{
 			SPMail sPMail = Build();
-			if (to != null)
+
+			if (to != null) 
 			{
 				sPMail.To = to;
 			}

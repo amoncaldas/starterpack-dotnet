@@ -19,8 +19,8 @@ namespace StarterPack.Controllers
 
         protected override void ApplyFilters(ref IQueryable<User> query) {
             query = query.Include(u => u.UserRoles).ThenInclude(ur => ur.Role);
-
-            if( HttpContext.Request.Query["id"].First() != null ) {
+ 
+            if( HttpContext.Request.Query.ContainsKey("id") ) {
                 query = query.Where(user => user.Id == long.Parse(HttpContext.Request.Query["id"].First()));
             }
         }
@@ -61,9 +61,7 @@ namespace StarterPack.Controllers
         protected override void AfterStore(User model) {
            ConfirmRegister confirm = new ConfirmRegister(model);
            confirm.Send();
-        }
-
-
+        } 
 
         //Mapeia Roles para UserRoles
         protected override void BeforeSave(User model, ref bool trackModel) {
