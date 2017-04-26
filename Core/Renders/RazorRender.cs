@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +29,7 @@ namespace StarterPack.Core.Renders
             _serviceProvider = serviceProvider;
         }
  
-        public async Task<string> RenderToStringAsync(string viewName, ViewDataDictionary viewData)
+        public async Task<string> RenderToStringAsync(string viewName, ExpandoObject data)
         {
             var httpContext = new DefaultHttpContext { RequestServices = _serviceProvider };
             var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
@@ -42,11 +45,11 @@ namespace StarterPack.Core.Renders
                 }
  
                 var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary());
-                viewDictionary.Model = viewData;                
+                viewDictionary.Model = data;
 
                 TempDataDictionary dict = new TempDataDictionary(actionContext.HttpContext, _tempDataProvider); 
-                var viewContext = new ViewContext(actionContext, viewResult.View, viewDictionary, dict, sw, new HtmlHelperOptions());
-                viewContext.ViewData = viewData;
+                var viewContext = new ViewContext(actionContext, viewResult.View, viewDictionary, dict, sw, new HtmlHelperOptions());                
+                PopulateViewData(viewContext.ViewData, data);           
  
                 await viewResult.View.RenderAsync(viewContext);
                 string view = sw.ToString();
@@ -58,6 +61,14 @@ namespace StarterPack.Core.Renders
             get {
                 return (IViewRenderService)Startup.GetServiceLocator.Instance.GetService(typeof(IViewRenderService));
             }
+        }
+
+        protected void PopulateViewData(ViewDataDictionary viewData, ExpandoObject data){           
+            IDictionary<string, object> propertyValues = (IDictionary<string, object>)data;
+            foreach (var item in propertyValues)
+            {               
+                viewData[item.Key] = item.Value;
+            }          
         }
     }
 }

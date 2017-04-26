@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StarterPack.Core.Mail
 {
@@ -6,16 +7,36 @@ namespace StarterPack.Core.Mail
     {       
         public abstract SPMail Build();
 
-        public void Send(MailAddress to = null){       
-            List<MailAddress> tos = null;
+        public void Send(MailAddress to){          
+            SendMail(new List<MailAddress>() { to });           
+        }
 
-            if(to != null)
-                tos = new List<MailAddress>() { to };
+		 public void Send(List<MailAddress> tos){          
+            SendMail(tos);           
+        }
 
-            SendAsync(tos);           
+		 public void Send(){ 
+            SendMail(null);           
+        }
+
+		public Task SendAsync(MailAddress to){          
+            return SendMailAsync(new List<MailAddress>() { to });           
+        }
+
+		 public Task SendAsync(List<MailAddress> tos){          
+            return SendMailAsync(tos);           
+        }
+
+		 public Task SendAsync(){ 
+            return SendMailAsync(null);           
         }
         
-		public async void SendAsync(List<MailAddress> to)
+		private async void SendMail(List<MailAddress> tos)
+		{
+			await SendMailAsync(tos);			
+		}
+
+		private Task SendMailAsync(List<MailAddress> to)
 		{
 			SPMail sPMail = Build();
 
@@ -23,7 +44,7 @@ namespace StarterPack.Core.Mail
 			{
 				sPMail.To = to;
 			}
-			await MailSender.SendEmailAsync(sPMail);
+			return MailSender.SendEmailAsync(sPMail);			
 		}
 
 	}

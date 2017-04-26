@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System;
 using StarterPack.Core.Mail;
 using StarterPack.Core.Renders;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Dynamic;
 
 // using https://github.com/jstedfast/MailKit
 
@@ -23,7 +23,7 @@ namespace StarterPack.Core
         /// <param name="template"></param>
         /// <param name="ViewData"></param>
         /// <returns></returns>
-        public static async Task SendEmailAsync(string toEmail, string subject, string template, ViewDataDictionary ViewData)
+        public static async Task SendEmailAsync(string toEmail, string subject, string template, ExpandoObject ViewData)
         {
             MailAddress to = new MailAddress(toEmail, toEmail);            
             await SendEmailAsync(to, subject, template, ViewData);
@@ -37,7 +37,7 @@ namespace StarterPack.Core
         /// <param name="template"></param>
         /// <param name="ViewData"></param>
         /// <returns></returns>
-        public static async Task SendEmailAsync(MailAddress to, string subject, string template, ViewDataDictionary ViewData)
+        public static async Task SendEmailAsync(MailAddress to, string subject, string template, ExpandoObject ViewData)
         {
             string defaultMailFrom = Env.Config("MAIL_FROM");
             string defaultMailName = Env.Config("MAIL_NAME");  
@@ -54,7 +54,7 @@ namespace StarterPack.Core
         /// <param name="template"></param>
         /// <param name="ViewData"></param>
         /// <returns></returns>
-        public static async Task SendEmailAsync(MailAddress from, MailAddress to, string subject, string template, ViewDataDictionary ViewData)
+        public static async Task SendEmailAsync(MailAddress from, MailAddress to, string subject, string template, ExpandoObject ViewData)
         {
             List<MailAddress> toList = new List<MailAddress>(){to};                      
             string message = await RazorRender.service.RenderToStringAsync(template, ViewData);
@@ -79,6 +79,15 @@ namespace StarterPack.Core
 
             MimeMessage message = new MimeMessage();
             var builder = new BodyBuilder ();
+
+            if(emailMessage.From.Count == 0) {               
+                emailMessage.From.Add(getDefaultFrom());                
+            }
+
+            if(!emailMessage.Rendered) {
+                emailMessage.Body = await RazorRender.service.RenderToStringAsync(emailMessage.Template, emailMessage.TemplateData);
+                emailMessage.Rendered = true;
+            }            
            
             if(emailMessage.Plain) {
                 builder.TextBody =  emailMessage.Body;
@@ -134,29 +143,31 @@ namespace StarterPack.Core
         /// <param name="from"></param>
         /// <returns></returns>
         private static async Task SendEmailAsync(List<MailAddress> toList, string subject, string message, MailAddress from = null, bool plain = false)
-        {
-            string defaultMailFrom = Env.Config("MAIL_FROM");
-            string defaultMailName = Env.Config("MAIL_NAME");  
-            
-            if(from == null && defaultMailFrom == "DEFAULT_FROM_MAIL")  {
-                 throw new System.Exception("You must either pass a from KeyValuePair or set the MAIL_FROM and the MAIL_NAME in config");
-            }
-           
+        {           
             SPMail emailMessage =  new SPMail();
-            emailMessage.Plain = plain;
-            MailAddress defaultFrom = new MailAddress(defaultMailFrom, defaultMailName);
-            if(from != null) {               
-                emailMessage.From.Add(from);
-            }
-            else {
-                emailMessage.From.Add(defaultFrom);
-            }
+            emailMessage.Rendered = true;
+            emailMessage.Plain = plain;            
+            if(from == null) {               
+                emailMessage.From.Add(getDefaultFrom());                
+            }            
             
             emailMessage.To.AddRange(toList);
 
             emailMessage.Subject = subject;           
             emailMessage.Body = message;          
             await SendEmailAsync(emailMessage);            
+        }
+
+        private static MailAddress getDefaultFrom(){
+            MailAddress from =null;
+            string defaultMailFrom = Env.Config("MAIL_FROM");
+            string defaultMailName = Env.Config("MAIL_NAME");  
+            
+            if(from == null && defaultMailFrom == "DEFAULT_FROM_MAIL")  {
+                 throw new System.Exception("You must either pass a from KeyValuePair or set the MAIL_FROM and the MAIL_NAME in config");
+            }
+            from = new MailAddress(defaultMailFrom, defaultMailName);
+            return from;
         }
     }
     

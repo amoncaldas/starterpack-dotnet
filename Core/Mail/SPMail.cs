@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace StarterPack.Core.Mail
 {
@@ -21,7 +21,9 @@ namespace StarterPack.Core.Mail
 
         public string Template;
 
-        public ViewDataDictionary TemplateData;
+        public dynamic TemplateData;
+
+        public bool Rendered;
 
         public SPMail() {
             Encoding = "uft-8";
@@ -29,6 +31,8 @@ namespace StarterPack.Core.Mail
             To = new List<MailAddress>();
             From = new List<MailAddress>();
             Attachments = new List<KeyValuePair<string, Stream>>();
+            TemplateData = new ExpandoObject();
+            Rendered = false;
         }
         
     }

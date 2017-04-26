@@ -18,6 +18,11 @@
 		"scale_precision_error":"'{PropertyName}' não pode ser mais do que {expectedPrecision} digitos no total, com {expectedScale} decimais. {digits} digitos e {actualScale} decimaais não encontrado.",
 		"notnull_error":"'{PropertyName}' não pode ser vazio.",
 		"enum_error":"'{PropertyName}' tem uma faixa de valores que não inclui '{PropertyValue}'."
+	},
+
+	"mail": {
+		"recoveryPassTitle": "Recuperação de senha",
+		"registrationData": "Dados de cadastro"
 	}
 	
 }

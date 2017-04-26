@@ -20,12 +20,17 @@ namespace StarterPack.Core
 
         public static string GenerateSalt()  
         {  
-            byte[] bytes = new byte[128 / 8];  
+            byte[] bytes = new byte[20];  
             using(var keyGenerator = RandomNumberGenerator.Create())  
             {  
                 keyGenerator.GetBytes(bytes);  
-                return BitConverter.ToString(bytes).Replace("-", "").ToLower();  
+                return BitConverter.ToString(bytes).Replace("-", "").ToLower();
             }  
+        }
+
+        public static string GeneratePassword(int length = 8)  
+        {  
+            return Guid.NewGuid().ToString().Substring(0, length);                        
         }
 
         public static string GenerateHash(string text)  

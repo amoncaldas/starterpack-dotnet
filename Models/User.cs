@@ -7,8 +7,7 @@ using Newtonsoft.Json;
 namespace StarterPack.Models
 {
     public class User : Model<User>
-    {  
-
+    {
         public string Name { get; set; }
         
         [Required]
