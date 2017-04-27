@@ -14,8 +14,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 
 namespace StarterPack.Core.Renders
-{   
-
+{
     public class RazorRender : IViewRenderService
     {
         private readonly IRazorViewEngine _razorViewEngine;
@@ -37,7 +36,7 @@ namespace StarterPack.Core.Renders
  
             using (var sw = new StringWriter())
             {
-                var viewResult = _razorViewEngine.FindView(actionContext, viewName, false);//_razorViewEngine.GetView("", viewName, false);
+                var viewResult = _razorViewEngine.FindView(actionContext, viewName, false);
  
                 if (viewResult.View == null)
                 {

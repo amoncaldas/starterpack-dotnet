@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace StarterPack.Exception
+namespace StarterPack.Core.Exception
 {
     public class ApiValidationException : System.Exception
     {

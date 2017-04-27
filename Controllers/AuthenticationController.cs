@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using StarterPack.Auth;
 using System.Threading.Tasks;
-using StarterPack.Exception;
+using StarterPack.Core.Exception;
 using StarterPack.Core;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -37,7 +37,7 @@ namespace StarterPack.Controllers
             ValidationResult results = loginValidator.Validate(login);
          
             if(!results.IsValid) {
-                throw new Exception.ValidationException(results.Errors);  
+                throw new Core.Exception.ValidationException(results.Errors);  
             }
 
             User user = await _tokenProviderOptions.IdentityResolver(login.Email, login.Password);

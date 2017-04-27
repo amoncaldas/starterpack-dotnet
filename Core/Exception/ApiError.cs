@@ -1,4 +1,4 @@
-namespace StarterPack.Exception
+namespace StarterPack.Core.Exception
 {
     public class ApiError
     {
