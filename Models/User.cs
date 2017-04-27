@@ -8,9 +8,10 @@ namespace StarterPack.Models
 {
     public class User : Model<User>
     {
+        [MaxLength(255)]
         public string Name { get; set; }
         
-        [Required]
+        [Required]       
         public string Email { get; set; }
 
         [Required]
@@ -19,7 +20,7 @@ namespace StarterPack.Models
         [Required, JsonIgnore]
         public string Salt { get; set; }  
 
-        [JsonIgnore]
+        [JsonIgnore]       
         public List<UserRole> UserRoles { get; set; }
 
         [NotMapped]
