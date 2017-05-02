@@ -22,7 +22,10 @@ namespace StarterPack.Controllers
                 throw new ValidationException(results.Errors);  
             }
 
-            User user = Models.User.BuildQuery(u => u.Email == login.Email).FirstOrDefault();
+            User user  = null;
+            if(Models.User.BuildQuery(u => u.Email == login.Email).Count() > 0) {
+                user = Models.User.BuildQuery(u => u.Email == login.Email).First();
+            }            
 
             if(user != null){
                 user.UpdateResetPasswordToken();

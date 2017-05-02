@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using Newtonsoft.Json;
 using StarterPack.Core;
 
@@ -9,6 +12,9 @@ namespace StarterPack.Models
 {
     public class User : Model<User>
     {
+        [NotMapped, JsonIgnore]
+        private string _salt;
+
         [MaxLength(255)]
         public string Name { get; set; }
         
@@ -19,7 +25,12 @@ namespace StarterPack.Models
         public string Password { get; set; }   
 
         [Required, JsonIgnore]
-        public string Salt { get; set; }  
+        public string Salt { 
+            get  {
+                return _salt;
+            }
+        }
+
 
         [JsonIgnore]       
         public List<UserRole> UserRoles { get; set; }
@@ -31,7 +42,10 @@ namespace StarterPack.Models
         public string PlainPassword { get; set; }   
 
         [JsonIgnore]      
-        public string ResetToken { get; set; }  
+        public string ResetToken { get; set; } 
+
+        [JsonIgnore]  
+        public DateTime? ResetTokenDate { get; set; }  
 
         protected override List<string> Fill { get; set; }
 
@@ -103,7 +117,7 @@ namespace StarterPack.Models
         public void DefinePassword(){
             // Se a senha ainda não tiver sido ddefinida, a define            
             if (this.PlainPassword == null) {
-                this.Salt = StringHelper.GenerateSalt();
+                SetSalt();
                 this.PlainPassword = StringHelper.GeneratePassword();                     
             }
             
@@ -115,9 +129,8 @@ namespace StarterPack.Models
         /// </summary>
         /// <param name="resetLogin"></param>
         public void UpdatePassword(Login resetLogin) {
-            this.PlainPassword = resetLogin.Password;
-            // TODO: check if the token is still valid
-            if(this.ResetToken == resetLogin.Token){
+            this.PlainPassword = resetLogin.Password;           
+            if(ValidateResetToken()){
                 this.ResetToken = null;
                 this.DefinePassword();                
             }
@@ -129,11 +142,29 @@ namespace StarterPack.Models
         /// <summary>
         /// Atualiza o reset token de um usuário usando uma string aleatória [mas não persiste]
         /// </summary>
-        public void UpdateResetPasswordToken(){
-             // TODO: generate a token that has a timestamp stored in, so we can check if it is valid
-            this.ResetToken = StringHelper.GenerateResetPasswordToken();
-        }
+        public void UpdateResetPasswordToken(){           
+            string now  = DateTime.UtcNow.ToString();
+            this.ResetToken = null;
+            if(this.Salt == null) {
+                SetSalt();
+            }
+            this.ResetToken = StringHelper.GenerateHash(StringHelper.GeneratePassword()); 
+            this.ResetTokenDate = DateTime.UtcNow;
+        }  
 
-                
+        /// <summary>
+        /// Valida se o resettoken ainda não expirou
+        /// </summary>
+        /// <returns></returns>
+        public bool ValidateResetToken() {           
+            return this.ResetTokenDate.Value.AddHours(1) > DateTime.UtcNow;
+        }   
+
+        /// <summary>
+        /// Define o salt
+        /// </summary>
+        private void SetSalt(){           
+            _salt = StringHelper.GenerateSalt();
+        }
     }   
 }

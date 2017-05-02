@@ -31,12 +31,7 @@ namespace StarterPack.Core
         public static string GeneratePassword(int length = 8)  
         {  
             return Guid.NewGuid().ToString().Substring(0, length);                        
-        }
-
-        public static string GenerateResetPasswordToken()  
-        { 
-            return GenerateHash(DateTime.UtcNow.Ticks.ToString());                                   
-        }
+        }      
 
         public static string GenerateHash(string text)  
         {  
@@ -44,10 +39,10 @@ namespace StarterPack.Core
             using(var sha256 = SHA256.Create())  
             {  
                 // Send a sample text to hash.  
-                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));  
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
                 // Get the hashed string.  
                 return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();  
             }  
-        }                   
+        }
     }
 }
