@@ -102,7 +102,12 @@ namespace StarterPack.Models
         }   
 
         public void Save(bool applyChanges = true) {
-            Save((T)this, applyChanges);            
+            if(this.Id != null) {
+                Update(applyChanges);
+            }
+            else {
+                Save((T)this, applyChanges);            
+            }            
         }
 
         public static void Save(T entity, bool applyChanges = true) {

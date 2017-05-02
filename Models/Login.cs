@@ -12,5 +12,7 @@ namespace StarterPack.Models
 
         [Required, MinLength(10, ErrorMessage="A senha deve ter no mínimo 10 caracteres")]
         public string Password { get; set; }   
+
+        public string Token {get;set;}
     }
 }

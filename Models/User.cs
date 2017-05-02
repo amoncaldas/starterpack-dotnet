@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Newtonsoft.Json;
+using StarterPack.Core;
 
 namespace StarterPack.Models
 {
@@ -64,6 +65,9 @@ namespace StarterPack.Models
             });
         }
 
+        /// <summary>
+        /// Mapeia os roles definidos no transiente 'Roles' de um usuário para o relacionamento UserRoles
+        /// </summary>
         public void mapFromRoles() {
             if(this.UserRoles == null) {
                 this.UserRoles = new List<UserRole>();
@@ -92,5 +96,44 @@ namespace StarterPack.Models
                 });                
             }
         }
+
+        /// <summary>
+        /// Define uma senha e o salt aleatória para o objeto do usuário, se ainda não tiver sido definida [mas não persiste]
+        /// </summary>
+        public void DefinePassword(){
+            // Se a senha ainda não tiver sido ddefinida, a define            
+            if (this.PlainPassword == null) {
+                this.Salt = StringHelper.GenerateSalt();
+                this.PlainPassword = StringHelper.GeneratePassword();                     
+            }
+            
+            this.Password = StringHelper.GenerateHash( this.PlainPassword + this.Salt );           
+        }
+
+        /// <summary>
+        /// Atualiza a a senha e define como nulo o reset token de um usuário [mas não persiste]
+        /// </summary>
+        /// <param name="resetLogin"></param>
+        public void UpdatePassword(Login resetLogin) {
+            this.PlainPassword = resetLogin.Password;
+            // TODO: check if the token is still valid
+            if(this.ResetToken == resetLogin.Token){
+                this.ResetToken = null;
+                this.DefinePassword();                
+            }
+            else {
+                throw new System.Exception("passwords.invalidPasswordResetToken");
+            }           
+        }
+
+        /// <summary>
+        /// Atualiza o reset token de um usuário usando uma string aleatória [mas não persiste]
+        /// </summary>
+        public void UpdateResetPasswordToken(){
+             // TODO: generate a token that has a timestamp stored in, so we can check if it is valid
+            this.ResetToken = StringHelper.GenerateResetPasswordToken();
+        }
+
+                
     }   
 }

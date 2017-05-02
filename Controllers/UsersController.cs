@@ -53,14 +53,12 @@ namespace StarterPack.Controllers
 
         protected override void BeforeStore(User model) {
             //Gera a senha com um hash para evitar que fique igual a senha codificada fique igual para uma mesma senha
-            model.Salt = StringHelper.GenerateSalt();
-            model.PlainPassword = StringHelper.GeneratePassword();           
-            model.Password = StringHelper.GenerateHash( model.PlainPassword + model.Salt );
+            model.DefinePassword();  
+            model.Save();          
         }
 
         protected override void AfterStore(User model) {
-           ConfirmRegister confirm = new ConfirmRegister(model);
-           confirm.Send();
+           new ConfirmRegister(model).Send();          
         } 
 
         //Mapeia Roles para UserRoles

@@ -9,8 +9,7 @@ namespace StarterPack.Core.Controllers
 {
     [Route("api/v1/[controller]")]
     public abstract partial class CrudController<T> : Controller where T : Model<T>
-    { 
-  
+    {   
         public CrudController() {
            
         }

@@ -32,12 +32,12 @@ namespace StarterPack.Core.Mail
         }
         
 		private async void SendMail(List<MailAddress> tos)
-		{
+		{			
 			await SendMailAsync(tos);			
 		}
 
 		private Task SendMailAsync(List<MailAddress> to)
-		{
+		{			
 			SPMail sPMail = Build();
 
 			if (to != null) 

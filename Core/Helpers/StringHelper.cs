@@ -33,6 +33,11 @@ namespace StarterPack.Core
             return Guid.NewGuid().ToString().Substring(0, length);                        
         }
 
+        public static string GenerateResetPasswordToken()  
+        { 
+            return GenerateHash(DateTime.UtcNow.Ticks.ToString());                                   
+        }
+
         public static string GenerateHash(string text)  
         {  
             // SHA512 is disposable by inheritance.  
