@@ -68,7 +68,7 @@ namespace StarterPack.Core.Controllers
 
        // POST api/users
         [HttpPut("{id}")]
-        public virtual IActionResult update(long id, [FromBody]T attributes)
+        public virtual IActionResult Update(long id, [FromBody]T attributes)
         {  
             T model = GetSingle(id);
             model.MergeAttributes(attributes);
@@ -89,7 +89,7 @@ namespace StarterPack.Core.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void destroy(long id)
+        public void Destroy(long id)
         {
             bool trackModel = false;
             BeforeAll(ref trackModel);

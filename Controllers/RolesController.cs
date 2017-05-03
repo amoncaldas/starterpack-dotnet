@@ -3,9 +3,11 @@ using System.Linq;
 using StarterPack.Core.Validation;
 using FluentValidation;
 using StarterPack.Core.Controllers;
+using StarterPack.Core.Controllers.Attributes;
 
 namespace StarterPack.Controllers
 {
+    [UnpublishAction("store","update", "destroy")]
     public class RolesController : CrudController<Role>
     {
         protected override void ApplyFilters(ref IQueryable<Role> query) { 

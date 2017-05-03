@@ -2,20 +2,19 @@ using StarterPack.Models;
 using System.Linq;
 using StarterPack.Core.Validation;
 using FluentValidation;
-using StarterPack.Core;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using StarterPack.Mail;
 using StarterPack.Core.Controllers;
 
 namespace StarterPack.Controllers
-{    
+{ 
     public class UsersController : CrudController<User>
     {
         public UsersController()  {
             // Http Request data can be accessed using the folowing code
             // HttpContext.Request;
-        }     
+        }    
 
         protected override void ApplyFilters(ref IQueryable<User> query) {
             query = query.Include(u => u.UserRoles).ThenInclude(ur => ur.Role);
