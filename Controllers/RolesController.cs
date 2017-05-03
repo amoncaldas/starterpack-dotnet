@@ -8,6 +8,7 @@ using StarterPack.Core.Controllers.Attributes;
 namespace StarterPack.Controllers
 {
     [UnpublishAction("index","update", "destroy")]
+  
     public class RolesController : CrudController<Role>
     {
         protected override void ApplyFilters(ref IQueryable<Role> query) { 

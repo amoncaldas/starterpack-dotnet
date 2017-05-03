@@ -6,10 +6,12 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using StarterPack.Mail;
 using StarterPack.Core.Controllers;
+using StarterPack.Core.Controllers.Attributes;
 
 namespace StarterPack.Controllers
 { 
     
+    [AuthorizeByRule("index:admin")]
     public class UsersController : CrudController<User>
     {
         public UsersController()  {

@@ -1,9 +1,8 @@
 using System;
 using System.Linq;
-using System.Reflection;
-using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using StarterPack.Core.Helpers;
 
 namespace StarterPack.Core.Controllers.Attributes
 {   
@@ -24,7 +23,7 @@ namespace StarterPack.Core.Controllers.Attributes
 
 		void IActionFilter.OnActionExecuted(ActionExecutedContext context)
 		{
-			
+				// silence is gold
 		}
 
 		/// <summary>
@@ -33,28 +32,10 @@ namespace StarterPack.Core.Controllers.Attributes
 		/// <param name="context"></param>
 		void IActionFilter.OnActionExecuting(ActionExecutingContext context)
 		{
-			string actionName = GetActionName(context.ActionDescriptor);		
+			string actionName = Extractor.GetActionName(context.ActionDescriptor);		
 			if(actionName != null && _unpublishMethods.Any(m => m.ToString().ToLower() == actionName.ToLower())){
 				throw new NotImplementedException("method not available");
 			}
-		}
-
-		/// <summary>
-		/// Recupera o nome da ação (método) que está sendo chamado
-		/// </summary>
-		/// <param name="actionDescriptor"></param>
-		/// <returns></returns>
-		private string GetActionName(ActionDescriptor actionDescriptor) {
-			PropertyInfo[] properties = actionDescriptor.GetType().GetProperties();              
-
-			if(properties != null) {					
-				PropertyInfo prop = properties.First(p => p.Name == "ActionName");
-				if(prop != null) {
-					string actionName = (string)prop.GetValue(actionDescriptor);
-					return actionName;
-				}
-			}
-			return null;
 		}
 	}
 }
