@@ -4,6 +4,8 @@ using StarterPack.Models;
 using System.Linq;
 using StarterPack.Core.Validation;
 using FluentValidation.Results;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace StarterPack.Core.Controllers
 {
@@ -12,6 +14,17 @@ namespace StarterPack.Core.Controllers
     {   
         public CrudController() {
            
+        }
+
+        public  User CurrentUser() {
+             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            //get current logged user with roles
+            return StarterPack.Models.User.BuildQuery(u => u.Id == long.Parse(userId))
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .AsNoTracking()
+                .First();
         }
 
         // GET api/users

@@ -9,6 +9,7 @@ using StarterPack.Core.Controllers;
 
 namespace StarterPack.Controllers
 { 
+    
     public class UsersController : CrudController<User>
     {
         public UsersController()  {

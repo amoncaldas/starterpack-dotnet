@@ -2,7 +2,6 @@ using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using StarterPack.Core.Controllers.Attributes;
 using StarterPack.Core.Validation;
 using StarterPack.Mail;
 using StarterPack.Models;
