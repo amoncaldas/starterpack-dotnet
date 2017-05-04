@@ -17,11 +17,9 @@ namespace StarterPack.Models
         public virtual long? Id { get; set; }
         
         [FromQuery(Name = "created_at")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public virtual DateTime? CreatedAt { get; set; }
 
         [FromQuery(Name = "updated_at")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public virtual DateTime? UpdatedAt { get; set; }
 
         [NotMapped]
@@ -40,6 +38,8 @@ namespace StarterPack.Models
 
             this.Fill = new List<string> {};
             this.DontFill = new List<string>() { "Password" };
+
+            this.CreatedAt = this.UpdatedAt = DateTime.Now;
         }
 
         public Model(DbContext context) : this()

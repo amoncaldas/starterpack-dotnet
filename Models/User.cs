@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using Newtonsoft.Json;
 using StarterPack.Core;
 
@@ -18,19 +16,18 @@ namespace StarterPack.Models
         [MaxLength(255)]
         public string Name { get; set; }
         
-        [Required]       
+        [Required, MaxLength(255)]       
         public string Email { get; set; }
 
-        [Required]
+        [Required, MaxLength(100)]
         public string Password { get; set; }   
 
-        [Required, JsonIgnore]
+        [Required, JsonIgnore, MaxLength(100)]
         public string Salt { 
             get  {
                 return _salt;
             }
         }
-
 
         [JsonIgnore]       
         public List<UserRole> UserRoles { get; set; }

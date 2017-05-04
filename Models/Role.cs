@@ -8,10 +8,10 @@ namespace StarterPack.Models
 {
     public class Role : Model<Role>, IEquatable<Role>
     {
-        [Required]
+        [Required, MaxLength(100)]
         public string Title { get; set; }
         
-        [Required]
+        [Required, MaxLength(30)]
         public string Slug { get; set; }    
 
         [JsonIgnore]
