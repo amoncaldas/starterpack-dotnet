@@ -73,7 +73,7 @@ namespace StarterPack.Models
             return getEntities().AsNoTracking().AsEnumerable();
         }
 
-        public static IQueryable<T> BuildQueryById(long? id) {
+        public static IQueryable<T> BuildQueryById(long id) {
             return BuildQuery(s => s.Id == id);          
         } 
 
