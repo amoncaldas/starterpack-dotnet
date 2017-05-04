@@ -18,6 +18,10 @@ namespace StarterPack.Core.Persistence
                 .HasIndex(u => u.Email)
                 .IsUnique();            
 
+            modelBuilder.Entity<Role>()
+                .HasIndex(u => u.Slug)
+                .IsUnique();
+                
             modelBuilder.Entity<UserRole>()
                 .HasKey(t => new { t.UserId, t.RoleId });
 

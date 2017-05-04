@@ -8,9 +8,10 @@ using StarterPack.Core.Persistence;
 namespace StarterPack.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20170504193403_AddUniqueKeyToRoleSlug")]
+    partial class AddUniqueKeyToRoleSlug
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
