@@ -163,5 +163,32 @@ namespace StarterPack.Models
         private void SetSalt(){           
             _salt = StringHelper.GenerateSalt();
         }
+        
+        /// <summary>
+        /// Verifica se o usuário tem um role especificado
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        public bool HasRole(string role) {
+            if(this.UserRoles.Any(ur => ur.Role.Slug.ToLower() == role.ToLower())) {
+                return true;
+            }	
+            return false;
+        }
+
+        /// <summary>
+        /// Verifica se o usuário todos os roles de uma lista especificada
+        /// </summary>
+        /// <param name="roles"></param>
+        /// <returns></returns>
+        public bool HasRoles(List<string> roles) {
+            foreach (string role in roles)
+            {	
+                if (!HasRole(role)){
+                    return false;
+                }
+            }
+            return true;	
+        }
     }   
 }

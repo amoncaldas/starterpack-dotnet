@@ -1,10 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using StarterPack.Models;
 
-namespace StarterPack.Models.Config
+namespace StarterPack.Core.Persistence
 {
-    public class ModelConfig
+    public partial class DatabaseContext
     {
-        public static void Set(ModelBuilder modelBuilder) {
+        // Todos os models devem ser adicionados ao DbSet aqui para poderem ser transacionados com o banco
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
+        /// <summary>
+        /// Aqui dvem ser configurados os models, especificando restrições e relacionamentos
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        public static void ConfigureModels(ModelBuilder modelBuilder) {
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();            
@@ -22,5 +31,6 @@ namespace StarterPack.Models.Config
                 .WithMany(r => r.UserRoles)
                 .HasForeignKey(ur => ur.RoleId);
         }
+
     }
 }

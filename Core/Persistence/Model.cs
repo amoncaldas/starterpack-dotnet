@@ -9,6 +9,7 @@ using StarterPack.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.ComponentModel.DataAnnotations.Schema;
+using StarterPack.Core.Persistence;
 
 namespace StarterPack.Models
 {
@@ -48,9 +49,8 @@ namespace StarterPack.Models
             entities = context.Set<T>();            
         }
 
-        private static DbContext getContext() {
-            // TODO: encapsulate the Startup.GetServiceLocator in another class
-            return (DbContext) Startup.GetServiceLocator.Instance.GetService(GetContextType());
+        private static DbContext getContext() {            
+            return DatabaseContext.Context(GetContextType());
         }
 
         protected static Type GetContextType() {
