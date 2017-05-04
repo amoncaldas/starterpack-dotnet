@@ -1,14 +1,12 @@
+using System;
 using Microsoft.EntityFrameworkCore;
+using StarterPack.Core.Helpers;
 using StarterPack.Models.Config;
 
-namespace StarterPack.Models
+namespace StarterPack.Core.Persistence
 {
-    //public class GenericRepository<T> : IRepository<T> where T : BaseModel
-    public class DatabaseContext : DbContext
-    {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-
+    public partial class DatabaseContext : DbContext
+    {       
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         { 
             
@@ -17,6 +15,11 @@ namespace StarterPack.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ModelConfig.Set(modelBuilder);            
-        }        
+        } 
+
+        public static DbContext Context(Type dbContextType) {
+           return (DbContext) Services.Instance.GetService(dbContextType);
+        }
+              
     }
 }

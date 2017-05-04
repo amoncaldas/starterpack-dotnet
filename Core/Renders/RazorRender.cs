@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
+using StarterPack.Core.Helpers;
 
 namespace StarterPack.Core.Renders
 {
@@ -58,7 +59,7 @@ namespace StarterPack.Core.Renders
 
         public static IViewRenderService service {            
             get {
-                return (IViewRenderService)Startup.GetServiceLocator.Instance.GetService(typeof(IViewRenderService));
+                return (IViewRenderService)Services.Instance.GetService(typeof(IViewRenderService));
             }
         }
 

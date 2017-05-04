@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using StarterPack.Core.Helpers;
@@ -19,7 +18,7 @@ namespace StarterPack.Core.Controllers.Attributes
 		/// Se o usuário autenticado tiver pelo menos um dos perfis listados, a action poderá ser executada.
 		/// Múltiplas rules (uma para cada action) podem ser especificadas. Ex.: AuthorizeByRule("index:admin", "store:manager, admin").
 		/// </summary>
-		/// <param name="rules"></param>
+		/// <param name="rules">Ex.: AuthorizeByRule("index:admin", "store:manager, admin").</param>
 		public AuthorizeByRule(params string[] rules) {
 			_rules = rules;
     }
@@ -46,12 +45,11 @@ namespace StarterPack.Core.Controllers.Attributes
 				// Verifica se pelo menos um dos roles está associado ao perfil do usuário
 				bool actionAllowed = false;
 				foreach (string roleAllowed in rolesAllowed)
-				{
-					if(user.UserRoles.Any(ur => ur.Role.Slug.ToLower() == roleAllowed.ToLower())) {
-						actionAllowed = true;
+				{	
+						actionAllowed = user.HasRole(roleAllowed);
 						break;
-					}				
 				}	
+
 				// Se o usuário não tem pelo menos um dos roles necessário, nega a execução da action
 				if(!actionAllowed){
 					throw new NotImplementedException("method not available");
