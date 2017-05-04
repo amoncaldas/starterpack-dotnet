@@ -145,6 +145,7 @@ namespace StarterPack.Models
         public virtual void Update(bool applyChanges = true) { 
             var context = getContext();            
             getEntities(context).Update((T)this);
+            UpdatedAt = DateTime.Now;
 
             if(applyChanges) {
                 context.SaveChanges();
@@ -153,6 +154,7 @@ namespace StarterPack.Models
 
         public virtual void UpdateAttributes(ExpandoObject updatedProperties) {
             T model = (T)this;
+            model.UpdatedAt = DateTime.Now;
 
             SetAttributes(ref model, updatedProperties);
             getContext().SaveChanges();
@@ -161,7 +163,7 @@ namespace StarterPack.Models
         public static void UpdateAttributes(long id, ExpandoObject updatedProperties)
         {
             T model = Get(id);
-
+            model.UpdatedAt = DateTime.Now;
             SetAttributes(ref model, updatedProperties);
             getContext().SaveChanges();
         } 
