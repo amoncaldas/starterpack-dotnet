@@ -9,5 +9,28 @@ namespace StarterPack.Core.Persistence
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
 
+        /// <summary>
+        /// Aqui dvem ser configurados os models, especificando restrições e relacionamentos
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        public static void ConfigureModels(ModelBuilder modelBuilder) {
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();            
+
+            modelBuilder.Entity<UserRole>()
+                .HasKey(t => new { t.UserId, t.RoleId });
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(ur => ur.User)
+                .WithMany(u => u.UserRoles)
+                .HasForeignKey(ur => ur.UserId);
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(ur => ur.Role)
+                .WithMany(r => r.UserRoles)
+                .HasForeignKey(ur => ur.RoleId);
+        }
+
     }
 }

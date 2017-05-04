@@ -1,7 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using StarterPack.Core.Helpers;
-using StarterPack.Models.Config;
 
 namespace StarterPack.Core.Persistence
 {
@@ -12,14 +11,14 @@ namespace StarterPack.Core.Persistence
             
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            ModelConfig.Set(modelBuilder);            
-        } 
-
         public static DbContext Context(Type dbContextType) {
            return (DbContext) Services.Instance.GetService(dbContextType);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+           ConfigureModels(modelBuilder);        
+        } 
               
     }
 }
