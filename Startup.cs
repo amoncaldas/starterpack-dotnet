@@ -50,36 +50,36 @@ namespace StarterPack
        
         public IHostingEnvironment env { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        //Use este método para adicionar/configurar serviços ao container
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
             var builder = services.AddMvc().AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander())); 
-              
-
+                          
             builder.AddMvcOptions(options => {
+                //Configura um filtro global para tratar exceptions
                 options.Filters.Add(new ApiExceptionFilter(env));
             });
 
-            builder.AddJsonOptions(options =>  {                    
+            builder.AddJsonOptions(options =>  {  
+                //Configura a nomenclatura na (de)serialização                  
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver()
                 {
                     NamingStrategy = new SnakeCaseNamingStrategy()
                 };
+                //Ajusta a serialização para evitar que fique em loop
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
-            //Configure Authentication Options
+            //configuração da autenticação
             ConfigureAuthOptions(services);
 
             services.AddSingleton<IConfiguration>(Configuration);
 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();        
 
-            var connectionString = Configuration["DbContextSettings:ConnectionString"];
-
+            //Configura o contexto do banco de dados
             services.AddDbContext<Core.Persistence.DatabaseContext>(
-                options => options.UseNpgsql(connectionString));
+                options => options.UseNpgsql(Configuration["DbContextSettings:ConnectionString"]));
 
             ValidatorOptions.ResourceProviderType = typeof(ValidationResourceProvider);
             ValidatorOptions.DisplayNameResolver = ValidationResourceProvider.DisplayNameResolver;
@@ -88,26 +88,27 @@ namespace StarterPack
             
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Use este método para configurar o HTTP Request Pipeline
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             Services.Instance = app.ApplicationServices;
 
-            //Add support to Static Files.
+            //Configura o arquivo que vai ser chamado por default
             DefaultFilesOptions options = new DefaultFilesOptions();
             options.DefaultFileNames.Clear();
             options.DefaultFileNames.Add("client/index.html");
 
+            //Adiciona suporte a arquivos estaticos
             app.UseDefaultFiles(options);
             app.UseStaticFiles(); 
 
-            //Configure Authentication
+            //Configura a autenticação
             ConfigureAuth(app);
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();            
 
-            //Configure CORS
+            //Configura o CORS
             app.UseCors(builder =>
                 builder
                     .WithOrigins("*")
@@ -121,6 +122,7 @@ namespace StarterPack
 
             // Call seeders
             Seeder.Execute();
+
         }         
     }
 }

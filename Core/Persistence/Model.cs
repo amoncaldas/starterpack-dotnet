@@ -48,7 +48,7 @@ namespace StarterPack.Core.Models
             entities = context.Set<T>();            
         }
 
-        private static DbContext getContext() {            
+        protected static DbContext getContext() {            
             return DatabaseContext.Context(GetContextType());
         }
 
@@ -57,13 +57,18 @@ namespace StarterPack.Core.Models
         }
 
         protected static DbSet<T> getEntities(DbContext context = null) {
-            var _context = context == null? getContext() : context;
+            var _context = context == null ? getContext() : context;
             return _context.Set<T>();
         }        
 
         public static EntityEntry<T> Entry(T model) {
             return getContext().Entry<T>(model);
         }
+
+        public static T Get(long id)
+        {            
+            return getEntities().SingleOrDefault(s => s.Id == id);
+        }   
 
         public static IEnumerable<T> GetAll(bool tracked = false) {
             if(tracked) {
@@ -72,34 +77,33 @@ namespace StarterPack.Core.Models
             return getEntities().AsNoTracking().AsEnumerable();
         }
 
-        public static IQueryable<T> BuildQueryById(long? id) {
-            return BuildQuery(s => s.Id == id);          
-        } 
-
-        public static IQueryable<T> BuildQuery(Expression<Func<T, bool>> predicate) {
-            return Query().Where(predicate);          
-        } 
-
-        public static IQueryable<T> Query() { 
-           return getEntities();
-        } 
-
-        public static IQueryable<T> PaginatedQuery(int page, int perPage) {           
-            return Query().Take(perPage).Skip((page-1) * perPage);
-        } 
-
         public static IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate, bool tracked = false) {  
             if(tracked) {
                 return BuildQuery(predicate).AsEnumerable();
             }         
             
             return BuildQuery(predicate).AsNoTracking().AsEnumerable();
+        }         
+
+        public static IQueryable<T> Query() { 
+           return getEntities();
         } 
-        
-        public static T Get(long id)
-        {            
-            return getEntities().SingleOrDefault(s => s.Id == id);
-        }   
+
+        public static IQueryable<T> BuildRawQuery(string sql, params object[] parameters) { 
+           return Query().FromSql(sql, parameters);
+        }         
+
+        public static IQueryable<T> BuildQuery(Expression<Func<T, bool>> predicate) {
+            return Query().Where(predicate);          
+        } 
+
+        public static IQueryable<T> BuildQueryById(long id) {
+            return BuildQuery(s => s.Id == id);          
+        }         
+
+        public static IQueryable<T> PaginatedQuery(int page, int perPage) {           
+            return Query().Take(perPage).Skip((page-1) * perPage);
+        } 
 
         public void Save(bool applyChanges = true) {
             if(this.Id != null) {
@@ -163,23 +167,35 @@ namespace StarterPack.Core.Models
             }
         } 
 
-        public virtual void UpdateAttributes(ExpandoObject updatedProperties) {
-            T model = (T)this;
-            model.UpdatedAt = DateTime.Now;
-
-            SetAttributes(ref model, updatedProperties);
-            getContext().SaveChanges();
+        public virtual void UpdateAttributes(ExpandoObject updatedProperties) 
+        {
+            UpdateAttributes((T) this, updatedProperties);
         }
 
         public static void UpdateAttributes(long id, ExpandoObject updatedProperties)
-        {
+        {            
             T model = Get(id);
-            model.UpdatedAt = DateTime.Now;
-            SetAttributes(ref model, updatedProperties);
-            getContext().SaveChanges();
+            UpdateAttributes(model, updatedProperties);
         } 
 
-        private static void SetAttributes(ref T model, ExpandoObject attributes) {
+        public void MergeAttributes(T updatedProperties) 
+        {
+            foreach (PropertyInfo property in updatedProperties.GetType().GetProperties())
+            {   
+                MergetProperty(this, property, property.GetValue(updatedProperties));
+            }            
+        }
+
+        private static void UpdateAttributes(T model, ExpandoObject updatedProperties) 
+        {            
+            SetAttributes(ref model, updatedProperties);
+            model.UpdatedAt = DateTime.Now;
+            
+            getContext().SaveChanges();
+        }
+
+        private static void SetAttributes(ref T model, ExpandoObject attributes) 
+        {
             foreach (KeyValuePair<string, object> attribute in attributes)
             {
                 String propertyName = StringHelper.SnakeCaseToTitleCase(attribute.Key);
@@ -189,16 +205,10 @@ namespace StarterPack.Core.Models
                     MergetProperty(model, property, attribute.Value);
                 }
             }            
-        }
+        }        
 
-        public void MergeAttributes(T updatedProperties) {
-            foreach (PropertyInfo property in updatedProperties.GetType().GetProperties())
-            {   
-                MergetProperty(this, property, property.GetValue(updatedProperties));
-            }            
-        }
-
-        private static void MergetProperty(Model<T> model, PropertyInfo property, dynamic value) {
+        private static void MergetProperty(Model<T> model, PropertyInfo property, dynamic value) 
+        {
             if(property.Name != "Id" 
             && !model.DontFill.Contains(property.Name) 
             && (model.Fill.Contains(property.Name) || model.Fill.Contains("*"))) {
