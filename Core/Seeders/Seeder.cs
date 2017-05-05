@@ -7,11 +7,17 @@ namespace StarterPack.Core.Seeders
 {
     public class Seeder
     {
+        /// <summary>
+        /// Recupera todas as classes que implementam a interface ISeeder
+        /// </summary>
         public static void Execute(){
-            // Recupera todas as classes que implementam a interface ISeeder
-            IEnumerable<Type> types = typeof(Seeder).GetTypeInfo().Assembly.GetTypes().Where(t =>typeof(ISeeder).IsAssignableFrom(t)).Where(t => t.GetTypeInfo().IsClass);
+            // Recupera o assembly deste pacote
+            Assembly assembly = typeof(Seeder).GetTypeInfo().Assembly;
 
-            // Ordena os seeders por nome
+            //Recupera a lista de classes que implementam a interface ISeeder
+            IEnumerable<Type> types = assembly.GetTypes().Where(t =>typeof(ISeeder).IsAssignableFrom(t)).Where(t => t.GetTypeInfo().IsClass);
+
+            // Ordena as classes de seeder por nome (a ordem de dependência entre os seeders deve ser resolvida por nome [alfabeticamente])
             types.OrderBy(s =>s.GetType().Name);
 
 
