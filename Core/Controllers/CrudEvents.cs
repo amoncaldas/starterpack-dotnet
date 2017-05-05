@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using StarterPack.Core.Validation;
 using StarterPack.Core.Exception;
-using StarterPack.Models;
+using StarterPack.Core.Models;
 
 namespace StarterPack.Core.Controllers
 {

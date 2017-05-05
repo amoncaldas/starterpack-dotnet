@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
-using System;
 using Microsoft.AspNetCore.Http;
 using StarterPack.Core;
 using FluentValidation;
@@ -13,8 +12,8 @@ using StarterPack.Core.Validation;
 using Newtonsoft.Json;
 using StarterPack.Core.Renders;
 using StarterPack.Core.Exception;
-using StarterPack.Core.Persistence;
 using StarterPack.Core.Helpers;
+using StarterPack.Core.Seeders;
 
 namespace StarterPack
 {
@@ -119,6 +118,9 @@ namespace StarterPack
 			
             // Uncommenting the line above will enable defining the routes in a central file
             //app.UseMvc(routes => {ApiRoutes.get(routes);});
+
+            // Call seeders
+            Seeder.Execute();
         }         
     }
 }

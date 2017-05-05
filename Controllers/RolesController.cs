@@ -4,6 +4,7 @@ using StarterPack.Core.Validation;
 using FluentValidation;
 using StarterPack.Core.Controllers;
 using StarterPack.Core.Controllers.Attributes;
+using StarterPack.Core.Models;
 
 namespace StarterPack.Controllers
 {

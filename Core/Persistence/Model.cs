@@ -5,13 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Dynamic;
-using StarterPack.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.ComponentModel.DataAnnotations.Schema;
 using StarterPack.Core.Persistence;
 
-namespace StarterPack.Models
+namespace StarterPack.Core.Models
 {
     public abstract class Model<T> where T :  Model<T>
     {
@@ -140,6 +139,18 @@ namespace StarterPack.Models
             if(applyChanges) {
                 context.SaveChanges();
             }
+        }
+
+        public static void Delete(Expression<Func<T, bool>> predicate = null) {
+            var context = Model<T>.getContext();  
+            context.RemoveRange(Model<T>.BuildQuery(predicate).Where(m => m.Id > 0));
+            context.SaveChanges();
+        }
+
+        public static void Delete() {
+            var context = Model<T>.getContext();  
+            context.RemoveRange(Model<T>.Query().Where(m => m.Id > 0));
+            context.SaveChanges();
         }
 
         public virtual void Update(bool applyChanges = true) { 

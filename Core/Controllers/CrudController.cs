@@ -6,6 +6,7 @@ using StarterPack.Core.Validation;
 using FluentValidation.Results;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using StarterPack.Core.Models;
 
 namespace StarterPack.Core.Controllers
 {
