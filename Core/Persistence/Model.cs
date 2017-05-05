@@ -49,7 +49,7 @@ namespace StarterPack.Models
             entities = context.Set<T>();            
         }
 
-        private static DbContext getContext() {            
+        protected static DbContext getContext() {            
             return DatabaseContext.Context(GetContextType());
         }
 
@@ -58,7 +58,7 @@ namespace StarterPack.Models
         }
 
         protected static DbSet<T> getEntities(DbContext context = null) {
-            var _context = context == null? getContext() : context;
+            var _context = context == null ? getContext() : context;
             return _context.Set<T>();
         }        
 
@@ -89,6 +89,10 @@ namespace StarterPack.Models
         public static IQueryable<T> Query() { 
            return getEntities();
         } 
+
+        public static IQueryable<T> BuildRawQuery(string sql, params object[] parameters) { 
+           return Query().FromSql(sql, parameters);
+        }         
 
         public static IQueryable<T> BuildQuery(Expression<Func<T, bool>> predicate) {
             return Query().Where(predicate);          
