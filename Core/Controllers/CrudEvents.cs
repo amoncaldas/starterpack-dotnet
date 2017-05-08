@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using StarterPack.Core.Validation;
 using StarterPack.Core.Exception;
-using StarterPack.Models;
+using StarterPack.Core.Models;
 
 namespace StarterPack.Core.Controllers
 {
@@ -92,15 +92,15 @@ namespace StarterPack.Core.Controllers
 
         #region validation events
 
-        protected virtual void BeforeValidate(Model<T> model, ModelValidator<T> validator) {
+        protected virtual void BeforeValidate(T model, ModelValidator<T> validator) {
 
         }
-        protected virtual bool AfterValidate(Model<T> model, ValidationException validationErrors) {
+        protected virtual bool AfterValidate(T model, ValidationException validationErrors) {
             return true;
         }       
 
         #endregion
 
-        protected abstract void SetValidationRules(Model<T> model, ModelValidator<T> validator);
+        protected abstract void SetValidationRules(T model, ModelValidator<T> validator);
     }
 }

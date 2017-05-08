@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using StarterPack.Mail;
 using StarterPack.Core.Controllers;
-using StarterPack.Core.Controllers.Attributes;
 using System;
 
 namespace StarterPack.Controllers
@@ -33,7 +32,7 @@ namespace StarterPack.Controllers
             });
         }
            
-        protected override void SetValidationRules(Model<User> model, ModelValidator<User> validator) {            
+        protected override void SetValidationRules(User model, ModelValidator<User> validator) {            
             validator.RuleFor(user => user.Email).NotEmpty().EmailAddress();
             validator.RuleFor(user => user.Name).NotEmpty().Length(3,30);
         }

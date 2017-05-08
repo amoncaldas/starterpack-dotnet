@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Newtonsoft.Json;
 using StarterPack.Core;
+using StarterPack.Core.Models;
 
 namespace StarterPack.Models
 {
@@ -12,6 +13,9 @@ namespace StarterPack.Models
     {
         [NotMapped, JsonIgnore]
         private string _salt;
+
+        [NotMapped, JsonIgnore]
+        private string _plainPassword;
 
         [Required, MaxLength(255)]
         public string Name { get; set; }
@@ -36,7 +40,11 @@ namespace StarterPack.Models
         public List<Role> Roles { get; set; }
 
         [JsonIgnore, NotMapped]       
-        public string PlainPassword { get; set; }   
+        public string PlainPassword { 
+            get {
+                return _plainPassword;
+            }
+        }   
 
         [JsonIgnore]      
         public string ResetToken { get; set; } 
@@ -111,12 +119,15 @@ namespace StarterPack.Models
         /// <summary>
         /// Define uma senha e o salt aleatória para o objeto do usuário, se ainda não tiver sido definida [mas não persiste]
         /// </summary>
-        public void DefinePassword(){
-            // Se a senha ainda não tiver sido ddefinida, a define            
-            if (this.PlainPassword == null) {
-                SetSalt();
-                this.PlainPassword = StringHelper.GeneratePassword();                     
+        public void DefinePassword(string pass = null){
+            // Se a senha ainda não tiver sido ddefinida, a define   
+            if(pass != null) {
+                this._plainPassword = pass;
+            }         
+            if (this.PlainPassword == null) {                
+                this._plainPassword = StringHelper.GeneratePassword();                     
             }
+            SetSalt();
             
             this.Password = StringHelper.GenerateHash( this.PlainPassword + this.Salt );           
         }
@@ -126,7 +137,7 @@ namespace StarterPack.Models
         /// </summary>
         /// <param name="resetLogin"></param>
         public void UpdatePassword(Login resetLogin) {
-            this.PlainPassword = resetLogin.Password;           
+            this._plainPassword = resetLogin.Password;           
             if(ValidateResetToken()){
                 this.ResetToken = null;
                 this.DefinePassword();                

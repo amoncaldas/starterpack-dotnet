@@ -8,6 +8,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using StarterPack.Core.Helpers;
 using System;
+using StarterPack.Core.Models;
 
 namespace StarterPack.Core.Controllers
 {

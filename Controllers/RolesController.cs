@@ -26,12 +26,12 @@ namespace StarterPack.Controllers
             }
         }
 
-        protected override void BeforeValidate(Model<Role> model, ModelValidator<Role> validator) { 
-            ((Role)model).Slug = ((Role)model).Title.ToLower();                      
+        protected override void BeforeValidate(Role model, ModelValidator<Role> validator) { 
+            model.Slug = model.Title.ToLower();                      
         }
 
            
-        protected override void SetValidationRules(Model<Role> model, ModelValidator<Role> validator) {            
+        protected override void SetValidationRules(Role model, ModelValidator<Role> validator) {            
             validator.RuleFor(role => role.Title).NotEmpty().EmailAddress();
             validator.RuleFor(user => user.Slug).NotEmpty();
         }       

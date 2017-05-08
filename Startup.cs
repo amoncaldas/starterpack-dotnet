@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using StarterPack.Core.Renders;
 using StarterPack.Core.Exception;
 using StarterPack.Core.Helpers;
+using StarterPack.Core.Seeders;
 
 namespace StarterPack
 {
@@ -118,6 +119,12 @@ namespace StarterPack
                     .WithHeaders("Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With"));
                             
             app.UseMvc();
+			
+            // Uncommenting the line above will enable defining the routes in a central file
+            //app.UseMvc(routes => {ApiRoutes.get(routes);});
+
+            // Run seeders
+            Seeder.Execute();
         }         
     }
 }
