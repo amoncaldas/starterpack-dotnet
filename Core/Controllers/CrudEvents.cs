@@ -11,16 +11,8 @@ namespace StarterPack.Core.Controllers
     {
        
         #region Before Events       
-        
-        protected virtual T GetSingle(long id) {
-            return Model<T>.Get(id);
-        }
 
         protected virtual void BeforeAll() {
-
-        }
-
-        protected virtual void BeforeAll(ref bool trackModel) {
 
         }
 
@@ -31,27 +23,20 @@ namespace StarterPack.Core.Controllers
         protected virtual void BeforeGet(long id, ref bool trackModel) {
 
         }
+        
         protected virtual void BeforeSave(T model) {
-
-        }
-
-        protected virtual void BeforeSave(T model,  ref bool trackModel) {
 
         }
 
         protected virtual void BeforeStore(T model) {
 
-        }
-
-        protected virtual void BeforeStore(T model,  ref bool trackModel) {
-
-        }        
+        }       
 
         protected virtual void BeforeSearch(ref IQueryable<T> query) {
 
         }
 
-        protected virtual void BeforeSearch(ref IQueryable<T> query, ref bool trackModels) {
+        protected virtual void BeforeSearch(ref IQueryable<T> query, ref bool trackModel) {
 
         }
 
@@ -63,7 +48,7 @@ namespace StarterPack.Core.Controllers
 
         }
 
-        protected virtual void BeforeUpdate(T model, T modelAttributes, ref bool trackModel) {
+        protected virtual void BeforeUpdate(T model, T modelAttributes) {
 
         }
 

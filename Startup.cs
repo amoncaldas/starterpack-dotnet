@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
-using System;
 using Microsoft.AspNetCore.Http;
 using StarterPack.Core;
 using FluentValidation;
@@ -13,7 +12,6 @@ using StarterPack.Core.Validation;
 using Newtonsoft.Json;
 using StarterPack.Core.Renders;
 using StarterPack.Core.Exception;
-using StarterPack.Core.Persistence;
 using StarterPack.Core.Helpers;
 
 namespace StarterPack
@@ -80,20 +78,23 @@ namespace StarterPack
 
             //Configura o contexto do banco de dados
             services.AddDbContext<Core.Persistence.DatabaseContext>(
-                options => options.UseNpgsql(Configuration["DbContextSettings:ConnectionString"]));
+                options => { 
+                    options.UseNpgsql(Configuration["DbContextSettings:ConnectionString"]);
+                },
+                ServiceLifetime.Scoped
+            );
 
             ValidatorOptions.ResourceProviderType = typeof(ValidationResourceProvider);
             ValidatorOptions.DisplayNameResolver = ValidationResourceProvider.DisplayNameResolver;
 
             services.AddScoped<IViewRenderService, RazorRender>();
-            
+
+            Services.Instance = services.BuildServiceProvider();
         }
 
         // Use este método para configurar o HTTP Request Pipeline
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            Services.Instance = app.ApplicationServices;
-
             //Configura o arquivo que vai ser chamado por default
             DefaultFilesOptions options = new DefaultFilesOptions();
             options.DefaultFileNames.Clear();
