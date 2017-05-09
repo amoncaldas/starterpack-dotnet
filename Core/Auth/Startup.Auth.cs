@@ -30,15 +30,8 @@ namespace StarterPack
             };  
 
             //check if options is valid
-            ThrowIfTokenInvalidOptions(tokenProviderOptions);
+            ThrowIfTokenInvalidOptions(tokenProviderOptions);  
 
-            //add options to service injector to use in other places
-            services.AddSingleton<TokenProviderOptions>(tokenProviderOptions);           
-        }
-
-        private void ConfigureAuth(IApplicationBuilder app)
-        {  
-            //define jwt middleware validation parameters
             var tokenValidationParameters = new TokenValidationParameters
             {
                 // The signing key must match!
@@ -54,17 +47,16 @@ namespace StarterPack
                 ValidateLifetime = true,
                 // Set to Zero the difference balance
                 ClockSkew = TimeSpan.Zero
-            };
+            };                    
 
-            //Add jwt middleware
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,                
-                TokenValidationParameters = tokenValidationParameters
-            });
+            //add options to service injector to use in other places
+            services.AddSingleton<TokenProviderOptions>(tokenProviderOptions);             
+            services.AddSingleton<TokenValidationParameters>(tokenValidationParameters); 
+        }
 
-            app.UseAuthException();       
+        private void ConfigureAuth(IApplicationBuilder app)
+        {  
+       
         }
         
         /// <summary>

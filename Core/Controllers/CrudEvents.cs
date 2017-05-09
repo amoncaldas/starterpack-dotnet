@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 using StarterPack.Core.Validation;
 using StarterPack.Core.Exception;
 using StarterPack.Core.Models;
 
 namespace StarterPack.Core.Controllers
 {
-    public abstract partial class CrudController<T> : Controller where T : Model<T>
+    public abstract partial class CrudController<T> : BaseController where T : Model<T>
     {
        
         #region Before Events       

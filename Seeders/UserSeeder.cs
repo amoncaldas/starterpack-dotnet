@@ -8,7 +8,7 @@ namespace StarterPack.Seeders
 	{
 		public void EmptyData()
 		{
-			User.Delete();
+			User.DeleteAll();
 		}
 
 		public void InsertData()

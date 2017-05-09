@@ -124,7 +124,7 @@ namespace StarterPack
             //app.UseMvc(routes => {ApiRoutes.get(routes);});
 
             // Run seeders
-            Seeder.Execute();
+            // Seeder.Execute();
         }         
     }
 }

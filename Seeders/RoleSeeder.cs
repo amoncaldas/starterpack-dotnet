@@ -8,7 +8,7 @@ namespace StarterPack.Seeders
 
         public void EmptyData()
 		{
-			Role.Delete();
+			Role.DeleteAll();
 		}
 
 		public void InsertData()

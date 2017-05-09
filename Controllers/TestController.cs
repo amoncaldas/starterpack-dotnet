@@ -2,13 +2,20 @@ using StarterPack.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-
+using StarterPack.Core.Controllers;
+using System;
+using StarterPack.Core.Models;
 
 namespace StarterPack.Controllers
 {   
     [Route("api/v1/test/")]
-    public class TestController : Controller
+    public class TestController : BaseController
     {
+        public TestController(IServiceProvider serviceProvider) : base(serviceProvider) {
+            // Http Request data can be accessed using the folowing code
+            // HttpContext.Request;
+        }      
+        
         [HttpGet]
         [Route("test")]
         public List<User> test() {

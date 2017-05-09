@@ -159,7 +159,7 @@ namespace StarterPack.Core.Models
             context.SaveChanges();
         }
 
-        public static void Delete() {
+        public static void DeleteAll() {
             var context = Model<T>.getContext();  
             context.RemoveRange(Model<T>.Query().Where(m => m.Id > 0));
             context.SaveChanges();
