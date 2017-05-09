@@ -17,7 +17,7 @@ namespace StarterPack.Models
         [NotMapped, JsonIgnore]
         private string _plainPassword;
 
-        [MaxLength(255)]
+        [Required, MaxLength(255)]
         public string Name { get; set; }
         
         [Required, MaxLength(255)]       

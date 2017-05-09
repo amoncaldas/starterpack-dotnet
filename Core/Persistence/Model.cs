@@ -65,10 +65,17 @@ namespace StarterPack.Core.Models
             return getContext().Entry<T>(model);
         }
 
-        public static T Get(long id)
-        {            
-            return getEntities().SingleOrDefault(s => s.Id == id);
-        }   
+        public static T Get(long id, bool tracked = true)
+        {      
+            if(tracked) {
+                return getEntities().SingleOrDefault(s => s.Id == id);
+            }
+            return getEntities().AsNoTracking().SingleOrDefault(s => s.Id == id);
+        }
+
+        public static IQueryable<T> BuildQueryById(long id, bool tracked = true) {
+            return BuildQuery(s => s.Id == id, tracked);          
+        }            
 
         public static IEnumerable<T> GetAll(bool tracked = false) {
             if(tracked) {
@@ -85,20 +92,19 @@ namespace StarterPack.Core.Models
             return BuildQuery(predicate).AsNoTracking().AsEnumerable();
         }         
 
-        public static IQueryable<T> Query() { 
-           return getEntities();
+        public static IQueryable<T> Query(bool tracked = false) { 
+            if(tracked) {
+                return getEntities();
+            }
+            return getEntities().AsNoTracking();
         } 
 
         public static IQueryable<T> BuildRawQuery(string sql, params object[] parameters) { 
-           return Query().FromSql(sql, parameters);
+           return getEntities().FromSql(sql, parameters);
         }         
 
-        public static IQueryable<T> BuildQuery(Expression<Func<T, bool>> predicate) {
-            return Query().Where(predicate);          
-        } 
-
-        public static IQueryable<T> BuildQueryById(long id) {
-            return BuildQuery(s => s.Id == id);          
+        public static IQueryable<T> BuildQuery(Expression<Func<T, bool>> predicate, bool tracked = false) {
+            return Query(tracked).Where(predicate);          
         }         
 
         public static IQueryable<T> PaginatedQuery(int page, int perPage) {           
@@ -129,8 +135,10 @@ namespace StarterPack.Core.Models
         }
 
         public static void Delete(long id, bool applyChanges = true) {    
-            var context = getContext();           
-            getEntities(context).Remove(Model<T>.Get(id));
+            var context = getContext();      
+            T model = Model<T>.Get(id);   
+          
+            getEntities(context).Remove(model);
 
             if(applyChanges) {
                 context.SaveChanges();
@@ -216,7 +224,7 @@ namespace StarterPack.Core.Models
                     property.SetValue(model, value);              
                 }
             }
-        }                
+        }                      
     }
    
 }

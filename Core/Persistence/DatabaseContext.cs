@@ -5,14 +5,14 @@ using StarterPack.Core.Helpers;
 namespace StarterPack.Core.Persistence
 {
     public partial class DatabaseContext : DbContext
-    {       
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+    {              
+        public DatabaseContext(DbContextOptions options) : base(options)
         { 
             
         }
 
-        public static DbContext Context(Type dbContextType) {
-           return (DbContext) Services.Instance.GetService(dbContextType);
+        public static DbContext Context(Type dbContextType) {           
+            return (DbContext) Services.Instance.GetService(dbContextType);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
