@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using StarterPack.Core.Helpers;
 using StarterPack.Models;
@@ -9,7 +8,7 @@ namespace StarterPack.Core.Controllers.Attributes
 {
 
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-	public class AuthorizeByRule : AuthorizeAttribute, IActionFilter
+	public class AuthorizeByRule : Attribute, IActionFilter
 	{	
 		private string[] _rules;
 
