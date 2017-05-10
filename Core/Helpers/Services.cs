@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace StarterPack.Core.Helpers
 {
@@ -21,25 +21,33 @@ namespace StarterPack.Core.Helpers
         
          public static DbContext DefaultDbContext {
              get{
-                int threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+                int threadId = Thread.CurrentThread.ManagedThreadId;
                 if(DbContextByThread.ContainsKey(threadId)){
                     return DbContextByThread.First(s=>s.Key == threadId).Value;
                 }
                 else {
                     return null;
                 }                
-            }
-            set{
-                if(DbContextByThread == null) {
-                    DbContextByThread = new Dictionary<int, DbContext>();
-                }
-                int threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+            }            
+         }  
 
-                if(!DbContextByThread.ContainsKey(threadId)){
-                    DbContextByThread[threadId] = value;
-                }
+         public static void SetCurrentThreadDbContext(DbContext dbContext){
+            if(DbContextByThread == null) {
+                DbContextByThread = new Dictionary<int, DbContext>();
             }
-         }       
+            int threadId = Thread.CurrentThread.ManagedThreadId;
+
+            if(!DbContextByThread.ContainsKey(threadId)){
+                DbContextByThread[threadId] = dbContext;
+            }
+         }
+
+         public static void RemoveCurrentThreadDbContext(){
+            int thredId = Thread.CurrentThread.ManagedThreadId;
+            if(DbContextByThread.ContainsKey(thredId)) {
+                DbContextByThread.Remove(thredId);
+            }
+         }     
     }
 }
 
