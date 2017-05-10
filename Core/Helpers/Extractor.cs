@@ -47,7 +47,7 @@ namespace StarterPack.Core.Helpers
 				string[] splitedActions = actionWithProfiles.ToLower().Split(':');
 
 				if(splitedActions.Length == 1)
-					return actionWithProfiles;
+					return actionWithProfiles.ToLower();
 				else
 					return splitedActions.First();
 			}).ToList();

@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 using StarterPack.Core.Renders;
 using StarterPack.Core.Exception;
 using StarterPack.Core.Helpers;
-using StarterPack.Core.Seeders;
+using StarterPack.Core.Extensions;
 
 namespace StarterPack
 {
@@ -90,7 +90,7 @@ namespace StarterPack
 
             services.AddScoped<IViewRenderService, RazorRender>();
 
-            Services.Instance = services.BuildServiceProvider();
+            Services.SetProvider(services.BuildServiceProvider());
         }
 
         // Use este método para configurar o HTTP Request Pipeline
@@ -104,9 +104,7 @@ namespace StarterPack
             //Adiciona suporte a arquivos estaticos
             app.UseDefaultFiles(options);
             app.UseStaticFiles(); 
-
-            //Configura a autenticação
-            ConfigureAuth(app);
+            
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();            
@@ -117,14 +115,17 @@ namespace StarterPack
                     .WithOrigins("*")
                     .WithMethods("POST", "GET", "OPTIONS", "PUT", "DELETE")
                     .WithHeaders("Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With"));
-                            
+               
+            //middlaware para db context
+            app.UseRequestDbContext();
             app.UseMvc();
 			
             // Uncommenting the line above will enable defining the routes in a central file
             //app.UseMvc(routes => {ApiRoutes.get(routes);});
 
             // Run seeders
-            // Seeder.Execute();
+            //Seeder.Execute();
+
         }         
     }
 }

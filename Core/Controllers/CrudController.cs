@@ -4,19 +4,13 @@ using System.Linq;
 using StarterPack.Core.Validation;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
-using System;
 using StarterPack.Core.Models;
-using StarterPack.Core.Persistence;
 
 namespace StarterPack.Core.Controllers
 {
     [Route("api/v1/[controller]")]
     public abstract partial class CrudController<T> : BaseController where T : Model<T>
-    {           
-
-        public CrudController(IServiceProvider serviceProvider) : base (serviceProvider) {
-        }
-
+    {
         // GET api/users
         [HttpGet]
         public object Index([FromQuery]T model)

@@ -92,7 +92,8 @@ namespace StarterPack.Core.Controllers.Attributes
 		}
 
 		private static void ValidateToken(ActionExecutingContext context) {
-			TokenValidationParameters parameters = Services.Instance.GetService<TokenValidationParameters>();
+
+			TokenValidationParameters parameters = Services.Resolve<TokenValidationParameters>();
 			SecurityToken validatedToken;			
 
 			//Faz essa verificação para não precisar validar o token novamente caso a anotações seja utilizada

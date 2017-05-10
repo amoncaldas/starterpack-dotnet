@@ -1,7 +1,5 @@
 using StarterPack.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 using StarterPack.Auth;
 using System.Threading.Tasks;
 using StarterPack.Core.Exception;
@@ -13,22 +11,24 @@ using StarterPack.Core.Validation;
 using FluentValidation;
 using FluentValidation.Results;
 using StarterPack.Core.Controllers;
-using System;
+
+using StarterPack.Core.Controllers.Attributes;
+
+
 
 namespace StarterPack.Controllers
 {   
     [Route("api/v1/")]
-    [Authorize]
+    [Authorize("authenticatedUser", "check")]
     public class AuthenticationController : BaseController
     {       
-        private TokenProviderOptions _tokenProviderOptions;
-        
-        public AuthenticationController(IServiceProvider serviceProvider, TokenProviderOptions tokenProviderOptions) : base(serviceProvider) {
+        private TokenProviderOptions _tokenProviderOptions;         
+        public AuthenticationController(TokenProviderOptions tokenProviderOptions)  {
+
             _tokenProviderOptions = tokenProviderOptions;
         }
         // POST api/users
-        [HttpPost]
-        [AllowAnonymous]
+        [HttpPost]        
         [Route("authenticate")]    
         public async Task<object> login([FromBody]Login login)
         {
@@ -66,7 +66,8 @@ namespace StarterPack.Controllers
         [Route("authenticate/check")]
         public IActionResult check() {
             return StatusCode(201);
-        }          
+        }   
+
 
         [HttpGet]
         [Route("authenticate/user")]

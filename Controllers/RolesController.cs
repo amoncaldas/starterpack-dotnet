@@ -4,7 +4,7 @@ using StarterPack.Core.Validation;
 using FluentValidation;
 using StarterPack.Core.Controllers;
 using StarterPack.Core.Controllers.Attributes;
-using System;
+
 
 namespace StarterPack.Controllers
 {
@@ -12,7 +12,7 @@ namespace StarterPack.Controllers
   
     public class RolesController : CrudController<Role>
     {
-        public RolesController(IServiceProvider serviceProvider) : base(serviceProvider) {
+        public RolesController() {
             // Http Request data can be accessed using the folowing code
             // HttpContext.Request;
         } 

@@ -2,12 +2,10 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using StarterPack.Auth;
 using StarterPack.Core;
-using StarterPack.Core.Extensions;
 using StarterPack.Models;
 
 namespace StarterPack
@@ -52,11 +50,6 @@ namespace StarterPack
             //add options to service injector to use in other places
             services.AddSingleton<TokenProviderOptions>(tokenProviderOptions);             
             services.AddSingleton<TokenValidationParameters>(tokenValidationParameters); 
-        }
-
-        private void ConfigureAuth(IApplicationBuilder app)
-        {  
-       
         }
         
         /// <summary>

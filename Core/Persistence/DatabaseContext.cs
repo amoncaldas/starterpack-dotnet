@@ -11,8 +11,11 @@ namespace StarterPack.Core.Persistence
             
         }
 
-        public static DbContext Context(Type dbContextType) {           
-            return (DbContext) Services.Instance.GetService(dbContextType);
+        public static DbContext Context(Type dbContextType) {
+            if(dbContextType == typeof(DatabaseContext)) {
+                return Services.DefaultDbContext;
+            }
+            return (DbContext) Services.Resolve(dbContextType);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

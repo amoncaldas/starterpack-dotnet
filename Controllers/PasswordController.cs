@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
@@ -13,11 +12,6 @@ namespace StarterPack.Controllers
     [Route("api/v1/password/")]
     public class PasswordController : BaseController
     {
-
-        public PasswordController(IServiceProvider serviceProvider) : base(serviceProvider) {
-
-        }
-
         [HttpPost]        
         [Route("email")]
         public object postEmail([FromBody]Login login) {
