@@ -16,7 +16,11 @@ namespace StarterPack.Core.Persistence
         public static void ConfigureModels(ModelBuilder modelBuilder) {
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
-                .IsUnique();            
+                .IsUnique();   
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Salt)
+                .HasField("_salt");                
 
             modelBuilder.Entity<Role>()
                 .HasIndex(u => u.Slug)

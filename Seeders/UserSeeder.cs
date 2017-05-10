@@ -8,14 +8,15 @@ namespace StarterPack.Seeders
 	{
 		public void EmptyData()
 		{
-			User.Delete();
+			User.DeleteAll();
 		}
 
 		public void InsertData()
 		{
 			User user  = new User(){Name = "Admin", Email = "admin-base@prodeb.com"};
             user.DefinePassword("Prodeb01");
-            user.Roles = Role.BuildQuery(r => r.Slug == "admin").Fetch();
+            user.Roles =  Role.BuildQuery(r => r.Slug == "admin").Fetch();
+						user.mapFromRoles();
             user.Save();
 		}
 	}

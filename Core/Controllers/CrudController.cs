@@ -1,34 +1,18 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using StarterPack.Models;
 using System.Linq;
 using StarterPack.Core.Validation;
 using FluentValidation.Results;
-using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
-using StarterPack.Core.Helpers;
-using System;
 using StarterPack.Core.Models;
+
+
 
 namespace StarterPack.Core.Controllers
 {
     [Route("api/v1/[controller]")]
-    public abstract partial class CrudController<T> : Controller where T : Model<T>
-    {           
-        public CrudController(IServiceProvider serviceProvider) {
-            Services.Instance = serviceProvider;   
-        }
-
-        public  User CurrentUser() {
-             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            //get current logged user with roles
-            return StarterPack.Models.User.BuildQuery(u => u.Id == long.Parse(userId))
-                .Include(u => u.UserRoles)
-                .ThenInclude(ur => ur.Role)
-                .AsNoTracking()
-                .First();
-        }
+    public abstract partial class CrudController<T> : BaseController where T : Model<T>
+    { 
 
         // GET api/users
         [HttpGet]

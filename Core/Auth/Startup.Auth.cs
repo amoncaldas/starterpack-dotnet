@@ -2,12 +2,10 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using StarterPack.Auth;
 using StarterPack.Core;
-using StarterPack.Core.Extensions;
 using StarterPack.Models;
 
 namespace StarterPack
@@ -30,15 +28,8 @@ namespace StarterPack
             };  
 
             //check if options is valid
-            ThrowIfTokenInvalidOptions(tokenProviderOptions);
+            ThrowIfTokenInvalidOptions(tokenProviderOptions);  
 
-            //add options to service injector to use in other places
-            services.AddSingleton<TokenProviderOptions>(tokenProviderOptions);           
-        }
-
-        private void ConfigureAuth(IApplicationBuilder app)
-        {  
-            //define jwt middleware validation parameters
             var tokenValidationParameters = new TokenValidationParameters
             {
                 // The signing key must match!
@@ -54,18 +45,14 @@ namespace StarterPack
                 ValidateLifetime = true,
                 // Set to Zero the difference balance
                 ClockSkew = TimeSpan.Zero
-            };
+            };                    
 
-            //Add jwt middleware
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,                
-                TokenValidationParameters = tokenValidationParameters
-            });
-
-            app.UseAuthException();       
+            //add options to service injector to use in other places
+            services.AddSingleton<TokenProviderOptions>(tokenProviderOptions);             
+            services.AddSingleton<TokenValidationParameters>(tokenValidationParameters); 
         }
+
+       
         
         /// <summary>
         /// Check user credentials and return the identity

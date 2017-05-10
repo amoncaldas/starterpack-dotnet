@@ -1,7 +1,5 @@
 using StarterPack.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 using StarterPack.Auth;
 using System.Threading.Tasks;
 using StarterPack.Core.Exception;
@@ -12,21 +10,23 @@ using System.Collections.Generic;
 using StarterPack.Core.Validation;
 using FluentValidation;
 using FluentValidation.Results;
+using StarterPack.Core.Controllers;
+using StarterPack.Core.Controllers.Attributes;
+
 
 namespace StarterPack.Controllers
 {   
     [Route("api/v1/")]
-    [Authorize]
-    public class AuthenticationController : Controller
+    [Authorize("authenticatedUser", "check")]
+    public class AuthenticationController : BaseController
     {       
-        private TokenProviderOptions _tokenProviderOptions;
+        private TokenProviderOptions _tokenProviderOptions; 
         
-        public AuthenticationController(TokenProviderOptions tokenProviderOptions) {
+        public AuthenticationController(TokenProviderOptions tokenProviderOptions)  {
             _tokenProviderOptions = tokenProviderOptions;
         }
         // POST api/users
-        [HttpPost]
-        [AllowAnonymous]
+        [HttpPost]        
         [Route("authenticate")]    
         public async Task<object> login([FromBody]Login login)
         {
@@ -62,22 +62,16 @@ namespace StarterPack.Controllers
 
         [HttpGet]
         [Route("authenticate/check")]
-        public void check() {
-
+        public IActionResult check() {            
+            return StatusCode(201);
         }          
 
         [HttpGet]
         [Route("authenticate/user")]
         public object authenticatedUser()
         {   
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
             //get current logged user with roles
-            User user = StarterPack.Models.User.BuildQuery(u => u.Id == long.Parse(userId))
-                .Include(u => u.UserRoles)
-                .ThenInclude(ur => ur.Role)
-                .AsNoTracking()
-                .First();
+            User user = CurrentUser();
             
             user.mapToRoles();
 

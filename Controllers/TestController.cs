@@ -1,28 +1,25 @@
-using StarterPack.Models;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-
+using StarterPack.Core.Controllers;
+using StarterPack.Core.Helpers;
 
 namespace StarterPack.Controllers
 {   
     [Route("api/v1/test/")]
-    public class TestController : Controller
+    public class TestController : BaseController
     {
+        public TestController() {
+            // Http Request data can be accessed using the folowing code
+            // HttpContext.Request;
+        }      
+        
         [HttpGet]
         [Route("test")]
-        public List<User> test() {
-            List<User> users = Model<User>.BuildRawQuery("SELECT * FROM \"Users\"")                
-                .Where(u => u.Name.Contains("Teste"))
-                .ToList();                
-
-            // IQueryable<User> query = Model<User>.Query()
-            //     .Select(t => new User{Id = t.Id, Name = t.Name})
-            //     .Where(u => u.Name.Contains("Teste"));          
-
-            return users;
-
-            // return Model<User>.GetAll().ToList();
-        }        
+        public string test() {
+            string t = Services.DefaultDbContext.GetHashCode().ToString();
+            if(HttpContext.Request.Query["id"].First() == "1")
+                System.Threading.Thread.Sleep(60*60*5);            
+            return Services.DefaultDbContext.GetHashCode().ToString()+"-" + t;
+        }
     }
 }

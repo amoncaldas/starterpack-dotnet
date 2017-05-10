@@ -11,8 +11,20 @@ namespace StarterPack.Models
 {
     public class User : Model<User>
     {
-        [NotMapped, JsonIgnore]
+        [JsonIgnore]
         private string _salt;
+
+        [Required, JsonIgnore, MaxLength(100)]
+        public string Salt { 
+            get { return _salt; }
+        } 
+
+        /// <summary>
+        /// Define o salt
+        /// </summary>
+        private void SetSalt(){           
+            _salt = StringHelper.GenerateSalt();
+        }               
 
         [NotMapped, JsonIgnore]
         private string _plainPassword;
@@ -25,13 +37,6 @@ namespace StarterPack.Models
 
         [Required, MaxLength(100)]
         public string Password { get; set; }   
-
-        [Required, JsonIgnore, MaxLength(100)]
-        public string Salt { 
-            get  {
-                return _salt;
-            }
-        }
 
         [JsonIgnore]       
         public List<UserRole> UserRoles { get; set; }
@@ -167,13 +172,6 @@ namespace StarterPack.Models
         public bool ValidateResetToken() {           
             return this.ResetTokenDate.Value.AddHours(1) > DateTime.UtcNow;
         }   
-
-        /// <summary>
-        /// Define o salt
-        /// </summary>
-        private void SetSalt(){           
-            _salt = StringHelper.GenerateSalt();
-        }
         
         /// <summary>
         /// Verifica se o usuário tem um role especificado

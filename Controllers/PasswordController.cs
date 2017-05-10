@@ -1,7 +1,10 @@
+using System;
 using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using StarterPack.Core.Controllers;
+using StarterPack.Core.Persistence;
 using StarterPack.Core.Validation;
 using StarterPack.Mail;
 using StarterPack.Models;
@@ -9,7 +12,7 @@ using StarterPack.Models;
 namespace StarterPack.Controllers
 {   
     [Route("api/v1/password/")]
-    public class PasswordController : Controller
+    public class PasswordController : BaseController
     {
         [HttpPost]        
         [Route("email")]
@@ -44,11 +47,12 @@ namespace StarterPack.Controllers
         [HttpPost]
         [Route("reset")]       
         public object postReset([FromBody]Login loginReset) {           
-            ModelValidator<Login> emailValidator = new ModelValidator<Login>();
-            emailValidator.RuleFor(l => l.Email).NotEmpty().EmailAddress();
-            emailValidator.RuleFor(l => l.Token).NotEmpty();
-            emailValidator.RuleFor(l => l.Password).NotEmpty();
-            ValidationResult results = emailValidator.Validate(loginReset);
+            ModelValidator<Login> validator = new ModelValidator<Login>();
+            validator.RuleFor(l => l.Email).NotEmpty().EmailAddress();
+            validator.RuleFor(l => l.Token).NotEmpty();
+            validator.RuleFor(l => l.Password).NotEmpty();
+            
+            ValidationResult results = validator.Validate(loginReset);
          
             if(!results.IsValid) {
                 throw new ValidationException(results.Errors);  

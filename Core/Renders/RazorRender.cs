@@ -59,7 +59,7 @@ namespace StarterPack.Core.Renders
 
         public static IViewRenderService service {            
             get {
-                return (IViewRenderService)Services.Instance.GetService(typeof(IViewRenderService));
+                return (IViewRenderService)Services.Resolve(typeof(IViewRenderService));
             }
         }
 

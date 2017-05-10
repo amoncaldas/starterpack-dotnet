@@ -6,15 +6,18 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using StarterPack.Mail;
 using StarterPack.Core.Controllers;
-using System;
+using StarterPack.Core.Controllers.Attributes;
 
 namespace StarterPack.Controllers
 { 
+    [Authorize("index:admin")]
+    [Authorize("index:normal")]
     public class UsersController : CrudController<User>
     {
-        public UsersController(IServiceProvider serviceProvider) : base(serviceProvider) {
+        public UsersController() {
             // Http Request data can be accessed using the folowing code
             // HttpContext.Request;
+            System.Threading.Thread.CurrentThread.GetHashCode();
         }    
 
         protected override void ApplyFilters(ref IQueryable<User> query) {
