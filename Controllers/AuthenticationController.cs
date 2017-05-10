@@ -12,16 +12,18 @@ using System.Collections.Generic;
 using StarterPack.Core.Validation;
 using FluentValidation;
 using FluentValidation.Results;
+using StarterPack.Core.Controllers;
+using System;
 
 namespace StarterPack.Controllers
 {   
     [Route("api/v1/")]
     [Authorize]
-    public class AuthenticationController : Controller
+    public class AuthenticationController : BaseController
     {       
         private TokenProviderOptions _tokenProviderOptions;
         
-        public AuthenticationController(TokenProviderOptions tokenProviderOptions) {
+        public AuthenticationController(IServiceProvider serviceProvider, TokenProviderOptions tokenProviderOptions) : base(serviceProvider) {
             _tokenProviderOptions = tokenProviderOptions;
         }
         // POST api/users
@@ -62,22 +64,16 @@ namespace StarterPack.Controllers
 
         [HttpGet]
         [Route("authenticate/check")]
-        public void check() {
-
+        public IActionResult check() {
+            return StatusCode(201);
         }          
 
         [HttpGet]
         [Route("authenticate/user")]
         public object authenticatedUser()
         {   
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
             //get current logged user with roles
-            User user = StarterPack.Models.User.BuildQuery(u => u.Id == long.Parse(userId))
-                .Include(u => u.UserRoles)
-                .ThenInclude(ur => ur.Role)
-                .AsNoTracking()
-                .First();
+            User user = CurrentUser();
             
             user.mapToRoles();
 
