@@ -10,7 +10,7 @@ namespace StarterPack.Core
             if(value != null) {
                 return value;
             }
-            return key;
+            return null;
         }
 
         public static IConfiguration Data { get; set; }

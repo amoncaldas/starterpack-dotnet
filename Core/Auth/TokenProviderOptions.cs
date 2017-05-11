@@ -21,7 +21,13 @@ namespace StarterPack.Auth
         /// The expiration time for the generated tokens.
         /// </summary>
         /// <remarks>The default is 30 minutes.</remarks>
-        public TimeSpan Expiration { get; set; } = TimeSpan.FromMinutes(30);
+        public int Expiration { get; set; } = 30;
+
+        /// <summary>
+        /// The left time for refresh the generated tokens.
+        /// </summary>
+        /// <remarks>The default is 10 minutes.</remarks>
+        public int LeftTimeToRenew { get; set; } = 10;        
 
         /// <summary>
         /// The signing key to use when generating tokens.

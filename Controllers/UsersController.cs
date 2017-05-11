@@ -15,18 +15,31 @@ namespace StarterPack.Controllers
     [Authorize("index:admin", "get:admin", "store:admin", "update:admin", "destroy:admin", "UpdateProfile")]
     public class UsersController : CrudController<User>
     {
-        public UsersController() {
-            // Http Request data can be accessed using the folowing code
-            // HttpContext.Request;
-            System.Threading.Thread.CurrentThread.GetHashCode();
-        }    
-
         protected override void ApplyFilters(ref IQueryable<User> query) {
             query = query.Include(u => u.UserRoles).ThenInclude(ur => ur.Role);
- 
-            if( HttpContext.Request.Query.ContainsKey("id") ) {
-                query = query.Where(user => user.Id == long.Parse(HttpContext.Request.Query["id"].First()));
-            }           
+
+            if( HasParameter("id") ) {
+                query = query.Where(user => user.Id == GetParameter<long>("id"));
+            }
+
+            if( HasParameter("nameOrEmail") ) {
+                string nameOrEmail = GetParameter("nameOrEmail");
+                query = query.Where(user => user.Name.Contains(nameOrEmail) || user.Email.Contains(nameOrEmail));
+            }
+
+            if( HasParameter("name") ) {
+                query = query.Where(user => user.Name.Contains(GetParameter("name")));
+            }
+
+            if( HasParameter("email") ) {
+                query = query.Where(user => user.Email.Contains(GetParameter("email")));
+            }            
+        }
+
+
+        protected override void BeforeSearch(ref IQueryable<User> dataQuery, ref IQueryable<User> countQuery)
+        {
+            dataQuery = dataQuery.OrderBy(m => m.Name);
         }
 
         protected override void AfterSearch(ref IQueryable<User> query, List<User> models) {

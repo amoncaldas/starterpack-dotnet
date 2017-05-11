@@ -31,11 +31,11 @@ namespace StarterPack.Core.Controllers
 
         }       
 
-        protected virtual void BeforeSearch(ref IQueryable<T> query) {
+        protected virtual void BeforeSearch(ref IQueryable<T> dataQuery, ref IQueryable<T> countQuery) {
 
         }
 
-        protected virtual void BeforeSearch(ref IQueryable<T> query, ref bool trackModel) {
+        protected virtual void BeforeSearch(ref IQueryable<T> dataQuery, ref IQueryable<T> countQuery, ref bool trackModel) {
 
         }
 

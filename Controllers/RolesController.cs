@@ -8,8 +8,7 @@ using StarterPack.Core.Controllers.Attributes;
 
 namespace StarterPack.Controllers
 {
-    [UnpublishAction("index","update", "destroy")]
-  
+    [UnpublishAction("get", "store", "update", "destroy")]
     public class RolesController : CrudController<Role>
     {
         public RolesController() {
