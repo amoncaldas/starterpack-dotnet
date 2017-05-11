@@ -16,14 +16,13 @@ namespace StarterPack.Middlewares
 
         public async Task Invoke(HttpContext context)
         {            
-            Services.DefaultDbContext = (DatabaseContext) context.RequestServices.GetService(typeof(DatabaseContext));
+            Services.SetCurrentThreadDbContext((DatabaseContext)context.RequestServices.GetService(typeof(DatabaseContext)));
+
+            // run the request
             await this._next(context);
             
-            //relase not used threads here    
-            int thredId = System.Threading.Thread.CurrentThread.ManagedThreadId;
-            if(Services.DbContextByThread.ContainsKey(thredId)) {
-                Services.DbContextByThread.Remove(thredId);
-            }
+            //remove the context for this request when it finishes    
+            Services.RemoveCurrentThreadDbContext();
         }
     }
 }
