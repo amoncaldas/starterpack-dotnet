@@ -57,7 +57,7 @@ namespace StarterPack
                           
             builder.AddMvcOptions(options => {
                 //Configura um filtro global para tratar exceptions
-                options.Filters.Add(new ApiExceptionFilter(env));
+                options.Filters.Add(new ExceptionHandler(env));
             });
 
             builder.AddJsonOptions(options =>  {  
