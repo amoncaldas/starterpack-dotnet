@@ -13,9 +13,10 @@ using StarterPack.Core.Extensions;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections;
 
-namespace StarterPack.Core.Models
+
+namespace StarterPack.Core.Persistence
 {
-    public abstract class Model<T> where T :  Model<T>
+    public abstract partial class Model<T> where T :  Model<T>
     {
         public virtual long? Id { get; set; }
         
@@ -26,10 +27,10 @@ namespace StarterPack.Core.Models
         public virtual DateTime? UpdatedAt { get; set; }
 
         [NotMapped]
-        protected virtual List<string> Fill { get; set; }
+        public virtual List<string> Fill { get; set; }
 
         [NotMapped]
-        protected virtual List<string> DontFill { get; set; }
+        public virtual List<string> DontFill { get; set; }
 
         protected readonly DbContext context;
         protected DbSet<T> entities;
@@ -45,34 +46,13 @@ namespace StarterPack.Core.Models
         /// inicializa as coleções Fill e DontFill e define as datas de CreatedAt e UpdatedAt como a data corrente
         /// </summary>
         /// <param name="context">Contexto de dados a ser utilizado para processar transações com o banco</param>
-        public Model(DbContext context)
-        {           
+        public Model(DbContext context){           
             this.context = context;
             entities = context.Set<T>();             
             this.Fill = new List<string> {}; 
             this.DontFill = new List<string> {};
             this.CreatedAt = this.UpdatedAt = DateTime.Now;           
-        }
-
-        /// <summary>
-        /// Recupera o contexto de dados. Por padrão é recuperado o DefaultDbContext. 
-        /// Caso o model vá utilizar um contexto de dados (conexão/banco) diferente deve 
-        /// implementar o método protected "new static DbContext getContext() { /* return your db context */}"
-        /// </summary>
-        /// <returns></returns>
-        protected static DbContext getContext() {            
-            return DbContextAccessor.GetContext(typeof(DefaultDbContext));
-        }        
-
-        /// <summary>
-        /// Recupera a referência às entidades de dados
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        protected static DbSet<T> getEntities(DbContext context = null) {
-            var _context = context == null ? getContext() : context;
-            return _context.Set<T>();
-        }        
+        }            
 
         /// <summary>
         /// Adiciona um model ao contexto de forma que seja possível recuperar as entidades relacionadas
@@ -86,7 +66,7 @@ namespace StarterPack.Core.Models
         }
 
         /// <summary>
-        /// Adiciona um model não rastreado ao contexto de forma que este torna-se rastreado e as mudanças neste podem ser salvas no banco
+        /// Adiciona um model já existente no banco e não o marca como modificado. A partir das primeira modificação para a ter o estado como modificado
         /// Veja o exemplo: https://docs.microsoft.com/en-us/ef/core/querying/related-data#explicit-loading
         /// </summary>
         /// <param name="model"></param>
@@ -120,15 +100,14 @@ namespace StarterPack.Core.Models
 
 
         /// <summary>
-        /// Recupera  a instância de um model pela FK id. 
+        /// Recupera  a instância de um model pela PK id. 
         /// Por padrão é retornada com treck ATIVO (mudanças serão refletidas no banco quando chamado executado SaveChanges), 
         /// podendo este track ser desativado passando o último parâmetro como false
         /// </summary>
         /// <param name="id"></param>
         /// <param name="tracked">Define se a entidade recuperada deve manter o track ativo (mudanças serão refletidas no banco quando chamado executado SaveChanges) [padrão true]</param>
         /// <returns></returns>
-        public static T Get(long id, bool tracked = true)
-        {      
+        public static T Get(long id, bool tracked = true){      
             if(tracked) {
                 return getEntities().SingleOrDefault(s => s.Id == id);
             }
@@ -212,7 +191,7 @@ namespace StarterPack.Core.Models
 
          
         /// <summary>
-        /// Recupera o objeto query do modelo com o critério fk id = [parametro id]
+        /// Recupera o objeto query do modelo com o critério PK id = [parametro id]
         /// Por padrão é retornada com treck ATIVO (mudanças NÃO serão refletidas no banco quando chamado executado SaveChanges), 
         /// podendo este track ser desativado passando o parâmetro tracked como false 
         /// </summary>
@@ -228,8 +207,9 @@ namespace StarterPack.Core.Models
         /// Se utilizado em conjunto com operações em lote como, por exemplo, Model.Save(false), Model.Update(false), Model.Delete(false)
         /// permite aplicar efetivamente todas as mudanças de uma vez só, sendo ùtil para transações atômicas
         /// </summary>
-        public static void CommitChanges() {
-            getContext().SaveChanges();
+        public static void SaveChanges(DbContext context = null) {
+            var _context = context == null ? getContext() : context;
+            _context.SaveChanges();
         }
 
         /// <summary>
@@ -243,30 +223,26 @@ namespace StarterPack.Core.Models
                 Update(applyChanges);
             }
             else {
-                Save((T)this, applyChanges);            
+                Save(applyChanges);            
             }            
         }
 
         /// <summary>
-        /// Salva as modificações de um model passado como parâmetro. Por padrão as mudanças são efetivamente salvas no banco no momento desta chamada,
-        /// podendo ser passado o parâmetro applyChanges como false para que essa mudança só seja efetivada em momento posterior
-        /// executando o método CommitChanges
+        /// Adiciona um model e já o marca como modificado.
         /// </summary>
-        /// <param name="applyChanges">Sendo passado como false evita a aplicação efetiva da mudança no banco, que nesse caso deve ser executada usando o método CommitChanges</param>
-        public static void Save(T entity, bool applyChanges = true) {
-            var context = getContext();            
-            getEntities(context).Add(entity);
-
-            if(applyChanges) {
-                context.SaveChanges();
-            }            
-        }
-        
+        /// <param name="entity"></param>
         public static void Add(T entity) {
             var context = getContext();            
             getEntities(context).Add(entity);
         }
 
+        /// <summary>
+        /// Exclui um registro pela PK Id. Por padrão essa exclusão já é persistida no banco. 
+        /// Se for passado o segundo parâmetro (applyChanges) como false, não salva, mas deixa marcado como modificado
+        /// podendo ser executado o método SaveChanges
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="applyChanges">Se for passado como false, não salva, mas deixa marcado como modificado</param>
         public static void Delete(long id, bool applyChanges = true) {    
             var context = getContext();      
             T model = Model<T>.Get(id);   
@@ -277,27 +253,31 @@ namespace StarterPack.Core.Models
                 context.SaveChanges();
             }
         }
+        
 
-        public void Delete(bool applyChanges = true) {
-            entities.Remove((T)this);
-            
-            if(applyChanges) {
-                context.SaveChanges();
-            }
-        }
-
-        public static void Delete(Expression<Func<T, bool>> predicate = null) {
+        /// <summary>
+        /// Exclui um ou mais registros a partir dos critérios passados. Por padrão essa operação já é persistida no banco. 
+        /// Se for passado o segundo parâmetro (applyChanges) como false, não salva, mas deixa marcado como modificado
+        /// podendo ser executado o método SaveChanges
+        /// </summary>
+        /// <param name="predicate">Expressão lambda com condições para exclusão</param>
+        /// <param name="applyChanges">Se for passado como false, não salva, mas deixa marcado como modificado</param>
+        public static void Delete(Expression<Func<T, bool>> predicate = null, bool applyChanges = true) {
             var context = Model<T>.getContext();  
             context.RemoveRange(Model<T>.Where(predicate).Where(m => m.Id > 0));
-            context.SaveChanges();
-        }
 
-        public static void DeleteAll() {
-            var context = Model<T>.getContext();  
-            context.RemoveRange(Model<T>.Query().Where(m => m.Id > 0));
-            context.SaveChanges();
+            if(applyChanges) {
+                context.SaveChanges();
+            }            
         }
+        
 
+        /// <summary>
+        /// Atualiza um modelo (atualizando automaticamente o campo UpdatedAt). Por padrão essa operação já é persistida no banco. 
+        /// Se for passado o segundo parâmetro (applyChanges) como false, não salva, mas deixa marcado como modificado
+        /// podendo ser executado o método SaveChanges
+        /// </summary>
+        /// <param name="applyChanges">Se for passado como false, não salva, mas deixa marcado como modificado</param>
         public virtual void Update(bool applyChanges = true) { 
             var context = getContext();            
             getEntities(context).Update((T)this);
@@ -306,58 +286,6 @@ namespace StarterPack.Core.Models
             if(applyChanges) {
                 context.SaveChanges();
             }
-        } 
-
-        public virtual void UpdateAttributes(ExpandoObject updatedProperties) 
-        {
-            UpdateAttributes((T) this, updatedProperties);
-        }
-
-        public static void UpdateAttributes(long id, ExpandoObject updatedProperties)
-        {            
-            T model = Get(id);
-            UpdateAttributes(model, updatedProperties);
-        } 
-
-        public void MergeAttributes(T updatedProperties) 
-        {
-            foreach (PropertyInfo property in updatedProperties.GetType().GetProperties())
-            {   
-                MergetProperty(this, property, property.GetValue(updatedProperties));
-            }            
-        }
-
-        private static void UpdateAttributes(T model, ExpandoObject updatedProperties) 
-        {            
-            SetAttributes(ref model, updatedProperties);
-            model.UpdatedAt = DateTime.Now;
-            
-            getContext().SaveChanges();
-        }
-
-        private static void SetAttributes(ref T model, ExpandoObject attributes) 
-        {
-            foreach (KeyValuePair<string, object> attribute in attributes)
-            {
-                String propertyName = StringHelper.SnakeCaseToTitleCase(attribute.Key);
-                PropertyInfo property = model.GetType().GetProperty(propertyName);                
-
-                if(property != null) {
-                    MergetProperty(model, property, attribute.Value);
-                }
-            }            
-        }        
-
-        private static void MergetProperty(Model<T> model, PropertyInfo property, dynamic value) 
-        {
-            if(property.Name != "Id" 
-            && !model.DontFill.Contains(property.Name) 
-            && (model.Fill.Contains(property.Name) || model.Fill.Contains("*"))) {
-                if(value != null) {
-                    property.SetValue(model, value);              
-                }
-            }
-        }                      
-    }
-   
+        }                              
+    }   
 }

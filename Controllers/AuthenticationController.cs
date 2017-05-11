@@ -12,6 +12,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using StarterPack.Core.Controllers;
 using StarterPack.Core.Controllers.Attributes;
+using StarterPack.Core.Extensions;
 
 namespace StarterPack.Controllers
 {   
@@ -40,7 +41,7 @@ namespace StarterPack.Controllers
             }
 
 
-            User user = Models.User.Where(u => u.Email == login.Email).FirstOrDefault();            
+            User user = Models.User.Where(u => u.Email == login.Email).FirstOrDefault();
 
             if (user == null || StringHelper.GenerateHash(login.Password + user.Salt) != user.Password)
             {
