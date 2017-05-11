@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace StarterPack.Core.Exception
 {
-    public class ApiExceptionFilter : ExceptionFilterAttribute
+    public class ExceptionHandler : ExceptionFilterAttribute
     {
 
         IHostingEnvironment env;
-        public ApiExceptionFilter(IHostingEnvironment env)
+        public ExceptionHandler(IHostingEnvironment env)
         {
             this.env = env;
         }        
@@ -27,11 +27,15 @@ namespace StarterPack.Core.Exception
                 // handle explicit 'known' API errors
                 var ex = context.Exception as ApiException;
 
-                context.Exception = null;
                 apiError = new ApiError(ex.Message);
 
                 context.HttpContext.Response.StatusCode = ex.StatusCode;
             }
+            else if (context.Exception is BusinessException)
+            {
+                apiError = new ApiError(context.Exception.Message);
+                context.HttpContext.Response.StatusCode = 400;
+            }            
             else if (context.Exception is UnauthorizedAccessException)
             {
                 apiError = new ApiError("messages.notAuthorized");
