@@ -9,7 +9,7 @@ namespace StarterPack.Core.Auth
 {
     public class AuthService
     {   
-        public static void SetCurrentUser(HttpContext context, SecurityToken token)   {            
+        public static void SetCurrentUser(HttpContext context)   {            
             var userId = context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
 
@@ -20,15 +20,12 @@ namespace StarterPack.Core.Auth
                 .AsNoTracking()
                 .First();
 
-            context.Items["Token"] = token;
+            
         }
 
         public static User GetCurrentUser(HttpContext context) {
             return (User) context.Items["CurrentUser"];
         }
-
-        public static User GetToken(HttpContext context) {
-            return (User) context.Items["Token"];
-        }        
+             
     }
 }

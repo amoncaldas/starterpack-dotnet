@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.ComponentModel.DataAnnotations.Schema;
 using StarterPack.Core.Persistence;
+using StarterPack.Core.Extensions;
 
 namespace StarterPack.Core.Models
 {
@@ -72,24 +73,21 @@ namespace StarterPack.Core.Models
             }
             return getEntities().AsNoTracking().SingleOrDefault(s => s.Id == id);
         }
+           
 
-        public static IQueryable<T> BuildQueryById(long id, bool tracked = true) {
-            return BuildQuery(s => s.Id == id, tracked);          
-        }            
-
-        public static IEnumerable<T> GetAll(bool tracked = false) {
+        public static List<T> GetAll(bool tracked = false) {
             if(tracked) {
-                return getEntities().AsEnumerable();
+                return getEntities().Fetch();
             }
-            return getEntities().AsNoTracking().AsEnumerable();
+            return getEntities().AsNoTracking().Fetch();
         }
 
-        public static IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate, bool tracked = false) {  
+        public static List<T> FindBy(Expression<Func<T, bool>> predicate, bool tracked = false) {  
             if(tracked) {
-                return BuildQuery(predicate).AsEnumerable();
+                return BuildQuery(predicate).Fetch();
             }         
             
-            return BuildQuery(predicate).AsNoTracking().AsEnumerable();
+            return BuildQuery(predicate).AsNoTracking().Fetch();
         }         
 
         public static IQueryable<T> Query(bool tracked = false) { 
@@ -105,10 +103,10 @@ namespace StarterPack.Core.Models
 
         public static IQueryable<T> BuildQuery(Expression<Func<T, bool>> predicate, bool tracked = false) {
             return Query(tracked).Where(predicate);          
-        }         
+        }
 
-        public static IQueryable<T> PaginatedQuery(int page, int perPage) {           
-            return Query().Take(perPage).Skip((page-1) * perPage);
+        public static IQueryable<T> BuildQueryById(long id, bool tracked = true) {
+            return BuildQuery(s => s.Id == id, tracked);          
         } 
 
         public void Save(bool applyChanges = true) {

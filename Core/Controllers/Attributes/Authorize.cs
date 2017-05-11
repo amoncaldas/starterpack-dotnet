@@ -9,6 +9,7 @@ using Microsoft.Extensions.Primitives;
 using StarterPack.Core.Exception;
 using System.Linq;
 using StarterPack.Core.Auth;
+using StarterPack.Auth;
 
 namespace StarterPack.Core.Controllers.Attributes
 {
@@ -98,13 +99,15 @@ namespace StarterPack.Core.Controllers.Attributes
 
 			//Faz essa verificação para não precisar validar o token novamente caso a anotações seja utilizada
 			//mais de 1 vez.
-			if( AuthService.GetCurrentUser(context.HttpContext) == null && AuthService.GetToken(context.HttpContext) == null ) {
+			if( AuthService.GetCurrentUser(context.HttpContext) == null) {
 				var token = Authorize.GetToken(context);
 
 				if(token != null) {
 					try {
 						context.HttpContext.User = new JwtSecurityTokenHandler().ValidateToken(Authorize.GetToken(context), parameters, out validatedToken);
-						AuthService.SetCurrentUser(context.HttpContext, validatedToken);
+						RenewTokenIfNecessary(context, validatedToken);
+						AuthService.SetCurrentUser(context.HttpContext);
+						
 					} catch(ArgumentException) { //formato invalido
 						throw new ApiException("token_invalid", 401);	
 					} catch(SecurityTokenExpiredException) { //tempo expirado
@@ -116,7 +119,15 @@ namespace StarterPack.Core.Controllers.Attributes
 					throw new ApiException("token_not_provided", 401);
 				}	
 			}							
-		}		
+		}
+
+		private static void RenewTokenIfNecessary(ActionExecutingContext context, SecurityToken validatedToken) {
+			if(validatedToken.ValidTo < DateTime.UtcNow.AddMinutes(-10)){
+				var tokenResolver =  Services.Resolve<TokenProviderOptions>();
+				var newToken = JwtHelper.Generate(AuthService.GetCurrentUser(context.HttpContext).Id.Value, tokenResolver);     
+				context.HttpContext.Response.Headers.Add("Authorization", "Bearer "+ newToken);
+			}	
+		}	
 	}
 }
 
