@@ -8,6 +8,8 @@ namespace StarterPack.Core.Persistence
         // Todos os models devem ser adicionados ao DbSet aqui para poderem ser transacionados com o banco
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Task> Tasks { get; set; }
 
         /// <summary>
         /// Aqui dvem ser configurados os models, especificando restrições e relacionamentos
@@ -15,15 +17,19 @@ namespace StarterPack.Core.Persistence
         /// <param name="modelBuilder"></param>
         public static void ConfigureModels(ModelBuilder modelBuilder) {
             modelBuilder.Entity<User>()
-                .HasIndex(u => u.Email)
+                .HasIndex(e => e.Email)
                 .IsUnique();   
 
             modelBuilder.Entity<User>()
-                .Property(u => u.Salt)
+                .Property(e => e.Salt)
                 .HasField("_salt");                
 
+            modelBuilder.Entity<Project>()
+                .HasIndex(e => e.Name)
+                .IsUnique();                
+
             modelBuilder.Entity<Role>()
-                .HasIndex(u => u.Slug)
+                .HasIndex(e => e.Slug)
                 .IsUnique();
                 
             modelBuilder.Entity<UserRole>()

@@ -56,12 +56,12 @@ namespace StarterPack.Core.Persistence
         }        
 
         /// <summary>
-        /// Realiza o merge entre um model e um objeto dynamic
+        /// Realiza o merge de uma propriedade de um model e um objeto dynamic
         /// </summary>
         /// <param name="model"></param>
         /// <param name="property"></param>
         /// <param name="value"></param>
-        private static void MergetProperty(Model<T> model, PropertyInfo property, dynamic value) 
+        public static void MergetProperty(Model<T> model, PropertyInfo property, dynamic value) 
         {
             if(property.Name != "Id" 
             && !model.DontFill.Contains(property.Name) 
@@ -86,12 +86,24 @@ namespace StarterPack.Core.Persistence
         /// </summary>
         /// <param name="model"></param>
         /// <param name="updatedProperties"></param>
-        private static void UpdateAttributes(T model, ExpandoObject updatedProperties) 
+        public static void UpdateAttributes(T model, ExpandoObject updatedProperties) 
         {            
             SetAttributes(ref model, updatedProperties);
             model.UpdatedAt = DateTime.Now;
             
             getContext().SaveChanges();
+        }
+
+        /// <summary>
+        /// Realiza o merge entre dois models
+        /// </summary>
+        /// <param name="updatedProperties"></param>
+        public void MergeAttributes(T updatedProperties) 
+        {
+            foreach (PropertyInfo property in updatedProperties.GetType().GetProperties())
+            {   
+                MergetProperty(this, property, property.GetValue(updatedProperties));
+            }            
         }
     }
 }

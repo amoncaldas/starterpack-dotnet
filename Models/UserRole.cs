@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
-using StarterPack.Core.Models;
+using StarterPack.Core.Persistence;
 
 namespace StarterPack.Models
 {

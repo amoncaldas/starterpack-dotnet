@@ -24,7 +24,8 @@ namespace StarterPack
                 Audience = Configuration.GetSection("APP_URL").Value,
                 Issuer = Configuration.GetSection("APP_NAME").Value,
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
-                Expiration = TimeSpan.FromMinutes(double.Parse(Configuration.GetSection("TOKEN_EXPIRATION").Value))
+                Expiration = int.Parse(Configuration.GetSection("TOKEN_EXPIRATION").Value),
+                LeftTimeToRenew = int.Parse(Configuration.GetSection("TOKEN_LEFT_TIME_TO_REFRESH").Value)
             };  
 
             //check if options is valid
@@ -68,10 +69,20 @@ namespace StarterPack
                 throw new ArgumentNullException(nameof(TokenProviderOptions.Audience));
             }
 
-            if (options.Expiration == TimeSpan.Zero)
+            if (options.Expiration == 0)
             {
-                throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(TokenProviderOptions.Expiration));
+                throw new ArgumentException("Deve ser maior que Zero.", nameof(TokenProviderOptions.Expiration));
             }
+
+            if (options.LeftTimeToRenew == 0)
+            {
+                throw new ArgumentException("Deve ser maior que Zero.", nameof(TokenProviderOptions.LeftTimeToRenew));
+            }    
+
+            if (options.LeftTimeToRenew > options.Expiration)
+            {
+                throw new ArgumentException("Deve ser menor que o Expiration.", nameof(TokenProviderOptions.LeftTimeToRenew));
+            }                      
 
             if (options.SigningCredentials == null)
             {

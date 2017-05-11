@@ -105,8 +105,8 @@ namespace StarterPack.Core.Controllers.Attributes
 				if(token != null) {
 					try {
 						context.HttpContext.User = new JwtSecurityTokenHandler().ValidateToken(Authorize.GetToken(context), parameters, out validatedToken);
-						RenewTokenIfNecessary(context, validatedToken);
 						AuthService.SetCurrentUser(context.HttpContext);
+						RenewTokenIfNecessary(context, validatedToken);
 						
 					} catch(ArgumentException) { //formato invalido
 						throw new ApiException("token_invalid", 401);	
@@ -122,16 +122,12 @@ namespace StarterPack.Core.Controllers.Attributes
 		}
 
 		private static void RenewTokenIfNecessary(ActionExecutingContext context, SecurityToken validatedToken) {
-			int TOKEN_EXPIRATION = 10;
-			string expirationConfig = Env.Config("TOKEN_EXPIRATION");
-			if(expirationConfig != "TOKEN_EXPIRATION") {
-				Int32.TryParse(expirationConfig, out TOKEN_EXPIRATION);
-			}
-			
-			if(validatedToken.ValidTo < DateTime.UtcNow.AddMinutes(TOKEN_EXPIRATION)){
-				var tokenResolver =  Services.Resolve<TokenProviderOptions>();
-				var newToken = JwtHelper.Generate(AuthService.GetCurrentUser(context.HttpContext).Id.Value, tokenResolver);     
-				context.HttpContext.Response.Headers.Add("Authorization", "Bearer "+ newToken);
+			var tokenOptions =  Services.Resolve<TokenProviderOptions>();
+
+			if (DateTime.UtcNow >= validatedToken.ValidTo.AddMinutes(-tokenOptions.LeftTimeToRenew)) {				
+				var newToken = JwtHelper.Generate(AuthService.GetCurrentUser(context.HttpContext).Id.Value, tokenOptions);     
+
+				context.HttpContext.Response.Headers.Add("Authorization", "Bearer " + newToken);
 			}	
 		}	
 	}

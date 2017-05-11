@@ -28,7 +28,7 @@ namespace StarterPack.Core.Extensions
 
         private static readonly FieldInfo QueryCompilationContextFactoryField = typeof(Database).GetTypeInfo().DeclaredFields.Single(x => x.Name == "_queryCompilationContextFactory");
 
-        public static string ToSql<T>(this IQueryable<T> query) where T : Models.Model<T>
+        public static string ToSql<T>(this IQueryable<T> query) where T : Persistence.Model<T>
 		{
             if (!(query is EntityQueryable<T>) && !(query is InternalDbSet<T>))
             {

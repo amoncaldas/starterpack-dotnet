@@ -33,7 +33,7 @@ namespace StarterPack.Core
                 audience: options.Audience,
                 claims: claims,
                 notBefore: now,
-                expires: now.Add(options.Expiration),
+                expires: now.AddMinutes(options.Expiration),
                 signingCredentials: options.SigningCredentials);
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }                

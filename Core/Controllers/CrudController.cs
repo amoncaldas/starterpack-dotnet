@@ -4,7 +4,8 @@ using System.Linq;
 using StarterPack.Core.Validation;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
-using StarterPack.Core.Models;
+using StarterPack.Core.Persistence;
+using StarterPack.Core.Extensions;
 
 namespace StarterPack.Core.Controllers
 {
@@ -14,26 +15,45 @@ namespace StarterPack.Core.Controllers
         // GET api/users
         [HttpGet]
         public object Index([FromQuery]T model)
-        {       
-
+        {
             bool trackModels = false;
             BeforeAll();
-            IQueryable<T> query = Model<T>.Query();
-           
-            BeforeSearch(ref query, ref trackModels);
-            ApplyFilters(ref query);            
-            
-            if(!trackModels)
-                query = query.AsNoTracking();
+            IQueryable<T> dataQuery = Model<T>.Query();
+                    
+            ApplyFilters(ref dataQuery);            
 
-            List<T> models = query.ToList();
-            AfterSearch(ref query, models);
-            AfterAll();            
-           
-            return new {
-                Items = models,
-                Total = models.Count()
-            };
+            IQueryable<T> countQuery = dataQuery.AsQueryable();
+
+            BeforeSearch(ref dataQuery, ref countQuery, ref trackModels);
+            
+            if (!trackModels)
+                dataQuery = dataQuery.AsNoTracking();
+
+            List<T> models;
+            int? count = null;
+
+            if (HasParameter("page") && HasParameter("perPage")) {
+                dataQuery = dataQuery.Paginate(GetParameter<int>("page"), GetParameter<int>("perPage"));
+                count = countQuery.Count();
+            } else {
+                if (HasParameter("limit")) {
+                    dataQuery = dataQuery.Take(GetParameter<int>("limit"));
+                }                 
+            }
+
+            models = dataQuery.Fetch();
+
+            AfterSearch(ref dataQuery, models);
+            AfterAll();
+
+            if(count == null) {
+                return models;
+            } else {
+                return new {
+                    Items = models,
+                    Total = count
+                };
+            }                            
         }       
 
 

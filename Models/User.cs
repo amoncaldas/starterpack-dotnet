@@ -6,7 +6,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using StarterPack.Core;
-using StarterPack.Core.Models;
 using StarterPack.Core.Persistence;
 
 namespace StarterPack.Models
@@ -62,7 +61,7 @@ namespace StarterPack.Models
         [JsonIgnore]  
         public DateTime? ResetTokenDate { get; set; }  
 
-        protected override List<string> Fill { get; set; }
+        public override List<string> Fill { get; set; }
 
         public User() {
              this.Fill = new List<string>() { "*" };
