@@ -7,7 +7,7 @@ using StarterPack.Core.Persistence;
 
 namespace StarterPack.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
+    [DbContext(typeof(DefaultDbContext))]
     [Migration("20170504135126_SpecifyAttributesLength")]
     partial class SpecifyAttributesLength
     {

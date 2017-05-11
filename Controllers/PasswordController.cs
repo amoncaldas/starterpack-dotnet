@@ -24,8 +24,8 @@ namespace StarterPack.Controllers
             }
 
             User user  = null;
-            if(Models.User.BuildQuery(u => u.Email == login.Email).Count() > 0) {
-                user = Models.User.BuildQuery(u => u.Email == login.Email).First();
+            if(Models.User.Where(u => u.Email == login.Email).Count() > 0) {
+                user = Models.User.Where(u => u.Email == login.Email).First();
             }            
 
             if(user != null){
@@ -56,7 +56,7 @@ namespace StarterPack.Controllers
                 throw new ValidationException(results.Errors);  
             }
 
-            User user = Models.User.BuildQuery(u => u.Email == loginReset.Email).FirstOrDefault();
+            User user = Models.User.Where(u => u.Email == loginReset.Email).FirstOrDefault();
 
             if(user != null){
                 user.UpdatePassword(loginReset);  

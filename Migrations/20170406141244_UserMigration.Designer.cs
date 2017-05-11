@@ -8,7 +8,7 @@ using StarterPack.Core.Persistence;
 
 namespace StarterPack.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
+    [DbContext(typeof(DefaultDbContext))]
     [Migration("20170406141244_UserMigration")]
     partial class UserMigration
     {

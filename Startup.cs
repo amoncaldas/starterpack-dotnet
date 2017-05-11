@@ -78,7 +78,7 @@ namespace StarterPack
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();        
 
             //Configura o contexto do banco de dados
-            services.AddDbContext<Core.Persistence.DatabaseContext>(
+            services.AddDbContext<Core.Persistence.DefaultDbContext>(
                 options => { 
                     options.UseNpgsql(Configuration["DbContextSettings:ConnectionString"]);
                 },

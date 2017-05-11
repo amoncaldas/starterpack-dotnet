@@ -15,7 +15,7 @@ namespace StarterPack.Seeders
 		{
 			User user  = new User(){Name = "Admin", Email = "admin-base@prodeb.com"};
             user.DefinePassword("Prodeb01");
-            user.Roles =  Role.BuildQuery(r => r.Slug == "admin").Fetch();
+            user.Roles =  Role.Where(r => r.Slug == "admin").Fetch();
 						user.mapFromRoles();
             user.Save();
 		}

@@ -7,7 +7,7 @@ using StarterPack.Core.Persistence;
 
 namespace StarterPack.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
+    [DbContext(typeof(DefaultDbContext))]
     [Migration("20170426150537_RemoveRequiredPasswordFromUser")]
     partial class RemoveRequiredPasswordFromUser
     {

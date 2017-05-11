@@ -42,7 +42,7 @@ namespace StarterPack.Controllers
         }
 
         protected override User GetSingle(long id, bool tracked = true) {
-            return Models.User.BuildQueryById(id, tracked)
+            return Models.User.WhereId(id, tracked)
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
                 .SingleOrDefault();
