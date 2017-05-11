@@ -7,7 +7,7 @@ using StarterPack.Core.Persistence;
 
 namespace StarterPack.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
+    [DbContext(typeof(DefaultDbContext))]
     partial class DatabaseContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

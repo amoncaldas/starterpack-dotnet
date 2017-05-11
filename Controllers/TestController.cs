@@ -22,7 +22,7 @@ namespace StarterPack.Controllers
             // var db = scope.ServiceProvider.GetService<DatabaseContext>();
             
             // Console.WriteLine("Numero " + HttpContext.Request.Query["id"].First() + " Hashcode context " + db.GetHashCode());
-            Console.WriteLine("Numero " + HttpContext.Request.Query["id"].First() + " Hashcode context" + Services.Resolve<DatabaseContext>().GetHashCode());
+            Console.WriteLine("Numero " + HttpContext.Request.Query["id"].First() + " Hashcode context" + Services.Resolve<DefaultDbContext>().GetHashCode());
 
             if(HttpContext.Request.Query["id"].First() == "1")
                 Task.WaitAll( Task.Delay( 60*60*10 ) );
@@ -33,7 +33,7 @@ namespace StarterPack.Controllers
             // db = scope.ServiceProvider.GetService<DatabaseContext>();  
 
             // Console.WriteLine("Numero " + HttpContext.Request.Query["id"].First() + " Hashcode context " + db.GetHashCode());                
-            Console.WriteLine("Numero " + HttpContext.Request.Query["id"].First() + " Hashcode context " + Services.Resolve<DatabaseContext>().GetHashCode());
+            Console.WriteLine("Numero " + HttpContext.Request.Query["id"].First() + " Hashcode context " + Services.Resolve<DefaultDbContext>().GetHashCode());
 
             return 1;
         }        

@@ -7,7 +7,7 @@ using StarterPack.Core.Persistence;
 
 namespace StarterPack.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
+    [DbContext(typeof(DefaultDbContext))]
     [Migration("20170504193403_AddUniqueKeyToRoleSlug")]
     partial class AddUniqueKeyToRoleSlug
     {

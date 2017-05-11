@@ -16,7 +16,7 @@ namespace StarterPack.Middlewares
 
         public async Task Invoke(HttpContext context)
         {            
-            Services.SetCurrentThreadDbContext((DatabaseContext)context.RequestServices.GetService(typeof(DatabaseContext)));
+            Services.SetCurrentThreadDbContext((DefaultDbContext)context.RequestServices.GetService(typeof(DefaultDbContext)));
 
             // run the request
             await this._next(context);

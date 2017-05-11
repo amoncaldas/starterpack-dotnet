@@ -40,21 +40,14 @@ namespace StarterPack.Controllers
             }
 
 
-            User user = Models.User.BuildQuery(u => u.Email == login.Email).FirstOrDefault();            
+            User user = Models.User.Where(u => u.Email == login.Email).FirstOrDefault();            
 
             if (user == null || StringHelper.GenerateHash(login.Password + user.Salt) != user.Password)
             {
                 throw new ApiException("messages.login.invalidCredentials", 401);
             }
-
-            //Get logged user roles to add in token
-            List<string> roles = UserRole.BuildQuery(u => u.UserId == user.Id)
-                .Include(ur => ur.Role)
-                .AsNoTracking()
-                .Select(ur => ur.Role.Slug.ToLower())
-                .ToList();
-
-            var token = JwtHelper.Generate(user.Id.Value, roles, _tokenProviderOptions);                
+            
+            var token = JwtHelper.Generate(user.Id.Value, _tokenProviderOptions);                
 
             return StatusCode(201, new { token = token });
         }    

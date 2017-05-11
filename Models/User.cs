@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using StarterPack.Core;
 using StarterPack.Core.Models;
+using StarterPack.Core.Persistence;
 
 namespace StarterPack.Models
 {

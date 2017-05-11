@@ -3,7 +3,7 @@ using StarterPack.Models;
 
 namespace StarterPack.Core.Persistence
 {
-    public partial class DatabaseContext
+    public partial class DefaultDbContext
     {
         // Todos os models devem ser adicionados ao DbSet aqui para poderem ser transacionados com o banco
         public DbSet<User> Users { get; set; }

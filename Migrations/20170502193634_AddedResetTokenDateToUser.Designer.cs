@@ -7,7 +7,7 @@ using StarterPack.Core.Persistence;
 
 namespace StarterPack.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
+    [DbContext(typeof(DefaultDbContext))]
     [Migration("20170502193634_AddedResetTokenDateToUser")]
     partial class AddedResetTokenDateToUser
     {

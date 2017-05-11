@@ -9,7 +9,7 @@ namespace StarterPack.Core
 {
     public static class JwtHelper
     {
-        public static string Generate(long userId, List<String> roles, TokenProviderOptions options, IEnumerable<Claim> additionalClaims = null)  
+        public static string Generate(long userId, TokenProviderOptions options, IEnumerable<Claim> additionalClaims = null)  
         {  
             var now = DateTime.UtcNow;
 
@@ -20,13 +20,7 @@ namespace StarterPack.Core
                 new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),                
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, new DateTimeOffset(now).ToUniversalTime().ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
-            };
-
-            if(roles != null) {
-                roles.ForEach(r => {
-                    claims = claims.Append(new Claim("roles", r));
-                });
-            }
+            };            
 
             if(additionalClaims != null)
             {

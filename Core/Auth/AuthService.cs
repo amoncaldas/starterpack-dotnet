@@ -9,26 +9,23 @@ namespace StarterPack.Core.Auth
 {
     public class AuthService
     {   
-        public static void SetCurrentUser(HttpContext context, SecurityToken token)   {            
+        public static void SetCurrentUser(HttpContext context)   {            
             var userId = context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
 
             //get current logged user with roles            
-            context.Items["CurrentUser"] = User.BuildQuery(u => u.Id == long.Parse(userId)) 
+            context.Items["CurrentUser"] = User.Where(u => u.Id == long.Parse(userId)) 
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
                 .AsNoTracking()
                 .First();
 
-            context.Items["Token"] = token;
+            
         }
 
         public static User GetCurrentUser(HttpContext context) {
             return (User) context.Items["CurrentUser"];
         }
-
-        public static User GetToken(HttpContext context) {
-            return (User) context.Items["Token"];
-        }        
+             
     }
 }
