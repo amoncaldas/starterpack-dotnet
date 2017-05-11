@@ -20,7 +20,7 @@ namespace StarterPack.Core.Exception
         public override void OnException(ExceptionContext context)
         {
            
-            List<ApiError> apiErrors = new List<ApiError>();  
+            ApiError apiError = null;
 
             if (context.Exception is ApiException)
             {
@@ -28,22 +28,29 @@ namespace StarterPack.Core.Exception
                 var ex = context.Exception as ApiException;
 
                 context.Exception = null;
-                apiErrors.Add(new ApiError(ex.Message));
+                apiError = new ApiError(ex.Message);
 
                 context.HttpContext.Response.StatusCode = ex.StatusCode;
             }
             else if (context.Exception is UnauthorizedAccessException)
             {
-                apiErrors.Add(new ApiError("messages.notAuthorized"));
+                apiError = new ApiError("messages.notAuthorized");
                 context.HttpContext.Response.StatusCode = 403;
             }
             else if (context.Exception is ValidationException)
             {
+                Dictionary<String, List<String>> validations = new Dictionary<String, List<String>>();
+
                 foreach (ValidationFailure failure in ((ValidationException)context.Exception).Errors)
-                {
-                    apiErrors.Add(new ApiError(failure.ErrorMessage, failure.PropertyName));                
+                {   
+                    if (!validations.ContainsKey(failure.PropertyName)) {
+                        validations.Add(failure.PropertyName, new List<string>());
+                    }
+
+                    validations[failure.PropertyName].Add(failure.ErrorMessage);                    
                 }                
                 context.HttpContext.Response.StatusCode = 422;
+                context.Result = new JsonResult(validations);
             }
             else
             {   
@@ -51,23 +58,20 @@ namespace StarterPack.Core.Exception
 
                 if(this.env.IsDevelopment() || this.env.IsEnvironment("Local"))
                 {
-                    apiErrors.Add(new ApiError(context.Exception.GetBaseException().Message));
-                    apiErrors.Add(new ApiError(context.Exception.GetBaseException().StackTrace));
+                    string detailError = context.Exception.GetBaseException().Message;
+                    detailError += "\n" + context.Exception.GetBaseException().StackTrace;
+
+                    apiError = new ApiError(detailError);
                 } else {
-                    apiErrors.Add(new ApiError("messages.internalError"));
+                    apiError = new ApiError("messages.internalError");
                 }
                 
                 context.HttpContext.Response.StatusCode = 500;
             }
 
-            // always return a JSON result
-            if(apiErrors.Count == 1) {
-                context.Result = new JsonResult(apiErrors.First());
-            }
-            else {
-                context.Result = new JsonResult(apiErrors);
-            }
-           
+            if(apiError != null) {
+                context.Result = new JsonResult(apiError);
+            }        
 
             base.OnException(context);
         }

@@ -3,6 +3,7 @@
 		"User":{
 			"Name":"Nome",
 			"Password":"Senha",
+			"PasswordConfirmation":"Confirmação da Senha",
 			"Email":"Email"
 		}
 	}

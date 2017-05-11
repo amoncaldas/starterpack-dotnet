@@ -16,15 +16,15 @@ namespace StarterPack
 
         private void ConfigureAuthOptions(IServiceCollection services) {
             //get and config jwt key
-            signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("TokenAuthentication:SecretKey").Value));
+            signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("JWT_KEY").Value));
 
             //configure jwt token options
             var tokenProviderOptions = new TokenProviderOptions
             {
-                Audience = Configuration.GetSection("TokenAuthentication:Audience").Value,
-                Issuer = Configuration.GetSection("TokenAuthentication:Issuer").Value,
+                Audience = Configuration.GetSection("APP_URL").Value,
+                Issuer = Configuration.GetSection("APP_NAME").Value,
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
-                IdentityResolver = GetIdentity
+                Expiration = TimeSpan.FromMinutes(double.Parse(Configuration.GetSection("TOKEN_EXPIRATION").Value))
             };  
 
             //check if options is valid
@@ -37,10 +37,10 @@ namespace StarterPack
                 IssuerSigningKey = signingKey,
                 // Validate the JWT Issuer (iss) claim
                 ValidateIssuer = true,
-                ValidIssuer = Configuration.GetSection("TokenAuthentication:Issuer").Value,
+                ValidIssuer = Configuration.GetSection("APP_NAME").Value,
                 // Validate the JWT Audience (aud) claim
                 ValidateAudience = true,
-                ValidAudience = Configuration.GetSection("TokenAuthentication:Audience").Value,
+                ValidAudience = Configuration.GetSection("APP_URL").Value,
                 // Validate the token expiry
                 ValidateLifetime = true,
                 // Set to Zero the difference balance
@@ -51,25 +51,6 @@ namespace StarterPack
             services.AddSingleton<TokenProviderOptions>(tokenProviderOptions);             
             services.AddSingleton<TokenValidationParameters>(tokenValidationParameters); 
         }
-        
-        /// <summary>
-        /// Check user credentials and return the identity
-        /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        private Task<User> GetIdentity(string email, string password)
-        {
-            User user = User.BuildQuery(u => u.Email == email).FirstOrDefault();            
-
-            if (user != null && StringHelper.GenerateHash(password + user.Salt) == user.Password)
-            {
-                return Task.FromResult(user);
-            }
-
-            // Account doesn't exists or credential invalids
-            return Task.FromResult<User>(null);
-        }  
 
         /// <summary>
         /// Check if token options is Valid
@@ -90,11 +71,6 @@ namespace StarterPack
             if (options.Expiration == TimeSpan.Zero)
             {
                 throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(TokenProviderOptions.Expiration));
-            }
-
-            if (options.IdentityResolver == null)
-            {
-                throw new ArgumentNullException(nameof(TokenProviderOptions.IdentityResolver));
             }
 
             if (options.SigningCredentials == null)

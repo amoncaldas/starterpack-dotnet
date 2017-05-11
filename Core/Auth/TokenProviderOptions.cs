@@ -27,10 +27,5 @@ namespace StarterPack.Auth
         /// The signing key to use when generating tokens.
         /// </summary>
         public SigningCredentials SigningCredentials { get; set; }
-
-        /// <summary>
-        /// Resolves a user identity given a username and password.
-        /// </summary>
-        public Func<string, string, Task<User>> IdentityResolver { get; set; }
     }
 }

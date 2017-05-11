@@ -38,6 +38,9 @@ namespace StarterPack.Models
         [Required, MaxLength(100)]
         public string Password { get; set; }   
 
+        [NotMapped]
+        public string PasswordConfirmation { get; set; }         
+
         [JsonIgnore]       
         public List<UserRole> UserRoles { get; set; }
 
@@ -79,7 +82,12 @@ namespace StarterPack.Models
         public bool ShouldSerializePassword()
         {
             return false;
-        }             
+        } 
+
+        public bool ShouldSerializePasswordConfirmation()
+        {
+            return false;
+        }                    
 
         public void mapToRoles() {
             this.Roles = new List<Role>(); 
@@ -128,8 +136,7 @@ namespace StarterPack.Models
             // Se a senha ainda não tiver sido ddefinida, a define   
             if(pass != null) {
                 this._plainPassword = pass;
-            }         
-            if (this.PlainPassword == null) {                
+            } else {                
                 this._plainPassword = StringHelper.GeneratePassword();                     
             }
             SetSalt();

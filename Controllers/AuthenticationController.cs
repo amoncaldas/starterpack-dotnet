@@ -11,10 +11,7 @@ using StarterPack.Core.Validation;
 using FluentValidation;
 using FluentValidation.Results;
 using StarterPack.Core.Controllers;
-
 using StarterPack.Core.Controllers.Attributes;
-
-
 
 namespace StarterPack.Controllers
 {   
@@ -30,7 +27,7 @@ namespace StarterPack.Controllers
         // POST api/users
         [HttpPost]        
         [Route("authenticate")]    
-        public async Task<object> login([FromBody]Login login)
+        public IActionResult login([FromBody]Login login)
         {
             ModelValidator<Login> loginValidator = new ModelValidator<Login>();
             loginValidator.RuleFor(l => l.Email).NotEmpty().EmailAddress();           
@@ -42,13 +39,13 @@ namespace StarterPack.Controllers
                 throw new Core.Exception.ValidationException(results.Errors);  
             }
 
-            User user = await _tokenProviderOptions.IdentityResolver(login.Email, login.Password);
-            
 
-            if (user == null)
-            {     
+            User user = Models.User.BuildQuery(u => u.Email == login.Email).FirstOrDefault();            
+
+            if (user == null || StringHelper.GenerateHash(login.Password + user.Salt) != user.Password)
+            {
                 throw new ApiException("messages.login.invalidCredentials", 401);
-            }            
+            }
 
             //Get logged user roles to add in token
             List<string> roles = UserRole.BuildQuery(u => u.UserId == user.Id)

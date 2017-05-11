@@ -7,11 +7,12 @@ using Microsoft.EntityFrameworkCore;
 using StarterPack.Mail;
 using StarterPack.Core.Controllers;
 using StarterPack.Core.Controllers.Attributes;
+using Microsoft.AspNetCore.Mvc;
+using FluentValidation.Results;
 
 namespace StarterPack.Controllers
 { 
-    [Authorize("index:admin")]
-    [Authorize("index:normal")]
+    [Authorize("index:admin", "get:admin", "store:admin", "update:admin", "destroy:admin", "UpdateProfile")]
     public class UsersController : CrudController<User>
     {
         public UsersController() {
@@ -66,6 +67,34 @@ namespace StarterPack.Controllers
             model = GetSingle(model.Id.Value);
             //mapeia UserRoles para Roles
             model.mapToRoles();
+        }
+
+        [HttpPut]
+        [Route("/api/v1/profile")]        
+        public virtual IActionResult UpdateProfile([FromBody]User attributes)
+        {  
+            ModelValidator<User> validator = new ModelValidator<User>();
+            validator.RuleFor(o => o.Name).NotEmpty().Length(3,30);
+            validator.RuleFor(o => o.Email).NotEmpty().EmailAddress();
+            validator.RuleFor(o => o.PasswordConfirmation).Equal(o => o.Password);
+            validator.RuleFor(o => o.Password).Length(8,30);
+
+            ValidationResult results = validator.Validate(attributes);
+         
+            if(!results.IsValid) {
+                throw new Core.Exception.ValidationException(results.Errors);  
+            }
+
+            User user = CurrentUser();
+            user.MergeAttributes(attributes);
+
+            if(!string.IsNullOrEmpty(attributes.Password))
+                user.DefinePassword(attributes.Password);
+
+            user.Update();
+            user.mapToRoles();
+
+            return StatusCode(201, user);
         }
     }
 }
