@@ -39,6 +39,11 @@
         //dont trait the success block because already did by token interceptor
         Auth.remoteValidateToken().catch(function() {
           PrToast.warn($translate.instant('messages.login.logoutInactive'));
+
+          if (toState.name !== Global.loginState) {
+            $state.go(Global.loginState);
+          }
+
           event.preventDefault();
         });
       } else {
