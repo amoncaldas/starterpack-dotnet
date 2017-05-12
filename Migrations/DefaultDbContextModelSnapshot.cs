@@ -5,17 +5,39 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using StarterPack.Core.Persistence;
 
-namespace StarterPack.Migrations
+namespace starterpack.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20170502193634_AddedResetTokenDateToUser")]
-    partial class AddedResetTokenDateToUser
+    partial class DefaultDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "1.1.1");
+                .HasAnnotation("ProductVersion", "1.1.2");
+
+            modelBuilder.Entity("StarterPack.Models.Project", b =>
+                {
+                    b.Property<long?>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double>("Cost");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Projects");
+                });
 
             modelBuilder.Entity("StarterPack.Models.Role", b =>
                 {
@@ -23,14 +45,46 @@ namespace StarterPack.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Slug")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(30);
 
                     b.Property<string>("Title")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("StarterPack.Models.Task", b =>
+                {
+                    b.Property<long?>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<bool>("Done");
+
+                    b.Property<int>("Priority");
+
+                    b.Property<long?>("ProjectId");
+
+                    b.Property<DateTime>("ScheduledTo");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("StarterPack.Models.User", b =>
@@ -41,17 +95,24 @@ namespace StarterPack.Migrations
                     b.Property<DateTime?>("CreatedAt");
 
                     b.Property<string>("Email")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(255);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(255);
 
                     b.Property<string>("Password")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<string>("ResetToken");
 
                     b.Property<DateTime?>("ResetTokenDate");
+
+                    b.Property<string>("Salt")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<DateTime?>("UpdatedAt");
 
@@ -74,6 +135,13 @@ namespace StarterPack.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRole");
+                });
+
+            modelBuilder.Entity("StarterPack.Models.Task", b =>
+                {
+                    b.HasOne("StarterPack.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("StarterPack.Models.UserRole", b =>

@@ -5,17 +5,40 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using StarterPack.Core.Persistence;
 
-namespace StarterPack.Migrations
+namespace starterpack.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20170509180655_AddSaltToUser")]
-    partial class AddSaltToUser
+    [Migration("20170512140212_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "1.1.1");
+                .HasAnnotation("ProductVersion", "1.1.2");
+
+            modelBuilder.Entity("StarterPack.Models.Project", b =>
+                {
+                    b.Property<long?>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double>("Cost");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Projects");
+                });
 
             modelBuilder.Entity("StarterPack.Models.Role", b =>
                 {
@@ -36,6 +59,33 @@ namespace StarterPack.Migrations
                         .IsUnique();
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("StarterPack.Models.Task", b =>
+                {
+                    b.Property<long?>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<bool>("Done");
+
+                    b.Property<int>("Priority");
+
+                    b.Property<long?>("ProjectId");
+
+                    b.Property<DateTime>("ScheduledTo");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("StarterPack.Models.User", b =>
@@ -86,6 +136,13 @@ namespace StarterPack.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRole");
+                });
+
+            modelBuilder.Entity("StarterPack.Models.Task", b =>
+                {
+                    b.HasOne("StarterPack.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("StarterPack.Models.UserRole", b =>

@@ -14,6 +14,7 @@ using StarterPack.Core.Renders;
 using StarterPack.Core.Exception;
 using StarterPack.Core.Helpers;
 using StarterPack.Core.Extensions;
+using StarterPack.Core.Seeders;
 
 namespace StarterPack
 {
@@ -22,21 +23,21 @@ namespace StarterPack
 
         public Startup(IHostingEnvironment env)
         {
-           
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)                
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
-            Configuration = builder.Build();   
-            Env.Data = Configuration;  
-            Env.Host = env;       
+            Configuration = builder.Build();
+            Env.Data = Configuration;
+            Env.Host = env;
 
             this.env = env;
 
             string culture = "pt_BR";
-            
+
             var localizationBuilder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile($"Resources/Lang/{culture}/messages.json", optional: false)
@@ -47,21 +48,21 @@ namespace StarterPack
 
         public IConfigurationRoot Configuration { get; }
 
-       
+
         public IHostingEnvironment env { get; }
 
         //Use este método para adicionar/configurar serviços ao container
         public void ConfigureServices(IServiceCollection services)
         {
-            var builder = services.AddMvc().AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander())); 
-                          
+            var builder = services.AddMvc().AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));
+
             builder.AddMvcOptions(options => {
                 //Configura um filtro global para tratar exceptions
                 options.Filters.Add(new ExceptionHandler(env));
             });
 
-            builder.AddJsonOptions(options =>  {  
-                //Configura a nomenclatura na (de)serialização                  
+            builder.AddJsonOptions(options =>  {
+                //Configura a nomenclatura na (de)serialização
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver()
                 {
                     NamingStrategy = new SnakeCaseNamingStrategy()
@@ -75,11 +76,11 @@ namespace StarterPack
 
             services.AddSingleton<IConfiguration>(Configuration);
 
-            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();        
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             //Configura o contexto do banco de dados
             services.AddDbContext<Core.Persistence.DefaultDbContext>(
-                options => { 
+                options => {
                     options.UseNpgsql(Configuration["DbContextSettings:ConnectionString"]);
                 },
                 ServiceLifetime.Scoped
@@ -103,11 +104,11 @@ namespace StarterPack
 
             //Adiciona suporte a arquivos estaticos
             app.UseDefaultFiles(options);
-            app.UseStaticFiles(); 
-            
+            app.UseStaticFiles();
+
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();            
+            loggerFactory.AddDebug();
 
             //Configura o CORS
             app.UseCors(builder =>
@@ -115,17 +116,16 @@ namespace StarterPack
                     .WithOrigins("*")
                     .WithMethods("POST", "GET", "OPTIONS", "PUT", "DELETE")
                     .WithHeaders("Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With"));
-               
+
             //middlaware para db context
             app.UseRequestDbContext();
             app.UseMvc();
-			
+
             // Uncommenting the line above will enable defining the routes in a central file
             //app.UseMvc(routes => {ApiRoutes.get(routes);});
 
             // Run seeders
-            //Seeder.Execute();
-
-        }         
+            // Seeder.Execute();
+        }
     }
 }

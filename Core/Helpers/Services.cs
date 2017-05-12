@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
+using StarterPack.Core.Persistence;
 
 namespace StarterPack.Core.Helpers
 {
@@ -10,26 +11,26 @@ namespace StarterPack.Core.Helpers
     {
          private static IServiceProvider _provider { get; set; }
          public static IDictionary<int, DbContext> DbContextByThread { get; set; }
-       
-         public static T Resolve<T>() => (T)_provider.GetService(typeof(T)); 
+
+         public static T Resolve<T>() => (T)_provider.GetService(typeof(T));
 
          public static object Resolve(Type t) => _provider.GetService(t);
 
          public static void SetProvider(IServiceProvider provider){
              _provider = provider;
          }
-        
+
          public static DbContext DefaultDbContext {
              get{
                 int threadId = Thread.CurrentThread.ManagedThreadId;
-                if(DbContextByThread.ContainsKey(threadId)){
+                if(DbContextByThread != null && DbContextByThread.ContainsKey(threadId)){
                     return DbContextByThread.First(s=>s.Key == threadId).Value;
                 }
                 else {
-                    return null;
-                }                
-            }            
-         }  
+                    return Services.Resolve<DefaultDbContext>();
+                }
+            }
+         }
 
          public static void SetCurrentThreadDbContext(DbContext dbContext){
             if(DbContextByThread == null) {
@@ -47,7 +48,7 @@ namespace StarterPack.Core.Helpers
             if(DbContextByThread.ContainsKey(thredId)) {
                 DbContextByThread.Remove(thredId);
             }
-         }     
+         }
     }
 }
 

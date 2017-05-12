@@ -19,7 +19,7 @@ namespace StarterPack.Core.Persistence
     public abstract partial class Model<T> where T :  Model<T>
     {
         public virtual long? Id { get; set; }
-        
+
         [FromQuery(Name = "created_at")]
         public virtual DateTime? CreatedAt { get; set; }
 
@@ -34,9 +34,9 @@ namespace StarterPack.Core.Persistence
 
         protected readonly DbContext context;
         protected DbSet<T> entities;
-        
+
         /// <summary>
-        /// Contrutor que define como contexto de dados o contexto padrão da requisição, 
+        /// Contrutor que define como contexto de dados o contexto padrão da requisição,
         /// inicializa as coleções Fill e DontFill e define as datas de CreatedAt e UpdatedAt como a data corrente
         /// </summary>
         public Model() : this(getContext()) {}
@@ -46,13 +46,13 @@ namespace StarterPack.Core.Persistence
         /// inicializa as coleções Fill e DontFill e define as datas de CreatedAt e UpdatedAt como a data corrente
         /// </summary>
         /// <param name="context">Contexto de dados a ser utilizado para processar transações com o banco</param>
-        public Model(DbContext context){           
+        public Model(DbContext context){
             this.context = context;
-            entities = context.Set<T>();             
-            this.Fill = new List<string> {}; 
+            entities = context.Set<T>();
+            this.Fill = new List<string> {};
             this.DontFill = new List<string> {};
-            this.CreatedAt = this.UpdatedAt = DateTime.Now;           
-        }            
+            this.CreatedAt = this.UpdatedAt = DateTime.Now;
+        }
 
         /// <summary>
         /// Adiciona um model ao contexto de forma que seja possível recuperar as entidades relacionadas
@@ -61,7 +61,7 @@ namespace StarterPack.Core.Persistence
         /// <param name="model"></param>
         /// <returns></returns>
         public static EntityEntry<T> Entry(T model) {
-            EntityEntry<T> entry = getContext().Entry<T>(model);            
+            EntityEntry<T> entry = getContext().Entry<T>(model);
             return entry;
         }
 
@@ -72,7 +72,7 @@ namespace StarterPack.Core.Persistence
         /// <param name="model"></param>
         /// <returns></returns>
         public static EntityEntry<T> Attach(T model) {
-            EntityEntry<T> entry = getContext().Attach<T>(model);            
+            EntityEntry<T> entry = getContext().Attach<T>(model);
             return entry;
         }
 
@@ -83,10 +83,10 @@ namespace StarterPack.Core.Persistence
         /// <returns></returns>
         public EntityEntry<T> LoadRelations(Expression<Func<T, bool>> predicate) {
             var expression = predicate.Body as NewExpression;
-            EntityEntry<T> entry = getContext().Entry<T>((T)this); 
+            EntityEntry<T> entry = getContext().Entry<T>((T)this);
 
             foreach (MemberExpression a in expression.Arguments) {
-                var propertyName = a.Member.Name; 
+                var propertyName = a.Member.Name;
                 if(this.GetType().IsAssignableFrom(typeof(IList))){
                     entry.Collection(propertyName);
                 }
@@ -94,30 +94,30 @@ namespace StarterPack.Core.Persistence
                     entry.Reference(propertyName);
                 }
             }
-                       
+
             return entry;
         }
 
 
         /// <summary>
-        /// Recupera  a instância de um model pela PK id. 
-        /// Por padrão é retornada com treck ATIVO (mudanças serão refletidas no banco quando chamado executado SaveChanges), 
+        /// Recupera  a instância de um model pela PK id.
+        /// Por padrão é retornada com treck ATIVO (mudanças serão refletidas no banco quando chamado executado SaveChanges),
         /// podendo este track ser desativado passando o último parâmetro como false
         /// </summary>
         /// <param name="id"></param>
         /// <param name="tracked">Define se a entidade recuperada deve manter o track ativo (mudanças serão refletidas no banco quando chamado executado SaveChanges) [padrão true]</param>
         /// <returns></returns>
-        public static T Get(long id, bool tracked = true){      
+        public static T Get(long id, bool tracked = true){
             if(tracked) {
                 return getEntities().SingleOrDefault(s => s.Id == id);
             }
             return getEntities().AsNoTracking().SingleOrDefault(s => s.Id == id);
         }
-           
+
         /// <summary>
-        /// Recupera  uma coleção de models. 
-        /// Por padrão é retornada com treck INATIVO (mudanças NÃO serão refletidas no banco quando chamado executado SaveChanges), 
-        /// podendo este track ser ativado passando o parâmetro tracked como true 
+        /// Recupera  uma coleção de models.
+        /// Por padrão é retornada com treck INATIVO (mudanças NÃO serão refletidas no banco quando chamado executado SaveChanges),
+        /// podendo este track ser ativado passando o parâmetro tracked como true
         /// </summary>
         /// <param name="tracked">Define se a entidade recuperada deve manter o track ativo (mudanças serão refletidas no banco quando chamado executado SaveChanges) [padrão false]</param>
         /// <returns>List<T></returns>
@@ -130,77 +130,77 @@ namespace StarterPack.Core.Persistence
 
         /// <summary>
         /// Recupera  uma coleção de models por critérios passados como parâmetro
-        /// Por padrão é retornada com treck INATIVO (mudanças NÃO serão refletidas no banco quando chamado executado SaveChanges), 
-        /// podendo este track ser ativado passando o parâmetro tracked como true 
+        /// Por padrão é retornada com treck INATIVO (mudanças NÃO serão refletidas no banco quando chamado executado SaveChanges),
+        /// podendo este track ser ativado passando o parâmetro tracked como true
         /// </summary>
         /// <param name="predicate">Expressão linq com consições para a recuperação de models</param>
         /// <param name="tracked">Define se a entidade recuperada deve manter o track ativo (mudanças serão refletidas no banco quando chamado executado SaveChanges) [padrão false]</param>
         /// <returns>List<Model></returns>
-        public static List<T> FindBy(Expression<Func<T, bool>> predicate, bool tracked = false) {  
+        public static List<T> FindBy(Expression<Func<T, bool>> predicate, bool tracked = false) {
             if(tracked) {
                 return Where(predicate).Fetch();
-            }         
-            
+            }
+
             return Where(predicate).AsNoTracking().Fetch();
-        }         
+        }
 
         /// <summary>
         /// Recupera o objeto que representa a query para o modelo
         /// </summary>
         /// <param name="tracked">Define se os models recuperados a partir da query retornada deverão manter o track ativo (mudanças serão refletidas no banco quando chamado executado SaveChanges) [padrão false]</param>
         /// <returns></returns>
-        public static IQueryable<T> Query(bool tracked = false) { 
+        public static IQueryable<T> Query(bool tracked = false) {
             if(tracked) {
                 return getEntities();
             }
             return getEntities().AsNoTracking();
-        } 
+        }
 
         /// <summary>
-        /// Executa uma query raw e retorna um conjunto de models 
+        /// Executa uma query raw e retorna um conjunto de models
         /// </summary>
         /// <param name="sql">String sql a ser executada com os devidos placeholders dos parâmetros (caso contenha parâmetros)</param>
         /// <param name="parameters">Parâmetros a serem inseridos na query sql</param>
         /// <returns></returns>
-        public static List<T> TypedRawSql(string sql, params object[] parameters) { 
+        public static List<T> TypedRawSql(string sql, params object[] parameters) {
            return getEntities().FromSql(sql, parameters).ToList();
-        }  
+        }
 
         /// <summary>
-        /// Executa uma query raw e retorna um RelationalDataReader (que pode conter qualquer conjunto de dados)        
+        /// Executa uma query raw e retorna um RelationalDataReader (que pode conter qualquer conjunto de dados)
         /// </summary>
         /// <param name="sql">String sql a ser executada com os devidos placeholders dos parâmetros (caso contenha parâmetros)</param>
         /// <param name="parameters">Parâmetros a serem inseridos na query sql</param>
         /// <returns>RelationalDataReader - Para ler os resultados execute: var dr = RawSql([parameters]); while (dr.Read()) { Console.Write("{0}\t{1}\t{2} \n", dr[0], dr[1], dr[2]);}</returns>
-        public static RelationalDataReader RawSql(string sql, params object[] parameters) { 
+        public static RelationalDataReader RawSql(string sql, params object[] parameters) {
            return getContext().Database.ExecuteSqlQuery(sql, parameters);
-        }  
+        }
 
-        
+
         /// <summary>
         /// Recupera o objeto query do modelo com critérios passados como parâmetro
-        /// Por padrão é retornada com treck INATIVO (mudanças NÃO serão refletidas no banco quando chamado executado SaveChanges), 
-        /// podendo este track ser ativado passando o parâmetro tracked como true 
+        /// Por padrão é retornada com treck INATIVO (mudanças NÃO serão refletidas no banco quando chamado executado SaveChanges),
+        /// podendo este track ser ativado passando o parâmetro tracked como true
         /// </summary>
         /// <param name="predicate">Expressão linq com consições para a recuperação de models</param>
         /// <param name="tracked">Define se a entidade recuperada deve manter o track ativo (mudanças serão refletidas no banco quando chamado executado SaveChanges) [padrão false]</param>
         /// <returns>Objeto query que pode ser utilizada para fazer uma consulta no banco executando query.Fetch()</returns>
         public static IQueryable<T> Where(Expression<Func<T, bool>> predicate, bool tracked = false) {
-            return Query(tracked).Where(predicate);          
+            return Query(tracked).Where(predicate);
         }
 
-         
+
         /// <summary>
         /// Recupera o objeto query do modelo com o critério PK id = [parametro id]
-        /// Por padrão é retornada com treck ATIVO (mudanças NÃO serão refletidas no banco quando chamado executado SaveChanges), 
-        /// podendo este track ser desativado passando o parâmetro tracked como false 
+        /// Por padrão é retornada com treck ATIVO (mudanças NÃO serão refletidas no banco quando chamado executado SaveChanges),
+        /// podendo este track ser desativado passando o parâmetro tracked como false
         /// </summary>
         /// <param name="predicate">Expressão linq com consições para a recuperação de models</param>
         /// <param name="tracked">Define se a entidade recuperada deve manter o track ativo (mudanças serão refletidas no banco quando chamado executado SaveChanges) [padrão true]</param>
         /// <returns>Objeto query que pode ser utilizada para fazer uma consulta no banco executando query.Fetch()</returns>
         public static IQueryable<T> WhereId(long id, bool tracked = true) {
-            return Where(s => s.Id == id, tracked);          
-        } 
+            return Where(s => s.Id == id, tracked);
+        }
 
         /// <summary>
         /// Salva todas os dados marcados como pendentes no banco de dados
@@ -223,8 +223,12 @@ namespace StarterPack.Core.Persistence
                 Update(applyChanges);
             }
             else {
-                Save(applyChanges);            
-            }            
+                Add((T) this);
+
+                if(applyChanges) {
+                    getContext().SaveChanges();
+                }
+            }
         }
 
         /// <summary>
@@ -232,60 +236,64 @@ namespace StarterPack.Core.Persistence
         /// </summary>
         /// <param name="entity"></param>
         public static void Add(T entity) {
-            var context = getContext();            
+            var context = getContext();
             getEntities(context).Add(entity);
         }
 
         /// <summary>
-        /// Exclui um registro pela PK Id. Por padrão essa exclusão já é persistida no banco. 
+        /// Exclui um registro pela PK Id. Por padrão essa exclusão já é persistida no banco.
         /// Se for passado o segundo parâmetro (applyChanges) como false, não salva, mas deixa marcado como modificado
         /// podendo ser executado o método SaveChanges
         /// </summary>
         /// <param name="id"></param>
         /// <param name="applyChanges">Se for passado como false, não salva, mas deixa marcado como modificado</param>
-        public static void Delete(long id, bool applyChanges = true) {    
-            var context = getContext();      
-            T model = Model<T>.Get(id);   
-          
+        public static void Delete(long id, bool applyChanges = true) {
+            var context = getContext();
+            T model = Model<T>.Get(id);
+
             getEntities(context).Remove(model);
 
             if(applyChanges) {
                 context.SaveChanges();
             }
         }
-        
+
 
         /// <summary>
-        /// Exclui um ou mais registros a partir dos critérios passados. Por padrão essa operação já é persistida no banco. 
+        /// Exclui um ou mais registros a partir dos critérios passados. Por padrão essa operação já é persistida no banco.
         /// Se for passado o segundo parâmetro (applyChanges) como false, não salva, mas deixa marcado como modificado
         /// podendo ser executado o método SaveChanges
         /// </summary>
         /// <param name="predicate">Expressão lambda com condições para exclusão</param>
         /// <param name="applyChanges">Se for passado como false, não salva, mas deixa marcado como modificado</param>
         public static void Delete(Expression<Func<T, bool>> predicate = null, bool applyChanges = true) {
-            var context = Model<T>.getContext();  
-            context.RemoveRange(Model<T>.Where(predicate).Where(m => m.Id > 0));
+            var context = Model<T>.getContext();
+
+            if(predicate != null)
+                context.RemoveRange(Model<T>.Where(predicate).Where(m => m.Id > 0));
+            else
+                context.RemoveRange(Model<T>.Where(m => m.Id > 0));
 
             if(applyChanges) {
                 context.SaveChanges();
-            }            
+            }
         }
-        
+
 
         /// <summary>
-        /// Atualiza um modelo (atualizando automaticamente o campo UpdatedAt). Por padrão essa operação já é persistida no banco. 
+        /// Atualiza um modelo (atualizando automaticamente o campo UpdatedAt). Por padrão essa operação já é persistida no banco.
         /// Se for passado o segundo parâmetro (applyChanges) como false, não salva, mas deixa marcado como modificado
         /// podendo ser executado o método SaveChanges
         /// </summary>
         /// <param name="applyChanges">Se for passado como false, não salva, mas deixa marcado como modificado</param>
-        public virtual void Update(bool applyChanges = true) { 
-            var context = getContext();            
+        public virtual void Update(bool applyChanges = true) {
+            var context = getContext();
             getEntities(context).Update((T)this);
             UpdatedAt = DateTime.Now;
 
             if(applyChanges) {
                 context.SaveChanges();
             }
-        }                              
-    }   
+        }
+    }
 }
