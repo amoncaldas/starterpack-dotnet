@@ -4,8 +4,6 @@
   "description": "StarterPack em DotNet Core e Angular",
   "version": "1.0.0",
   "scripts": {
-    "server": "dotnet run",
-    "serverlive": "dotnet watch run",
     "package": "sh scripts/deploy.sh",
     "build": "gulp --gulpfile public/client/gulpfile.js",
     "check": "gulp --gulpfile public/client/gulpfile.js check",

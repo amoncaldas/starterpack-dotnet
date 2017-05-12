@@ -18,4 +18,4 @@ insert_final_newline = false
 trim_trailing_whitespace = false
 
 [*.cs]
-indent_size = 2
+indent_size = 4
