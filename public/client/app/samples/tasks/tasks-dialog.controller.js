@@ -9,7 +9,7 @@
   /** @ngInject */
   // eslint-disable-next-line max-params
   function TasksDialogController($controller, TasksService, projectId, PrToast, // NOSONAR
-    PrDialog, $translate, Global) {
+    PrDialog, $translate, Global, moment) {
 
     var vm = this;
 
@@ -28,7 +28,7 @@
 
     function onActivate() {
       vm.global = Global;
-      vm.now  = new Date();
+      vm.resource.scheduled_to = moment().add(30, 'minutes');
       vm.queryFilters = { projectId: projectId };
     }
 
@@ -38,6 +38,7 @@
 
     function beforeSave() {
       vm.resource.project_id = vm.queryFilters.projectId;
+      vm.resource.project = null;
     }
 
     function afterSave() {

@@ -14,10 +14,20 @@
     //Attributes Block
 
     //Functions Block
+    vm.onActivate = onActivate;
+    vm.applyFilters = applyFilters;
     vm.viewTasks = viewTasks;
 
     // instantiate base controller
     $controller('CRUDController', { vm: vm, modelService: ProjectsService, options: {} });
+
+    function onActivate() {
+      vm.queryFilters = {};
+    }
+
+    function applyFilters(defaultQueryFilters) {
+      return angular.extend(defaultQueryFilters, vm.queryFilters);
+    }
 
     function viewTasks(projectId) {
       var config = {
@@ -30,7 +40,7 @@
         hasBackdrop: true
       };
 
-      PrDialog.custom(config).then(function() {
+      PrDialog.custom(config).finally(function() {
         vm.search(vm.paginator.currentPage);
       });
 
