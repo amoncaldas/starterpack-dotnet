@@ -10,7 +10,7 @@ namespace StarterPack.Core.Controllers
     {
         public User CurrentUser() {
             return AuthService.GetCurrentUser(HttpContext);
-        }   
+        }
 
         public string GetParameter(string name) {
             return (HasParameter(name)) ? HttpContext.Request.Query[name].First() : null;
@@ -27,14 +27,17 @@ namespace StarterPack.Core.Controllers
                     return (T) Convert.ChangeType(long.Parse(parameter), typeof(T));
 
                 if(typeof(T) == typeof(DateTime))
-                    return (T) Convert.ChangeType(DateTime.Parse(parameter), typeof(T));                                     
+                    return (T) Convert.ChangeType(DateTime.Parse(parameter), typeof(T));
+
+                if(typeof(T) == typeof(bool))
+                    return (T) Convert.ChangeType(bool.Parse(parameter), typeof(T));
             }
-            
+
             return default(T);
         }
 
         public bool HasParameter(string name) {
             return HttpContext.Request.Query.ContainsKey(name);
-        }        
+        }
     }
 }

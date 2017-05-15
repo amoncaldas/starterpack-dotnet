@@ -14,25 +14,25 @@ namespace StarterPack.Controllers
         public RolesController() {
             // Http Request data can be accessed using the folowing code
             // HttpContext.Request;
-        } 
+        }
 
-        protected override void ApplyFilters(ref IQueryable<Role> query) { 
-            if( HttpContext.Request.Query.ContainsKey("slug") ) {
-                query = query.Where(role => role.Slug == HttpContext.Request.Query["slug"].First());
+        protected override void ApplyFilters(ref IQueryable<Role> query) {
+            if( HasParameter("slug") ) {
+                query = query.Where(role => role.Slug == GetParameter("slug"));
             }
-            if( HttpContext.Request.Query.ContainsKey("id") ) {
-                query = query.Where(role => role.Id == long.Parse(HttpContext.Request.Query["id"].First()));
+            if( HasParameter("id") ) {
+                query = query.Where(role => role.Id == GetParameter<long>("id"));
             }
         }
 
-        protected override void BeforeValidate(Role model, ModelValidator<Role> validator) { 
-            model.Slug = model.Title.ToLower();                      
+        protected override void BeforeValidate(Role model, ModelValidator<Role> validator) {
+            model.Slug = model.Title.ToLower();
         }
 
-           
-        protected override void SetValidationRules(Role model, ModelValidator<Role> validator) {            
+
+        protected override void SetValidationRules(Role model, ModelValidator<Role> validator) {
             validator.RuleFor(role => role.Title).NotEmpty().EmailAddress();
             validator.RuleFor(user => user.Slug).NotEmpty();
-        }       
+        }
     }
 }

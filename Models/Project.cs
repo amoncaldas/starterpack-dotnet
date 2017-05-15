@@ -11,10 +11,15 @@ namespace StarterPack.Models
     {
         [Required, MaxLength(100)]
         public string Name { get; set; }
-        
-        [Required]
-        public double Cost { get; set; }        
 
-        public List<Task> Tasks;   
+        [Required]
+        public double? Cost { get; set; }
+
+        public List<Task> Tasks  { get; set; }
+
+        public Project() {
+             this.Fill = new List<string>() { "*" };
+             this.DontFill = new List<string>() { "Tasks" };
+        }
     }
 }

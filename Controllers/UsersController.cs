@@ -12,7 +12,7 @@ using FluentValidation.Results;
 using StarterPack.Core.Persistence;
 
 namespace StarterPack.Controllers
-{ 
+{
     [Authorize("index:admin", "get:admin", "store:admin", "update:admin", "destroy:admin", "UpdateProfile")]
     public class UsersController : CrudController<User>
     {
@@ -24,17 +24,17 @@ namespace StarterPack.Controllers
             }
 
             if( HasParameter("nameOrEmail") ) {
-                string nameOrEmail = GetParameter("nameOrEmail");
-                query = query.Where(user => user.Name.Contains(nameOrEmail) || user.Email.Contains(nameOrEmail));
+                string nameOrEmail = GetParameter("nameOrEmail").ToLower();
+                query = query.Where(user => user.Name.ToLower().Contains(nameOrEmail) || user.Email.ToLower().Contains(nameOrEmail));
             }
 
             if( HasParameter("name") ) {
-                query = query.Where(user => user.Name.Contains(GetParameter("name")));
+                query = query.Where(user => user.Name.ToLower().Contains(GetParameter("name").ToLower()));
             }
 
             if( HasParameter("email") ) {
-                query = query.Where(user => user.Email.Contains(GetParameter("email")));
-            }            
+                query = query.Where(user => user.Email.ToLower().Contains(GetParameter("email").ToLower()));
+            }
         }
 
 
@@ -49,8 +49,8 @@ namespace StarterPack.Controllers
                 user.mapToRoles();
             });
         }
-           
-        protected override void SetValidationRules(User model, ModelValidator<User> validator) {            
+
+        protected override void SetValidationRules(User model, ModelValidator<User> validator) {
             validator.RuleFor(user => user.Email).NotEmpty().EmailAddress();
             validator.RuleFor(user => user.Name).NotEmpty().Length(3,30);
         }
@@ -62,17 +62,17 @@ namespace StarterPack.Controllers
                 .SingleOrDefault();
         }
 
-        protected override void BeforeStore(User model) {
+        protected override void BeforeStore(User model, User attributes) {
             //Gera a senha com um hash para evitar que fique igual a senha codificada fique igual para uma mesma senha
-            model.DefinePassword();     
+            model.DefinePassword();
         }
 
         protected override void AfterStore(User model) {
-           new ConfirmRegister(model).Send();          
-        } 
+           new ConfirmRegister(model).Send();
+        }
 
         //Mapeia Roles para UserRoles
-        protected override void BeforeSave(User model) {
+        protected override void BeforeSave(User model, User attributes) {
             model.mapFromRoles();
         }
 
@@ -84,9 +84,9 @@ namespace StarterPack.Controllers
         }
 
         [HttpPut]
-        [Route("/api/v1/profile")]        
+        [Route("/api/v1/profile")]
         public virtual IActionResult UpdateProfile([FromBody]User attributes)
-        {  
+        {
             ModelValidator<User> validator = new ModelValidator<User>();
             validator.RuleFor(o => o.Name).NotEmpty().Length(3,30);
             validator.RuleFor(o => o.Email).NotEmpty().EmailAddress();
@@ -94,12 +94,12 @@ namespace StarterPack.Controllers
             validator.RuleFor(o => o.Password).Length(8,30);
 
             ValidationResult results = validator.Validate(attributes);
-         
+
             if(!results.IsValid) {
-                throw new Core.Exception.ValidationException(results.Errors);  
+                throw new Core.Exception.ValidationException(results.Errors);
             }
 
-            User user = CurrentUser();           
+            User user = CurrentUser();
 
             if(!string.IsNullOrEmpty(attributes.Password))
                 user.DefinePassword(attributes.Password);

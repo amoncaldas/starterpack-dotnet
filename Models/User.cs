@@ -16,50 +16,50 @@ namespace StarterPack.Models
         private string _salt;
 
         [Required, JsonIgnore, MaxLength(100)]
-        public string Salt { 
+        public string Salt {
             get { return _salt; }
-        } 
+        }
 
         /// <summary>
         /// Define o salt
         /// </summary>
-        private void SetSalt(){           
+        private void SetSalt(){
             _salt = StringHelper.GenerateSalt();
-        }               
+        }
 
         [NotMapped, JsonIgnore]
         private string _plainPassword;
 
         [Required, MaxLength(255)]
         public string Name { get; set; }
-        
-        [Required, MaxLength(255)]       
+
+        [Required, MaxLength(255)]
         public string Email { get; set; }
 
         [Required, MaxLength(100)]
-        public string Password { get; set; }   
+        public string Password { get; set; }
 
         [NotMapped]
-        public string PasswordConfirmation { get; set; }         
+        public string PasswordConfirmation { get; set; }
 
-        [JsonIgnore]       
+        [JsonIgnore]
         public List<UserRole> UserRoles { get; set; }
 
         [NotMapped]
         public List<Role> Roles { get; set; }
 
-        [JsonIgnore, NotMapped]       
-        public string PlainPassword { 
+        [JsonIgnore, NotMapped]
+        public string PlainPassword {
             get {
                 return _plainPassword;
             }
-        }   
+        }
 
-        [JsonIgnore]      
-        public string ResetToken { get; set; } 
+        [JsonIgnore]
+        public string ResetToken { get; set; }
 
-        [JsonIgnore]  
-        public DateTime? ResetTokenDate { get; set; }  
+        [JsonIgnore]
+        public DateTime? ResetTokenDate { get; set; }
 
         public override List<string> Fill { get; set; }
 
@@ -72,26 +72,26 @@ namespace StarterPack.Models
         /// Método ShouldSerialize* utilizado Json.NET para informar se um atributo deve ser serializado ou não.
         /// O comportamento da deserialização não é modificado.
         /// http://www.newtonsoft.com/json/help/html/ConditionalProperties.htm
-        /// 
+        ///
         /// </summary>
         /// <returns>true ou false</returns>
         public bool ShouldSerializeSalt()
         {
             return false;
-        }   
+        }
 
         public bool ShouldSerializePassword()
         {
             return false;
-        } 
+        }
 
         public bool ShouldSerializePasswordConfirmation()
         {
             return false;
-        }                    
+        }
 
         public void mapToRoles() {
-            this.Roles = new List<Role>(); 
+            this.Roles = new List<Role>();
 
             this.UserRoles?.ForEach(userRole => {
                 this.Roles.Add(userRole.Role);
@@ -126,7 +126,7 @@ namespace StarterPack.Models
                         if(roleLoaded != null)
                             this.UserRoles.Add(new UserRole(roleLoaded));
                     }
-                });                
+                });
             }
         }
 
@@ -134,15 +134,15 @@ namespace StarterPack.Models
         /// Define uma senha e o salt aleatória para o objeto do usuário, se ainda não tiver sido definida [mas não persiste]
         /// </summary>
         public void DefinePassword(string pass = null){
-            // Se a senha ainda não tiver sido ddefinida, a define   
+            // Se a senha ainda não tiver sido ddefinida, a define
             if(pass != null) {
                 this._plainPassword = pass;
-            } else {                
-                this._plainPassword = StringHelper.GeneratePassword();                     
+            } else {
+                this._plainPassword = StringHelper.GeneratePassword();
             }
             SetSalt();
-            
-            this.Password = StringHelper.GenerateHash( this.PlainPassword + this.Salt );           
+
+            this.Password = StringHelper.GenerateHash( this.PlainPassword + this.Salt );
         }
 
         /// <summary>
@@ -150,37 +150,37 @@ namespace StarterPack.Models
         /// </summary>
         /// <param name="resetLogin"></param>
         public void UpdatePassword(Login resetLogin) {
-            this._plainPassword = resetLogin.Password;           
+            this._plainPassword = resetLogin.Password;
             if(ValidateResetToken()){
                 this.ResetToken = null;
-                this.DefinePassword();                
+                this.DefinePassword();
             }
             else {
                 throw new System.Exception("passwords.invalidPasswordResetToken");
-            }           
+            }
         }
 
         /// <summary>
         /// Atualiza o reset token de um usuário usando uma string aleatória [mas não persiste]
         /// </summary>
-        public void UpdateResetPasswordToken(){           
+        public void UpdateResetPasswordToken(){
             string now  = DateTime.UtcNow.ToString();
             this.ResetToken = null;
             if(this.Salt == null) {
                 SetSalt();
             }
-            this.ResetToken = StringHelper.GenerateHash(StringHelper.GeneratePassword()); 
+            this.ResetToken = StringHelper.GenerateHash(StringHelper.GeneratePassword());
             this.ResetTokenDate = DateTime.UtcNow;
-        }  
+        }
 
         /// <summary>
         /// Valida se o resettoken ainda não expirou
         /// </summary>
         /// <returns></returns>
-        public bool ValidateResetToken() {           
+        public bool ValidateResetToken() {
             return this.ResetTokenDate.Value.AddHours(1) > DateTime.UtcNow;
-        }   
-        
+        }
+
         /// <summary>
         /// Verifica se o usuário tem um role especificado
         /// </summary>
@@ -189,7 +189,7 @@ namespace StarterPack.Models
         public bool HasRole(string role) {
             if(this.UserRoles.Any(ur => ur.Role.Slug.ToLower() == role.ToLower())) {
                 return true;
-            }	
+            }
             return false;
         }
 
@@ -200,12 +200,12 @@ namespace StarterPack.Models
         /// <returns></returns>
         public bool HasRoles(List<string> roles) {
             foreach (string role in roles)
-            {	
+            {
                 if (!HasRole(role)){
                     return false;
                 }
             }
-            return true;	
+            return true;
         }
-    }   
+    }
 }

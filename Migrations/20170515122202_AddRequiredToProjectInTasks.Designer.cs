@@ -8,9 +8,10 @@ using StarterPack.Core.Persistence;
 namespace starterpack.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    partial class DefaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170515122202_AddRequiredToProjectInTasks")]
+    partial class AddRequiredToProjectInTasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -23,15 +24,13 @@ namespace starterpack.Migrations
 
                     b.Property<double>("Cost");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .IsRequired();
+                    b.Property<DateTime?>("CreatedAt");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .IsRequired();
+                    b.Property<DateTime?>("UpdatedAt");
 
                     b.HasKey("Id");
 
@@ -67,8 +66,7 @@ namespace starterpack.Migrations
                     b.Property<long?>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .IsRequired();
+                    b.Property<DateTime?>("CreatedAt");
 
                     b.Property<string>("Description")
                         .IsRequired();
@@ -80,11 +78,9 @@ namespace starterpack.Migrations
                     b.Property<long?>("ProjectId")
                         .IsRequired();
 
-                    b.Property<DateTimeOffset?>("ScheduledTo")
-                        .IsRequired();
+                    b.Property<DateTime>("ScheduledTo");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .IsRequired();
+                    b.Property<DateTime?>("UpdatedAt");
 
                     b.HasKey("Id");
 
@@ -98,8 +94,7 @@ namespace starterpack.Migrations
                     b.Property<long?>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .IsRequired();
+                    b.Property<DateTime?>("CreatedAt");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -121,8 +116,7 @@ namespace starterpack.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .IsRequired();
+                    b.Property<DateTime?>("UpdatedAt");
 
                     b.HasKey("Id");
 

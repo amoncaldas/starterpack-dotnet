@@ -13,14 +13,14 @@ namespace StarterPack.Models
         public long? RoleId { get; set; }
         public Role Role { get; set; }
 
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public override long? Id { get; set; }
 
         [NotMapped, JsonIgnore]
-        public override DateTime? CreatedAt { get; set; }
+        public override DateTimeOffset? CreatedAt { get; set; }
 
         [NotMapped, JsonIgnore]
-        public override DateTime? UpdatedAt { get; set; }
+        public override DateTimeOffset? UpdatedAt { get; set; }
 
         public UserRole() {}
 
@@ -30,6 +30,6 @@ namespace StarterPack.Models
 
         public UserRole(long? roleId) {
             this.RoleId = roleId;
-        }        
+        }
     }
 }

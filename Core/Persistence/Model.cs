@@ -12,7 +12,7 @@ using StarterPack.Core.Persistence;
 using StarterPack.Core.Extensions;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace StarterPack.Core.Persistence
 {
@@ -20,11 +20,11 @@ namespace StarterPack.Core.Persistence
     {
         public virtual long? Id { get; set; }
 
-        [FromQuery(Name = "created_at")]
-        public virtual DateTime? CreatedAt { get; set; }
+        [Required, FromQuery(Name = "created_at")]
+        public virtual DateTimeOffset? CreatedAt { get; set; }
 
-        [FromQuery(Name = "updated_at")]
-        public virtual DateTime? UpdatedAt { get; set; }
+        [Required, FromQuery(Name = "updated_at")]
+        public virtual DateTimeOffset? UpdatedAt { get; set; }
 
         [NotMapped]
         public virtual List<string> Fill { get; set; }

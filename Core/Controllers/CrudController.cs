@@ -6,6 +6,7 @@ using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using StarterPack.Core.Persistence;
 using StarterPack.Core.Extensions;
+using System;
 
 namespace StarterPack.Core.Controllers
 {
@@ -19,13 +20,14 @@ namespace StarterPack.Core.Controllers
             bool trackModels = false;
             BeforeAll();
             IQueryable<T> dataQuery = Model<T>.Query();
-                    
-            ApplyFilters(ref dataQuery);            
 
-            IQueryable<T> countQuery = dataQuery.AsQueryable();
+            ApplyFilters(ref dataQuery);
 
+            IQueryable<T> countQuery = dataQuery;
+
+            BeforeSearch(ref dataQuery, ref countQuery);
             BeforeSearch(ref dataQuery, ref countQuery, ref trackModels);
-            
+
             if (!trackModels)
                 dataQuery = dataQuery.AsNoTracking();
 
@@ -38,7 +40,7 @@ namespace StarterPack.Core.Controllers
             } else {
                 if (HasParameter("limit")) {
                     dataQuery = dataQuery.Take(GetParameter<int>("limit"));
-                }                 
+                }
             }
 
             models = dataQuery.Fetch();
@@ -53,8 +55,8 @@ namespace StarterPack.Core.Controllers
                     Items = models,
                     Total = count
                 };
-            }                            
-        }       
+            }
+        }
 
 
         // GET api/users/5
@@ -62,46 +64,50 @@ namespace StarterPack.Core.Controllers
         public virtual T Get(long id)
         {
             bool trackModel = false;
-            BeforeAll();            
+            BeforeAll();
             BeforeGet(id, ref trackModel);
             T model = GetSingle(id, trackModel);
-            AfterGet(model);           
+            AfterGet(model);
             AfterAll();
             return model;
         }
 
         // POST api/users
         [HttpPost]
-        public IActionResult Store([FromBody]T model)
+        public IActionResult Store([FromBody]T attributes)
         {
             BeforeAll();
-            Validate(model);
-            BeforeStore(model);
-            BeforeSave(model);
-            model.Save();                        
+            Validate(attributes);
+
+            T model = (T) Activator.CreateInstance(typeof(T));
+            model.FillAttributes(attributes);
+
+            BeforeStore(model, attributes);
+            BeforeSave(model, attributes);
+            model.Save();
             AfterStore(model);
             AfterSave(model);
             AfterAll();
             return StatusCode(201, model);
-        } 
+        }
 
        // POST api/users
         [HttpPut("{id}")]
         public virtual IActionResult Update(long id, [FromBody]T attributes)
-        {  
+        {
             T model = GetSingle(id, true);
-            model.MergeAttributes(attributes);
+            model.FillAttributes(attributes);
 
-            BeforeAll();            
+            BeforeAll();
             Validate(model);
-            BeforeUpdate(model, attributes); 
-            BeforeSave(model);
+            BeforeUpdate(model, attributes);
+            BeforeSave(model, attributes);
             model.Update();
             AfterUpdate(model);
             AfterSave(model);
-            AfterAll();   
+            AfterAll();
 
-            return StatusCode(201, model);       
+            return StatusCode(201, model);
         }
 
         // DELETE api/values/5
@@ -110,17 +116,17 @@ namespace StarterPack.Core.Controllers
         {
             BeforeAll();
             BeforeDelete(id);
-            Model<T>.Delete(id);  
+            Model<T>.Delete(id);
             AfterDelete(id);
-            AfterAll();         
-        }  
+            AfterAll();
+        }
 
-        protected void Validate(T model) {           
-            ModelValidator<T> modelValidator = new ModelValidator<T>();            
+        protected void Validate(T model) {
+            ModelValidator<T> modelValidator = new ModelValidator<T>();
             SetValidationRules(model, modelValidator);
 			ValidationResult results = modelValidator.Validate(model);
             BeforeValidate(model, modelValidator);
-			Exception.ValidationException validationException = new Exception.ValidationException();           
+			Exception.ValidationException validationException = new Exception.ValidationException();
             validationException.Errors.AddRange(results.Errors);
             bool mustContinue = AfterValidate(model, validationException);
 
@@ -128,10 +134,10 @@ namespace StarterPack.Core.Controllers
                 throw validationException;
             }
         }
-        
+
         protected virtual T GetSingle(long id, bool tracked = true) {
             return Model<T>.Get(id, tracked);
-        }                   
-         
+        }
+
     }
 }

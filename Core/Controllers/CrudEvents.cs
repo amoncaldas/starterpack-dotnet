@@ -8,8 +8,8 @@ namespace StarterPack.Core.Controllers
 {
     public abstract partial class CrudController<T> : BaseController where T : Model<T>
     {
-       
-        #region Before Events       
+
+        #region Before Events
 
         protected virtual void BeforeAll() {
 
@@ -22,14 +22,14 @@ namespace StarterPack.Core.Controllers
         protected virtual void BeforeGet(long id, ref bool trackModel) {
 
         }
-        
-        protected virtual void BeforeSave(T model) {
+
+        protected virtual void BeforeSave(T model, T attributes) {
 
         }
 
-        protected virtual void BeforeStore(T model) {
+        protected virtual void BeforeStore(T model, T attributes) {
 
-        }       
+        }
 
         protected virtual void BeforeSearch(ref IQueryable<T> dataQuery, ref IQueryable<T> countQuery) {
 
@@ -51,11 +51,11 @@ namespace StarterPack.Core.Controllers
 
         }
 
-       
-       
+
+
         #endregion
 
-        #region After Events       
+        #region After Events
 
         protected virtual void AfterGet(T model) {
 
@@ -64,14 +64,14 @@ namespace StarterPack.Core.Controllers
         protected virtual void AfterAll() {
 
         }
-        
+
         protected virtual void AfterSave(T model) {
 
         }
 
         protected virtual void AfterStore(T model) {
 
-        }        
+        }
 
         protected virtual void AfterSearch(ref IQueryable<T> query, List<T> models) {
 
@@ -83,8 +83,8 @@ namespace StarterPack.Core.Controllers
 
         protected virtual void AfterUpdate(T model) {
 
-        }        
-       
+        }
+
         #endregion
 
 
@@ -96,7 +96,7 @@ namespace StarterPack.Core.Controllers
         }
         protected virtual bool AfterValidate(T model, ValidationException validationErrors) {
             return true;
-        }       
+        }
 
         #endregion
 

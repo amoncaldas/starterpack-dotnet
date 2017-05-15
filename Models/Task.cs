@@ -11,15 +11,24 @@ namespace StarterPack.Models
     {
         [Required]
         public string Description { get; set; }
-        
+
         [Required]
         public bool Done { get; set; }
 
         [Required]
         public int Priority { get; set; }
 
-        public DateTime ScheduledTo { get; set; }
+        [Required]
+        public DateTimeOffset? ScheduledTo { get; set; }
 
-        public Project Project { get; set; }   
+        [Required]
+        public Project Project { get; set; }
+
+        public long? ProjectId { get; set; }
+
+        public Task() {
+             this.Fill = new List<string>() { "*" };
+             this.DontFill = new List<string>() { "Project" };
+        }
     }
 }

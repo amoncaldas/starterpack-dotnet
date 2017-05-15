@@ -1,11 +1,23 @@
 {
 	"attributes":{
+    "Name":"Nome",
+    "CreatedAt": "Criado Em",
+    "UpdatedAt": "Atualizado Em",
 		"User":{
-			"Name":"Nome",
 			"Password":"Senha",
 			"PasswordConfirmation":"Confirmação da Senha",
 			"Email":"Email"
-		}
+		},
+    "Project": {
+      "Cost": "Custo"
+    },
+    "Task": {
+      "Description": "Descrição",
+      "Done": "Feito?",
+      "Priority": "Prioridade",
+      "ScheduledTo": "Agendado Para?",
+      "Project": "Projeto"
+    }
 	}
-	
+
 }
