@@ -22,10 +22,11 @@
     <PackageReference Include="NETCore.MailKit" Version="1.0.1"/>
     <PackageReference Include="RazorLight" Version="1.0.1"/>
     <PackageReference Include="Humanizer.Core" Version="2.2.0"/>
+    <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1"/>
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0"/>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0"/>
-    <DotNetCliToolReference Include="DotNetStarterPackConsole" Version="1.0.0"/>
+    <!--<DotNetCliToolReference Include="DotNetStarterPackConsole" Version="1.0.0"/>-->
   </ItemGroup>
 </Project>
