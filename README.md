@@ -1,20 +1,19 @@
+# Inicia o servidor
 - dotnet watch run
-Inicia o servidor
 
+# Carrega as bibliotecas adicionadas
 - dotnet restore
-Carrega as bibliotecas adicionadas
 
+# Cria uma migration para refletir o estado dos models
 - dotnet ef migrations add NameOfMigration
-Cria uma migration para refletir o estado dos models
 
+# Apaga a última migration gerada
 - dotnet ef migrations remove
-Apaga a última migration gerada
 
+# Gera um arquivo .sql referente ao conteudo das migrations
 - dotnet ef migrations script
-Gera um arquivo .sql referente ao conteudo das migrations
 
+
+# Roda as migrations
 - dotnet ef database update
 - dotnet ef database update -e Local
-Roda as migrations
-
-http://www.jerriepelser.com/blog/validation-response-aspnet-core-webapi/

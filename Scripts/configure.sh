@@ -52,13 +52,13 @@ npm install -g git+ssh://git@git.prodeb.ba.gov.br:starter-pack/generator-ngprode
 # Dando permissão nas pastas do laravel
 
 # Instalando as dependencias
-
 dotnet restore
-
-# Gerando as chaves
 
 # Gerando os dados de usuários padrão no banco
 dotnet ef database update
+
+# Roda as seeds
+dotnet run sp seed
 
 # Instalando as dependencias do frontend
 cd public/client
