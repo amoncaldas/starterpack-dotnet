@@ -15,45 +15,23 @@ using StarterPack.Core.Exception;
 using StarterPack.Core.Helpers;
 using StarterPack.Core.Extensions;
 using StarterPack.Core.Seeders;
+using StarterPack.Core.Configure;
 
 namespace StarterPack
 {
     public partial class Startup
     {
-
         public Startup(IHostingEnvironment env)
         {
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
-            Env.Data = Configuration;
-            Env.Host = env;
-
-            this.env = env;
-
-            string culture = "pt_BR";
-
-            var localizationBuilder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile($"Resources/Lang/{culture}/messages.json", optional: false)
-                .AddJsonFile($"Resources/Lang/{culture}/attributes.json", optional: false);
-
-            Lang.Strings = localizationBuilder.Build();
+            Application.ConfigureBuilder(env.EnvironmentName, env.ContentRootPath);
         }
-
-        public IConfigurationRoot Configuration { get; }
-
-
         public IHostingEnvironment env { get; }
 
         //Use este método para adicionar/configurar serviços ao container
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IConfiguration>(Env.Data);
+            Services.SetProvider(services.BuildServiceProvider());
             var builder = services.AddMvc().AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));
 
             builder.AddMvcOptions(options => {
@@ -74,17 +52,11 @@ namespace StarterPack
             //configuração da autenticação
             ConfigureAuthOptions(services);
 
-            services.AddSingleton<IConfiguration>(Configuration);
-
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             //Configura o contexto do banco de dados
-            services.AddDbContext<Core.Persistence.DefaultDbContext>(
-                options => {
-                    options.UseNpgsql(Configuration["DbContextSettings:ConnectionString"]);
-                },
-                ServiceLifetime.Scoped
-            );
+            Application.ConfigureDb(services);
+
 
             ValidatorOptions.ResourceProviderType = typeof(ValidationResourceProvider);
             ValidatorOptions.DisplayNameResolver = ValidationResourceProvider.DisplayNameResolver;
@@ -107,7 +79,7 @@ namespace StarterPack
             app.UseStaticFiles();
 
 
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(Env.Data.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             //Configura o CORS
@@ -123,9 +95,6 @@ namespace StarterPack
 
             // Uncommenting the line above will enable defining the routes in a central file
             //app.UseMvc(routes => {ApiRoutes.get(routes);});
-
-            // Run seeders
-            // Seeder.Execute();
         }
     }
 }

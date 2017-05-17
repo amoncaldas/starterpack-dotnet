@@ -16,20 +16,20 @@ namespace StarterPack
 
         private void ConfigureAuthOptions(IServiceCollection services) {
             //get and config jwt key
-            signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("JWT_KEY").Value));
+            signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Env.Data.GetSection("JWT_KEY").Value));
 
             //configure jwt token options
             var tokenProviderOptions = new TokenProviderOptions
             {
-                Audience = Configuration.GetSection("APP_URL").Value,
-                Issuer = Configuration.GetSection("APP_NAME").Value,
+                Audience = Env.Data.GetSection("APP_URL").Value,
+                Issuer = Env.Data.GetSection("APP_NAME").Value,
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
-                Expiration = int.Parse(Configuration.GetSection("TOKEN_EXPIRATION").Value),
-                LeftTimeToRenew = int.Parse(Configuration.GetSection("TOKEN_LEFT_TIME_TO_REFRESH").Value)
-            };  
+                Expiration = int.Parse(Env.Data.GetSection("TOKEN_EXPIRATION").Value),
+                LeftTimeToRenew = int.Parse(Env.Data.GetSection("TOKEN_LEFT_TIME_TO_REFRESH").Value)
+            };
 
             //check if options is valid
-            ThrowIfTokenInvalidOptions(tokenProviderOptions);  
+            ThrowIfTokenInvalidOptions(tokenProviderOptions);
 
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -38,19 +38,19 @@ namespace StarterPack
                 IssuerSigningKey = signingKey,
                 // Validate the JWT Issuer (iss) claim
                 ValidateIssuer = true,
-                ValidIssuer = Configuration.GetSection("APP_NAME").Value,
+                ValidIssuer = Env.Data.GetSection("APP_NAME").Value,
                 // Validate the JWT Audience (aud) claim
                 ValidateAudience = true,
-                ValidAudience = Configuration.GetSection("APP_URL").Value,
+                ValidAudience = Env.Data.GetSection("APP_URL").Value,
                 // Validate the token expiry
                 ValidateLifetime = true,
                 // Set to Zero the difference balance
                 ClockSkew = TimeSpan.Zero
-            };                    
+            };
 
             //add options to service injector to use in other places
-            services.AddSingleton<TokenProviderOptions>(tokenProviderOptions);             
-            services.AddSingleton<TokenValidationParameters>(tokenValidationParameters); 
+            services.AddSingleton<TokenProviderOptions>(tokenProviderOptions);
+            services.AddSingleton<TokenValidationParameters>(tokenValidationParameters);
         }
 
         /// <summary>
@@ -77,17 +77,17 @@ namespace StarterPack
             if (options.LeftTimeToRenew == 0)
             {
                 throw new ArgumentException("Deve ser maior que Zero.", nameof(TokenProviderOptions.LeftTimeToRenew));
-            }    
+            }
 
             if (options.LeftTimeToRenew > options.Expiration)
             {
                 throw new ArgumentException("Deve ser menor que o Expiration.", nameof(TokenProviderOptions.LeftTimeToRenew));
-            }                      
+            }
 
             if (options.SigningCredentials == null)
             {
                 throw new ArgumentNullException(nameof(TokenProviderOptions.SigningCredentials));
             }
-        }              
+        }
     }
 }
