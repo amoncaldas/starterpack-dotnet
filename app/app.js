@@ -11,7 +11,7 @@
     'ngMaterial',
     'modelFactory',
     'md.data.table',
-    'mdPickers',
+    'ngMaterialDatePicker',
     'pascalprecht.translate',
     'angularFileUpload']);
 })();

@@ -3,7 +3,8 @@
   md-component-id="left"
   md-is-locked-open="$mdMedia('gt-sm')"
   hide-print
-  md-whiteframe="4">
+  md-whiteframe="4"
+  ng-style="::menuCtrl.sidenavStyle.content">
 
   <header class="nav-header" ng-style="::menuCtrl.sidenavStyle.top">
     <a class="logo" href="/">
@@ -21,7 +22,7 @@
         <md-menu md-offset="0 55">
           <md-button
             class="md-button md-buttom-menu"
-            ng-click="menuCtrl.openMenuOrRedirectToState($mdOpenMenu, $event, item)">
+            ng-click="menuCtrl.openMenuOrRedirectToState($mdMenu, $event, item)">
             <md-icon md-font-set="material-icons"
               class="pull-left menu-icon" ng-style="menuCtrl.sidenavStyle.textColor">
               {{::item.icon}}
@@ -31,7 +32,7 @@
           <md-menu-content width="4">
             <md-menu-item ng-repeat="subItem in item.subItens">
               <md-button
-                ng-click="menuCtrl.openMenuOrRedirectToState($mdOpenMenu, $event, subItem)"
+                ng-click="menuCtrl.openMenuOrRedirectToState($mdMenu, $event, subItem)"
                 ng-if="!subItem.profiles || (subItem.profiles && auth.currentUser.hasProfile(subItem.profiles, subItem.allProfiles))">
                 <span md-menu-align-target>
                   <md-icon md-font-set="material-icons" class="pull-left menu-icon">

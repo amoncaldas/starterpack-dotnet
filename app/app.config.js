@@ -8,7 +8,7 @@
   /** @ngInject */
   // eslint-disable-next-line max-params
   function config(Global, $mdThemingProvider, $modelFactoryProvider,  // NOSONAR
-    $translateProvider, $mdpDatePickerProvider, $mdpTimePickerProvider, moment, $mdAriaProvider) {
+    $translateProvider, moment, $mdAriaProvider) {
 
     $translateProvider
       .useLoader('languageLoader')
@@ -20,9 +20,6 @@
 
     //os serviços referente aos models vai utilizar como base nas urls
     $modelFactoryProvider.defaultOptions.prefix = Global.apiPath;
-
-    $mdpDatePickerProvider.setCancelButtonLabel('Cancelar');
-    $mdpTimePickerProvider.setCancelButtonLabel('Cancelar');
 
     // Configuration theme
     $mdThemingProvider.theme('default')

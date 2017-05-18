@@ -10,6 +10,7 @@
       name: 'Nome',
       image: 'Imagem',
       roles: 'Perfis',
+      date: 'Data',
       task: {
         description: 'Descrição',
         done: 'Feito?',

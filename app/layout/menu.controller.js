@@ -70,9 +70,9 @@
      * Método que exibe o sub menu dos itens do menu lateral caso tenha sub itens
      * caso contrário redireciona para o state passado como parâmetro
      */
-    function openMenuOrRedirectToState($mdOpenMenu, ev, item) {
+    function openMenuOrRedirectToState($mdMenu, ev, item) {
       if (angular.isDefined(item.subItens) && item.subItens.length > 0) {
-        $mdOpenMenu(ev);
+        $mdMenu.open(ev);
       } else {
         $state.go(item.state);
         $mdSidenav('left').close();

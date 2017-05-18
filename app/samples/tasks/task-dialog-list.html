@@ -8,24 +8,20 @@
   <md-content layout-padding md-whiteframe="1" class="bottom-4">
     <form class="condensed" ng-submit="tasksCtrl.search(vm.paginator.currentPage)">
       <div layout="row" hide-xs>
-        <div layout="row">
+        <md-input-container class="md-block" flex=25>
+          <label>Data Inicial</label>
           <pr-date-time-picker
-              ng-model="tasksCtrl.queryFilters.dateStart"
-              placeholder-date="Data Inicial"
-              placeholder-time="Horário Inicial"
-              open-on-click="true"
-              with-time="true">
+            ng-model="tasksCtrl.queryFilters.dateStart"
+            with-time="true">
           </pr-date-time-picker>
-        </div>
-        <div layout="row">
+        </md-input-container>
+        <md-input-container class="md-block" flex=25>
+          <label>Data Final</label>
           <pr-date-time-picker
-              ng-model="tasksCtrl.queryFilters.dateEnd"
-              placeholder-date="Data Final"
-              placeholder-time="Horário Final"
-              open-on-click="true"
-              with-time="true">
+            ng-model="tasksCtrl.queryFilters.dateEnd"
+            with-time="true">
           </pr-date-time-picker>
-        </div>
+        </md-input-container>
       </div>
       <div layout="row">
         <md-input-container flex=25 flex-xs=75>
