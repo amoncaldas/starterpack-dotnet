@@ -8,18 +8,18 @@
     </box-toolbar-buttons>
     <div class="padding-top-8">
       <md-input-container class="md-block">
-        <label>{{::'attributes.description' | translate}}</label>
+        <label>{{::'attributes.task.description' | translate}}</label>
         <input type="text" required ng-model="tasksCtrl.resource.description">
       </md-input-container>
       <div layout="row" hide-gt-xs>
         <md-input-container class="md-block" flex="50">
-          <label>{{::'attributes.priority' | translate}}</label>
+          <label>{{::'attributes.task.priority' | translate}}</label>
           <input type="number" required step="1" min="1" max="10" ng-model="tasksCtrl.resource.priority">
-        </md-input-container>        
+        </md-input-container>
       </div>
       <div layout="row">
         <md-input-container class="md-block" flex="30" hide-xs>
-          <label>{{::'attributes.priority' | translate}}</label>
+          <label>{{::'attributes.task.priority' | translate}}</label>
           <input type="number" required step="1" min="1" max="10" ng-model="tasksCtrl.resource.priority">
         </md-input-container>
         <pr-date-time-picker

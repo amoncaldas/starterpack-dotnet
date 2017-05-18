@@ -10,6 +10,16 @@
       name: 'Nome',
       image: 'Imagem',
       roles: 'Perfis',
+      task: {
+        description: 'Descrição',
+        done: 'Feito?',
+        priority: 'Prioridade',
+        scheduled_to: 'Agendado Para?',
+        project: 'Projeto'
+      },
+      project: {
+        cost: 'Custo'
+      },
       //é carregado do servidor caso esteja definido no mesmo
       auditModel: {
       }

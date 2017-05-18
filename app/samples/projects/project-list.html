@@ -6,12 +6,28 @@
     </md-button>
   </box-toolbar-buttons>
 
+  <md-content layout-padding md-whiteframe="1" class="bottom-4">
+    <form class="condensed" ng-submit="projectsCtrl.search(vm.paginator.currentPage)">
+      <div layout="row">
+        <md-input-container flex=40 flex-xs=75 class="top-20">
+          <label>{{::'views.fields.project.name' | translate}}</label>
+          <input type="text" ng-model="projectsCtrl.queryFilters.name">
+        </md-input-container>
+        <md-input-container flex>
+        </md-input-container>
+        <md-button id="btn-projectsCtrl-filter" class="md-raised md-primary md-mini" type="submit">
+          {{::'views.actions.filter' | translate}}
+        </md-button>
+      </div>
+    </form>
+  </md-content>
+
   <md-table-container>
     <table md-table class="condensed">
       <thead md-head>
         <tr md-row>
           <th md-column>{{::'attributes.name' | translate}}</th>
-          <th md-column hide-xs>{{::'attributes.cost' | translate}}</th>
+          <th md-column hide-xs>{{::'attributes.project.cost' | translate}}</th>
           <th md-column hide-xs>{{::'views.fields.project.totalTask' | translate}}</th>
           <th md-column hide-xs>{{::'attributes.created_at' | translate}}</th>
           <th md-column class="md-text-center">{{::'views.fields.actions' | translate}}</th>

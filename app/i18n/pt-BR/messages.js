@@ -38,7 +38,8 @@
       mail: {
         mailErrors: 'Ocorreu um erro nos seguintes emails abaixo:\n',
         sendMailSuccess: 'Email enviado com sucesso!',
-        sendMailError: 'Não foi possível enviar o email.'
+        sendMailError: 'Não foi possível enviar o email.',
+        passwordSendingSuccess: 'O processo de recuperação de senha foi iniciado. Caso o email não chegue em 10 minutos tente novamente.'
       },
       user: {
         removeYourSelfError: 'Você não pode remover seu próprio usuário',

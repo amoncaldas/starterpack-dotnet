@@ -88,6 +88,7 @@
           }
         },
         project: {
+          name: 'Nome',
           totalTask: 'Total de Tarefas'
         },
         task: {

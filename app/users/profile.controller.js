@@ -24,8 +24,6 @@
         //atualiza o usuário corrente com as novas informações
         Auth.updateCurrentUser(response);
         PrToast.success($translate.instant('messages.saveSuccess'));
-      }, function (error) {
-        PrToast.errorValidation(error.data, $translate('messages.user.profile.updateError'));
       });
     }
   }
