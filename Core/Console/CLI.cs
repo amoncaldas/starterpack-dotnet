@@ -16,21 +16,29 @@ namespace StarterPack.Core.Console
 {
     public class CLI
     {
+        /// <summary>
+        /// Executa a CLI do StarterPack, permitindo que operações sejam realizadas via linha de comando
+        /// </summary>
+        /// <param name="args">List ade argumentos passados via command line</param>
         public static void Run(string[] args){
 
             var app = new CommandLineApplication();
             string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             Application.ConfigureBuilder(env, Directory.GetCurrentDirectory());
-            ServiceCollection services =  Application.ConfigureServices(env);
-            Application.ConfigureDb(services);
-            Services.SetProvider(services.BuildServiceProvider());
+            ServiceCollection services =  Application.CreateServices(env);
+            Application.ConfigureDefaultDb(services);
+            Application.ConfigureProvider(services);
 
             app.HelpOption("-?|-h|--help");
-            ListenForSP(app);
+            ListenForSP(app, args);
             app.Execute(args);
         }
 
-         public static void ListenForSP(CommandLineApplication rootCommand){
+        /// <summary>
+        ///Escuta pelo comando raiz do StarterPack CLI, que é o 'sp'
+        /// </summary>
+        /// <param name="rootCommand"></param>
+        public static void ListenForSP(CommandLineApplication rootCommand, string[] args){
             rootCommand.Command("sp", (command) =>
             {
                 command.FullName = "CLI do StarterPack. Passe como parâmetro um comando a ser executado";
@@ -41,24 +49,8 @@ namespace StarterPack.Core.Console
                     command.ShowHelp();
                     return 0;
                 });
-                ListenForSeed(command);
-            });
-        }
 
-        public static void ListenForSeed(CommandLineApplication rootCommand){
-            rootCommand.Command("seed", (innerCommand) =>
-            {
-                innerCommand.HelpOption("-?|-h|--help");
-                innerCommand.Description = "Povoa a base de dados com base nas classes que implementam a interface ISeeder";
-                innerCommand.FullName = "Povoa a base de dados com base nas classes que implementam a interface ISeeder";
-                innerCommand.ExtendedHelpText = "Ex.: dotnet run sp seed UserSeed";
-                CommandArgument locationArgument = innerCommand.Argument("[location]", "Where the ninja should hide.");
-                innerCommand.OnExecute(() =>
-                {
-                    Seeder.Execute();
-                    System.Console.WriteLine("Seeds executada com sucesso");
-                    return 0;
-                });
+                SeedListener.Listen(command, args);
             });
         }
     }

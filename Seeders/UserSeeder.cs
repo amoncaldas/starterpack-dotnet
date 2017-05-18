@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using StarterPack.Core.Extensions;
 using StarterPack.Core.Seeders;
 using StarterPack.Models;
@@ -16,7 +17,7 @@ namespace StarterPack.Seeders
 			User user  = new User(){Name = "Admin", Email = "admin-base@prodeb.com"};
             user.DefinePassword("Prodeb01");
             user.Roles =  Role.Where(r => r.Slug == "admin").Fetch();
-						user.mapFromRoles();
+			user.mapFromRoles();
             user.Save();
 		}
 	}
