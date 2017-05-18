@@ -38,19 +38,20 @@
     <![endif]-->
   </head>
 
-  <body ng-controller="AppController as appCtrl">
-    <pr-spinner></pr-spinner>
-    <ui-view/>
+  <body ng-controller="AppController as appCtrl" layout="column">
+    <md-content flex>
+      <pr-spinner></pr-spinner>
+      <ui-view/>
 
-    <!-- inject:vendors:script  -->
-    <script src="client/build/vendors.js?version=fwecffnaggq0kgt"></script>
-    <script src="client/build/angular-with-plugins.js?version=fwecffnaggq0kgt"></script>
-    <!-- end:inject:vendors:script  -->
+      <!-- inject:vendors:script  -->
+      <script src="client/build/vendors.js?version=fwecffnaggq0kgt"></script>
+      <script src="client/build/angular-with-plugins.js?version=fwecffnaggq0kgt"></script>
+      <!-- end:inject:vendors:script  -->
 
-    <!-- inject:application:script -->
-    <script src="client/build/application.js?version=wokhuyko0c49gre"></script>
-    <!-- end:inject:application:script  -->
-
+      <!-- inject:application:script -->
+      <script src="client/build/application.js?version=wokhuyko0c49gre"></script>
+      <!-- end:inject:application:script  -->
+    </md-content>
   </body>
 
 </html>
