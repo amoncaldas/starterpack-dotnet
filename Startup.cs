@@ -31,7 +31,8 @@ namespace StarterPack
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConfiguration>(Env.Data);
-            Services.SetProvider(services.BuildServiceProvider());
+            Application.ConfigureProvider(services);
+
             var builder = services.AddMvc().AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));
 
             builder.AddMvcOptions(options => {
@@ -55,7 +56,7 @@ namespace StarterPack
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             //Configura o contexto do banco de dados
-            Application.ConfigureDb(services);
+            Application.ConfigureDefaultDb(services);
 
 
             ValidatorOptions.ResourceProviderType = typeof(ValidationResourceProvider);
