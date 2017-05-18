@@ -37,9 +37,14 @@ namespace StarterPack.Core.Console
 
                     // Trata o caso da opção de --only, recuperando a lista de Seeders que devem ser executadas
                     if(onlyOption.HasValue()){
-                        seedersList = ParseSeedersListFromOption(onlyOption);
+                        // Atualmente não é suportado usar em conjunto as opções --only e --exclude em conjunto
+                        // Se esse for o caso, notifica o usuário e interrompe a execução
                         if(excludeOption.HasValue()){
-                            System.Console.WriteLine("Não é possível usar as opções [--only|-o] e [--exclude|-e] ao mesmo tempo");
+                            System.Console.WriteLine("Não é possível usar as opções [--only|-o] e [--exclude|-e] ao mesmo tempo.");
+                            return 1;
+                        }
+                        else {
+                            seedersList = ParseSeedersListFromOption(onlyOption);
                         }
                     }
 
