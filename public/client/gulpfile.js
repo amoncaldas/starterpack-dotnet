@@ -42,11 +42,13 @@ paths.angularScripts = [
   paths.bower + '/angular-material-data-table/dist/md-data-table.min.js',
   paths.bower + '/angular-model-factory/dist/angular-model-factory.js',
   paths.bower + '/angular-file-upload/dist/angular-file-upload.js',
-  paths.bower + '/mdPickers/dist/mdPickers.min.js',
+  paths.bower + '/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js',
   paths.bower + '/ng-prodeb/dist/ng-prodeb.min.js'
 ];
 //Add minifieds files.
 paths.vendorsScripts = [
+  paths.bower + '/alasql/dist/alasql.js',
+  paths.bower + '/js-xlsx/dist/xlsx.core.min.js',
   paths.bower + '/lodash/dist/lodash.min.js',
   paths.bower + '/moment/min/moment.min.js',
   paths.bower + '/moment/min/locales.min.js'
@@ -59,7 +61,7 @@ paths.scripts = [
 paths.styles = [
   paths.bower   + '/ng-prodeb/dist/ng-prodeb.css',
   paths.bower   + '/angular-material-data-table/dist/md-data-table.min.css',
-  paths.bower   + '/mdPickers/dist/mdPickers.min.css',
+  paths.bower   + '/ng-material-datetimepicker/dist/material-datetimepicker.min.css',
   paths.client  + '/styles/app.scss'
 ];
 

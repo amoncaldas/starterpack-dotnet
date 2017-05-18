@@ -150,14 +150,14 @@ table.condensed .md-cell {
   }
 }
 
-ul.menu-sidenav {
-  margin: 0;
+.menu-sidenav, .menu-sidenav ul {
   list-style: none;
   padding: 0;
   max-width: 100%;
+  overflow-x: hidden;
 }
 
-ul.menu-sidenav li {
+.menu-sidenav li {
   padding: 0;
   margin-top: 3px;
 }
