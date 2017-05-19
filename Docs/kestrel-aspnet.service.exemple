@@ -1,0 +1,23 @@
+1 - sudo nano /etc/systemd/system/kestrel-starterpack.service
+
+2 - Cole o conteúdo do bloco abaixo no arquivo kestrel-starterpack.service, faça  os ajustes necessários e salve
+
+[Unit]
+Description=StarterPack Asp.Net Core Service
+
+[Service]
+WorkingDirectory=/path/to/the/application/public/folder
+ExecStart=/usr/bin/dotnet /path/to/the/application/public/folder/starterpack.dll
+Restart=always
+RestartSec=10  # Restart service after 10 seconds if dotnet service crashes
+SyslogIdentifier=starter-pack-aspnet-core
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+
+[Install]
+WantedBy=multi-user.target
+
+
+3 - service enable kestrel-starterpack.service [para habilitar o serviço]
+4 - service start kestrel-starterpack.service [para iniciar o serviço]
+5 - service status kestrel-starterpack.service [para verificar o status do serviço]
