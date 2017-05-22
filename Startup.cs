@@ -16,6 +16,7 @@ using StarterPack.Core.Helpers;
 using StarterPack.Core.Extensions;
 using StarterPack.Core.Seeders;
 using StarterPack.Core.Configure;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace StarterPack
 {
@@ -73,6 +74,11 @@ namespace StarterPack
         // Use este método para configurar o HTTP Request Pipeline
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             //Configura o arquivo que vai ser chamado por default
             DefaultFilesOptions options = new DefaultFilesOptions();
             options.DefaultFileNames.Clear();

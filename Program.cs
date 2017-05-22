@@ -24,6 +24,7 @@ namespace StarterPack
             else {
                 var host = new WebHostBuilder()
                     .UseKestrel()
+                    .UseUrls("http://*:5000")
                     .UseWebRoot("public")
                     .UseContentRoot(Directory.GetCurrentDirectory())
                     .UseIISIntegration()
