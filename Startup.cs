@@ -92,10 +92,7 @@ namespace StarterPack
             loggerFactory.AddConsole(Env.Data.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            if (env.IsDevelopment() || env.EnvironmentName == "Local")
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseExceptionHandler("/api/v1/support/error");
 
             //Configura o CORS
             app.UseCors(builder =>

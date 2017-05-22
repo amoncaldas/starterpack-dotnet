@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using StarterPack.Core;
@@ -19,6 +20,11 @@ namespace StarterPack.Controllers
             return new {
                 Attributes = Lang.GetAttributes()
             };
+        }
+
+        [Route("error")]
+        public IActionResult error() {
+            throw new Exception("messages.internalError");
         }
     }
 }
