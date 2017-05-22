@@ -48,7 +48,7 @@ namespace StarterPack.Core.Controllers
             AfterSearch(ref dataQuery, models);
             AfterAll();
 
-            if(count == null) {
+            if (count == null) {
                 return models;
             } else {
                 return new {

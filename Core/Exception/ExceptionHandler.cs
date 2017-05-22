@@ -66,10 +66,10 @@ namespace StarterPack.Core.Exception
                     var error = Regex.Split(context.Exception.GetBaseException().StackTrace.Trim(), @"\s");
 
                     context.Result = new JsonResult(new {
-                        Message = context.Exception.GetBaseException().Message,
-                        Source = error[1],
-                        Line = error[4],
-                        StackTrace = context.Exception.GetBaseException().StackTrace
+                        message = context.Exception.GetBaseException().Message,
+                        source = error[1],
+                        line = error[4],
+                        stacktrace = context.Exception.GetBaseException().StackTrace
                     });
                 } else {
                     apiError = new ApiError("messages.internalError");
