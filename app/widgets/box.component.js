@@ -24,7 +24,7 @@
         ctrl.transclude = $transclude;
 
         ctrl.$onInit = function() {
-          if (angular.isUndefined(ctrl.toolbarBgColor)) ctrl.toolbarBgColor = 'primary';
+          if (angular.isUndefined(ctrl.toolbarBgColor)) ctrl.toolbarBgColor = 'default-primary';
         };
       }]
     });

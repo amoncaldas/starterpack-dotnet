@@ -8,21 +8,17 @@
               <label>{{::'id' | tAttr}}</label>
               <input type="text" ng-model="auditCtrl.queryFilters.auditable_id">
             </md-input-container>
-            <md-input-container flex-gt-md=25 hide-xs>
-              <label>{{::'views.fields.audit.dateStart' | translate}}</label>
-              <pr-date-time-picker
-                ng-model="auditCtrl.queryFilters.dateStart"
-                with-time="false">
-              </pr-date-time-picker>
-            </md-input-container>
+            <pr-date-time-picker hide-xs
+              ng-model="auditCtrl.queryFilters.dateStart"
+              with-time="false"
+              flex="25"
+              label="::'views.fields.audit.dateStart' | translate"></pr-date-time-picker>
 
-            <md-input-container flex-gt-md=25 hide-xs>
-              <label>{{::'views.fields.audit.dateEnd' | translate}}</label>
-              <pr-date-time-picker
-                ng-model="auditCtrl.queryFilters.dateEnd"
-                with-time="false">
-              </pr-date-time-picker>
-            </md-input-container>
+            <pr-date-time-picker hide-xs
+              ng-model="auditCtrl.queryFilters.dateEnd"
+              with-time="false"
+              flex="25"
+              label="::'views.fields.audit.dateEnd' | translate"></pr-date-time-picker>
           </div>
           <div layout="row" hide-gt-xs>
             <md-input-container flex=100>
