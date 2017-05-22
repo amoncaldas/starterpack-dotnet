@@ -21,16 +21,19 @@ namespace StarterPack
 {
     public partial class Startup
     {
+        public IHostingEnvironment env { get; }
+
         public Startup(IHostingEnvironment env)
         {
+            this.env = env;
             Application.ConfigureBuilder(env.EnvironmentName, env.ContentRootPath);
         }
-        public IHostingEnvironment env { get; }
 
         //Use este método para adicionar/configurar serviços ao container
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConfiguration>(Env.Data);
+            services.AddSingleton<IHostingEnvironment>(this.env);
             Application.ConfigureProvider(services);
 
             var builder = services.AddMvc().AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));
@@ -82,6 +85,11 @@ namespace StarterPack
 
             loggerFactory.AddConsole(Env.Data.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            if (env.IsDevelopment() || env.EnvironmentName == "Local")
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             //Configura o CORS
             app.UseCors(builder =>
