@@ -107,7 +107,6 @@ namespace StarterPack
 
             // Uncommenting the line above will enable defining the routes in a central file
             //app.UseMvc(routes => {ApiRoutes.get(routes);});
-            Seeder.Populate();
         }
     }
 }
