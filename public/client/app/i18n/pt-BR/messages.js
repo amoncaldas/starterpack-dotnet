@@ -35,10 +35,13 @@
         welcome: 'Seja bem Vindo {{userName}}',
         description: 'Utilize o menu para navegação.'
       },
+      password: {
+        resetError: 'Não foi possível reiniciar sua senha.'
+      },
       mail: {
         mailErrors: 'Ocorreu um erro nos seguintes emails abaixo:\n',
         sendMailSuccess: 'Email enviado com sucesso!',
-        sendMailError: 'Não foi possível enviar o email.',
+        passwordSendingError: 'Não foi possível enviar o email.',
         passwordSendingSuccess: 'O processo de recuperação de senha foi iniciado. Caso o email não chegue em 10 minutos tente novamente.'
       },
       user: {

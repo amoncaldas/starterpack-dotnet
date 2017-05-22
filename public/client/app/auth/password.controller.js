@@ -57,7 +57,7 @@
       }
 
       Auth.sendEmailResetPassword(vm.reset).then(function (data) {
-        PrToast.success(data.message);
+        PrToast.success($translate.instant(data.message));
 
         vm.cleanForm();
         vm.closeDialog();
