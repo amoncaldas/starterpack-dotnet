@@ -17,7 +17,8 @@ namespace StarterPack.Core.Console
 
     public class DeployListener
     {
-        public const string deployFolder = "deploy/";
+        public const string deployTempFolder = "deploy/";
+        public const string deployFile = "deploy.zip";
 
         /// <summary>
         /// Escuta o comando seed, utilizado para povoar o banco de dados
@@ -42,14 +43,14 @@ namespace StarterPack.Core.Console
                 {
                     IDeployCommands commands  = DeployCommandFactory.Make();
 
-                    DeployCommand(commands.Delete(deployFolder, "-Rf"));
-                    DeployCommand(commands.Delete("deploy.zip", "-f"));
+                    DeployCommand(commands.Delete(deployTempFolder, "-Rf"));
+                    DeployCommand(commands.Delete(deployFile, "-f"));
 
                     System.Console.ForegroundColor = System.ConsoleColor.Blue;
                     System.Console.WriteLine("## Compilando a aplicação...");
                     System.Console.ResetColor();
 
-                    if( DeployCommand("dotnet", $"publish -c=Production --output={deployFolder}")) {
+                    if( DeployCommand("dotnet", $"publish -c=Production --output={deployTempFolder}")) {
 
                         System.Console.ForegroundColor = System.ConsoleColor.Blue;
                         System.Console.WriteLine("## Executando Minificação de js e css...");
@@ -61,20 +62,25 @@ namespace StarterPack.Core.Console
                         System.Console.WriteLine("## Copiando arquivos do client...");
                         System.Console.ResetColor();
 
-                        DeployCommand(commands.CreateFolder($"{deployFolder}public"));
-                        DeployCommand(commands.CreateFolder($"{deployFolder}public/client"));
-                        DeployCommand(commands.Copy("public/client/images/", $"{deployFolder}public/client/"));
-                        DeployCommand(commands.Copy("public/client/app/", $"{deployFolder}public/client/"));
-                        DeployCommand(commands.Copy("public/client/build/", $"{deployFolder}public/client/"));
-                        DeployCommand(commands.Copy("public/client/styles/", $"{deployFolder}public/client/"));
+                        DeployCommand(commands.CreateFolder($"{deployTempFolder}public"));
+                        DeployCommand(commands.CreateFolder($"{deployTempFolder}public/client"));
+                        DeployCommand(commands.Copy("public/client/images/", $"{deployTempFolder}public/client/"));
+                        DeployCommand(commands.Copy("public/client/app/", $"{deployTempFolder}public/client/"));
+                        DeployCommand(commands.Copy("public/client/build/", $"{deployTempFolder}public/client/"));
+                        DeployCommand(commands.Copy("public/client/styles/", $"{deployTempFolder}public/client/"));
 
                         System.Console.ForegroundColor = System.ConsoleColor.Blue;
                         System.Console.WriteLine("## Zipando aplicação...");
                         System.Console.ResetColor();
-                        DeployCommand(commands.Compress("deploy.zip", "deploy/"));
+                        DeployCommand(commands.Compress(deployFile, $"{deployTempFolder}/"));
+
+                        System.Console.ForegroundColor = System.ConsoleColor.Blue;
+                        System.Console.WriteLine("## Excluindo pasta temporária deploy...");
+                        System.Console.ResetColor();
+                        DeployCommand(commands.Delete(deployTempFolder, "-Rf"));
 
                         System.Console.ForegroundColor = System.ConsoleColor.Green;
-                        System.Console.WriteLine("## Pacote Deploy.zip criado com sucesso em!" );
+                        System.Console.WriteLine($"## Pacote {deployFile} criado com sucesso em!" );
                         System.Console.ResetColor();
 
                         //Aqui vai ser implementada a estratégia de envio via ftp ou ssh
