@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "starter-pack-dotnet",
+  "description": "StarterPack em DotNet Core e Angular",
+  "version": "1.0.0",
+  "scripts": {
+    "package": "sh scripts/deploy.sh",
+    "build": "gulp --gulpfile public/client/gulpfile.js",
+    "check": "gulp --gulpfile public/client/gulpfile.js check",
+    "migrate": "dotnet ef database update",
+    "migratelocal": "dotnet ef database update -e Local"
+  }
+}

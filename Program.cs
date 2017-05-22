@@ -11,6 +11,7 @@ using StarterPack.Core.Persistence;
 using StarterPack.Core.Seeders;
 using System.Linq;
 using StarterPack.Core.Console;
+using System.Diagnostics;
 
 namespace StarterPack
 {
@@ -18,7 +19,11 @@ namespace StarterPack
     {
         public static void Main(string[] args)
         {
+            //execute deploy command here
+
+
             if(args.Length > 0 && args.First().Equals("sp")){
+
                 CLI.Run(args);
             }
             else {
