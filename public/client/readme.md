@@ -84,11 +84,11 @@ yo ngprodeb
 
 > ### Adicionar novo módulo angular ###
 
-- adicione a dependência no arquivo bower.json
+- adicione a dependência no arquivo package.json
 - rode o comando
 
 ```sh
-bower install {nome-da-biblioteca}
+npm install {nome-da-biblioteca} --save
 ```
 
 - adicione o caminho da dependência no arquivo gulpfile.js

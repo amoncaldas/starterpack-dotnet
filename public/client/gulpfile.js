@@ -22,36 +22,37 @@ var runSequence = require('run-sequence');
 var argv = require('yargs').argv;
 
 paths.client = '.';
-paths.bower = 'bower_components';
+paths.node = 'node_modules';
 
 paths.app = paths.client + '/app';
 paths.destination = paths.client + '/build';
 paths.angularScripts = [
-  paths.bower + '/deep-diff/index.js',
-  paths.bower + '/uri-templates/uri-templates.js',
-  paths.bower + '/angular/angular.js',
-  paths.bower + '/angular-aria/angular-aria.js',
-  paths.bower + '/angular-sanitize/angular-sanitize.js',
-  paths.bower + '/angular-animate/angular-animate.js',
-  paths.bower + '/angular-resource/angular-resource.min.js',
-  paths.bower + '/angular-translate/angular-translate.min.js',
-  paths.bower + '/angular-i18n/angular-locale_pt-br.js',
-  paths.bower + '/angular-input-masks/angular-input-masks-standalone.min.js',
-  paths.bower + '/angular-ui-router/release/angular-ui-router.min.js',
-  paths.bower + '/angular-material/angular-material.js',
-  paths.bower + '/angular-material-data-table/dist/md-data-table.min.js',
-  paths.bower + '/angular-model-factory/dist/angular-model-factory.js',
-  paths.bower + '/angular-file-upload/dist/angular-file-upload.js',
-  paths.bower + '/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js',
-  paths.bower + '/ng-prodeb/dist/ng-prodeb.min.js'
+  paths.node + '/deep-diff/index.js',
+  paths.node + '/uri-templates/uri-templates.js',
+  paths.node + '/angular/angular.js',
+  paths.node + '/angular-aria/angular-aria.js',
+  paths.node + '/angular-sanitize/angular-sanitize.js',
+  paths.node + '/angular-animate/angular-animate.js',
+  paths.node + '/angular-resource/angular-resource.min.js',
+  paths.node + '/angular-translate/dist/angular-translate.min.js',
+  paths.node + '/angular-i18n/angular-locale_pt-br.js',
+  paths.node + '/angular-input-masks/releases/angular-input-masks-standalone.min.js',
+  paths.node + '/angular1-text-mask/dist/angular1TextMask.js',
+  paths.node + '/angular-ui-router/release/angular-ui-router.min.js',
+  paths.node + '/angular-material/angular-material.js',
+  paths.node + '/angular-material-data-table/dist/md-data-table.min.js',
+  paths.node + '/angular-model-factory/dist/angular-model-factory.js',
+  paths.node + '/angular-file-upload/dist/angular-file-upload.js',
+  paths.node + '/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js',
+  paths.node + '/ng-prodeb/dist/ng-prodeb.js'
 ];
 //Add minifieds files.
 paths.vendorsScripts = [
-  paths.bower + '/alasql/dist/alasql.js',
-  paths.bower + '/js-xlsx/dist/xlsx.core.min.js',
-  paths.bower + '/lodash/dist/lodash.min.js',
-  paths.bower + '/moment/min/moment.min.js',
-  paths.bower + '/moment/min/locales.min.js'
+  paths.node + '/alasql/dist/alasql.js',
+  paths.node + '/xlsx/dist/xlsx.core.min.js',
+  paths.node + '/lodash/lodash.min.js',
+  paths.node + '/moment/min/moment.min.js',
+  paths.node + '/moment/min/locales.min.js'
 ];
 paths.scripts = [
   paths.app + '/app.js',
@@ -59,9 +60,9 @@ paths.scripts = [
   paths.app + '/**/*.js'
 ];
 paths.styles = [
-  paths.bower   + '/ng-prodeb/dist/ng-prodeb.css',
-  paths.bower   + '/angular-material-data-table/dist/md-data-table.min.css',
-  paths.bower   + '/ng-material-datetimepicker/dist/material-datetimepicker.min.css',
+  paths.node   + '/ng-prodeb/dist/ng-prodeb.css',
+  paths.node   + '/angular-material-data-table/dist/md-data-table.min.css',
+  paths.node   + '/ng-material-datetimepicker/dist/material-datetimepicker.min.css',
   paths.client  + '/styles/app.scss'
 ];
 

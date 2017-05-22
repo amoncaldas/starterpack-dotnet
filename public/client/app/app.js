@@ -8,6 +8,7 @@
     'ui.router',
     'ngProdeb',
     'ui.utils.masks',
+    'text-mask',
     'ngMaterial',
     'modelFactory',
     'md.data.table',

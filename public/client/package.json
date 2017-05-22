@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "base-php-laravel-angular",
-  "description": "StarterPack em PHP usando Laravel com Angular",
+  "name": "starter-pack-frontend",
+  "description": "Starter Pack em front-end",
   "version": "1.0.0",
   "scripts": {
     "server": "http-server",
@@ -9,9 +9,35 @@
     "check": "gulp check"
   },
   "node": "~6.9.0",
+  "dependencies": {
+    "alasql": "~0.3.5",
+    "angular": "~1.6.4",
+    "angular-animate": "~1.6.4",
+    "angular-aria": "~1.6.4",
+    "angular-file-upload": "~2.5.0",
+    "angular-i18n": "~1.6.4",
+    "angular-input-masks": "~2.4.0",
+    "angular-material": "~1.1.4",
+    "angular-material-data-table": "~0.10.10",
+    "angular-messages": "~1.6.4",
+    "angular-model-factory": "~1.0.3",
+    "angular-moment": "~0.10.3",
+    "angular-resource": "~1.6.4",
+    "angular-sanitize": "~1.6.4",
+    "angular-translate": "~2.11.1",
+    "angular-ui-router": "~0.3.1",
+    "angular1-text-mask": "~6.0.1",
+    "deep-diff": "~0.3.8",
+    "lodash": "~4.13.1",
+    "moment": "~2.14.1",
+    "ng-material-datetimepicker": "~1.6.2",
+    "ng-prodeb": "git+ssh://git@git.prodeb.ba.gov.br:starter-pack/ngprodeb.git#0.2.12",
+    "uri-templates": "~0.2.0",
+    "xlsx": "~0.10.3"
+  },
   "devDependencies": {
+    "http-server": "~0.9.0",
     "babel-preset-es2015": "~6.9.0",
-    "bower": "~1.7.9",
     "browser-sync": "~2.13.0",
     "eslint": "~3.1.1",
     "eslint-plugin-angular": "~1.3.0",
@@ -43,8 +69,5 @@
     "stream-series": "~0.1.1",
     "yargs": "~4.8.1",
     "lodash": "~4.17.4"
-  },
-  "dependencies": {
-    "http-server": "~0.9.0"
   }
 }

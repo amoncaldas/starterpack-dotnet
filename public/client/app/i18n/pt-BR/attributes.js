@@ -11,6 +11,8 @@
       image: 'Imagem',
       roles: 'Perfis',
       date: 'Data',
+      initialDate: 'Data Inicial',
+      finalDate: 'Data Final',
       task: {
         description: 'Descrição',
         done: 'Feito?',
