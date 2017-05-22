@@ -40,8 +40,8 @@ git remote add starter-pack git@git.prodeb.ba.gov.br:starter-pack/starter-pack-d
 
 # Configurando o Projeto
 
-# Instalando as dependencias locais yoman gulp, eslint, bower e derivados
-npm install -g yo gulp gulp-babel babel-preset-es2015 eslint eslint-plugin-angular bower protractor protractor-console
+# Instalando as dependencias locais yoman gulp, eslint, derivados
+npm install -g yo gulp gulp-babel babel-preset-es2015 eslint eslint-plugin-angular protractor protractor-console
 
 # Atualizando o webdriver para rodar os testes e2e
 webdriver-manager update
@@ -63,7 +63,6 @@ dotnet run sp seed
 # Instalando as dependencias do frontend
 cd public/client
 npm install
-bower install
 
 # Voltando para pasta raiz
 cd ../..
