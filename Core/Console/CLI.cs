@@ -51,6 +51,7 @@ namespace StarterPack.Core.Console
                 });
 
                 SeedListener.Listen(command, args);
+                DeployListener.Listen(command, args);
             });
         }
     }

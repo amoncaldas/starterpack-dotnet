@@ -35,7 +35,7 @@ namespace StarterPack.Core.Seeders
             if(reverseSelection){
                 types = types.Where(t => !seedersList.Contains(t.Name.ToString()));
             }
-            else {
+            else if(seedersList.Count > 0) {
                 types = types.Where(t => seedersList.Contains(t.Name.ToString()));
             }
 
