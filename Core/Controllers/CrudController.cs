@@ -7,13 +7,30 @@ using Microsoft.EntityFrameworkCore;
 using StarterPack.Core.Persistence;
 using StarterPack.Core.Extensions;
 using System;
+using System.Reflection;
 
 namespace StarterPack.Core.Controllers
 {
     [Route("api/v1/[controller]")]
     public abstract partial class CrudController<T> : BaseController where T : Model<T>
     {
-        // GET api/users
+        /// <summary>
+        /// GET api/v1/[recurso]
+        /// </summary>
+        /// <param name="model">
+        /// Parametros QueryString que é transformada no objeto tipado para serem utilizados como critérios de pesquisa
+        ///
+        /// Além disso os seguintes parametros:
+        /// - perPage e page - para realizar uma paginação
+        /// - limit - para limitar a quantidade de recursos retornados (somente no caso de não utilizar paginação)
+        /// - orderBy - nome do campo para realizar a ordenação
+        /// - orderType - asc ou desc para ascendente ou descendente
+        /// </param>
+        /// <returns>
+        /// Caso os atributos page e perPage tenham sido informados,
+        /// retorna um objeto com as propriedades items (array com os recursos encontrados referente a página especificada) e total.
+        /// Caso não sejam informados, retorna uma lista com todos os recursos encontrados.
+        /// </returns>
         [HttpGet]
         public object Index([FromQuery]T model)
         {
@@ -30,6 +47,15 @@ namespace StarterPack.Core.Controllers
 
             if (!trackModels)
                 dataQuery = dataQuery.AsNoTracking();
+
+            //Realiza a ordenação
+            if (HasParameter("orderBy")) {
+                if(HasParameter("orderType") && GetParameter("orderType") == "desc") {
+                    dataQuery = dataQuery.OrderByDescending(GetParameter("orderBy"));
+                } else {
+                    dataQuery = dataQuery.OrderBy(GetParameter("orderBy"));
+                }
+            }
 
             List<T> models;
             int? count = null;
@@ -57,7 +83,6 @@ namespace StarterPack.Core.Controllers
                 };
             }
         }
-
 
         // GET api/users/5
         [HttpGet("{id}")]

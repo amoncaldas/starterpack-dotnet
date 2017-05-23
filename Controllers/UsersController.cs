@@ -37,12 +37,6 @@ namespace StarterPack.Controllers
             }
         }
 
-
-        protected override void BeforeSearch(ref IQueryable<User> dataQuery, ref IQueryable<User> countQuery)
-        {
-            dataQuery = dataQuery.OrderBy(m => m.Name);
-        }
-
         protected override void AfterSearch(ref IQueryable<User> query, List<User> models) {
             //mapeia UserRoles para Roles
             models.ForEach(user => {
@@ -68,7 +62,7 @@ namespace StarterPack.Controllers
         }
 
         protected override void AfterStore(User model) {
-           new ConfirmRegister(model).Send();
+           new ConfirmRegister(model).SendAsync();
         }
 
         //Mapeia Roles para UserRoles
