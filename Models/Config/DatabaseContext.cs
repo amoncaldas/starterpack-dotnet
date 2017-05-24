@@ -12,26 +12,27 @@ namespace StarterPack.Core.Persistence
         public DbSet<Task> Tasks { get; set; }
 
         /// <summary>
-        /// Aqui dvem ser configurados os models, especificando restrições e relacionamentos
+        /// Aqui dvem ser configurados os models, especificando restrições e relacionamentos que não pode ser
+        /// configurado através de anotações.
         /// </summary>
         /// <param name="modelBuilder"></param>
         public static void ConfigureModels(ModelBuilder modelBuilder) {
             modelBuilder.Entity<User>()
                 .HasIndex(e => e.Email)
-                .IsUnique();   
+                .IsUnique();
 
             modelBuilder.Entity<User>()
                 .Property(e => e.Salt)
-                .HasField("_salt");                
+                .HasField("_salt");
 
             modelBuilder.Entity<Project>()
                 .HasIndex(e => e.Name)
-                .IsUnique();                
+                .IsUnique();
 
             modelBuilder.Entity<Role>()
                 .HasIndex(e => e.Slug)
                 .IsUnique();
-                
+
             modelBuilder.Entity<UserRole>()
                 .HasKey(t => new { t.UserId, t.RoleId });
 

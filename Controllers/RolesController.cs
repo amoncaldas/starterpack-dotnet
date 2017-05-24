@@ -11,11 +11,6 @@ namespace StarterPack.Controllers
     [UnpublishAction("get", "store", "update", "destroy")]
     public class RolesController : CrudController<Role>
     {
-        public RolesController() {
-            // Http Request data can be accessed using the folowing code
-            // HttpContext.Request;
-        }
-
         protected override void ApplyFilters(ref IQueryable<Role> query) {
             if( HasParameter("slug") ) {
                 query = query.Where(role => role.Slug == GetParameter("slug"));

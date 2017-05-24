@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace StarterPack.Core.Exception
 {
+    /// <summary>
+    /// Classe responsável por tratar as exceptions geradas a partir da execução da pipeline do controller
+    /// </summary>
     public class ExceptionHandler : ExceptionFilterAttribute
     {
 
