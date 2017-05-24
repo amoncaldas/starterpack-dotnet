@@ -13,7 +13,12 @@
 # Gera um arquivo .sql referente ao conteudo das migrations
 - dotnet ef migrations script
 
-
 # Roda as migrations
 - dotnet ef database update
 - dotnet ef database update -e Local
+
+# Para rodar os tests
+- dotnet test ou dotnet xunit
+
+# Para listar os testes
+- dotnet test -t

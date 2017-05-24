@@ -2,12 +2,17 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="public\**"/>
     <Content Remove="public\**"/>
     <EmbeddedResource Remove="public\**"/>
     <None Remove="public\**"/>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="appsettings*.json" CopyToOutputDirectory="Always"/>
+    <None Include="Resources\**" CopyToOutputDirectory="Always"/>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2"/>
@@ -23,9 +28,17 @@
     <PackageReference Include="RazorLight" Version="1.0.1"/>
     <PackageReference Include="Humanizer.Core" Version="2.2.0"/>
     <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="1.1.2"/>
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0"/>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0"/>
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="15.0.0"/>
+    <PackageReference Include="xunit" Version="2.3.0-beta2-build3683"/>
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta2-build1317"/>
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0-beta2-build3683"/>
   </ItemGroup>
 </Project>

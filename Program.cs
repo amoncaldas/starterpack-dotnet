@@ -19,11 +19,7 @@ namespace StarterPack
     {
         public static void Main(string[] args)
         {
-            //execute deploy command here
-
-
             if(args.Length > 0 && args.First().Equals("sp")){
-
                 CLI.Run(args);
             }
             else {
