@@ -32,6 +32,7 @@ namespace StarterPack.Core.Console.Runner
             ExecResult result = new ExecResult(){Success = true};
             try{
                 proc.Start();
+                //proc.WaitForExit();               
                 while (!proc.StandardOutput.EndOfStream) {
                     string line = proc.StandardOutput.ReadLine();
                     result.Messages.Add(line);
@@ -51,15 +52,17 @@ namespace StarterPack.Core.Console.Runner
         /// <param name="arguments">Argumentos a serem passado para o comando</param>
         /// <returns></returns>
         public static Process BuildProcess(string fileToExecute, string arguments){
-             Process proc = new Process {
-                StartInfo = new ProcessStartInfo {
-                    FileName = fileToExecute,
-                    Arguments = arguments,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true
-                }
+        var StartInfo = new ProcessStartInfo {
+                FileName = fileToExecute,
+                Arguments = arguments,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true,                
             };
+            //StartInfo.WorkingDirectory = "C:\\Users\\Amon\\Desktop\\sp\\starter-pack-dotnet\\";
+
+            Process proc = new Process();
+            proc.StartInfo = StartInfo;
             return proc;
         }
     }
