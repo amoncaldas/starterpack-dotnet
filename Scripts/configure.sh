@@ -31,6 +31,7 @@ then
 
 
   # Preparand oos arquivos templates
+  cp public/client/index.html.example public/client/index.html
   cp public/client/paths.json.example-dotnet public/client/paths.json
   cp public/client/app/app.global.js.example-dotnet public/client/app/app.global.js
   rm -rf public/client/app/app.global.js.example.* public/client/paths.json.example.*
