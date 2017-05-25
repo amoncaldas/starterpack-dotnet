@@ -33,7 +33,7 @@ namespace StarterPack.Core.Console.SOCommands
 		}
 
         public string[] CreateFolder(params string[] parameters){
-            var command = new List<string>() {"mkdir"};
+            var command = new List<string>() {"mkdir", "-p"};
             command.AddRange(parameters);
             return command.ToArray();
         }
