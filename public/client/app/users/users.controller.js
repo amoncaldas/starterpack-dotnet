@@ -25,7 +25,10 @@
     $controller('CRUDController', { vm: vm, modelService: UsersService, options: {} });
 
     function onActivate() {
-      vm.queryFilters = {};
+      vm.queryFilters = {
+        orderBy: 'name',
+        orderType: 'asc'
+      };
 
       vm.roles = RolesService.query().then(function (response) {
         vm.roles = response;

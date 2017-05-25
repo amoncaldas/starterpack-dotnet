@@ -11,6 +11,11 @@
     "Project": {
       "Cost": "Custo"
     },
+    "MailView": {
+      "Subject": "Assunto",
+      "Message": "Mensagem",
+      "Users": "Para"
+    },
     "Task": {
       "Description": "Descrição",
       "Done": "Feito?",

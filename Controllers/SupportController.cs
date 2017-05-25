@@ -9,11 +9,10 @@ namespace StarterPack.Controllers
     [Route("api/v1/support/")]
     public class SupportController : BaseController
     {
-        public SupportController() {
-            // Http Request data can be accessed using the folowing code
-            // HttpContext.Request;
-        }
-
+        /// <summary>
+        /// Action responsável por retornar a lista de atributos traduzidos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("langs")]
         public object langs() {
@@ -22,6 +21,10 @@ namespace StarterPack.Controllers
             };
         }
 
+        /// <summary>
+        /// Action utilizada para o redirecionamento de erros fora do pipeline do controller
+        /// </summary>
+        /// <returns></returns>
         [Route("error")]
         public IActionResult error() {
             throw new Exception("messages.internalError");

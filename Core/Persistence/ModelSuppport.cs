@@ -34,6 +34,7 @@ namespace StarterPack.Core.Persistence
         /// <returns></returns>
         protected static DbSet<T> getEntities(DbContext context = null) {
             var _context = context == null ? getContext() : context;
+
             return _context.Set<T>();
         }
 
@@ -61,7 +62,7 @@ namespace StarterPack.Core.Persistence
         /// <param name="model"></param>
         /// <param name="property"></param>
         /// <param name="value"></param>
-        public static void MergetProperty(Model<T> model, PropertyInfo property, dynamic value)
+        private static void MergetProperty(Model<T> model, PropertyInfo property, dynamic value)
         {
             if(property.Name != "Id"
             && !model.DontFill.Contains(property.Name)
@@ -95,7 +96,8 @@ namespace StarterPack.Core.Persistence
         }
 
         /// <summary>
-        /// Realiza o merge entre dois models
+        /// Preenche o model com os atributos informados verificando e aplicando as regras referente as lista
+        /// Fill e DontFill.
         /// </summary>
         /// <param name="updatedProperties"></param>
         public void FillAttributes(T updatedProperties)

@@ -15,10 +15,10 @@ namespace StarterPack
         public SymmetricSecurityKey signingKey;
 
         private void ConfigureAuthOptions(IServiceCollection services) {
-            //get and config jwt key
+            //pega e configura a chave do jwt
             signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Env.Data.GetSection("JWT_KEY").Value));
 
-            //configure jwt token options
+            //configura as opções do token
             var tokenProviderOptions = new TokenProviderOptions
             {
                 Audience = Env.Data.GetSection("APP_URL").Value,
@@ -28,33 +28,32 @@ namespace StarterPack
                 LeftTimeToRenew = int.Parse(Env.Data.GetSection("TOKEN_LEFT_TIME_TO_REFRESH").Value)
             };
 
-            //check if options is valid
             ThrowIfTokenInvalidOptions(tokenProviderOptions);
 
             var tokenValidationParameters = new TokenValidationParameters
             {
-                // The signing key must match!
+                //Valida se a chave está correta
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
-                // Validate the JWT Issuer (iss) claim
+                //Valida se o emissor está correto
                 ValidateIssuer = true,
                 ValidIssuer = Env.Data.GetSection("APP_NAME").Value,
-                // Validate the JWT Audience (aud) claim
+                //valida se o dominio está correto
                 ValidateAudience = true,
                 ValidAudience = Env.Data.GetSection("APP_URL").Value,
-                // Validate the token expiry
+                //Valida o tempo de expiração
                 ValidateLifetime = true,
-                // Set to Zero the difference balance
+                //Define para zero a tolerância para distorção no tempo
                 ClockSkew = TimeSpan.Zero
             };
 
-            //add options to service injector to use in other places
+            //adiciona as configurações e opções de validação do token para a injeção de dependência
             services.AddSingleton<TokenProviderOptions>(tokenProviderOptions);
             services.AddSingleton<TokenValidationParameters>(tokenValidationParameters);
         }
 
         /// <summary>
-        /// Check if token options is Valid
+        /// Verifica se a configuração do token está correta
         /// </summary>
         /// <param name="options"></param>
         private static void ThrowIfTokenInvalidOptions(TokenProviderOptions options)

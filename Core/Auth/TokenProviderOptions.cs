@@ -6,31 +6,31 @@ using StarterPack.Models;
 namespace StarterPack.Auth
 {
     public class TokenProviderOptions
-    { 
+    {
         /// <summary>
-        ///  The Issuer (iss) claim for generated tokens.
-        /// </summary>
+        ///  Emissor do token
+        /// /// </summary>
         public string Issuer { get; set; }
 
         /// <summary>
-        /// The Audience (aud) claim for the generated tokens.
+        /// Domain do token
         /// </summary>
         public string Audience { get; set; }
 
         /// <summary>
-        /// The expiration time for the generated tokens.
+        /// Tempo de expiração
         /// </summary>
-        /// <remarks>The default is 30 minutes.</remarks>
+        /// <remarks>O padrão é 30 minutos.</remarks>
         public int Expiration { get; set; } = 30;
 
         /// <summary>
-        /// The left time for refresh the generated tokens.
+        /// Definição do tempo restante para renovar um token
         /// </summary>
-        /// <remarks>The default is 10 minutes.</remarks>
-        public int LeftTimeToRenew { get; set; } = 10;        
+        /// <remarks>O padrão é 10 minutos</remarks>
+        public int LeftTimeToRenew { get; set; } = 10;
 
         /// <summary>
-        /// The signing key to use when generating tokens.
+        /// Chave utilizada para gerar o token
         /// </summary>
         public SigningCredentials SigningCredentials { get; set; }
     }

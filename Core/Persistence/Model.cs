@@ -26,9 +26,17 @@ namespace StarterPack.Core.Persistence
         [Required, FromQuery(Name = "updated_at")]
         public virtual DateTimeOffset? UpdatedAt { get; set; }
 
+        /// <summary>
+        /// Lista que deve conter os attributos que são preenchidos através do metodo FillAttributes e UpdateAttributes
+        /// "*" coringa para representar todos os atributos
+        /// </summary>
         [NotMapped]
         public virtual List<string> Fill { get; set; }
 
+        /// <summary>
+        /// Lista que deve conter os attributos que não vão ser preenchidos através do metodo FillAttributes e UpdateAttributes
+        /// Essa lista tem prioridade em relação a lista Fill. Nesta o coringa "*" não funciona
+        /// </summary>
         [NotMapped]
         public virtual List<string> DontFill { get; set; }
 

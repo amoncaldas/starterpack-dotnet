@@ -4,6 +4,10 @@ using System.IO;
 
 namespace StarterPack.Core.Mail
 {
+    /// <summary>
+    /// Classe que representa um email
+    /// Contém todos os campos que podem ser utilizados no envio de um email.
+    /// </summary>
     public class SPMail
     {
         public List<MailAddress> To;
@@ -34,6 +38,6 @@ namespace StarterPack.Core.Mail
             TemplateData = new ExpandoObject();
             Rendered = false;
         }
-        
+
     }
 }

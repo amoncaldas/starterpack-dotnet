@@ -8,7 +8,7 @@ namespace StarterPack.Core.Seeders
     public class Seeder
     {
         /// <summary>
-        /// Pobvoa os dados de acordo com as regras de uma classe seeder
+        /// Povoa os dados de acordo com as regras de uma classe seeder
         /// </summary>
         public static List<string> Populate(List<string> seedersList = null, bool reverseSelection = false){
             return Execute(s => s.InsertData(), seedersList, reverseSelection);

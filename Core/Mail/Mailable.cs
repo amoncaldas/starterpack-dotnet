@@ -7,27 +7,51 @@ namespace StarterPack.Core.Mail
     {
         public abstract SPMail Build();
 
+        /// <summary>
+        /// Envia um email de forma síncrona para um destinatário.
+        /// </summary>
+        /// <param name="to">destinatário</param>
         public void Send(MailAddress to){
             SendMail(new List<MailAddress>() { to });
         }
 
-		 public void Send(List<MailAddress> tos){
+        /// <summary>
+        /// Envia um email de forma síncrona para vários destinatário(s).
+        /// </summary>
+        /// <param name="to">destinatário(s)</param>
+        public void Send(List<MailAddress> tos){
             SendMail(tos);
         }
 
-		 public void Send(){
+        /// <summary>
+        /// Envia o email de forma síncrona.
+        /// Neste caso na construção do email deve já ter adicionado o destinatário.
+        /// </summary>
+        public void Send(){
             SendMail(null);
         }
 
+        /// <summary>
+        /// Envia um email de forma assíncrona para um destinatário.
+        /// </summary>
+        /// <param name="to">destinatário</param>
 		public Task SendAsync(MailAddress to){
             return SendMailAsync(new List<MailAddress>() { to });
         }
 
-		 public Task SendAsync(List<MailAddress> tos){
+        /// <summary>
+        /// /// Envia um email de forma assíncrona para vários destinatários.
+        /// </summary>
+        /// <param name="to">destinatários</param>
+		public Task SendAsync(List<MailAddress> tos){
             return SendMailAsync(tos);
         }
 
-		 public Task SendAsync(){
+        /// <summary>
+        /// Envia o email de forma assíncrona.
+        /// Neste caso na construção do email deve já ter adicionado o destinatário.
+        /// </summary>
+        public Task SendAsync(){
             return SendMailAsync(null);
         }
 
