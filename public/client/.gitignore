@@ -5,6 +5,7 @@ node_modules/
 bower_components/
 build/
 paths.json
+index.html
 app/app.global.js
 
 npm-debug.log
