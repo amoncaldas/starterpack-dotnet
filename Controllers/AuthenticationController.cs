@@ -25,7 +25,7 @@ namespace StarterPack.Controllers
 
             _tokenProviderOptions = tokenProviderOptions;
         }
-        // POST api/users
+
         [HttpPost]
         [Route("authenticate")]
         public IActionResult login([FromBody]Login login)
