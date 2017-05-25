@@ -18,9 +18,16 @@ namespace StarterPack.Core.Console.Deploy
             return command.ToArray();
 		}
 
-        string[] IDeployCommands.Delete(params string[] parameters)
+        string[] IDeployCommands.DeleteFile(params string[] parameters)
 		{
-			var command = new List<string>() {"rm", "-R"};
+			var command = new List<string>() {"rm", "-f"};
+            command.AddRange(parameters);
+            return command.ToArray();
+		}
+
+		string[] IDeployCommands.DeleteFolder(params string[] parameters)
+		{
+			var command = new List<string>() {"rm", "-Rf"};
             command.AddRange(parameters);
             return command.ToArray();
 		}

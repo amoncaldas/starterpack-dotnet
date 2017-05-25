@@ -5,7 +5,9 @@ namespace StarterPack.Core.Console.Deploy
     public interface IDeployCommands
     {
         string[] Copy(params string[] parameters);
-        string[] Delete(params string[] parameters);
+        string[] DeleteFolder(params string[] parameters);
+
+        string[] DeleteFile(params string[] parameters);
         string[] CreateFolder(params string[] parameters);
         string[] Gulp(params string[] parameters);
         string[] Compress (params string[] parameters);
