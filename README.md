@@ -22,3 +22,18 @@
 
 # Para listar os testes
 - dotnet test -t
+
+# Para executar verificar as opções da CLI do StartPack
+- dotnet run sp -h
+
+# Para ver todas as opções do seed do CLI do StartPack
+- dotnet run sp seed -h
+
+# Para executar o seed do StartPack
+- dotnet run sp seed
+
+# Para executar o seed do CLI do StartPack resetando os dados
+- dotnet run sp seed --reset
+
+# Para executar o deploy do StartPack
+- dotnet run sp deploy
