@@ -8,23 +8,12 @@ using System;
 
 namespace StarterPack.Test
 {
-    public class SupportTest
+    public class SupportTest : BaseTest
     {
-        private readonly TestServer _server;
-        private readonly HttpClient _client;
-
-        public SupportTest()
-        {
-            // Arrange
-            _server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
-            _client = _server.CreateClient();
-        }
-
         [Fact]
         public async Task ShouldLoadLangs()
         {
-            // Act
-            var response = await _client.GetAsync("/api/v1/support/langs");
+            var response = await _client.GetAsync($"{_apiPrefix}/support/langs");
             response.EnsureSuccessStatusCode();
 
             var responseString = response.Content.ReadAsStringAsync().Result;
