@@ -23,7 +23,7 @@
 # Para listar os testes
 - dotnet test -t
 
-# Para executar verificar as opções da CLI do StarterPack
+# Para verificar as opções da CLI do StarterPack
 - dotnet run sp -h
 
 # Para ver todas as opções do seed do CLI do StarterPack
