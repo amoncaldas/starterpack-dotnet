@@ -74,6 +74,8 @@ namespace StarterPack
         // Use este método para configurar o HTTP Request Pipeline
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseExceptionHandler("/api/v1/support/error");
+
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -92,7 +94,6 @@ namespace StarterPack
             loggerFactory.AddConsole(Env.Data.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseExceptionHandler("/api/v1/support/error");
 
             //Configura o CORS
             app.UseCors(builder =>
