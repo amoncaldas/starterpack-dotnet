@@ -27,6 +27,7 @@ namespace StarterPack.Core.Configure
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env}.json", optional: true)
                 .AddEnvironmentVariables();
+
             IConfigurationRoot Configuration = builder.Build();
             Env.Data = Configuration;
 
