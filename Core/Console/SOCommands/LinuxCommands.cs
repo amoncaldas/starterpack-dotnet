@@ -45,32 +45,5 @@ namespace StarterPack.Core.Console.SOCommands
             return command.ToArray();
 		}
 
-		public string[] Upload(params string[] parameters)
-		{
-			var command = new List<string>() {"ftp"};
-            command.AddRange(parameters);
-            return command.ToArray();
-		}
-
-		public string[] Compress(params string[] parameters)
-		{
-			var command = new List<string>() {"zip", "-r"};
-            command.AddRange(parameters);
-            return command.ToArray();
-		}
-
-		public string[] NavigateTo(params string[] parameters)
-		{
-			var command = new List<string>() {"cd"};
-            command.AddRange(parameters);
-            return command.ToArray();
-		}
-
-        public string[] Move(params string[] parameters)
-		{
-			var command = new List<string>() {"mv"};
-            command.AddRange(parameters);
-            return command.ToArray();
-		}
 	}
 }

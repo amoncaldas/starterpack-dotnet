@@ -14,8 +14,8 @@ namespace StarterPack.Core.Console.SOCommands
 
 		public string[] Copy(params string[] parameters)
 		{
-			parameters[0] = "\"" + parameters[0] + "\"";
-			parameters[1] = "\"" + parameters[1] + "\"";
+			parameters[0] = "\"" + parameters[0] + "\"";// o primeiro parâmetro é a pasta origem
+			parameters[1] = "\"" + parameters[1] + "\""; // o segundo parametro é a pasta destino
 			var command = new List<string>() {"cmd.exe", "/c", "copy"};
             command.AddRange(parameters);
             return command.ToArray();
@@ -50,32 +50,5 @@ namespace StarterPack.Core.Console.SOCommands
             return command.ToArray();
 		}
 
-		public string[] Upload(params string[] parameters)
-		{
-			var command = new List<string>() {"ftp"};
-            command.AddRange(parameters);
-            return command.ToArray();
-		}
-
-		public string[] Compress(params string[] parameters)
-		{
-			var command = new List<string>() {"zip", "-r"};
-            command.AddRange(parameters);
-            return command.ToArray();
-		}
-
-		public string[] NavigateTo(params string[] parameters)
-		{
-			var command = new List<string>() {"cd"};
-            command.AddRange(parameters);
-            return command.ToArray();
-		}
-
-        public string[] Move(params string[] parameters)
-		{
-			var command = new List<string>() {"mv"};
-            command.AddRange(parameters);
-            return command.ToArray();
-		}
 	}
 }
