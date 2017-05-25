@@ -4,25 +4,25 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace StarterPack.Core.Console.Deploy
+namespace StarterPack.Core.Console.SOCommands
 {
-    public class DeployCommandFactory
+    public class OSCommandFactory
     {
         /// <summary>
         /// Constrói um objeto do tipo IDeployCommand basedo em uma especificada ou a plataforma corrente
         /// </summary>
         /// <param name="platform">Plataforma que deve ser usada como referêcia para construção do IDeployCommand</param>
         /// <returns></returns>
-        public static IDeployCommands Make(OSPlatform platform){
-            IDeployCommands deployCommandInstance = null;
+        public static IOSCommand Make(OSPlatform platform){
+            IOSCommand deployCommandInstance = null;
             // Aqui recuperamos as classes que implmentam a interface IDeployCommand
-            Assembly assembly = typeof(DeployCommandFactory).GetTypeInfo().Assembly;
-            IEnumerable<Type> types = assembly.GetTypes().Where(t =>typeof(IDeployCommands).IsAssignableFrom(t)).Where(t => t.GetTypeInfo().IsClass);
+            Assembly assembly = typeof(OSCommandFactory).GetTypeInfo().Assembly;
+            IEnumerable<Type> types = assembly.GetTypes().Where(t =>typeof(IOSCommand).IsAssignableFrom(t)).Where(t => t.GetTypeInfo().IsClass);
 
             // Iteramos sobre elas e verifacamos qual delas tem o OSPlatform desejado
             foreach (Type commandType in types)
             {
-               deployCommandInstance = (IDeployCommands)Activator.CreateInstance(commandType);
+               deployCommandInstance = (IOSCommand)Activator.CreateInstance(commandType);
                if(deployCommandInstance.Platform() == platform){
                    break;
                }
@@ -31,7 +31,7 @@ namespace StarterPack.Core.Console.Deploy
             //Retornamos a instância
             return deployCommandInstance;
         }
-        public static IDeployCommands Make(){
+        public static IOSCommand Make(){
             return Make(CurrentOS());
         }
 

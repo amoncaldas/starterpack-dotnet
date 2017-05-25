@@ -1,58 +1,63 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 
-namespace StarterPack.Core.Console.Deploy
+namespace StarterPack.Core.Console.SOCommands
 {
-    public class LinuxDeployCommands : IDeployCommands
+    public class WindowsDeployCommands : IOSCommand
     {
 		public OSPlatform Platform()
 		{
 			return OSPlatform.Linux;
 		}
 
-		string[] IDeployCommands.Copy(params string[] parameters)
+		public string[] Copy(params string[] parameters)
 		{
-			var command = new List<string>() {"cp", "-R"};
+			parameters[0] = "\"" + parameters[0] + "\"";
+			parameters[1] = "\"" + parameters[1] + "\"";
+			var command = new List<string>() {"cmd.exe", "/c", "copy"};
             command.AddRange(parameters);
             return command.ToArray();
 		}
 
-        string[] IDeployCommands.DeleteFile(params string[] parameters)
+
+        public string[] DeleteFolder(params string[] parameters)
 		{
-			var command = new List<string>() {"rm", "-f"};
+			var command = new List<string>() {"cmd.exe", "/c", "rmdir", "/S", "/Q"};
             command.AddRange(parameters);
             return command.ToArray();
 		}
 
-		string[] IDeployCommands.DeleteFolder(params string[] parameters)
+		public string[] DeleteFile(params string[] parameters)
 		{
-			var command = new List<string>() {"rm", "-Rf"};
+			var command = new List<string>() {"cmd.exe", "/c", "del", "/F", "/Q"};
             command.AddRange(parameters);
             return command.ToArray();
 		}
 
-        string[] IDeployCommands.CreateFolder(params string[] parameters){
-            var command = new List<string>() {"mkdir"};
+        public string[] CreateFolder(params string[] parameters){
+            var command = new List<string>() {"cmd.exe", "/c", "mkdir"};
+			parameters[0] = "\"" + parameters[0] + "\"";
             command.AddRange(parameters);
             return command.ToArray();
         }
 
-		string[] IDeployCommands.Gulp(params string[] parameters)
+		public string[] Gulp(params string[] parameters)
 		{
-            var command = new List<string>() {"gulp"};
+            var command = new List<string>() {"cmd.exe", "/c", "gulp"};
             command.AddRange(parameters);
             return command.ToArray();
 		}
 
-		string[] IDeployCommands.Upload(params string[] parameters)
+		public string[] Upload(params string[] parameters)
 		{
 			var command = new List<string>() {"ftp"};
             command.AddRange(parameters);
             return command.ToArray();
 		}
 
-		string[] IDeployCommands.Compress(params string[] parameters)
+		public string[] Compress(params string[] parameters)
 		{
 			var command = new List<string>() {"zip", "-r"};
             command.AddRange(parameters);
@@ -66,7 +71,7 @@ namespace StarterPack.Core.Console.Deploy
             return command.ToArray();
 		}
 
-        string[] IDeployCommands.Move(params string[] parameters)
+        public string[] Move(params string[] parameters)
 		{
 			var command = new List<string>() {"mv"};
             command.AddRange(parameters);

@@ -1,8 +1,8 @@
 using System.Runtime.InteropServices;
 
-namespace StarterPack.Core.Console.Deploy
+namespace StarterPack.Core.Console.SOCommands
 {
-    public interface IDeployCommands
+    public interface IOSCommand
     {
         string[] Copy(params string[] parameters);
         string[] DeleteFolder(params string[] parameters);
