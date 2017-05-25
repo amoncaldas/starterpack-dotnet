@@ -18,31 +18,43 @@ namespace StarterPack.Core
             return string.Join("", tokens);
         }
 
-        public static string GenerateSalt()  
-        {  
-            byte[] bytes = new byte[20];  
-            using(var keyGenerator = RandomNumberGenerator.Create())  
-            {  
-                keyGenerator.GetBytes(bytes);  
+        public static string GenerateSalt()
+        {
+            byte[] bytes = new byte[20];
+            using(var keyGenerator = RandomNumberGenerator.Create())
+            {
+                keyGenerator.GetBytes(bytes);
                 return BitConverter.ToString(bytes).Replace("-", "").ToLower();
-            }  
+            }
         }
 
-        public static string GeneratePassword(int length = 8)  
-        {  
-            return Guid.NewGuid().ToString().Substring(0, length);                        
-        }      
+        public static string GeneratePassword(int length = 8)
+        {
+            return Guid.NewGuid().ToString().Substring(0, length);
+        }
 
-        public static string GenerateHash(string text)  
-        {  
-            // SHA512 is disposable by inheritance.  
-            using(var sha256 = SHA256.Create())  
-            {  
-                // Send a sample text to hash.  
+        public static string GenerateHash(string text)
+        {
+            // SHA512 is disposable by inheritance.
+            using(var sha256 = SHA256.Create())
+            {
+                // Send a sample text to hash.
                 var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
-                // Get the hashed string.  
-                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();  
-            }  
+                // Get the hashed string.
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+        }
+
+        public static string ImageToBase64(string path){
+            string imageRepresentation = null;
+            try{
+                byte[] imageArray = System.IO.File.ReadAllBytes(path);
+                imageRepresentation = Convert.ToBase64String(imageArray);
+            }
+            catch(System.Exception ex){
+                //log
+            }
+            return imageRepresentation;
         }
     }
 }

@@ -93,6 +93,7 @@ namespace StarterPack
 
             loggerFactory.AddConsole(Env.Data.GetSection("Logging"));
             loggerFactory.AddDebug();
+            loggerFactory.AddFile("");
 
 
             //Configura o CORS
