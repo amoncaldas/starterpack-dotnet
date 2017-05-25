@@ -17,6 +17,7 @@ using StarterPack.Core.Extensions;
 using StarterPack.Core.Seeders;
 using StarterPack.Core.Configure;
 using Microsoft.AspNetCore.HttpOverrides;
+using Serilog;
 
 namespace StarterPack
 {
@@ -33,6 +34,13 @@ namespace StarterPack
         //Use este método para adicionar/configurar serviços ao container
         public void ConfigureServices(IServiceCollection services)
         {
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Env.Data)
+                .Enrich.FromLogContext()
+                .CreateLogger();
+
+            Log.Information("Log Configurado");
+
             services.AddSingleton<IConfiguration>(Env.Data);
             services.AddSingleton<IHostingEnvironment>(this.env);
             Application.ConfigureProvider(services);
@@ -72,9 +80,11 @@ namespace StarterPack
         }
 
         // Use este método para configurar o HTTP Request Pipeline
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime appLifetime)
         {
             app.UseExceptionHandler("/api/v1/support/error");
+            loggerFactory.AddSerilog();
+            appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
@@ -89,12 +99,6 @@ namespace StarterPack
             //Adiciona suporte a arquivos estaticos
             app.UseDefaultFiles(options);
             app.UseStaticFiles();
-
-
-            loggerFactory.AddConsole(Env.Data.GetSection("Logging"));
-            loggerFactory.AddDebug();
-            loggerFactory.AddFile("");
-
 
             //Configura o CORS
             app.UseCors(builder =>

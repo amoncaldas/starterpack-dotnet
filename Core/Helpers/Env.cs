@@ -13,7 +13,7 @@ namespace StarterPack.Core
             return null;
         }
 
-        public static IConfiguration Data { get; set; }
+        public static IConfigurationRoot Data { get; set; }
 
         public static IHostingEnvironment Host { get; set;}
     }
