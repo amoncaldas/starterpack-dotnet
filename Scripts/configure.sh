@@ -3,27 +3,32 @@
 echo
 
 EXISTING_PROJECT=false
+NO_REPO=true
 
-while getopts g:e option
+while getopts g:e:nr option
 do
         case "${option}"
         in
                 g) GIT_URL=${OPTARG};;
                 e) EXISTING_PROJECT=true;;
+                nr) NO_REPO=true;;
         esac
 done
 
 if [ $EXISTING_PROJECT = false ]
 then
-  if [ -z $GIT_URL ]; then
-      echo "É obrigatório fornecer a url do repositório git através da opção -u. Ex: sh scripts/configure.sh -g git@git.prodeb.ba.gov.br:nome-do-repositorio.git"
-      exit
+  if [ -z $GIT_URL ] && [ $NO_REPO = false ]; then
+    echo "É obrigatório fornecer a url do repositório git através da opção -u. Ex: sh scripts/configure.sh -g git@git.prodeb.ba.gov.br:nome-do-repositorio.git"
+    exit
   fi
 
   # Configurando o GIT
   rm -rf .git
   git init
-  git remote add origin $GIT_URL
+  if [ ! -z $GIT_URL ]; then
+    git remote add origin $GIT_URL
+  fi
+
 
   # Preparand oos arquivos templates
   cp public/client/paths.json.example-dotnet public/client/paths.json
