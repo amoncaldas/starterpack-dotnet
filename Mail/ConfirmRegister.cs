@@ -18,7 +18,6 @@ namespace StarterPack.Mail
 
 		public override SPMail Build()
 		{
-            string logoPath = Directory.GetCurrentDirectory() +"/public/client/images/governo-do-estado-da-bahia.png";
 
 			SPMail mail = new SPMail();
             MailAddress to = new MailAddress(_user.Email, _user.Name);
