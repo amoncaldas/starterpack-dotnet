@@ -143,7 +143,7 @@ namespace StarterPack.Core.Console
             }
 
             if(!error){
-                Write("info",$"## 4 - Gerando sql de modificações do banco...");
+                Write("info",$"## 4 - Gerando sql do estado atual do banco...");
                 if(!DeployCommand("dotnet","ef migrations script -o deploy/update-db.sql")){
                     Abort(osCommand, $"Não foi possível gerar o sql de atualização do banco. Verifique a permissão e as configurações de acesso ao banco.");
                     error = true;
