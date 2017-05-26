@@ -43,10 +43,10 @@ namespace StarterPack.Core.Console
 
                     if(ValidateAndClean(osCommand)){
                         if(Generate(osCommand)){
-                            Write("info","## 6 - Zipando aplicação...");
+                            Write("info","## 7 - Zipando aplicação...");
                             ZipFile.CreateFromDirectory(deployTempFolder, deployFile);
 
-                            Write("info","## 7 - Excluindo pasta temporária deploy...");
+                            Write("info","## 8 - Excluindo pasta temporária deploy...");
                             DeployCommand(osCommand.DeleteFolder(deployTempFolder));
 
                             Write("success", $"## Pacote {deployFile} criado com sucesso!");
@@ -143,7 +143,15 @@ namespace StarterPack.Core.Console
             }
 
             if(!error){
-                Write("info",$"## 4 - Criando pasta {deployTempFolder}/public/client...");
+                Write("info",$"## 4 - Gerando sql de modificações do banco...");
+                if(!DeployCommand("dotnet","ef migrations script -o deploy/update-db.sql")){
+                    Abort(osCommand, $"Não foi possível gerar o sql de atualização do banco. Verifique a permissão e as configurações de acesso ao banco.");
+                    error = true;
+                }
+            }
+
+            if(!error){
+                Write("info",$"## 5 - Criando pasta {deployTempFolder}/public/client...");
                 if(!DeployCommand(osCommand.CreateFolder($"{deployTempFolder}/public/client"))){
                     Abort(osCommand, $"Não foi possível criar a pasta {deployTempFolder}/public/client. Verifique a permissão.");
                     error = true;
@@ -151,7 +159,7 @@ namespace StarterPack.Core.Console
             }
 
             if(!error){
-                Write("info","## 5 - Copiando arquivos do client...");
+                Write("info","## 6 - Copiando arquivos do client...");
                 bool images = DeployCommand(osCommand.Copy("public/client/images/", $"{deployTempFolder}/public/client/"));
                 bool app = DeployCommand(osCommand.Copy("public/client/app/", $"{deployTempFolder}/public/client/"));
                 bool build = DeployCommand(osCommand.Copy("public/client/build/", $"{deployTempFolder}/public/client/"));

@@ -1,6 +1,7 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using Serilog;
 
 namespace StarterPack.Core
 {
@@ -45,14 +46,19 @@ namespace StarterPack.Core
             }
         }
 
-        public static string ImageToBase64(string path){
+        /// <summary>
+		/// Converte o arquivo especificado em uma representação no formato base64
+		/// </summary>
+		/// <param name="absolutePath">Caminho absoluto do arquivo no FileSystem</param>
+		/// <returns>Representação do arquivo em uma string base64</returns>
+        public static string FileToBase64String(string absolutePath){
             string imageRepresentation = null;
             try{
-                byte[] imageArray = System.IO.File.ReadAllBytes(path);
-                imageRepresentation = Convert.ToBase64String(imageArray);
+                byte[] fileArray = System.IO.File.ReadAllBytes(absolutePath);
+                imageRepresentation = Convert.ToBase64String(fileArray).Replace("= ","");
             }
             catch(System.Exception ex){
-                //log
+                Log.Error("It was not possible to convert the file {0} to base64. Error: {1}", absolutePath, ex.Message);
             }
             return imageRepresentation;
         }

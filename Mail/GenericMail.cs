@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.IO;
 using StarterPack.Core;
 using StarterPack.Core.Mail;
 using StarterPack.Models;
@@ -17,8 +18,9 @@ namespace StarterPack.Mail
 
 		public override SPMail Build()
 		{
-			SPMail mail = new SPMail();
+            string logoPath = Directory.GetCurrentDirectory() +"/public/client/images/governo-do-estado-da-bahia.png";
 
+			SPMail mail = new SPMail();
             mail.To = _mail.Users;
             mail.Subject = _mail.Subject;
             mail.TemplateData.message = _mail.Message;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using StarterPack.Core;
 using StarterPack.Core.Mail;
 using StarterPack.Models;
+using System.IO;
 
 namespace StarterPack.Mail
 {
@@ -17,6 +18,8 @@ namespace StarterPack.Mail
 
 		public override SPMail Build()
 		{
+            string logoPath = Directory.GetCurrentDirectory() +"/public/client/images/governo-do-estado-da-bahia.png";
+
 			SPMail mail = new SPMail();
             MailAddress to = new MailAddress(_user.Email, _user.Name);
 

@@ -20,7 +20,7 @@
      -->
 
     <!-- inject:all:css -->
-    <link rel="stylesheet" href="client/build/application.css?version=s0szdzoqyvt3i2a">
+    <link rel="stylesheet" href="client/build/application.css?version=dzkuwkyhims1afv">
     <!-- end:inject:all:css -->
 
     <!--
@@ -44,12 +44,12 @@
       <ui-view/>
 
       <!-- inject:vendors:script  -->
-      <script src="client/build/vendors.js?version=s0szdzoqyvt3i2a"></script>
-      <script src="client/build/angular-with-plugins.js?version=s0szdzoqyvt3i2a"></script>
+      <script src="client/build/vendors.min.js?version=dzkuwkyhims1afv"></script>
+      <script src="client/build/angular-with-plugins.min.js?version=dzkuwkyhims1afv"></script>
       <!-- end:inject:vendors:script  -->
 
       <!-- inject:application:script -->
-      <script src="client/build/application.js?version=zi3tthdaypwvtlw"></script>
+      <script src="client/build/application.min.js?version=lns27p0d9h7fi2j"></script>
       <!-- end:inject:application:script  -->
     </md-content>
   </body>
