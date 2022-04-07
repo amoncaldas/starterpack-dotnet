@@ -1,6 +1,6 @@
 # StarterPack .NetCore
 
-## A base web application pack for the development of web applications, implemented common flows, controllers, services and components necessary for most web applications. It uses active record standard with Entity Framework for data access and persistence.
+## A base web application pack to speed up the development of new web applications, implementing common flows, controllers, services and components necessary for most web applications. It uses active record standard with Entity Framework for data access and persistence.
 
 # Mains reources
 - Custom CLI extension
